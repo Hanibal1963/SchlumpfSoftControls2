@@ -74,12 +74,6 @@
     </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="ToolboxControl1.Designer.vb">
-      <DependentUpon>ToolboxControl1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ToolboxControl1.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -103,9 +97,6 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ToolboxControl1.resx">
-      <DependentUpon>ToolboxControl1.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
