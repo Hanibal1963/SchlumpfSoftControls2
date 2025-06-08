@@ -1,12 +1,18 @@
 ﻿' ****************************************************************************************************************
+'
 ' ColorProgressBar.vb
-' © 2024 - 2025 by Andreas Sauer
-' ****************************************************************************************************************
+' Copyright (c)2025 by Andreas Sauer
+'
+' Kurzbeschreibung:
+'
+' Control zum Anzeigen eines farbigen Fortschrittbalkens.
 '
 ' weitere Infos:
 ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
 ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+'
+' ****************************************************************************************************************
 
 Imports System
 Imports System.ComponentModel
