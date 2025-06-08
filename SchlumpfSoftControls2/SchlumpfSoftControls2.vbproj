@@ -66,6 +66,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AniGifControl\SizeMode.vb" />
+    <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
+      <DependentUpon>ColorProgressBar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -93,6 +99,9 @@
     <EmbeddedResource Include="AniGifControl\AniGif.resx">
       <DependentUpon>AniGif.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ColorProgressBarControl\ColorProgressBar.resx">
+      <DependentUpon>ColorProgressBar.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -100,8 +109,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\AniGif.bmp" />
-    <Content Include="Resources\AniGif_Standard.gif" />
+    <EmbeddedResource Include="Resources\AniGif.bmp" />
+    <EmbeddedResource Include="Resources\AniGif_Standard.gif" />
+    <EmbeddedResource Include="Resources\ColorProgressBar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DriveWatcherControl\" />
+    <Folder Include="ExplorerTreeViewControl\" />
+    <Folder Include="IniFileControl\" />
+    <Folder Include="NotifyFormControl\" />
+    <Folder Include="SeveSegmentControl\" />
+    <Folder Include="Shapecontrol\" />
+    <Folder Include="TransparentLabelControl\" />
+    <Folder Include="WizzardControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
