@@ -23,7 +23,7 @@ Partial Class DriveWatcherTest
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.DriveWatcher1 = New SchlumpfSoft.Controls.DriveWatcher.DriveWatcher(Me.components)
+        Me.DriveWatcher1 = New SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -61,7 +61,7 @@ Partial Class DriveWatcherTest
 
     End Sub
 
-    Private WithEvents DriveWatcher1 As SchlumpfSoft.Controls.DriveWatcher.DriveWatcher
+    Private WithEvents DriveWatcher1 As SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher
     Private WithEvents Label1 As Label
     Private WithEvents Label2 As Label
 End Class

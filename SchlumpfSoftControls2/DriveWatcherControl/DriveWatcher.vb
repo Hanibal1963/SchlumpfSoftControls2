@@ -21,7 +21,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
 
-Namespace DriveWatcher
+Namespace DriveWatcherControl
 
     ''' <summary>
     ''' Steuerelement um die Laufwerke zu überwachen.

@@ -19,7 +19,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
 
-Namespace ColorProgressBar
+Namespace ColorProgressBarControl
 
     ''' <summary>
     ''' Control zum Anzeigen eines farbigen Fortschrittbalkens.

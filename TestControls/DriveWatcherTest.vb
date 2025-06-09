@@ -1,6 +1,6 @@
 ﻿
 
-Imports SchlumpfSoft.Controls.DriveWatcher
+Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Public Class DriveWatcherTest
 

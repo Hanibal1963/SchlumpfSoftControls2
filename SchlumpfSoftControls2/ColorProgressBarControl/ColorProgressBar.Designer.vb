@@ -1,7 +1,7 @@
 ﻿
 Imports System.Windows.Forms
 
-Namespace ColorProgressBar
+Namespace ColorProgressBarControl
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class ColorProgressBar

@@ -82,6 +82,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="NotifyFormControl\NotifyFormEnums.vb" />
+    <Compile Include="NotifyFormControl\NotifyForm.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
   </ItemGroup>
@@ -113,6 +117,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NotifyFormControl\NotifyForm.resx">
+      <DependentUpon>NotifyForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AniGif.bmp" />
     <EmbeddedResource Include="Resources\AniGif_Standard.gif" />
     <EmbeddedResource Include="Resources\ColorProgressBar.bmp" />
@@ -120,14 +127,20 @@
   <ItemGroup>
     <Folder Include="ExplorerTreeViewControl\" />
     <Folder Include="IniFileControl\" />
-    <Folder Include="NotifyFormControl\" />
-    <Folder Include="SeveSegmentControl\" />
-    <Folder Include="Shapecontrol\" />
+    <Folder Include="SevenSegmentControl\" />
+    <Folder Include="ShapeControl\" />
     <Folder Include="TransparentLabelControl\" />
     <Folder Include="WizzardControl\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DriveWatcher.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CriticalError.png" />
+    <EmbeddedResource Include="Resources\Information.png" />
+    <EmbeddedResource Include="Resources\NotifyForm.bmp" />
+    <EmbeddedResource Include="Resources\Question.png" />
+    <EmbeddedResource Include="Resources\Warning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

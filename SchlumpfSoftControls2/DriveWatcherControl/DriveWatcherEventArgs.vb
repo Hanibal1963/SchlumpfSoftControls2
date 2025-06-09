@@ -9,7 +9,7 @@
 '
 ' *************************************************************************************************
 
-Namespace DriveWatcher
+Namespace DriveWatcherControl
 
     ''' <summary>
     ''' Übergibt die Argumente für das hinzugefügte Laufwerk.

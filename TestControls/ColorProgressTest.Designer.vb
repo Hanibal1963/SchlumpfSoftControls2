@@ -22,7 +22,7 @@ Partial Class ColorProgressTest
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ColorProgressBar1 = New SchlumpfSoft.Controls.ColorProgressBar.ColorProgressBar()
+        Me.ColorProgressBar1 = New SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar()
         Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
@@ -129,7 +129,7 @@ Partial Class ColorProgressTest
 
     End Sub
 
-    Private WithEvents ColorProgressBar1 As SchlumpfSoft.Controls.ColorProgressBar.ColorProgressBar
+    Private WithEvents ColorProgressBar1 As SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar
     Private WithEvents NumericUpDown1 As NumericUpDown
     Private WithEvents Label1 As Label
     Private WithEvents CheckBox1 As CheckBox
