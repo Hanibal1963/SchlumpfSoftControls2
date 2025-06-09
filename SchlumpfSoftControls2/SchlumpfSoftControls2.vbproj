@@ -57,9 +57,19 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="ClassDiagramms\AniGifControl.cd" />
+    <None Include="ClassDiagramms\ExplorerTreeViewControl.cd" />
+    <None Include="ClassDiagramms\IniFileControl.cd" />
+    <None Include="ClassDiagramms\NotifyFormControl.cd" />
+    <None Include="ClassDiagramms\DriveWacherControl.cd" />
+    <None Include="ClassDiagramms\ColorProgressBar.cd" />
+    <None Include="ClassDiagramms\SevenSegmentControl.cd" />
+    <None Include="ClassDiagramms\ShapeControl.cd" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagramms\TransparentLabelControl.cd" />
+    <None Include="ClassDiagramms\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AniGifControl\AniGif.vb">
@@ -88,6 +98,12 @@
     </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
+    <Compile Include="SevenSegmentControl\SevSegMultiDigit.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SevenSegmentControl\SevSegSingleDigit.vb">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -115,6 +131,12 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="SevenSegmentControl\SevSegMultiDigit.resx">
+      <DependentUpon>SevSegMultiDigit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SevenSegmentControl\SevSegSingleDigit.resx">
+      <DependentUpon>SevSegSingleDigit.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NotifyFormControl\NotifyForm.resx">
@@ -127,7 +149,6 @@
   <ItemGroup>
     <Folder Include="ExplorerTreeViewControl\" />
     <Folder Include="IniFileControl\" />
-    <Folder Include="SevenSegmentControl\" />
     <Folder Include="ShapeControl\" />
     <Folder Include="TransparentLabelControl\" />
     <Folder Include="WizzardControl\" />
@@ -141,6 +162,10 @@
     <EmbeddedResource Include="Resources\NotifyForm.bmp" />
     <EmbeddedResource Include="Resources\Question.png" />
     <EmbeddedResource Include="Resources\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SevenSegmentMultiDigit.bmp" />
+    <EmbeddedResource Include="Resources\SevenSegmentSingleDigit.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

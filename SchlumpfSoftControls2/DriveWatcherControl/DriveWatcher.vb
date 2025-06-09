@@ -29,7 +29,7 @@ Namespace DriveWatcherControl
     <ProvideToolboxControl("Schlumpfsoft Controls", False)>
     <ToolboxItem(True)>
     <Description("Steuerelement um die Laufwerke zu überwachen.")>
-    <ToolboxBitmap(GetType(DriveWatcher), "DriveWatcher.bmp")>
+    <ToolboxBitmap("DriveWatcher.bmp")>
     Public Class DriveWatcher
 
         Inherits Component

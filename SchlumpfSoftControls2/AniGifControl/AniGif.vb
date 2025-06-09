@@ -25,10 +25,10 @@ Namespace AniGifControl
     ''' <summary>
     ''' Control zum anzeigen von animierten Grafiken.
     ''' </summary>
-    <ProvideToolboxControl("SchlumpfSoft Controls 2", False)>
+    <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum Anzeigen von animierten Grafiken.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(AniGif), "AniGif.bmp")>
+    <ToolboxBitmap("AniGif.bmp")>
     Public Class AniGif
 
         Inherits UserControl

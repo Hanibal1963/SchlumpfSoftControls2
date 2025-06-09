@@ -27,7 +27,7 @@ Namespace ColorProgressBarControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum Anzeigen eines farbigen Fortschrittbalkens.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(ColorProgressBar), "ColorProgressBar.bmp")>
+    <ToolboxBitmap("ColorProgressBar.bmp")>
     Public Class ColorProgressBar
 
         Inherits UserControl
