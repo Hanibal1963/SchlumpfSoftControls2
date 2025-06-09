@@ -1,12 +1,22 @@
-﻿
-
+﻿' *************************************************************************************************
+' 
+' DriveWatcher.vb
+' Copyright (c) 2025 by Andreas Sauer 
+'
+' Kurzbeschreibung:
+' 
+' Steuerelement um die Laufwerke zu überwachen.
+'
 ' weitere Infos:
 ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
 ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+'
+' *************************************************************************************************
 
 Imports System
 Imports System.ComponentModel
+Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
@@ -47,7 +57,7 @@ Namespace DriveWatcher
         <Description("Wird ausgelöst wenn ein Laufwerk entfernt wurde.")>
         Public Event DriveRemoved(sender As Object, e As DriveRemovedEventArgs)
 
-        <Diagnostics.DebuggerNonUserCode()>
+        <DebuggerNonUserCode()>
         Public Sub New()
             MyBase.New()
             'Dieser Aufruf ist für den Komponenten-Designer erforderlich.
@@ -85,11 +95,11 @@ Namespace DriveWatcher
         ''' Das Bearbeiten ist mit dem Komponenten-Designer möglich.<br/>
         ''' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
         ''' </remarks>
-        <Diagnostics.DebuggerStepThrough()>
+        <DebuggerStepThrough()>
         Private Sub InitializeComponent()
         End Sub
 
-        <Diagnostics.DebuggerNonUserCode()>
+        <DebuggerNonUserCode()>
         Public Sub New(container As IContainer)
             MyClass.New()
             'Erforderlich für die Unterstützung des Windows.Forms-Klassenkompositions-Designers
@@ -100,7 +110,7 @@ Namespace DriveWatcher
         ''' Die Komponente überschreibt den Löschvorgang zum Bereinigen der Komponentenliste.
         ''' </summary>
         ''' <param name="disposing"></param>
-        <Diagnostics.DebuggerNonUserCode()>
+        <DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(disposing As Boolean)
             Try
                 If disposing Then
@@ -219,10 +229,8 @@ Namespace DriveWatcher
 
             'Das Ereignis betrifft ein Volume
             Private Sub HandleVolume(ByRef m As Message)
-
                 Dim volume As DEV_BROADCAST_VOLUME
                 Dim objVolume As Object = m.GetLParam(volume.GetType)
-
                 If Not Microsoft.VisualBasic.IsNothing(objVolume) Then
                     volume = DirectCast(objVolume, DEV_BROADCAST_VOLUME)
                     Dim di As New DriveInfo(Me.DriveFromMask(volume.dbcv_unitmask))

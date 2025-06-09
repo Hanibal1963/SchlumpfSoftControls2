@@ -1,4 +1,13 @@
-﻿
+﻿' *************************************************************************************************
+' 
+' DriveWatcherEventArgs.vb
+' Copyright (c) 2025 by Andreas Sauer 
+'
+' Kurzbeschreibung:
+' 
+' Übergibt die Argumente für das hinzugefügte oder entfernte Laufwerk.
+'
+' *************************************************************************************************
 
 Namespace DriveWatcher
 

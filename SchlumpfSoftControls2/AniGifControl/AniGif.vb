@@ -1,7 +1,7 @@
 ﻿' *************************************************************************************************
 ' 
 ' AniGif.vb
-' Copyright (c)2025 by Andreas Sauer 
+' Copyright (c) 2024-2025 by Andreas Sauer 
 '
 ' Kurzbeschreibung:
 ' 
@@ -32,11 +32,12 @@ Namespace AniGifControl
     Public Class AniGif
 
         Inherits UserControl
-
         Implements IDisposable
 
         Private WithEvents Timer As Timer
         Private components As IContainer
+
+#Region "Interne Eigenschaftsvariablen"
 
         Private _Gif As Bitmap ' Das aktuell geladene GIF-Bild
         Private _GifSizeMode As SizeMode ' Gibt an, wie das GIF im Steuerelement skaliert/angezeigt wird (z.B. gestreckt, zentriert)
@@ -48,6 +49,8 @@ Namespace AniGifControl
         Private _Autoplay As Boolean ' Gibt an, ob die Animation automatisch abgespielt wird
         Private _ZoomFactor As Decimal ' Zoomfaktor für die Anzeige des GIFs
 
+#End Region
+
 #Region "Ereignisdefinitionen"
 
         ''' <summary>
@@ -58,15 +61,8 @@ Namespace AniGifControl
         <Description("Wird ausgelöst wenn die Grafik nicht animiert werden kann.")>
         Public Event NoAnimation(sender As Object, e As EventArgs)
 
-        ''' <summary>
-        ''' Wird ausgelöst wenn sich das Bild geändert hat.
-        ''' </summary>
-        Private Event GifChanged()
-
-        ''' <summary>
-        ''' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
-        ''' </summary>
-        Private Event CustomDisplaySpeedChanged()
+        Private Event GifChanged() ' Wird ausgelöst wenn sich das Bild geändert hat.
+        Private Event CustomDisplaySpeedChanged() ' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
 
 #End Region
 
@@ -340,9 +336,8 @@ Namespace AniGifControl
         End Sub
 
         Private Sub InitializeComponent()
-            Me.components = New Container()
-            Dim resources As ComponentResourceManager = New ComponentResourceManager(GetType(AniGif))
-            Me.Timer = New Timer(Me.components)
+            Me.components = New System.ComponentModel.Container()
+            Me.Timer = New System.Windows.Forms.Timer(Me.components)
             Me.SuspendLayout()
             '
             'Timer
@@ -351,9 +346,9 @@ Namespace AniGifControl
             '
             'AniGif
             '
-            resources.ApplyResources(Me, "$this")
             Me.Name = "AniGif"
             Me.ResumeLayout(False)
+
         End Sub
 
         Protected Overloads Overrides Sub InitLayout()

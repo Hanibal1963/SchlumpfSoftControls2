@@ -1,7 +1,7 @@
 ﻿' ****************************************************************************************************************
 '
 ' ColorProgressBar.vb
-' Copyright (c)2025 by Andreas Sauer
+' Copyright (c) 2024-2025 by Andreas Sauer
 '
 ' Kurzbeschreibung:
 '
@@ -32,14 +32,18 @@ Namespace ColorProgressBar
 
         Inherits UserControl
 
-        Friend _ProgressUnit As Integer = 20 ' Der Betrag in Pixeln, um den der Fortschrittsbalken erhöht wird.
-        Friend _ProgressValue As Integer = 1 ' Die Menge des ausgefüllten Maximalwerts.
-        Friend _MaxValue As Integer = 10 ' Der Maximalwert des Fortschrittsbalkens.
-        Friend _ShowBorder As Boolean = True ' Legt fest, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist
-        Friend _IsGlossy As Boolean = True ' Legt fest, ob der Glanz auf der Fortschrittsleiste angezeigt wird.
-        Friend _BarColor As Color = Color.Blue ' Die Farbe des Fortschrittsbalkens
-        Friend _EmptyColor As Color = Color.LightGray ' Die Farbe des leeren Fortschrittsbalkens.
-        Friend _BorderColor As Color = Color.Black ' Die Farbe des Rahmens.
+#Region "Interne Eigenschaftsvariablen"
+
+        Private _ProgressUnit As Integer = 20 ' Der Betrag in Pixeln, um den der Fortschrittsbalken erhöht wird.
+        Private _ProgressValue As Integer = 1 ' Die Menge des ausgefüllten Maximalwerts.
+        Private _MaxValue As Integer = 10 ' Der Maximalwert des Fortschrittsbalkens.
+        Private _ShowBorder As Boolean = True ' Legt fest, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist
+        Private _IsGlossy As Boolean = True ' Legt fest, ob der Glanz auf der Fortschrittsleiste angezeigt wird.
+        Private _BarColor As Color = Color.Blue ' Die Farbe des Fortschrittsbalkens
+        Private _EmptyColor As Color = Color.LightGray ' Die Farbe des leeren Fortschrittsbalkens.
+        Private _BorderColor As Color = Color.Black ' Die Farbe des Rahmens.
+
+#End Region
 
 #Region "Ereignisdefinitionen für öffentliche Ereignisse"
 
