@@ -124,6 +124,12 @@
     <Compile Include="ShapeTest.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TransparentLabelTest.Designer.vb">
+      <DependentUpon>TransparentLabelTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TransparentLabelTest.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ColorProgressTest.resx">
@@ -149,6 +155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShapeTest.resx">
       <DependentUpon>ShapeTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransparentLabelTest.resx">
+      <DependentUpon>TransparentLabelTest.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
