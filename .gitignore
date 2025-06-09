@@ -363,7 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Eigene Definitionen
-/TestControls/
+TestControls/
 /Links.md
 /VS Marketplace Vorlage.md
 *.cd
