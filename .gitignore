@@ -361,7 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/TestControls/*.*
+
+# Eigene Definitionen
+/TestControls/
 /Links.md
 /VS Marketplace Vorlage.md
 *.cd
