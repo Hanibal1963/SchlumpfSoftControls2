@@ -98,10 +98,14 @@
     </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="SevenSegmentControl\SevSegMultiDigit.vb">
+    <Compile Include="SevenSegmentControl\MultiDigit.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SevenSegmentControl\SevSegSingleDigit.vb">
+    <Compile Include="SevenSegmentControl\SingleDigit.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ShapeControl\ShapeEnums.vb" />
+    <Compile Include="ShapeControl\Shape.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -131,11 +135,14 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SevenSegmentControl\SevSegMultiDigit.resx">
-      <DependentUpon>SevSegMultiDigit.vb</DependentUpon>
+    <EmbeddedResource Include="SevenSegmentControl\MultiDigit.resx">
+      <DependentUpon>MultiDigit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SevenSegmentControl\SevSegSingleDigit.resx">
-      <DependentUpon>SevSegSingleDigit.vb</DependentUpon>
+    <EmbeddedResource Include="SevenSegmentControl\SingleDigit.resx">
+      <DependentUpon>SingleDigit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShapeControl\Shape.resx">
+      <DependentUpon>Shape.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +156,6 @@
   <ItemGroup>
     <Folder Include="ExplorerTreeViewControl\" />
     <Folder Include="IniFileControl\" />
-    <Folder Include="ShapeControl\" />
     <Folder Include="TransparentLabelControl\" />
     <Folder Include="WizzardControl\" />
   </ItemGroup>
@@ -166,6 +172,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SevenSegmentMultiDigit.bmp" />
     <EmbeddedResource Include="Resources\SevenSegmentSingleDigit.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Shape.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
