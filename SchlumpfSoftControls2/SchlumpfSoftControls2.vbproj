@@ -72,6 +72,10 @@
     <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="DriveWatcherControl\DriveWatcherEventArgs.vb" />
+    <Compile Include="DriveWatcherControl\DriveWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -102,6 +106,9 @@
     <EmbeddedResource Include="ColorProgressBarControl\ColorProgressBar.resx">
       <DependentUpon>ColorProgressBar.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DriveWatcherControl\DriveWatcher.resx">
+      <DependentUpon>DriveWatcher.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -114,7 +121,6 @@
     <EmbeddedResource Include="Resources\ColorProgressBar.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DriveWatcherControl\" />
     <Folder Include="ExplorerTreeViewControl\" />
     <Folder Include="IniFileControl\" />
     <Folder Include="NotifyFormControl\" />
@@ -122,6 +128,9 @@
     <Folder Include="Shapecontrol\" />
     <Folder Include="TransparentLabelControl\" />
     <Folder Include="WizzardControl\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DriveWatcher.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
