@@ -8,7 +8,7 @@ Public Class ShapeTest
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-        PictureBox1.Image = My.Resources.Papa_Schlumpf_08
+        PictureBox1.Image = My.Resources.TestBild
         ComboBox1.SelectedIndex = 0
         NumericUpDown1.Value = 1
         Shape1.LineWidth = 1
