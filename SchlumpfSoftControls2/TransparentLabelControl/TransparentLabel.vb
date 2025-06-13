@@ -26,7 +26,7 @@ Namespace TransparentLabelControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("TransparentLabel.bmp")>
+    <ToolboxBitmap(GetType(TransparentLabel), "TransparentLabel.bmp")>
     Public Class TransparentLabel
 
         Inherits Label

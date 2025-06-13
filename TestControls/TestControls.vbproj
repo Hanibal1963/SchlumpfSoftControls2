@@ -130,6 +130,12 @@
     <Compile Include="TransparentLabelTest.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="WizardTest.Designer.vb">
+      <DependentUpon>WizardTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WizardTest.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ColorProgressTest.resx">
@@ -158,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TransparentLabelTest.resx">
       <DependentUpon>TransparentLabelTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardTest.resx">
+      <DependentUpon>WizardTest.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

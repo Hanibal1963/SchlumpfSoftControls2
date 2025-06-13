@@ -28,7 +28,7 @@ Namespace AniGifControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum Anzeigen von animierten Grafiken.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("AniGif.bmp")>
+    <ToolboxBitmap(GetType(AniGif), "AniGif.bmp")>
     Public Class AniGif
 
         Inherits UserControl
@@ -447,19 +447,15 @@ Namespace AniGifControl
             _CustomDisplaySpeed = False         ' Keine benutzerdefinierte Geschwindigkeit
             _FramesPerSecond = 10               ' Standard: 10 Bilder pro Sekunde
             _ZoomFactor = 50                    ' Standard-Zoomfaktor: 50%
-
         End Sub
 
         ' Prüft den Wert für Bilder/Sekunde
         Private Function CheckFramesPerSecondValue(Frames As Decimal) As Decimal
             ' Überprüft, ob der FPS-Wert im zulässigen Bereich liegt (1 bis 50)
             Select Case Frames
-                Case Is < 1 ' Wenn der Wert kleiner als 1 ist, auf Mindestwert 1 setzen
-                    Return 1
-                Case Is > 50 ' Wenn der Wert größer als 50 ist, auf Höchstwert 50 setzen
-                    Return 50
-                Case Else ' Ansonsten den übergebenen Wert zurückgeben
-                    Return Frames
+                Case Is < 1 : Return 1' Wenn der Wert kleiner als 1 ist, auf Mindestwert 1 setzen
+                Case Is > 50 : Return 50 ' Wenn der Wert größer als 50 ist, auf Höchstwert 50 setzen
+                Case Else : Return Frames ' Ansonsten den übergebenen Wert zurückgeben
             End Select
         End Function
 

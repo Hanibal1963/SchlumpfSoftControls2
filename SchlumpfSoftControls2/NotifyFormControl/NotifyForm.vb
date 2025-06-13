@@ -28,7 +28,7 @@ Namespace NotifyFormControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum anzeigen von Benachrichtigungsfenstern.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("NotifyForm.bmp")>
+    <ToolboxBitmap(GetType(NotifyForm), "NotifyForm.bmp")>
     Public Class NotifyForm
 
         Inherits Component

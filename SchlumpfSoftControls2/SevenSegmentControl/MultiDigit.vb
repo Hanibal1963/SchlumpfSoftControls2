@@ -27,7 +27,7 @@ Namespace SevenSegmentControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("ClassDescriptionSevSegMultiDigit")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("SevenSegmentMultiDigit.bmp")>
+    <ToolboxBitmap(GetType(MultiDigit), "SevenSegmentMultiDigit.bmp")>
     Public Class MultiDigit
 
         Inherits Control

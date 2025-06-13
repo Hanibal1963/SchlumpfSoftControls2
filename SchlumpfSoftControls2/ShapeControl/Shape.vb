@@ -26,7 +26,7 @@ Namespace ShapeControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("Shape.bmp")>
+    <ToolboxBitmap(GetType(Shape), "Shape.bmp")>
     Public Class Shape
 
         Inherits Control

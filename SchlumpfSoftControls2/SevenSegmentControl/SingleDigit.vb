@@ -29,7 +29,7 @@ Namespace SevenSegmentControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap("SevenSegmentSingleDigit.bmp")>
+    <ToolboxBitmap(GetType(SingleDigit), "SevenSegmentSingleDigit.bmp")>
     Public Class SingleDigit
 
         Inherits Control
