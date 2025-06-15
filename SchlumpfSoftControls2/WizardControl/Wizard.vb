@@ -1,10 +1,19 @@
-﻿
-
+﻿' *************************************************************************************************
+' 
+' Wizard.vb
+' Copyright (c) 2025 by Andreas Sauer 
+'
+' Kurzbeschreibung:
+' 
+' Ein Control zum erstellen eines Assistenten
 '
 ' weitere Infos:
 ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
 ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
+'
+' *************************************************************************************************
 
 Imports System
 Imports System.ComponentModel
@@ -17,13 +26,13 @@ Imports System.Windows.Forms.Design
 Namespace WizardControl
 
     ''' <summary>
-    ''' Ein Control zum erstellen eines Assistenen
+    ''' Ein Control zum erstellen eines Assistenten
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Ein Control zum erstellen eines Assistenen")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(Wizard), "Wizard.bmp")>
-    <Designer(GetType(WizardDesigner))>
+    <ToolboxBitmap(GetType(WizardControl.Wizard), "WizardControl.Wizard.bmp")>
+    <Designer(GetType(WizardControl.WizardDesigner))>
     Public Class Wizard
 
         Inherits UserControl

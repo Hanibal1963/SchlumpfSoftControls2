@@ -11,6 +11,7 @@
 ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
 ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
 '
 ' *************************************************************************************************
 
@@ -28,7 +29,7 @@ Namespace NotifyFormControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum anzeigen von Benachrichtigungsfenstern.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(NotifyForm), "NotifyForm.bmp")>
+    <ToolboxBitmap(GetType(NotifyFormControl.NotifyForm), "NotifyFormControl.NotifyForm.bmp")>
     Public Class NotifyForm
 
         Inherits Component

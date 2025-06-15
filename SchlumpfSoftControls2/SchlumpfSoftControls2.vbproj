@@ -160,30 +160,26 @@
     <EmbeddedResource Include="NotifyFormControl\NotifyForm.resx">
       <DependentUpon>NotifyForm.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AniGif.bmp" />
-    <EmbeddedResource Include="Resources\AniGif_Standard.gif" />
-    <EmbeddedResource Include="Resources\ColorProgressBar.bmp" />
+    <EmbeddedResource Include="Resources\AniGifControl.AniGif.bmp" />
+    <Compile Include="Resources\AniGif_Standard.gif" />
+    <EmbeddedResource Include="Resources\ColorProgressBarControl.ColorProgressBar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ExplorerTreeViewControl\" />
     <Folder Include="IniFileControl\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DriveWatcher.bmp" />
+    <EmbeddedResource Include="Resources\DriveWatcherControl.DriveWatcher.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CriticalError.png" />
-    <EmbeddedResource Include="Resources\Information.png" />
-    <EmbeddedResource Include="Resources\NotifyForm.bmp" />
-    <EmbeddedResource Include="Resources\Question.png" />
-    <EmbeddedResource Include="Resources\Warning.png" />
+    <Compile Include="Resources\CriticalError.png" />
+    <Compile Include="Resources\Information.png" />
+    <EmbeddedResource Include="Resources\NotifyformControl.NotifyForm.bmp" />
+    <Compile Include="Resources\Question.png" />
+    <Compile Include="Resources\Warning.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\SevenSegmentMultiDigit.bmp" />
-    <EmbeddedResource Include="Resources\SevenSegmentSingleDigit.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Shape.bmp" />
+    <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.jpg">
@@ -198,10 +194,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <EmbeddedResource Include="Resources\WizardHeaderImage.jpg" />
-    <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />
-    <EmbeddedResource Include="Resources\Wizard.bmp" />
-    <EmbeddedResource Include="Resources\TransparentLabel.bmp" />
+    <EmbeddedResource Include="Resources\SevenSegmentControl.MultiDigit.bmp" />
+    <EmbeddedResource Include="Resources\SevenSegmentControl.SingleDigit.bmp" />
+    <Compile Include="Resources\WizardHeaderImage.jpg" />
+    <Compile Include="Resources\WizardWelcomeImage.jpg" />
+    <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
+    <EmbeddedResource Include="Resources\TransparentLabelControl.TransparentLabel.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

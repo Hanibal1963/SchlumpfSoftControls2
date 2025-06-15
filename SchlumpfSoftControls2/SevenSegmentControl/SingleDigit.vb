@@ -11,6 +11,7 @@
 ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
 ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
 '
 ' *************************************************************************************************
 
@@ -29,7 +30,7 @@ Namespace SevenSegmentControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(SingleDigit), "SevenSegmentSingleDigit.bmp")>
+    <ToolboxBitmap(GetType(SevenSegmentControl.SingleDigit), "SevenSegmentControl.SingleDigit.bmp")>
     Public Class SingleDigit
 
         Inherits Control

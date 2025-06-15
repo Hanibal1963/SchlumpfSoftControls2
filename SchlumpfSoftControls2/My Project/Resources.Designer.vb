@@ -63,29 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property AniGif() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("AniGif", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property AniGif_Standard() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("AniGif_Standard", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property ColorProgressBar() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ColorProgressBar", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -103,29 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property DriveWatcher() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("DriveWatcher", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property Information() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Information", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property NotifyForm() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("NotifyForm", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -143,59 +103,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property SevenSegmentMultiDigit() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("SevenSegmentMultiDigit", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property SevenSegmentSingleDigit() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("SevenSegmentSingleDigit", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Shape() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Shape", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property TransparentLabel() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("TransparentLabel", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property Warning() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Warning", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Wizard() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Wizard", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
