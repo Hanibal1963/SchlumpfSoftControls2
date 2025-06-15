@@ -6,7 +6,7 @@
         <Description xml:space="preserve">Eine Sammlung verschiedener Steuerelemente.</Description>
         <License>LICENSE.txt</License>
         <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
-        <Icon>Icon.jpg</Icon>
+        <Icon>Resources\Icon.jpg</Icon>
         <Tags>Controls, Animation, ProgressBar, Shape, SevenSegment, Drive, Label</Tags>
     </Metadata>
     <Installation>
