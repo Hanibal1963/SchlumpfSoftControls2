@@ -36,6 +36,7 @@ Namespace AniGifControl
 
         Private WithEvents Timer As Timer
         Private components As IContainer
+        Private disposedValue As Boolean ' To detect redundant calls
 
 #Region "Interne Eigenschaftsvariablen"
 
@@ -63,6 +64,7 @@ Namespace AniGifControl
 
         Private Event GifChanged() ' Wird ausgelöst wenn sich das Bild geändert hat.
         Private Event CustomDisplaySpeedChanged() ' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
+        Private Event FramesPerSecondChanged() ' Wird ausgelöst wenn sich die Frames pro Sekunde geändert haben.
 
 #End Region
 
@@ -94,6 +96,7 @@ Namespace AniGifControl
                 Return _Gif
             End Get
             Set(value As Bitmap)
+                If _Gif IsNot Nothing Then _Gif.Dispose() ' Vorhandenes Bild freigeben
                 _Gif = If(value, My.Resources.AniGif_Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
                 RaiseEvent GifChanged()
             End Set
@@ -147,7 +150,7 @@ Namespace AniGifControl
             End Get
             Set(value As Decimal)
                 _FramesPerSecond = CheckFramesPerSecondValue(value)
-                Timer.Interval = CInt(1000 / _FramesPerSecond)
+                RaiseEvent FramesPerSecondChanged()
             End Set
         End Property
 
@@ -346,9 +349,9 @@ Namespace AniGifControl
             '
             'AniGif
             '
+            Me.DoubleBuffered = True
             Me.Name = "AniGif"
             Me.ResumeLayout(False)
-
         End Sub
 
         Protected Overloads Overrides Sub InitLayout()
@@ -377,12 +380,21 @@ Namespace AniGifControl
         End Sub
 
         Protected Overrides Sub Dispose(disposing As Boolean)
-            If disposing Then
-                components?.Dispose()
-                Timer?.Dispose()
-                _Gif?.Dispose()
+            If Not disposedValue Then
+                If disposing Then
+                    components?.Dispose()
+                    Timer?.Dispose()
+                    _Gif?.Dispose()
+                End If
+                disposedValue = True
             End If
             MyBase.Dispose(disposing)
+        End Sub
+
+        ' IDisposable Support
+        Public Overloads Sub Dispose() Implements IDisposable.Dispose
+            Dispose(True)
+            GC.SuppressFinalize(Me)
         End Sub
 
 #Region "interne Ereignisbehandlungen"
@@ -416,6 +428,17 @@ Namespace AniGifControl
             End If
         End Sub
 
+        ' Wird ausgeführt wenn die Frames pro Sekunde geändert wurden.
+        Private Sub AniGif_FramesPerSecondChanged() Handles Me.FramesPerSecondChanged
+            If Timer.Enabled Then
+                Timer.Stop() ' Timer stoppen um die Intervalle zu aktualisieren
+                Timer.Interval = CInt(1000 / _FramesPerSecond)
+                Timer.Start() ' Timer neu starten
+            Else
+                Timer.Interval = CInt(1000 / _FramesPerSecond) ' Nur das Intervall aktualisieren wenn der Timer nicht läuft
+            End If
+        End Sub
+
         ' Wird ausgeführt wenn das nächste Teilbild angezeigt werden soll.
         Private Sub OnNextFrame(o As Object, e As EventArgs)
             If AutoPlay AndAlso Not DesignMode Then
@@ -424,7 +447,7 @@ Namespace AniGifControl
         End Sub
 
         ' wird ausgeführt wenn die Anzeigezeit abgelaufen ist.
-        Private Sub Tick(sender As Object, e As EventArgs) Handles Timer.Tick
+        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
             'Bild animieren wenn AutoPlay und Benutzerdefinierte Geschwindigkeit aktiv
             If Not DesignMode AndAlso AutoPlay Then
                 If _MaxFrame = 0 Then Exit Sub ' wenn Frames = 0 ist das Bild nicht animiert -> Ende
@@ -464,7 +487,7 @@ Namespace AniGifControl
         ' Gibt den korrigierten Zoomfaktor im Bereich 1 bis 100 zurück.
         Private Function CheckZoomFactorValue(ZoomFactor As Decimal) As Decimal
             Select Case ZoomFactor
-                Case Is < 0 ' Wenn der Zoomfaktor kleiner als 0 ist, auf Mindestwert 1 setzen
+                Case Is < 1 ' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
                     Return 1
                 Case Is > 100 ' Wenn der Zoomfaktor größer als 100 ist, auf Höchstwert 100 setzen
                     Return 100
@@ -476,26 +499,37 @@ Namespace AniGifControl
         ' Bildgröße in Abhängikeit vom Zeichenodus berechnen.
         Private Function GetRectStartSize(Mode As SizeMode, Control As AniGif, Gif As Bitmap, Zoom As Decimal) As Size
             Select Case Mode
-                Case SizeMode.Normal ' Bild wird in Originalgröße angezeigt (keine Skalierung)
+                Case SizeMode.Normal
+                    ' Bild wird in Originalgröße angezeigt (keine Skalierung)
                     Return New Size(Gif.Size.Width, Gif.Size.Height)
-                Case SizeMode.CenterImage ' Bild wird ebenfalls in Originalgröße angezeigt (zentriert, aber Größe bleibt gleich)
+                Case SizeMode.CenterImage
+                    ' Bild wird ebenfalls in Originalgröße angezeigt (zentriert, aber Größe bleibt gleich)
                     Return New Size(Gif.Size.Width, Gif.Size.Height)
-                Case SizeMode.Zoom ' Bild wird proportional zum Zoomfaktor skaliert
-                    If Gif.Size.Width < Gif.Size.Height Then ' Bild ist höher als breit
+                Case SizeMode.Zoom
+                    ' Bild wird proportional zum Zoomfaktor skaliert
+                    If Gif.Size.Width < Gif.Size.Height Then
+                        ' Bild ist höher als breit
                         ' Höhe des Controls als Basis, Breite proportional berechnen und mit Zoom multiplizieren
                         Return New Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width) * Zoom), CInt(Control.Height * Zoom))
-                    Else ' Bild ist breiter als hoch
+                    Else
+                        ' Bild ist breiter als hoch
                         ' Breite des Controls als Basis, Höhe proportional berechnen und mit Zoom multiplizieren
                         Return New Size(CInt(Control.Width * Zoom), CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width) * Zoom))
                     End If
-                Case SizeMode.Fill ' Bild wird so skaliert, dass es das Control vollständig ausfüllt (Seitenverhältnis bleibt erhalten)
-                    If Gif.Size.Width < Gif.Size.Height Then ' Bild ist höher als breit
+                Case SizeMode.Fill
+                    ' Bild wird so skaliert, dass es das Control vollständig ausfüllt (Seitenverhältnis bleibt erhalten)
+                    If Gif.Size.Width < Gif.Size.Height Then
+                        ' Bild ist höher als breit
                         ' Höhe des Controls als Basis, Breite proportional berechnen
                         Return New Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width)), Control.Height)
-                    Else ' Bild ist breiter als hoch
+                    Else
+                        ' Bild ist breiter als hoch
                         ' Breite des Controls als Basis, Höhe proportional berechnen
                         Return New Size(Control.Width, CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width)))
                     End If
+                Case Else
+                    ' Fallback für unbekannte SizeMode-Werte, gibt die Originalgröße zurück
+                    Return New Size(Gif.Size.Width, Gif.Size.Height)
             End Select
         End Function
 
@@ -503,17 +537,21 @@ Namespace AniGifControl
         Private Function GetRectStartPoint(Mode As SizeMode, Control As AniGif, Gif As Bitmap, RectStartSize As Size) As Point
             ' Bestimmt den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes
             Select Case Mode
-                Case SizeMode.Normal ' Bild wird in Originalgröße oben links gezeichnet
+                Case SizeMode.Normal
+                    ' Bild wird in Originalgröße oben links gezeichnet
                     Return New Point(0, 0)
-                Case SizeMode.CenterImage ' Bild wird in Originalgröße zentriert gezeichnet
+                Case SizeMode.CenterImage
+                    ' Bild wird in Originalgröße zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und Bild-Höhe
                     Return New Point(CInt((Control.Width - Gif.Size.Width) / 2), CInt((Control.Height - Gif.Size.Height) / 2))
-                Case SizeMode.Zoom ' Bild wird skaliert (gezoomt) und zentriert gezeichnet
+                Case SizeMode.Zoom
+                    ' Bild wird skaliert (gezoomt) und zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und skalierter Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und skalierter Bild-Höhe
                     Return New Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
-                Case SizeMode.Fill ' Bild wird so skaliert, dass es das Control ausfüllt und zentriert gezeichnet
+                Case SizeMode.Fill
+                    ' Bild wird so skaliert, dass es das Control ausfüllt und zentriert gezeichnet
                     ' X- und Y-Position wie bei Zoom
                     Return New Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
             End Select
