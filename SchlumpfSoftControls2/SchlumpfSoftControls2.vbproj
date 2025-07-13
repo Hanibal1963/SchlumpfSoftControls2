@@ -84,6 +84,16 @@
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.Designer.vb">
+      <DependentUpon>ExplorerTreeView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExplorerTreeViewControl\FolderNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\SpecialFolderNode.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -139,6 +149,9 @@
     <EmbeddedResource Include="DriveWatcherControl\DriveWatcher.resx">
       <DependentUpon>DriveWatcher.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExplorerTreeViewControl\ExplorerTreeView.resx">
+      <DependentUpon>ExplorerTreeView.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -162,7 +175,9 @@
     <EmbeddedResource Include="Resources\AniGif_Standard.gif" />
     <EmbeddedResource Include="Resources\ColorProgressBarControl.ColorProgressBar.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DriveWatcherControl.DriveWatcher.bmp" />
   </ItemGroup>
@@ -177,6 +192,22 @@
     <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\FolderVideos.png" />
+    <EmbeddedResource Include="Resources\FolderMusic.png" />
+    <EmbeddedResource Include="Resources\FolderPictures.png" />
+    <EmbeddedResource Include="Resources\FolderDownloads.png" />
+    <EmbeddedResource Include="Resources\FolderDocuments.png" />
+    <EmbeddedResource Include="Resources\FolderDesktop.png" />
+    <EmbeddedResource Include="Resources\Folder.png" />
+    <None Include="Resources\DriveSystem.png" />
+    <None Include="Resources\DriveDisk.png" />
+    <EmbeddedResource Include="Resources\DriveUnknown.png" />
+    <EmbeddedResource Include="Resources\DriveRamDisk.png" />
+    <EmbeddedResource Include="Resources\Computer.png" />
+    <EmbeddedResource Include="Resources\DriveRemovable.png" />
+    <EmbeddedResource Include="Resources\DriveNetwork.png" />
+    <EmbeddedResource Include="Resources\DriveCDRom.png" />
+    <EmbeddedResource Include="Resources\DriveFixed.png" />
     <EmbeddedResource Include="Resources\Icon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -194,6 +225,9 @@
     <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />
     <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
     <EmbeddedResource Include="Resources\TransparentLabelControl.TransparentLabel.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

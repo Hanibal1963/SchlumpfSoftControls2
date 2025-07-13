@@ -122,9 +122,57 @@
     <value>..\Resources\AniGif_Standard.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Standardanimation für AniGifControl</comment>
   </data>
+  <data name="Computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CriticalError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CriticalError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Fehlersymbol für NotyfiFormControl</comment>
+  </data>
+  <data name="DriveCDRom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveCDRom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveDisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveDisk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveFixed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveFixed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveNetwork" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveNetwork.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveRamDisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveRamDisk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveRemovable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveRemovable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveSystem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveSystem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DriveUnknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveUnknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderDesktop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderDesktop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderDocuments" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderDocuments.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderDownloads" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderDownloads.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderMusic.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderPictures" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderPictures.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FolderVideos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FolderVideos.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -85,6 +85,12 @@
     <Compile Include="DriveWatcherTest.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewTest.Designer.vb">
+      <DependentUpon>ExplorerTreeViewTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorerTreeViewTest.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -143,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DriveWatcherTest.resx">
       <DependentUpon>DriveWatcherTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExplorerTreeViewTest.resx">
+      <DependentUpon>ExplorerTreeViewTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
