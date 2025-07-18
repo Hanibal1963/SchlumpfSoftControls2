@@ -9,6 +9,7 @@
 
 
 Imports System
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Windows.Forms
 
@@ -75,14 +76,39 @@ Namespace ExplorerTreeViewControl
         Private Function GetImageKey(drive As DriveInfo) As String
             Dim result As String = String.Empty
             Select Case drive.DriveType
-                Case DriveType.Fixed : result = If(IsSystemDrive(drive), "DriveSystem", "DriveFixed")
+                Case DriveType.Fixed
+                    If IsSystemDrive(drive) Then
+                        result = "DriveSystem"
+                    Else
+                        result = "DriveFixed"
+                    End If
+
                 Case DriveType.CDRom : result = "DriveCDROM"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), "DriveFloppy", "DriveRemovable")
-                Case DriveType.Network : result = "DriveNetwork"
-                Case DriveType.Ram : result = "DriveRamDisk"
-                Case DriveType.NoRootDirectory : result = "kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = "DriveUnknown"
+                Case DriveType.Removable
+                    If IsFloppyDrive(drive) Then
+                        result = "DriveFloppy"
+                    Else
+                        result = "DriveRemovable"
+                    End If
+
+                Case DriveType.Network
+                    result = "DriveNetwork"
+
+                Case DriveType.Ram
+                    result = "DriveRamDisk"
+
+                Case DriveType.NoRootDirectory
+                    result = "kein Root-Verzeichnis"
+
+                Case DriveType.Unknown
+                    result = "DriveUnknown"
+
             End Select
+
+#If DEBUG Then
+            Debug.Print($"DriveNode.GetImageKey: Drive:{drive.Name} - result:{result}")
+#End If
+
             Return result
         End Function
 
@@ -125,13 +151,31 @@ Namespace ExplorerTreeViewControl
         Private Function GetDriveTypeString(drive As DriveInfo) As String
             Dim result As String = String.Empty
             Select Case drive.DriveType
-                Case DriveType.Fixed : result = $"Lokaler Datenträger"
-                Case DriveType.CDRom : result = $"CD-Laufwerk"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), $"Diskettenlaufwerk", $"Wechselmedium")
-                Case DriveType.Network : result = $"Netzlaufwerk"
-                Case DriveType.Ram : result = $"Ramlaufwerk"
-                Case DriveType.NoRootDirectory : result = $"kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = $"Unbekanntes Laufwerk"
+                Case DriveType.Fixed
+                    result = $"Lokaler Datenträger"
+
+                Case DriveType.CDRom
+                    result = $"CD-Laufwerk"
+
+                Case DriveType.Removable
+                    If IsFloppyDrive(drive) Then
+                        result = $"Diskettenlaufwerk"
+                    Else
+                        result = $"Wechselmedium"
+                    End If
+
+                Case DriveType.Network
+                    result = $"Netzlaufwerk"
+
+                Case DriveType.Ram
+                    result = $"Ramlaufwerk"
+
+                Case DriveType.NoRootDirectory
+                    result = $"kein Root-Verzeichnis"
+
+                Case DriveType.Unknown
+                    result = $"Unbekanntes Laufwerk"
+
             End Select
             Return result
         End Function
@@ -144,14 +188,17 @@ Namespace ExplorerTreeViewControl
         ''' </param>
         Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
             Dim result As Boolean = False
-            ' Ermitteln ob das Laufwerk das Diskettenlaufwerk A ist
-            If String.Equals(drive.Name, $"a:\", StringComparison.OrdinalIgnoreCase) Then
+            ' Ermitteln ob das Laufwerk das Diskettenlaufwerk A ode B ist
+            If drive.Name.StartsWith($"a") Or drive.Name.StartsWith($"b") Then
                 result = True
             End If
-            ' Ermitteln ob das Laufwerk das Diskettenlaufwerk B  ist
-            If False = String.Equals(drive.Name, $"b:\", StringComparison.OrdinalIgnoreCase) Then
-                result = True
-            End If
+            'If String.Equals(drive.Name, $"a:\", StringComparison.OrdinalIgnoreCase) Then
+            '    result = True
+            'End If
+            '' Ermitteln ob das Laufwerk das Diskettenlaufwerk B  ist
+            'If False = String.Equals(drive.Name, $"b:\", StringComparison.OrdinalIgnoreCase) Then
+            '    result = True
+            'End If
             Return result
         End Function
 

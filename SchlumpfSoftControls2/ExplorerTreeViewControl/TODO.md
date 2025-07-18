@@ -1,3 +1,4 @@
-- Eine Funktion erstellen zum automatischen aktualisieren der Ansicht wenn ein Laufwerk hinzugefügt oder entfernt wurde.
+## Noch zu erledigen
+
 - Eine Funktion erstellen die nach dem aktualisieren den letzten Ordner wieder öffnet.
 - 

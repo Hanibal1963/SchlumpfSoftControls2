@@ -63,6 +63,7 @@
     <None Include="ClassDiagramms\ColorProgressBar.cd" />
     <None Include="ClassDiagramms\SevenSegmentControl.cd" />
     <None Include="ClassDiagramms\ShapeControl.cd" />
+    <None Include="ExplorerTreeViewControl\TODO.md" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

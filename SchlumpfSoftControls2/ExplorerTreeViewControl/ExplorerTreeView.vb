@@ -8,6 +8,7 @@
 ' *************************************************************************************************
 
 Imports System
+Imports System.Diagnostics
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
@@ -72,6 +73,7 @@ Namespace ExplorerTreeViewControl
             rootnode.ImageKey = $"Computer"
             rootnode.SelectedImageKey = $"Computer"
             TV.Nodes.Add(rootnode)
+            TV.Nodes.Item(0).Expand()
         End Sub
 
         ''' <summary>
@@ -248,15 +250,21 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         Private Sub DW_DriveAdded(sender As Object, e As DriveAddedEventArgs) Handles DW.DriveAdded
+
 #If DEBUG Then
-            MessageBox.Show($"DriveAdded: Name={e.DriveName} - Typ={e.DriveType} - Format={e.DriveFormat} - Volume={e.VolumeLabel}")
+            Debug.Print($"ExplorerTreeView.DriveAdded: Name={e.DriveName} - Typ={e.DriveType} - Format={e.DriveFormat} - Volume={e.VolumeLabel}")
 #End If
+
+            SetRootNode()
         End Sub
 
         Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
+
 #If DEBUG Then
-            MessageBox.Show($"DriveRemoved: Name={e.DriveName}")
+            Debug.Print($"ExplorerTreeView.DriveRemoved: Name={e.DriveName}")
 #End If
+
+            SetRootNode()
         End Sub
 
     End Class
