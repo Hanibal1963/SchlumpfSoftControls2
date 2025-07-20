@@ -45,6 +45,9 @@ Namespace ExplorerTreeViewControl
         End Property
 
         Public Sub New(Drive As DriveInfo)
+#If DEBUG Then
+            Debug.Print($"DriveNode.New: Node für Laufwerk {Drive.Name} erstellt.")
+#End If
             ' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
             SetPropertys(Drive)
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
@@ -106,7 +109,7 @@ Namespace ExplorerTreeViewControl
             End Select
 
 #If DEBUG Then
-            Debug.Print($"DriveNode.GetImageKey: Drive:{drive.Name} - result:{result}")
+            Debug.Print($"DriveNode.GetImageKey: Laufwerk: {drive.Name} - Rückgabewert: result={result}")
 #End If
 
             Return result

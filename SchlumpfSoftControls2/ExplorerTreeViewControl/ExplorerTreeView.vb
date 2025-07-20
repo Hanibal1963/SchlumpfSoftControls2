@@ -9,7 +9,9 @@
 
 Imports System
 Imports System.Diagnostics
+Imports System.IO
 Imports System.Windows.Forms
+Imports Microsoft.VisualStudio.PlatformUI
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Namespace ExplorerTreeViewControl
@@ -255,16 +257,31 @@ Namespace ExplorerTreeViewControl
             Debug.Print($"ExplorerTreeView.DriveAdded: Name={e.DriveName} - Typ={e.DriveType} - Format={e.DriveFormat} - Volume={e.VolumeLabel}")
 #End If
 
-            SetRootNode()
+
+            'TODO: Das hinzugefügte Laufwerk wird am Ende hinzugefügt (nicht hilfreich)
+            TV.Nodes.Item(0).Nodes.Add(New DriveNode(New DriveInfo(e.DriveName)))
+
+
+
+
+
+
         End Sub
 
         Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
-
-#If DEBUG Then
-            Debug.Print($"ExplorerTreeView.DriveRemoved: Name={e.DriveName}")
-#End If
-
-            SetRootNode()
+            ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
+            For Each obj As Object In TV.Nodes.Item(0).Nodes
+                ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
+                If TypeOf obj Is DriveNode Then
+                    ' Konvertiere den Knoten in einen DriveNode
+                    Dim drn As DriveNode = CType(obj, DriveNode)
+                    ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
+                    If drn.Tag.ToString() = e.DriveName Then
+                        ' Entferne den DriveNode aus der Liste
+                        drn.Remove()
+                    End If
+                End If
+            Next
         End Sub
 
     End Class

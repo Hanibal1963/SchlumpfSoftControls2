@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="ClassDiagramms\AniGifControl.cd" />
+    <None Include="ClassDiagramms\ExplorerTreeViewControl.cd" />
     <None Include="ClassDiagramms\NotifyFormControl.cd" />
     <None Include="ClassDiagramms\DriveWacherControl.cd" />
     <None Include="ClassDiagramms\ColorProgressBar.cd" />

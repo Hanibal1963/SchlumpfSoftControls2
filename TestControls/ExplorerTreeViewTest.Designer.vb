@@ -27,9 +27,9 @@ Partial Class ExplorerTreeViewTest
         '
         'ExplorerTreeView1
         '
-        Me.ExplorerTreeView1.Location = New System.Drawing.Point(31, 29)
+        Me.ExplorerTreeView1.Location = New System.Drawing.Point(43, 54)
         Me.ExplorerTreeView1.Name = "ExplorerTreeView1"
-        Me.ExplorerTreeView1.Size = New System.Drawing.Size(340, 437)
+        Me.ExplorerTreeView1.Size = New System.Drawing.Size(327, 401)
         Me.ExplorerTreeView1.TabIndex = 0
         '
         'ExplorerTreeViewTest
