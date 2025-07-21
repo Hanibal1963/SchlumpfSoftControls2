@@ -71,10 +71,8 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         Private Sub SetRootNode()
             TV.Nodes.Clear()
-            Dim rootnode As New ComputerNode
-            rootnode.ImageKey = $"Computer"
-            rootnode.SelectedImageKey = $"Computer"
-            TV.Nodes.Add(rootnode)
+            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
+            Dim unused = TV.Nodes.Add(rootnode)
             TV.Nodes.Item(0).Expand()
         End Sub
 
@@ -251,30 +249,43 @@ Namespace ExplorerTreeViewControl
             SetSelectedPath(e.Node)
         End Sub
 
+        ''' <summary>
+        ''' Wird ausgeführt wenn ein neues Laufwerk hinzugefügt wurde
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub DW_DriveAdded(sender As Object, e As DriveAddedEventArgs) Handles DW.DriveAdded
-
-#If DEBUG Then
-            Debug.Print($"ExplorerTreeView.DriveAdded: Name={e.DriveName} - Typ={e.DriveType} - Format={e.DriveFormat} - Volume={e.VolumeLabel}")
-#End If
-
-
-            'TODO: Das hinzugefügte Laufwerk wird am Ende hinzugefügt (nicht hilfreich)
-            TV.Nodes.Item(0).Nodes.Add(New DriveNode(New DriveInfo(e.DriveName)))
-
-
-
-
-
-
+            Dim newDriveNode As New DriveNode(New DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
+            Dim inserted As Boolean = False
+            ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
+            For i As Integer = 0 To TV.Nodes.Item(0).Nodes.Count - 1
+                Dim currentNode As TreeNode = TV.Nodes.Item(0).Nodes(i)
+                ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
+                If TypeOf currentNode Is DriveNode AndAlso String.Compare(currentNode.Tag.ToString, newDriveNode.Tag.ToString, StringComparison.OrdinalIgnoreCase) > 0 Then
+                    TV.Nodes.Item(0).Nodes.Insert(i, newDriveNode)
+                    inserted = True
+                    Exit For
+                End If
+            Next
+            ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
+            If Not inserted Then
+                Dim unused = TV.Nodes.Item(0).Nodes.Add(newDriveNode)
+            End If
         End Sub
 
+        ''' <summary>
+        ''' Wird ausgeführt wenn ein Laufwerk entfernt wurde
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
+            Dim drn As DriveNode
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
             For Each obj As Object In TV.Nodes.Item(0).Nodes
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
                 If TypeOf obj Is DriveNode Then
                     ' Konvertiere den Knoten in einen DriveNode
-                    Dim drn As DriveNode = CType(obj, DriveNode)
+                    drn = CType(obj, DriveNode)
                     ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
                     If drn.Tag.ToString() = e.DriveName Then
                         ' Entferne den DriveNode aus der Liste

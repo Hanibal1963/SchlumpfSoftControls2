@@ -69,15 +69,30 @@ Namespace DriveWatcherControl
         ''' Wird ausgelöst wenn ein Laufwerk hinzugefügt wurde
         ''' </summary>
         Private Sub NatForm_DriveAdded(sender As Object, e As DriveInfo) Handles NatForm.DriveAdded
-            Dim arg As New DriveAddedEventArgs With {
-                .DriveName = e.Name,
-                .VolumeLabel = e.VolumeLabel,
-                .AvailableFreeSpace = e.AvailableFreeSpace,
-                .TotalFreeSpace = e.TotalFreeSpace,
-                .TotalSize = e.TotalSize,
-                .DriveFormat = e.DriveFormat,
-                .DriveType = e.DriveType,
-                .IsReady = e.IsReady}
+            Dim arg As New DriveAddedEventArgs
+            If e.IsReady Then
+                With arg
+                    .DriveName = e.Name
+                    .VolumeLabel = e.VolumeLabel
+                    .AvailableFreeSpace = e.AvailableFreeSpace
+                    .TotalFreeSpace = e.TotalFreeSpace
+                    .TotalSize = e.TotalSize
+                    .DriveFormat = e.DriveFormat
+                    .DriveType = e.DriveType
+                    .IsReady = e.IsReady
+                End With
+            Else
+                With arg
+                    .DriveName = e.Name
+                    .VolumeLabel = $""
+                    .AvailableFreeSpace = 0
+                    .TotalFreeSpace = 0
+                    .TotalSize = 0
+                    .DriveFormat = $""
+                    .DriveType = e.DriveType
+                    .IsReady = e.IsReady
+                End With
+            End If
             RaiseEvent DriveAdded(Me, arg)
         End Sub
 
