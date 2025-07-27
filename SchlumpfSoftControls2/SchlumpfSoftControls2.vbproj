@@ -194,6 +194,7 @@
     <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ExplorerTreeViewControl.ExplorerTreeView.bmp" />
     <EmbeddedResource Include="Resources\FolderVideos.png" />
     <EmbeddedResource Include="Resources\FolderMusic.png" />
     <EmbeddedResource Include="Resources\FolderPictures.png" />

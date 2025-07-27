@@ -8,10 +8,10 @@
 ' *************************************************************************************************
 
 Imports System
-Imports System.Diagnostics
+Imports System.ComponentModel
+Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
-Imports Microsoft.VisualStudio.PlatformUI
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Namespace ExplorerTreeViewControl
@@ -20,6 +20,10 @@ Namespace ExplorerTreeViewControl
     ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
     ''' Ermöglicht die Auswahl von Laufwerken, speziellen Ordnern und Unterordnern in einer hierarchischen Baumstruktur.
     ''' </summary>
+    <ProvideToolboxControl("SchlumpfSoft Controls", False)>
+    <Description("Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.")>
+    <ToolboxItem(True)>
+    <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeViewControl.ExplorerTreeView.bmp")>
     Public Class ExplorerTreeView : Inherits UserControl
 
         Private _SelectedPath As String = String.Empty

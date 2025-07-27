@@ -173,6 +173,16 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property ExplorerTreeViewControl_ExplorerTreeView() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ExplorerTreeViewControl_ExplorerTreeView", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Folder() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Folder", resourceCulture)
