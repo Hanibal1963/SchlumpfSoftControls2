@@ -5,6 +5,10 @@
 '
 ' Kurzbeschreibung:
 ' 
+'
+' weitere Literatur:
+' https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
+'
 ' *************************************************************************************************
 
 Imports System
@@ -26,7 +30,13 @@ Namespace ExplorerTreeViewControl
     <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeViewControl.ExplorerTreeView.bmp")>
     Public Class ExplorerTreeView : Inherits UserControl
 
+#Region "Interne Variablen für die Eigenschaften"
+
         Private _SelectedPath As String = String.Empty
+
+#End Region
+
+#Region "Definition der öffentlichen Ereignisse"
 
         ''' <summary>
         ''' Ereignis, das ausgelöst wird, wenn sich der ausgewählte Pfad ändert.
@@ -36,19 +46,201 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
+        <Description("")>
+        <Browsable(True)>
         Public Event SelectedPathChanged(sender As Object, e As EventArgs)
 
+#End Region
+
+#Region "Öffentliche Eigenschaften"
+
         ''' <summary>
-        ''' Gibt den aktuell ausgewählten Pfad im TreeView zurück.
+        '''Gibt den vollständigen Pfad des ausgewählten Knotens zurück.
         ''' Diese Eigenschaft wird aktualisiert, wenn ein Knoten im TreeView ausgewählt wird.
         ''' Sie ermöglicht den Zugriff auf den Pfad des aktuell ausgewählten Knotens,
         ''' was für weitere Operationen wie das Öffnen oder Bearbeiten von Dateien und Ordnern nützlich ist.
         ''' </summary>
+        <Description("Gibt den vollständigen Pfad des ausgewählten Knotens zurück.")>
+        <Browsable(False)>
         Public ReadOnly Property SelectedPath As String
             Get
                 Return _SelectedPath
             End Get
         End Property
+
+        ''' <summary>
+        ''' Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.
+        ''' </summary>
+        <Category("Behavior")>
+        <Description("Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.")>
+        <Browsable(True)>
+        Public Property LineColor As Color
+            Get
+                Return TV.LineColor
+            End Get
+            Set(value As Color)
+                TV.LineColor = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gibt an, ob Linien zwischen den Knoten angezeigt werden.
+        ''' </summary>
+        <Category("Behavior")>
+        <Description("Gibt an, ob Linien zwischen den Knoten angezeigt werden.")>
+        <Browsable(True)>
+        Public Property ShowLines As Boolean
+            Get
+                Return TV.ShowLines
+            End Get
+            Set
+                TV.ShowLines = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Legt fest ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.
+        ''' </summary>
+        <Category("Behavior")>
+        <Description("Legt fest ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.")>
+        <Browsable(True)>
+        Public Property ShowPlusMinus As Boolean
+            Get
+                Return TV.ShowPlusMinus
+            End Get
+            Set
+                TV.ShowPlusMinus = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.
+        ''' </summary>
+        <Category("Behavior")>
+        <Description("Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.")>
+        <Browsable(True)>
+        Public Property ShowRootLines As Boolean
+            Get
+                Return TV.ShowRootLines
+            End Get
+            Set
+                TV.ShowRootLines = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.
+        ''' </summary>
+        <Category("Behavior")>
+        <Description("Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.")>
+        <Browsable(True)>
+        Public Property Indent As Integer
+            Get
+                Return TV.Indent
+            End Get
+            Set
+                TV.Indent = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.
+        ''' </summary>
+        <Category("Appearance")>
+        <Description("Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.")>
+        <Browsable(True)>
+        Public Property ItemHeight As Integer
+            Get
+                Return TV.ItemHeight
+            End Get
+            Set
+                TV.ItemHeight = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.
+        ''' </summary>
+        <Category("Appearance")>
+        <Description("Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.")>
+        <Browsable(True)>
+        Public Overrides Property BackColor As Color
+            Get
+                Return TV.BackColor
+            End Get
+            Set(value As Color)
+                TV.BackColor = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Legt die Schriftart des Textes im Steuerelement fest oder gibt diese zurück.
+        ''' </summary>
+        <Category("Appearance")>
+        <Description("Legt die Schriftart des Textes im Steuerelement fest oder gibt diese zurück.")>
+        <Browsable(True)>
+        Public Overrides Property Font As Font
+            Get
+                Return TV.Font
+            End Get
+            Set(value As Font)
+                TV.Font = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.
+        ''' </summary>
+        <Category("Appearance")>
+        <Description("Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.")>
+        <Browsable(True)>
+        Public Overrides Property ForeColor As Color
+            Get
+                Return MyBase.ForeColor
+            End Get
+            Set(value As Color)
+                MyBase.ForeColor = value
+            End Set
+        End Property
+
+#End Region
+
+#Region "ausgeblendete Eigenschaften"
+
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
+        <Browsable(False)>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage As Image
+            Get
+                Return MyBase.BackgroundImage
+            End Get
+            Set(value As Image)
+                MyBase.BackgroundImage = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
+        <Browsable(False)>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout As ImageLayout
+            Get
+                Return MyBase.BackgroundImageLayout
+            End Get
+            Set(value As ImageLayout)
+                MyBase.BackgroundImageLayout = value
+            End Set
+        End Property
+
+
+
+
+
+
+#End Region
 
         ''' <summary>
         ''' Konstruktor für das ExplorerTreeView-Steuerelement.
@@ -65,6 +257,8 @@ Namespace ExplorerTreeViewControl
             ' Setzt den Wurzelknoten des TreeViews
             SetRootNode()
         End Sub
+
+#Region "Interne Hilfsroutinen"
 
         ''' <summary>
         ''' Setzt den Wurzelknoten des TreeViews.
@@ -109,31 +303,24 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Behandelt das BeforeExpand-Ereignis des TreeViews.
+        ''' Setzt den aktuell ausgewählten Pfad basierend auf dem ausgewählten Knoten im TreeView.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="node"></param>
         ''' <remarks>
-        ''' Dieses Ereignis wird ausgelöst, bevor ein Knoten erweitert wird.
-        ''' Abhängig vom Typ des Knotens werden die entsprechenden Unterordner geladen.
-        ''' Die verschiedenen Knotentypen (ComputerNode, SpecialFolderNode, DriveNode, FolderNode) werden unterschieden,
-        ''' um die passenden Unterordner zu laden und anzuzeigen.
-        ''' 
-        ''' Das Ereignis wird verwendet, um die Struktur des TreeViews dynamisch zu erweitern,
-        ''' indem nur die Knoten geladen werden, die tatsächlich benötigt werden.
-        ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
-        ''' </remarks>
-        Private Sub TV_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV.BeforeExpand
-            Select Case True
-                ' Spezielle Ordner und Laufwerke laden
-                Case e.Node.GetType.Equals(GetType(ComputerNode)) : LoadRootKindNodes(e)
-                ' Unterordner der speziellen Ordner laden
-                Case e.Node.GetType.Equals(GetType(SpecialFolderNode)) : LoadSpecialFoldersSubfolders(e)
-                ' Unterordner des Laufwerks laden
-                Case e.Node.GetType.Equals(GetType(DriveNode)) : LoadDriveSubfolders(e)
-                ' Unterordner des Ordners laden
-                Case e.Node.GetType.Equals(GetType(FolderNode)) : LoadFoldersSubfolders(e)
-            End Select
+        ''' Diese Methode wird aufgerufen, wenn ein Knoten im TreeView ausgewählt wird.
+        ''' Sie aktualisiert die _SelectedPath-Eigenschaft basierend auf dem Typ des ausgewählten Knotens.
+        ''' Dadurch wird sichergestellt, dass der aktuell ausgewählte Pfad immer korrekt ist und andere Teile der Anwendung darauf reagieren können.
+        ''' </remarks
+        Private Sub SetSelectedPath(node As TreeNode)
+            If TV.SelectedNode IsNot Nothing Then
+                Select Case TV.SelectedNode.GetType
+                    Case GetType(ComputerNode) : _SelectedPath = String.Empty
+                    Case GetType(DriveNode) : _SelectedPath = CType(TV.SelectedNode, DriveNode).FullPath
+                    Case GetType(SpecialFolderNode) : _SelectedPath = CType(TV.SelectedNode, SpecialFolderNode).FullPath
+                    Case GetType(FolderNode) : _SelectedPath = CType(TV.SelectedNode, FolderNode).FullPath
+                End Select
+            End If
+            RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
         End Sub
 
         ''' <summary>
@@ -218,25 +405,36 @@ Namespace ExplorerTreeViewControl
             CType(e.Node, ComputerNode).LoadDrives()
         End Sub
 
+#End Region
+
+#Region "Ereignisbehandlung TreeView"
+
         ''' <summary>
-        ''' Setzt den aktuell ausgewählten Pfad basierend auf dem ausgewählten Knoten im TreeView.
+        ''' Behandelt das BeforeExpand-Ereignis des TreeViews.
         ''' </summary>
-        ''' <param name="node"></param>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn ein Knoten im TreeView ausgewählt wird.
-        ''' Sie aktualisiert die _SelectedPath-Eigenschaft basierend auf dem Typ des ausgewählten Knotens.
-        ''' Dadurch wird sichergestellt, dass der aktuell ausgewählte Pfad immer korrekt ist und andere Teile der Anwendung darauf reagieren können.
-        ''' </remarks
-        Private Sub SetSelectedPath(node As TreeNode)
-            If TV.SelectedNode IsNot Nothing Then
-                Select Case TV.SelectedNode.GetType
-                    Case GetType(ComputerNode) : _SelectedPath = String.Empty
-                    Case GetType(DriveNode) : _SelectedPath = CType(TV.SelectedNode, DriveNode).FullPath
-                    Case GetType(SpecialFolderNode) : _SelectedPath = CType(TV.SelectedNode, SpecialFolderNode).FullPath
-                    Case GetType(FolderNode) : _SelectedPath = CType(TV.SelectedNode, FolderNode).FullPath
-                End Select
-            End If
-            RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
+        ''' Dieses Ereignis wird ausgelöst, bevor ein Knoten erweitert wird.
+        ''' Abhängig vom Typ des Knotens werden die entsprechenden Unterordner geladen.
+        ''' Die verschiedenen Knotentypen (ComputerNode, SpecialFolderNode, DriveNode, FolderNode) werden unterschieden,
+        ''' um die passenden Unterordner zu laden und anzuzeigen.
+        ''' 
+        ''' Das Ereignis wird verwendet, um die Struktur des TreeViews dynamisch zu erweitern,
+        ''' indem nur die Knoten geladen werden, die tatsächlich benötigt werden.
+        ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
+        ''' </remarks>
+        Private Sub TV_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV.BeforeExpand
+            Select Case True
+                ' Spezielle Ordner und Laufwerke laden
+                Case e.Node.GetType.Equals(GetType(ComputerNode)) : LoadRootKindNodes(e)
+                ' Unterordner der speziellen Ordner laden
+                Case e.Node.GetType.Equals(GetType(SpecialFolderNode)) : LoadSpecialFoldersSubfolders(e)
+                ' Unterordner des Laufwerks laden
+                Case e.Node.GetType.Equals(GetType(DriveNode)) : LoadDriveSubfolders(e)
+                ' Unterordner des Ordners laden
+                Case e.Node.GetType.Equals(GetType(FolderNode)) : LoadFoldersSubfolders(e)
+            End Select
         End Sub
 
         ''' <summary>
@@ -252,6 +450,10 @@ Namespace ExplorerTreeViewControl
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
             SetSelectedPath(e.Node)
         End Sub
+
+#End Region
+
+#Region "Ereiegnisbehandlung DriveWatcher"
 
         ''' <summary>
         ''' Wird ausgeführt wenn ein neues Laufwerk hinzugefügt wurde
@@ -298,6 +500,8 @@ Namespace ExplorerTreeViewControl
                 End If
             Next
         End Sub
+
+#End Region
 
     End Class
 

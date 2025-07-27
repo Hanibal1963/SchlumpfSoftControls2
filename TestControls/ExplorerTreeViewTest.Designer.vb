@@ -27,8 +27,12 @@ Partial Class ExplorerTreeViewTest
         '
         'ExplorerTreeView1
         '
+        Me.ExplorerTreeView1.LineColor = System.Drawing.Color.Black
         Me.ExplorerTreeView1.Location = New System.Drawing.Point(43, 54)
         Me.ExplorerTreeView1.Name = "ExplorerTreeView1"
+        Me.ExplorerTreeView1.ShowLines = True
+        Me.ExplorerTreeView1.ShowPlusMinus = True
+        Me.ExplorerTreeView1.ShowRootLines = True
         Me.ExplorerTreeView1.Size = New System.Drawing.Size(327, 401)
         Me.ExplorerTreeView1.TabIndex = 0
         '
