@@ -23,35 +23,47 @@ Partial Class ExplorerTreeViewTest
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.ExplorerTreeView1 = New SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'ExplorerTreeView1
         '
-        Me.ExplorerTreeView1.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.ExplorerTreeView1.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ExplorerTreeView1.ForeColor = System.Drawing.SystemColors.Info
+        Me.ExplorerTreeView1.BackColor = System.Drawing.SystemColors.Window
+        Me.ExplorerTreeView1.Font = New System.Drawing.Font("Courier New", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ExplorerTreeView1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.ExplorerTreeView1.Indent = 19
         Me.ExplorerTreeView1.ItemHeight = 16
         Me.ExplorerTreeView1.LineColor = System.Drawing.Color.Black
-        Me.ExplorerTreeView1.Location = New System.Drawing.Point(35, 37)
+        Me.ExplorerTreeView1.Location = New System.Drawing.Point(19, 16)
         Me.ExplorerTreeView1.Margin = New System.Windows.Forms.Padding(2, 5, 2, 5)
         Me.ExplorerTreeView1.Name = "ExplorerTreeView1"
         Me.ExplorerTreeView1.ShowLines = True
         Me.ExplorerTreeView1.ShowPlusMinus = True
         Me.ExplorerTreeView1.ShowRootLines = True
-        Me.ExplorerTreeView1.Size = New System.Drawing.Size(312, 423)
+        Me.ExplorerTreeView1.Size = New System.Drawing.Size(322, 410)
         Me.ExplorerTreeView1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoEllipsis = True
+        Me.Label1.Location = New System.Drawing.Point(16, 442)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(538, 57)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Label1"
         '
         'ExplorerTreeViewTest
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ExplorerTreeView1)
         Me.Name = "ExplorerTreeViewTest"
-        Me.Size = New System.Drawing.Size(394, 516)
+        Me.Size = New System.Drawing.Size(576, 516)
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents ExplorerTreeView1 As SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView
+    Friend WithEvents Label1 As Label
 End Class
