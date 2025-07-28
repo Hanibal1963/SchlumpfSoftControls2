@@ -33,9 +33,7 @@ Namespace WizardControl
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(WizardControl.Wizard), "WizardControl.Wizard.bmp")>
     <Designer(GetType(WizardControl.WizardDesigner))>
-    Public Class Wizard
-
-        Inherits UserControl
+    Public Class Wizard : Inherits UserControl
 
         Friend _ImageHeader As Image
         Friend _ImageWelcome As Image

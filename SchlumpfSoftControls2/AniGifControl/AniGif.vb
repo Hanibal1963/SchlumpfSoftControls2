@@ -30,9 +30,8 @@ Namespace AniGifControl
     <Description("Control zum Anzeigen von animierten Grafiken.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGifControl.AniGif.bmp")>
-    Public Class AniGif
+    Public Class AniGif : Inherits UserControl
 
-        Inherits UserControl
         Implements IDisposable
 
         Private WithEvents Timer As Timer

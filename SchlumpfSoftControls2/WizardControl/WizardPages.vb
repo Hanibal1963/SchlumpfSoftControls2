@@ -15,9 +15,7 @@ Namespace WizardControl
     ''' Definiert eine Seite des Controls
     ''' </summary>
     <ToolboxItem(False)>
-    Public Class WizardPage
-
-        Inherits Panel
+    Public Class WizardPage : Inherits Panel
 
         Private _Style As PageStyle = PageStyle.Standard
         Private _Title As String = String.Empty

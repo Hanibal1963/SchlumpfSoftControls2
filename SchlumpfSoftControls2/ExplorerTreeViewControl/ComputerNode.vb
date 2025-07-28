@@ -23,20 +23,20 @@ Namespace ExplorerTreeViewControl
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
-            Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
-            Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+            Dim unused = Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
+            Dim unused1 = Nodes.Add(New TreeNode($"Laufwerke laden ..."))
         End Sub
 
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
         Friend Sub LoadSpecialFolders()
-            Nodes.Add(New SpecialFolderNode("Desktop"))
-            Nodes.Add(New SpecialFolderNode("Dokumente"))
-            Nodes.Add(New SpecialFolderNode("Downloads"))
-            Nodes.Add(New SpecialFolderNode("Musik"))
-            Nodes.Add(New SpecialFolderNode("Bilder"))
-            Nodes.Add(New SpecialFolderNode("Videos"))
+            Dim unused = Nodes.Add(New SpecialFolderNode("Desktop"))
+            Dim unused1 = Nodes.Add(New SpecialFolderNode("Dokumente"))
+            Dim unused2 = Nodes.Add(New SpecialFolderNode("Downloads"))
+            Dim unused3 = Nodes.Add(New SpecialFolderNode("Musik"))
+            Dim unused4 = Nodes.Add(New SpecialFolderNode("Bilder"))
+            Dim unused5 = Nodes.Add(New SpecialFolderNode("Videos"))
         End Sub
 
         ''' <summary>
@@ -45,7 +45,7 @@ Namespace ExplorerTreeViewControl
         Friend Sub LoadDrives()
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
                 Dim driveNode As New DriveNode(drive)
-                Nodes.Add(driveNode)
+                Dim unused = Nodes.Add(driveNode)
             Next
         End Sub
 

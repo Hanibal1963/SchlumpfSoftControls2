@@ -29,9 +29,7 @@ Namespace SevenSegmentControl
     <Description("ClassDescriptionSevSegMultiDigit")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "SevenSegmentControl.MultiDigit.bmp")>
-    Public Class MultiDigit
-
-        Inherits Control
+    Public Class MultiDigit : Inherits Control
 
 #Region "Eigenschaftsvariablen"
 

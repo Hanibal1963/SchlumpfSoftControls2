@@ -31,9 +31,7 @@ Namespace DriveWatcherControl
     <ToolboxItem(True)>
     <Description("Steuerelement um die Laufwerke zu überwachen.")>
     <ToolboxBitmap(GetType(DriveWatcherControl.DriveWatcher), "DriveWatcherControl.DriveWatcher.bmp")>
-    Public Class DriveWatcher
-
-        Inherits Component
+    Public Class DriveWatcher : Inherits Component
 
         Private ReadOnly components As IContainer ' Wird vom Komponenten-Designer benötigt.
         Private WithEvents NatForm As New NativeForm ' Internes Formular welches die Meldungen empfängt.

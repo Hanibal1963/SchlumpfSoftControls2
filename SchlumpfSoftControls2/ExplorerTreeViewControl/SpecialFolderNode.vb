@@ -36,7 +36,7 @@ Namespace ExplorerTreeViewControl
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Dim unused = Nodes.Add(New TreeNode($"Ordner laden ..."))
         End Sub
 
         ''' <summary>
@@ -45,7 +45,7 @@ Namespace ExplorerTreeViewControl
         Friend Sub LoadSubfolders()
             Try
                 For Each dir As String In IO.Directory.GetDirectories(FullPath)
-                    Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+                    Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
                 Next
             Catch ex As UnauthorizedAccessException
                 ' Zugriff verweigert – Ordner wird übersprungen

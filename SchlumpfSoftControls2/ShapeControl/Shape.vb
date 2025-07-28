@@ -28,9 +28,7 @@ Namespace ShapeControl
     <Description("Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(ShapeControl.Shape), "ShapeControl.Shape.bmp")>
-    Public Class Shape
-
-        Inherits Control
+    Public Class Shape : Inherits Control
 
 #Region "interne Eigenschftsvariablen"
 

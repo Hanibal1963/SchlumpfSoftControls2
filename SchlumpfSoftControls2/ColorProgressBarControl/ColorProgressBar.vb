@@ -29,9 +29,7 @@ Namespace ColorProgressBarControl
     <Description("Control zum Anzeigen eines farbigen Fortschrittbalkens.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(ColorProgressBarControl.ColorProgressBar), "ColorProgressBarControl.ColorProgressBar.bmp")>
-    Public Class ColorProgressBar
-
-        Inherits UserControl
+    Public Class ColorProgressBar : Inherits UserControl
 
 #Region "Interne Eigenschaftsvariablen"
 

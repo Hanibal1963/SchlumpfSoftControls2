@@ -27,9 +27,7 @@ Namespace TransparentLabelControl
     <Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(TransparentLabelControl.TransparentLabel), "TransparentLabelControl.TransparentLabel.bmp")>
-    Public Class TransparentLabel
-
-        Inherits Label
+    Public Class TransparentLabel : Inherits Label
 
         Private components As IContainer
 

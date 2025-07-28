@@ -31,9 +31,7 @@ Namespace SevenSegmentControl
     <Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(SevenSegmentControl.SingleDigit), "SevenSegmentControl.SingleDigit.bmp")>
-    Public Class SingleDigit
-
-        Inherits Control
+    Public Class SingleDigit : Inherits Control
 
 #Region "interne Eigenschaftsvariablen"
 

@@ -1,19 +1,13 @@
-﻿Public Class ExplorerTreeViewTest
+﻿
 
-    Public Sub New()
-
-        ' Dieser Aufruf ist für den Designer erforderlich.
-        InitializeComponent()
-
-        ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-
-    End Sub
-
+Public Class ExplorerTreeViewTest
 
     Private Sub ExplorerTreeView1_SelectedPathChanged(sender As Object, e As EventArgs) Handles ExplorerTreeView1.SelectedPathChanged
+
+        Dim selpath As String = CType(sender, SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView).SelectedPath
+
 #If DEBUG Then
-        Debug.Print($"aktuell ausgewählter Pfad:{vbCrLf}" &
-                    $"{CType(sender, SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView).SelectedPath}")
+        Debug.Print($"ausgewählter Pfad: {selpath}")
 #End If
 
     End Sub

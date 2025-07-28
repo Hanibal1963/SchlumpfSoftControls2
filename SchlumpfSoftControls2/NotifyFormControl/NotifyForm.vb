@@ -30,9 +30,7 @@ Namespace NotifyFormControl
     <Description("Control zum anzeigen von Benachrichtigungsfenstern.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(NotifyFormControl.NotifyForm), "NotifyFormControl.NotifyForm.bmp")>
-    Public Class NotifyForm
-
-        Inherits Component
+    Public Class NotifyForm : Inherits Component
 
 #Region "Interne Eigenschaftsvariablen"
 

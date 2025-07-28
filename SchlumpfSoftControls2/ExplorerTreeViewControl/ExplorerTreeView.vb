@@ -166,25 +166,11 @@ Namespace ExplorerTreeViewControl
         <Browsable(True)>
         Public Overrides Property BackColor As Color
             Get
-                Return TV.BackColor
+                Return MyBase.BackColor
             End Get
             Set(value As Color)
+                MyBase.BackColor = value
                 TV.BackColor = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Legt die Schriftart des Textes im Steuerelement fest oder gibt diese zurück.
-        ''' </summary>
-        <Category("Appearance")>
-        <Description("Legt die Schriftart des Textes im Steuerelement fest oder gibt diese zurück.")>
-        <Browsable(True)>
-        Public Overrides Property Font As Font
-            Get
-                Return TV.Font
-            End Get
-            Set(value As Font)
-                TV.Font = value
             End Set
         End Property
 
@@ -200,6 +186,7 @@ Namespace ExplorerTreeViewControl
             End Get
             Set(value As Color)
                 MyBase.ForeColor = value
+                TV.ForeColor = value
             End Set
         End Property
 
@@ -234,11 +221,6 @@ Namespace ExplorerTreeViewControl
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
-
-
-
-
-
 
 #End Region
 
