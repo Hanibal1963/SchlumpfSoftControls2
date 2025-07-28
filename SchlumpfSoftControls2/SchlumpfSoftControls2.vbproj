@@ -211,9 +211,10 @@
     <EmbeddedResource Include="Resources\DriveNetwork.png" />
     <EmbeddedResource Include="Resources\DriveCDRom.png" />
     <EmbeddedResource Include="Resources\DriveFixed.png" />
-    <EmbeddedResource Include="Resources\Icon.jpg">
+    <Content Include="Icon.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
