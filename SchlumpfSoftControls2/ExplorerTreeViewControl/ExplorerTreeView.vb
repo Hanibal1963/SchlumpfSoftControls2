@@ -285,25 +285,21 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Setzt den aktuell ausgewählten Pfad basierend auf dem ausgewählten Knoten im TreeView.
+        ''' Ermittelt den Pfad basierend auf dem ausgewählten Knoten im TreeView.
         ''' </summary>
         ''' <param name="node"></param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn ein Knoten im TreeView ausgewählt wird.
-        ''' Sie aktualisiert die _SelectedPath-Eigenschaft basierend auf dem Typ des ausgewählten Knotens.
-        ''' Dadurch wird sichergestellt, dass der aktuell ausgewählte Pfad immer korrekt ist und andere Teile der Anwendung darauf reagieren können.
-        ''' </remarks
-        Private Sub SetSelectedPath(node As TreeNode)
+        Private Function GetFullPath(node As TreeNode) As String
+            Dim result As String = String.Empty
             If TV.SelectedNode IsNot Nothing Then
                 Select Case TV.SelectedNode.GetType
-                    Case GetType(ComputerNode) : _SelectedPath = String.Empty
-                    Case GetType(DriveNode) : _SelectedPath = CType(TV.SelectedNode, DriveNode).FullPath
-                    Case GetType(SpecialFolderNode) : _SelectedPath = CType(TV.SelectedNode, SpecialFolderNode).FullPath
-                    Case GetType(FolderNode) : _SelectedPath = CType(TV.SelectedNode, FolderNode).FullPath
+                    Case GetType(ComputerNode) : result = String.Empty
+                    Case GetType(DriveNode) : result = CType(TV.SelectedNode, DriveNode).FullPath
+                    Case GetType(SpecialFolderNode) : result = CType(TV.SelectedNode, SpecialFolderNode).FullPath
+                    Case GetType(FolderNode) : result = CType(TV.SelectedNode, FolderNode).FullPath
                 End Select
             End If
-            RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
-        End Sub
+            Return result
+        End Function
 
         ''' <summary>
         ''' Lädt die Unterordner eines Ordners, wenn der Knoten erweitert wird.
@@ -312,7 +308,6 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Diese Methode wird aufgerufen, wenn ein Ordnerknoten im TreeView erweitert wird.
         ''' Sie leert die vorhandenen Knoten und lädt die Unterordner des Ordners neu.
-        ''' 
         ''' Diese Methode ist entscheidend für die Anzeige der Unterordner eines Ordners im TreeView.
         ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer einen Ordner öffnet.
         ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
@@ -333,7 +328,6 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Diese Methode wird aufgerufen, wenn ein Laufwerksknoten im TreeView erweitert wird.
         ''' Sie leert die vorhandenen Knoten und lädt die Unterordner des Laufwerks neu.
-        ''' 
         ''' Diese Methode ist entscheidend für die Anzeige der Unterordner von Laufwerken im TreeView.
         ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer ein Laufwerk öffnet.
         ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
@@ -392,16 +386,14 @@ Namespace ExplorerTreeViewControl
 #Region "Ereignisbehandlung TreeView"
 
         ''' <summary>
-        ''' Behandelt das BeforeExpand-Ereignis des TreeViews.
+        ''' Wird ausgelöst, bevor ein Knoten erweitert wird.
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         ''' <remarks>
-        ''' Dieses Ereignis wird ausgelöst, bevor ein Knoten erweitert wird.
         ''' Abhängig vom Typ des Knotens werden die entsprechenden Unterordner geladen.
         ''' Die verschiedenen Knotentypen (ComputerNode, SpecialFolderNode, DriveNode, FolderNode) werden unterschieden,
         ''' um die passenden Unterordner zu laden und anzuzeigen.
-        ''' 
         ''' Das Ereignis wird verwendet, um die Struktur des TreeViews dynamisch zu erweitern,
         ''' indem nur die Knoten geladen werden, die tatsächlich benötigt werden.
         ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
@@ -420,17 +412,27 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
+        ''' Tritt ein, wenn der Strukturknoten erweitert wurde.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
+            'TODO: Code für Verzeichnisüberwachung einfügen
+        End Sub
+
+        ''' <summary>
         ''' Behandelt das AfterSelect-Ereignis des TreeViews.
         ''' Dieses Ereignis wird ausgelöst, wenn ein Knoten im TreeView ausgewählt wird.
         ''' Es aktualisiert den aktuell ausgewählten Pfad basierend auf dem ausgewählten Knoten.
-        ''' 
         ''' Diese Methode ist wichtig, um sicherzustellen, dass der aktuell ausgewählte Pfad immer korrekt ist,
         ''' und ermöglicht anderen Teilen der Anwendung, auf Änderungen im ausgewählten Pfad zu reagieren.
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
-            SetSelectedPath(e.Node)
+            ' Pfad des ausgewählten node ermitteln und Ereignis auslösen
+            _SelectedPath = GetFullPath(e.Node)
+            RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
         End Sub
 
 #End Region
