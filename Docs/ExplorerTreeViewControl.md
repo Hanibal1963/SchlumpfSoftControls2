@@ -48,7 +48,7 @@ Diese Steuerelement habe ich für ein anderes Projekt entwickelt um dessen Code 
 
 ## TODO
 
-
+- Eine Funktion implementieren die bei Änderungen in der Ordnerstruktur die Ansicht des Controls aktualisiert.
 
 ---
 
