@@ -5,6 +5,8 @@
 '
 ' Kurzbeschreibung:
 ' 
+' Repräsentiert einen Knoten für ein Laufwerk im ExplorerTreeViewControl
+'
 ' *************************************************************************************************
 
 Imports System

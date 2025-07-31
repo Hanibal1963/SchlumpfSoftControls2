@@ -5,6 +5,8 @@
 '
 ' Kurzbeschreibung:
 ' 
+' Stellt einen TreeNode für einen speziellen Windows-Ordner (z.B. Desktop, Dokumente, Downloads) dar.
+'
 ' *************************************************************************************************
 
 Imports System

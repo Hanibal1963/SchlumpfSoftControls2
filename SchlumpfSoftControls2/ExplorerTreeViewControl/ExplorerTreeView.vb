@@ -5,9 +5,7 @@
 '
 ' Kurzbeschreibung:
 ' 
-'
-' weitere Literatur:
-' https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
+' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
 '
 ' *************************************************************************************************
 
@@ -19,6 +17,8 @@ Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Namespace ExplorerTreeViewControl
+
+    ' CategoryAttribute Klasse: https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 
     ''' <summary>
     ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.

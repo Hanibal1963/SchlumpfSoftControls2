@@ -5,6 +5,8 @@
 '
 ' Kurzbeschreibung:
 ' 
+' Repräsentiert den Knoten für "Dieser Computer" im ExplorerTreeViewControl.
+'
 ' *************************************************************************************************
 
 Imports System

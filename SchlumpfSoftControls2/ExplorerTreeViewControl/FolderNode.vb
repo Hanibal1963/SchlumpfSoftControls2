@@ -5,6 +5,8 @@
 '
 ' Kurzbeschreibung:
 ' 
+' Stellt einen Knoten für einen Ordner im ExplorerTreeViewControl dar.
+'
 ' *************************************************************************************************
 
 Imports System
