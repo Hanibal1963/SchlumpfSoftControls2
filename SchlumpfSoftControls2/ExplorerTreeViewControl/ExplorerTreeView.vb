@@ -10,9 +10,12 @@
 ' *************************************************************************************************
 
 Imports System
+Imports System.Collections.Generic
 Imports System.ComponentModel
+Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
+Imports System.Linq
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
@@ -30,9 +33,10 @@ Namespace ExplorerTreeViewControl
     <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeViewControl.ExplorerTreeView.bmp")>
     Public Class ExplorerTreeView : Inherits UserControl
 
-#Region "Interne Variablen für die Eigenschaften"
+#Region "Interne Variablen"
 
         Private _SelectedPath As String = String.Empty
+        Private _FileSystemWatchers As New Dictionary(Of String, FileSystemWatcher)
 
 #End Region
 
@@ -285,19 +289,17 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Ermittelt den Pfad basierend auf dem ausgewählten Knoten im TreeView.
+        ''' Ermittelt den Verzeichnispfad basierend auf dem ausgewählten Knoten im TreeView.
         ''' </summary>
         ''' <param name="node"></param>
-        Private Function GetFullPath(node As TreeNode) As String
+        Private Function GetPath(node As TreeNode) As String
             Dim result As String = String.Empty
-            If TV.SelectedNode IsNot Nothing Then
-                Select Case TV.SelectedNode.GetType
-                    Case GetType(ComputerNode) : result = String.Empty
-                    Case GetType(DriveNode) : result = CType(TV.SelectedNode, DriveNode).FullPath
-                    Case GetType(SpecialFolderNode) : result = CType(TV.SelectedNode, SpecialFolderNode).FullPath
-                    Case GetType(FolderNode) : result = CType(TV.SelectedNode, FolderNode).FullPath
-                End Select
-            End If
+            Select Case node.GetType
+                Case GetType(ComputerNode) : result = String.Empty ' "Dieser Computer" hat keinen Pfad
+                Case GetType(DriveNode) : result = CType(node, DriveNode).FullPath ' Gibt den Laufwerksbuchstaben zuück
+                Case GetType(SpecialFolderNode) : result = CType(node, SpecialFolderNode).FullPath ' Gibt den Pfad für Spezialordner zurück
+                Case GetType(FolderNode) : result = CType(node, FolderNode).FullPath ' Gibt den Pfad für alle anderen ordner zurück
+            End Select
             Return result
         End Function
 
@@ -381,6 +383,93 @@ Namespace ExplorerTreeViewControl
             CType(e.Node, ComputerNode).LoadDrives()
         End Sub
 
+        ''' <summary>
+        ''' Erstellt einen FileSystemWatcher für den angegebenen Pfad, um Änderungen zu überwachen
+        ''' </summary>
+        ''' <param name="path">Der zu überwachende Verzeichnispfad</param>
+        Private Sub CreateFileSystemWatcher(Path As String)
+            ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
+            If String.IsNullOrEmpty(Path) OrElse Not Directory.Exists(Path) Then Return
+            ' Prüfen, ob bereits ein Watcher für diesen Pfad existiert
+            If _FileSystemWatchers.ContainsKey(Path) Then Return
+            Try
+                ' Neuen FileSystemWatcher erstellen
+                Dim watcher As New FileSystemWatcher(Path) With {
+                    .NotifyFilter = NotifyFilters.DirectoryName,' Verzeichnisse überwachen
+                    .IncludeSubdirectories = False ' Nur das aktuelle Verzeichnis überwachen
+                    }
+                ' Event-Handler hinzufügen
+                AddHandler watcher.Created, AddressOf OnDirectoryChanged
+                AddHandler watcher.Deleted, AddressOf OnDirectoryChanged
+                AddHandler watcher.Renamed, AddressOf OnDirectoryChanged
+                ' Watcher in die Sammlung einfügen
+                _FileSystemWatchers.Add(Path, watcher)
+                ' Watcher aktivieren
+                watcher.EnableRaisingEvents = True
+            Catch ex As Exception
+                ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
+                Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
+            End Try
+        End Sub
+
+        ''' <summary>
+        ''' Entfernt alle FileSystemWatcher für das angegebene Verzeichnis und alle Unterverzeichnisse.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        Private Sub RemoveFileSystemWatchers(Path As String)
+            ' Sammle alle zu entfernenden Pfade (das Verzeichnis und alle Unterverzeichnisse)
+            Dim toRemove As New List(Of String)
+            For Each watcherPath In _FileSystemWatchers.Keys
+                ' Prüfe, ob watcherPath gleich Path oder ein Unterverzeichnis davon ist
+                If watcherPath.Equals(Path, StringComparison.OrdinalIgnoreCase) OrElse
+                watcherPath.StartsWith(Path & IO.Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) Then
+                    toRemove.Add(watcherPath)
+                End If
+            Next
+            ' Entferne alle gefundenen Watcher
+            For Each watcherPath In toRemove
+                ' Watcher deaktivieren
+                Dim watcher = _FileSystemWatchers(watcherPath)
+                watcher.EnableRaisingEvents = False
+                ' Event-Handler entfernen
+                RemoveHandler watcher.Created, AddressOf OnDirectoryChanged
+                RemoveHandler watcher.Deleted, AddressOf OnDirectoryChanged
+                RemoveHandler watcher.Renamed, AddressOf OnDirectoryChanged
+                ' Ressourcen freigeben
+                watcher.Dispose()
+                ' Watcher aus der Sammlung entfernen
+                _FileSystemWatchers.Remove(watcherPath)
+            Next
+        End Sub
+
+#End Region
+
+#Region "Ereignisbehandlung FileSystemWatcher"
+
+        ''' <summary>
+        ''' Wird aufgerufen wenn sich der Inhalt eines Verzeichnisses geändert hat.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub OnDirectoryChanged(sender As Object, e As FileSystemEventArgs)
+
+
+
+#If DEBUG Then
+            Debug.Print($"Sender Pfad:{CType(sender, FileSystemWatcher).Path}")
+            Select Case e.ChangeType
+                Case WatcherChangeTypes.Created : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde hinzugefügt.")
+                Case WatcherChangeTypes.Deleted : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde entfernt.")
+                Case WatcherChangeTypes.Renamed : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde umbenannt.")
+            End Select
+#End If
+
+
+
+
+
+        End Sub
+
 #End Region
 
 #Region "Ereignisbehandlung TreeView"
@@ -417,7 +506,20 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
-            'TODO: Code für Verzeichnisüberwachung einfügen
+            ' einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
+            Dim path As String = GetPath(e.Node)
+            CreateFileSystemWatcher(path)
+        End Sub
+
+        ''' <summary>
+        ''' Tritt ein, wenn der Strukturknoten reduziert wurde.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub TV_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TV.AfterCollapse
+            ' den FilesystemWatcher für das geschlossene Verzeichnis un alle eventuell geöffnete Unterverzeichnisse entfernen
+            Dim path As String = GetPath(e.Node)
+            RemoveFileSystemWatchers(path)
         End Sub
 
         ''' <summary>
@@ -431,7 +533,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e"></param>
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
             ' Pfad des ausgewählten node ermitteln und Ereignis auslösen
-            _SelectedPath = GetFullPath(e.Node)
+            _SelectedPath = GetPath(e.Node)
             RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
         End Sub
 
