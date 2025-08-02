@@ -25,8 +25,6 @@ Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Namespace ExplorerTreeViewControl
 
-    ' CategoryAttribute Klasse: https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
-
     ''' <summary>
     ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
     ''' Ermöglicht die Auswahl von Laufwerken, speziellen Ordnern und Unterordnern in einer hierarchischen Baumstruktur.
@@ -43,6 +41,7 @@ Namespace ExplorerTreeViewControl
         ''' Zwischenspeicher für den Pfad des aktuell ausgewähten Knotens.
         ''' </summary>
         Private _SelectedPath As String = String.Empty
+
         ''' <summary>
         ''' Liste der zu überwachenden Verzeichnisse.
         ''' </summary>
@@ -69,7 +68,7 @@ Namespace ExplorerTreeViewControl
 #Region "Öffentliche Eigenschaften"
 
         ''' <summary>
-        '''Gibt den vollständigen Pfad des ausgewählten Knotens zurück.
+        ''' Gibt den vollständigen Pfad des ausgewählten Knotens zurück.
         ''' Diese Eigenschaft wird aktualisiert, wenn ein Knoten im TreeView ausgewählt wird.
         ''' Sie ermöglicht den Zugriff auf den Pfad des aktuell ausgewählten Knotens,
         ''' was für weitere Operationen wie das Öffnen oder Bearbeiten von Dateien und Ordnern nützlich ist.
@@ -266,12 +265,9 @@ Namespace ExplorerTreeViewControl
         ''' Außerdem wird der Wurzelknoten des TreeViews gesetzt, um die Struktur des Steuerelements zu definieren.
         ''' </remarks>
         Public Sub New()
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            InitializeComponent()
-            ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-            LoadImages()
-            ' Setzt den Wurzelknoten des TreeViews
-            SetRootNode()
+            InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            LoadImages() ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
+            SetRootNode() ' Setzt den Wurzelknoten des TreeViews
         End Sub
 
 #End Region
@@ -324,15 +320,15 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt den Verzeichnispfad basierend auf dem ausgewählten Knoten im TreeView.
         ''' </summary>
         ''' <param name="node"></param>
-        Private Function GetPath(node As TreeNode) As String
-            Dim result As String = String.Empty
-            Select Case node.GetType
-                Case GetType(ComputerNode) : result = String.Empty ' "Dieser Computer" hat keinen Pfad
-                Case GetType(DriveNode) : result = CType(node, DriveNode).FullPath ' Gibt den Laufwerksbuchstaben zuück
-                Case GetType(SpecialFolderNode) : result = CType(node, SpecialFolderNode).FullPath ' Gibt den Pfad für Spezialordner zurück
-                Case GetType(FolderNode) : result = CType(node, FolderNode).FullPath ' Gibt den Pfad für alle anderen ordner zurück
+        Private Function GetDirectoryPath(node As TreeNode) As String
+            Dim path As String = String.Empty
+            Select Case True
+                Case TypeOf node Is ComputerNode : path = String.Empty ' "Dieser Computer" hat keinen Pfad
+                Case TypeOf node Is DriveNode : path = CType(node, DriveNode).FullPath ' Gibt den Laufwerksbuchstaben zuück
+                Case TypeOf node Is SpecialFolderNode : path = CType(node, SpecialFolderNode).FullPath ' Gibt den Pfad für Spezialordner zurück
+                Case TypeOf node Is FolderNode : path = CType(node, FolderNode).FullPath ' Gibt den Pfad für alle anderen Ordner zurück
             End Select
-            Return result
+            Return path
         End Function
 
         ''' <summary>
@@ -384,13 +380,6 @@ Namespace ExplorerTreeViewControl
             Dim spezialfoldernode As SpecialFolderNode = CType(Node, SpecialFolderNode) ' Typumwandlung des Knotens in SpecialFolderNode
             spezialfoldernode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
             spezialfoldernode.LoadSubfolders() ' Laden der Unterordner des speziellen Ordners
-
-            '' Typumwandlung des Knotens in SpecialFolderNode
-            'Dim node As SpecialFolderNode = CType(e.Node, SpecialFolderNode)
-            '' Leeren der Knoten, um sie neu zu laden
-            'node.Nodes.Clear()
-            '' Laden der Unterordner des speziellen Ordners
-            'node.LoadSubfolders()
         End Sub
 
         ''' <summary>
@@ -409,13 +398,6 @@ Namespace ExplorerTreeViewControl
             computernode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
             computernode.LoadSpecialFolders() ' Laden der speziellen Ordner
             computernode.LoadDrives() ' Laden der Laufwerke
-
-            '' Leeren der Knoten, um sie neu zu laden
-            'CType(e.Node, ComputerNode).Nodes.Clear()
-            '' Laden der speziellen Ordner
-            'CType(e.Node, ComputerNode).LoadSpecialFolders()
-            '' Laden der Laufwerke
-            'CType(e.Node, ComputerNode).LoadDrives()
         End Sub
 
         ''' <summary>
@@ -423,27 +405,21 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="FolderPath">Der zu überwachende Verzeichnispfad</param>
         Private Sub CreateFileSystemWatcher(FolderPath As String)
-            ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
-            If String.IsNullOrEmpty(FolderPath) OrElse Not Directory.Exists(FolderPath) Then Return
-            ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
-            If _FileSystemWatchers.ContainsKey(FolderPath) Then Return
+            If String.IsNullOrEmpty(FolderPath) OrElse Not Directory.Exists(FolderPath) Then Return ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
+            If _FileSystemWatchers.ContainsKey(FolderPath) Then Return ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
             Try
                 ' Neuen FileSystemWatcher erstellen
                 Dim FSW As New FileSystemWatcher(FolderPath) With {
                     .NotifyFilter = NotifyFilters.DirectoryName,' Verzeichnisse überwachen
                     .IncludeSubdirectories = False ' Nur das aktuelle Verzeichnis überwachen
                     }
-                ' Event-Handler hinzufügen
-                AddHandler FSW.Created, AddressOf FSW_DirectoryChanged
-                AddHandler FSW.Deleted, AddressOf FSW_DirectoryChanged
-                AddHandler FSW.Renamed, AddressOf FSW_DirectoryChanged
-                ' Watcher in die Sammlung einfügen
-                _FileSystemWatchers.Add(FolderPath, FSW)
-                ' Watcher aktivieren
-                FSW.EnableRaisingEvents = True
+                AddHandler FSW.Created, AddressOf FSW_DirectoryChanged ' Event-Handler für neu erstellten Ordner hinzufügen
+                AddHandler FSW.Deleted, AddressOf FSW_DirectoryChanged ' Event-Handler für gelöschten Ordner hinzufügen
+                AddHandler FSW.Renamed, AddressOf FSW_DirectoryChanged ' Event-Handler für umbenannten Ordner hinzufügen
+                _FileSystemWatchers.Add(FolderPath, FSW) ' Watcher in die Sammlung einfügen
+                FSW.EnableRaisingEvents = True ' Watcher aktivieren
             Catch ex As Exception
-                ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
-                Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
+                Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}") ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
             End Try
         End Sub
 
@@ -453,12 +429,9 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="FolderPath">Das Verzeichnis, für das die zugehörigen Watcher entfernt werden sollen.</param>
         Private Sub RemoveFileSystemWatchers(FolderPath As String)
-            ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
-            Dim toRemove As New List(Of String)
-            ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
-            FindWatchersToRemove(FolderPath, toRemove)
-            ' Entferne und entsorge alle gefundenen Watcher
-            RemoveAndDisposeWatchers(toRemove)
+            Dim toRemove As New List(Of String) ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
+            FindWatchersToRemove(FolderPath, toRemove) ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
+            RemoveAndDisposeWatchers(toRemove) ' Entferne und entsorge alle gefundenen Watcher
         End Sub
 
         ''' <summary>
@@ -469,13 +442,11 @@ Namespace ExplorerTreeViewControl
         ''' <param name="FolderPath">Das Verzeichnis, für das die zu entfernenden Watcher gesucht werden.</param>
         ''' <param name="toRemove">Liste, in die alle zu entfernenden Watcher-Pfade eingetragen werden.</param>
         Private Sub FindWatchersToRemove(FolderPath As String, toRemove As List(Of String))
-            ' Durchlaufe alle aktuell überwachten Verzeichnispfade
-            For Each watcherPath In _FileSystemWatchers.Keys
+            For Each watcherPath In _FileSystemWatchers.Keys ' Durchlaufe alle aktuell überwachten Verzeichnispfade
                 ' Prüfe, ob der Pfad exakt übereinstimmt oder ein Unterverzeichnis des angegebenen Verzeichnisses ist
                 If watcherPath.Equals(FolderPath, StringComparison.OrdinalIgnoreCase) OrElse
                    watcherPath.StartsWith(FolderPath & IO.Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) Then
-                    ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
-                    toRemove.Add(watcherPath)
+                    toRemove.Add(watcherPath) ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
                 End If
             Next
         End Sub
@@ -488,16 +459,11 @@ Namespace ExplorerTreeViewControl
         Private Sub RemoveAndDisposeWatchers(toRemove As List(Of String))
             ' Durchlaufe alle zu entfernenden Watcher-Pfade
             For Each watcherPath In toRemove
-                ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
-                Dim watcher = _FileSystemWatchers(watcherPath)
-                ' Deaktiviere die Ereignisauslösung
-                watcher.EnableRaisingEvents = False
-                ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
-                RemoveWatcherHandlers(watcher)
-                ' Gib die Ressourcen des Watchers frei
-                watcher.Dispose()
-                ' Entferne den Watcher aus der internen Sammlung
-                Dim unused = _FileSystemWatchers.Remove(watcherPath)
+                Dim watcher = _FileSystemWatchers(watcherPath) ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
+                watcher.EnableRaisingEvents = False ' Deaktiviere die Ereignisauslösung
+                RemoveWatcherHandlers(watcher) ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
+                watcher.Dispose() ' Gib die Ressourcen des Watchers frei
+                Dim unused = _FileSystemWatchers.Remove(watcherPath) ' Entferne den Watcher aus der internen Sammlung
             Next
         End Sub
 
@@ -508,12 +474,9 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="watcher">Der FileSystemWatcher, von dem die Handler entfernt werden sollen.</param>
         Private Sub RemoveWatcherHandlers(watcher As FileSystemWatcher)
-            ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
-            RemoveHandler watcher.Created, AddressOf FSW_DirectoryChanged
-            ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
-            RemoveHandler watcher.Deleted, AddressOf FSW_DirectoryChanged
-            ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
-            RemoveHandler watcher.Renamed, AddressOf FSW_DirectoryChanged
+            RemoveHandler watcher.Created, AddressOf FSW_DirectoryChanged ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
+            RemoveHandler watcher.Deleted, AddressOf FSW_DirectoryChanged ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
+            RemoveHandler watcher.Renamed, AddressOf FSW_DirectoryChanged ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
         End Sub
 
         ''' <summary>
@@ -526,7 +489,7 @@ Namespace ExplorerTreeViewControl
             ' Durchlaufe alle Knoten in der aktuellen Knotenliste
             For Each node As TreeNode In Nodes
                 ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
-                If String.Equals(GetPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
+                If String.Equals(GetDirectoryPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
                     Return node ' Passender Knoten gefunden, diesen zurückgeben
                 End If
                 ' Wenn nicht gefunden, rekursiv in den Unterknoten weitersuchen
@@ -601,7 +564,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e"></param>
         Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
             ' einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
-            Dim folderpath As String = GetPath(e.Node)
+            Dim folderpath As String = GetDirectoryPath(e.Node)
             CreateFileSystemWatcher(folderpath)
         End Sub
 
@@ -612,7 +575,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e"></param>
         Private Sub TV_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TV.AfterCollapse
             ' den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
-            Dim folderpath As String = GetPath(e.Node)
+            Dim folderpath As String = GetDirectoryPath(e.Node)
             RemoveFileSystemWatchers(folderpath)
         End Sub
 
@@ -627,7 +590,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e"></param>
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
             ' Pfad des ausgewählten node ermitteln und Ereignis auslösen
-            _SelectedPath = GetPath(e.Node)
+            _SelectedPath = GetDirectoryPath(e.Node)
             RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
         End Sub
 
