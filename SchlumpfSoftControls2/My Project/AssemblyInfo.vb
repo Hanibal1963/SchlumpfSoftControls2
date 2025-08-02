@@ -21,5 +21,5 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 <Assembly: ComVisible(False)>
-<Assembly: AssemblyVersion("1.2025.0802.0")>
-<Assembly: AssemblyFileVersion("1.2025.0802.0")>
+<Assembly: AssemblyVersion("1.2025.0615.2000")>
+<Assembly: AssemblyFileVersion("1.2025.0615.2000")>
