@@ -9,15 +9,19 @@
 '
 ' *************************************************************************************************
 
+
+#Region "Importe"
+
 Imports System
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
-Imports System.Linq
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
+
+#End Region
 
 Namespace ExplorerTreeViewControl
 
@@ -35,7 +39,13 @@ Namespace ExplorerTreeViewControl
 
 #Region "Interne Variablen"
 
+        ''' <summary>
+        ''' Zwischenspeicher für den Pfad des aktuell ausgewähten Knotens.
+        ''' </summary>
         Private _SelectedPath As String = String.Empty
+        ''' <summary>
+        ''' Liste der zu überwachenden Verzeichnisse.
+        ''' </summary>
         Private _FileSystemWatchers As New Dictionary(Of String, FileSystemWatcher)
 
 #End Region
@@ -245,6 +255,9 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
+
+#Region "öffentliche Methoden"
+
         ''' <summary>
         ''' Konstruktor für das ExplorerTreeView-Steuerelement.
         ''' </summary>
@@ -260,6 +273,8 @@ Namespace ExplorerTreeViewControl
             ' Setzt den Wurzelknoten des TreeViews
             SetRootNode()
         End Sub
+
+#End Region
 
 #Region "Interne Hilfsroutinen"
 
@@ -331,13 +346,10 @@ Namespace ExplorerTreeViewControl
         ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer einen Ordner öffnet.
         ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
         ''' </remarks>
-        Private Sub LoadFoldersSubfolders(e As TreeViewCancelEventArgs)
-            ' Typumwandlung des Knotens in FolderNode
-            Dim node As FolderNode = CType(e.Node, FolderNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            node.Nodes.Clear()
-            ' Laden der Unterordner des Ordners
-            node.LoadSubfolders()
+        Private Sub LoadFoldersSubfolders(Node As TreeNode)
+            Dim foldernode As FolderNode = CType(Node, FolderNode) ' Typumwandlung des Knotens in FolderNode
+            foldernode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
+            foldernode.LoadSubfolders() ' Laden der Unterordner des Ordners
         End Sub
 
         ''' <summary>
@@ -351,13 +363,10 @@ Namespace ExplorerTreeViewControl
         ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer ein Laufwerk öffnet.
         ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
         ''' </remarks>
-        Private Sub LoadDriveSubfolders(e As TreeViewCancelEventArgs)
-            ' Typumwandlung des Knotens in DriveNode
-            Dim node As DriveNode = CType(e.Node, DriveNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            node.Nodes.Clear()
-            ' Laden der Unterordner des Laufwerks
-            node.LoadSubfolders()
+        Private Sub LoadDriveSubfolders(Node As TreeNode)
+            Dim drivenode As DriveNode = CType(Node, DriveNode) ' Typumwandlung des Knotens in DriveNode
+            drivenode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
+            drivenode.LoadSubfolders() ' Laden der Unterordner des Laufwerks
         End Sub
 
         ''' <summary>
@@ -371,13 +380,17 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode ist entscheidend für die Anzeige der Unterordner von speziellen Ordnern wie "Desktop", "Dokumente" usw.
         ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer einen speziellen Ordner öffnet.
         ''' </remarks>
-        Private Sub LoadSpecialFoldersSubfolders(e As TreeViewCancelEventArgs)
-            ' Typumwandlung des Knotens in SpecialFolderNode
-            Dim node As SpecialFolderNode = CType(e.Node, SpecialFolderNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            node.Nodes.Clear()
-            ' Laden der Unterordner des speziellen Ordners
-            node.LoadSubfolders()
+        Private Sub LoadSpecialFoldersSubfolders(Node As TreeNode)
+            Dim spezialfoldernode As SpecialFolderNode = CType(Node, SpecialFolderNode) ' Typumwandlung des Knotens in SpecialFolderNode
+            spezialfoldernode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
+            spezialfoldernode.LoadSubfolders() ' Laden der Unterordner des speziellen Ordners
+
+            '' Typumwandlung des Knotens in SpecialFolderNode
+            'Dim node As SpecialFolderNode = CType(e.Node, SpecialFolderNode)
+            '' Leeren der Knoten, um sie neu zu laden
+            'node.Nodes.Clear()
+            '' Laden der Unterordner des speziellen Ordners
+            'node.LoadSubfolders()
         End Sub
 
         ''' <summary>
@@ -391,13 +404,18 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode ist entscheidend für die initiale Struktur des TreeViews, 
         ''' da sie die Basis für die Anzeige der verfügbaren Laufwerke und Ordner bildet.
         ''' </remarks>
-        Private Sub LoadRootKindNodes(e As TreeViewCancelEventArgs)
-            ' Leeren der Knoten, um sie neu zu laden
-            CType(e.Node, ComputerNode).Nodes.Clear()
-            ' Laden der speziellen Ordner
-            CType(e.Node, ComputerNode).LoadSpecialFolders()
-            ' Laden der Laufwerke
-            CType(e.Node, ComputerNode).LoadDrives()
+        Private Sub LoadRootKindNodes(Node As TreeNode)
+            Dim computernode As ComputerNode = CType(Node, ComputerNode) ' Typumwandlung des Knotens in Computernode
+            computernode.Nodes.Clear() ' Leeren der Knoten, um sie neu zu laden
+            computernode.LoadSpecialFolders() ' Laden der speziellen Ordner
+            computernode.LoadDrives() ' Laden der Laufwerke
+
+            '' Leeren der Knoten, um sie neu zu laden
+            'CType(e.Node, ComputerNode).Nodes.Clear()
+            '' Laden der speziellen Ordner
+            'CType(e.Node, ComputerNode).LoadSpecialFolders()
+            '' Laden der Laufwerke
+            'CType(e.Node, ComputerNode).LoadDrives()
         End Sub
 
         ''' <summary>
@@ -509,14 +527,12 @@ Namespace ExplorerTreeViewControl
             For Each node As TreeNode In Nodes
                 ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
                 If String.Equals(GetPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
-                    ' Passender Knoten gefunden, diesen zurückgeben
-                    Return node
+                    Return node ' Passender Knoten gefunden, diesen zurückgeben
                 End If
                 ' Wenn nicht gefunden, rekursiv in den Unterknoten weitersuchen
                 Dim found As TreeNode = FindNodeByPath(node.Nodes, SearchPath)
                 If found IsNot Nothing Then
-                    ' Passenden Knoten in den Unterknoten gefunden, diesen zurückgeben
-                    Return found
+                    Return found ' Passenden Knoten in den Unterknoten gefunden, diesen zurückgeben
                 End If
             Next
             ' Kein passender Knoten gefunden, Nothing zurückgeben
@@ -545,14 +561,9 @@ Namespace ExplorerTreeViewControl
             ' Je nach Knotentyp (normaler Ordner oder spezieller Ordner) werden die Unterknoten neu geladen,
             ' damit neue, gelöschte oder umbenannte Unterordner sofort angezeigt werden.
             Select Case True
-                Case TypeOf changednode Is FolderNode
-                    ' Bei normalen Ordnern: Unterknoten leeren und neu laden
-                    CType(changednode, FolderNode).Nodes.Clear()
-                    CType(changednode, FolderNode).LoadSubfolders()
-                Case TypeOf changednode Is SpecialFolderNode
-                    ' Bei speziellen Ordnern (z.B. Desktop, Dokumente): Unterknoten leeren und neu laden
-                    CType(changednode, SpecialFolderNode).Nodes.Clear()
-                    CType(changednode, SpecialFolderNode).LoadSubfolders()
+                Case TypeOf changednode Is DriveNode : LoadDriveSubfolders(changednode)' Unterknoten des Laufwerks leeren und neu laden
+                Case TypeOf changednode Is SpecialFolderNode : LoadSpecialFoldersSubfolders(changednode)' Unterknoten des speziellen Ordners leeren und neu laden
+                Case TypeOf changednode Is FolderNode : LoadFoldersSubfolders(changednode) ' Unterknoten des Ordners leeren und neu laden
             End Select
         End Sub
 
@@ -574,15 +585,12 @@ Namespace ExplorerTreeViewControl
         ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
         ''' </remarks>
         Private Sub TV_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV.BeforeExpand
-            Select Case True
-                ' Spezielle Ordner und Laufwerke laden
-                Case e.Node.GetType.Equals(GetType(ComputerNode)) : LoadRootKindNodes(e)
-                ' Unterordner der speziellen Ordner laden
-                Case e.Node.GetType.Equals(GetType(SpecialFolderNode)) : LoadSpecialFoldersSubfolders(e)
-                ' Unterordner des Laufwerks laden
-                Case e.Node.GetType.Equals(GetType(DriveNode)) : LoadDriveSubfolders(e)
-                ' Unterordner des Ordners laden
-                Case e.Node.GetType.Equals(GetType(FolderNode)) : LoadFoldersSubfolders(e)
+            Dim expandnode As TreeNode = e.Node ' Knoten merken der erweitert werden soll
+            Select Case True ' Typ des Knotens ermitteln und entsprechend verzweigen
+                Case TypeOf expandnode Is ComputerNode : LoadRootKindNodes(expandnode) ' Spezielle Ordner und Laufwerke laden
+                Case TypeOf expandnode Is SpecialFolderNode : LoadSpecialFoldersSubfolders(expandnode) ' Unterordner der speziellen Ordner laden
+                Case TypeOf expandnode Is DriveNode : LoadDriveSubfolders(expandnode) ' Unterordner des Laufwerks laden
+                Case TypeOf expandnode Is FolderNode : LoadFoldersSubfolders(expandnode) ' Unterordner des Ordners laden
             End Select
         End Sub
 
