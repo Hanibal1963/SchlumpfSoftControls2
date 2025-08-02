@@ -38,7 +38,7 @@ Namespace ExplorerTreeViewControl
 #Region "Interne Variablen"
 
         ''' <summary>
-        ''' Zwischenspeicher für den Pfad des aktuell ausgewähten Knotens.
+        ''' Zwischenspeicher für den Pfad des aktuell ausgewählten Knotens.
         ''' </summary>
         Private _SelectedPath As String = String.Empty
 
@@ -106,8 +106,8 @@ Namespace ExplorerTreeViewControl
             Get
                 Return TV.ShowLines
             End Get
-            Set
-                TV.ShowLines = Value
+            Set(value As Boolean)
+                TV.ShowLines = value
             End Set
         End Property
 
@@ -121,8 +121,8 @@ Namespace ExplorerTreeViewControl
             Get
                 Return TV.ShowPlusMinus
             End Get
-            Set
-                TV.ShowPlusMinus = Value
+            Set(value As Boolean)
+                TV.ShowPlusMinus = value
             End Set
         End Property
 
@@ -136,8 +136,8 @@ Namespace ExplorerTreeViewControl
             Get
                 Return TV.ShowRootLines
             End Get
-            Set
-                TV.ShowRootLines = Value
+            Set(value As Boolean)
+                TV.ShowRootLines = value
             End Set
         End Property
 
@@ -151,8 +151,8 @@ Namespace ExplorerTreeViewControl
             Get
                 Return TV.Indent
             End Get
-            Set
-                TV.Indent = Value
+            Set(value As Integer)
+                TV.Indent = value
             End Set
         End Property
 
@@ -166,8 +166,8 @@ Namespace ExplorerTreeViewControl
             Get
                 Return TV.ItemHeight
             End Get
-            Set
-                TV.ItemHeight = Value
+            Set(value As Integer)
+                TV.ItemHeight = value
             End Set
         End Property
 
@@ -278,14 +278,15 @@ Namespace ExplorerTreeViewControl
         ''' Setzt den Wurzelknoten des TreeViews.
         ''' </summary>
         ''' <remarks>
-        ''' Der Wurzelknoten ist ein ComputerNode, der die Basis für die Anzeige von Laufwerken und speziellen Ordnern bildet.
-        ''' Dieser Knoten wird beim Laden des Steuerelements erstellt und hinzugefügt.
+        ''' Diese Methode entfernt alle vorhandenen Knoten im TreeView und fügt einen neuen Wurzelknoten vom Typ ComputerNode hinzu.
+        ''' Der Wurzelknoten repräsentiert "Dieser Computer" und bildet die Basis für die Anzeige von Laufwerken und speziellen Ordnern.
+        ''' Nach dem Hinzufügen wird der Wurzelknoten automatisch erweitert, sodass dessen Unterknoten (z.B. Laufwerke) sichtbar sind.
         ''' </remarks>
         Private Sub SetRootNode()
-            TV.Nodes.Clear()
-            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
-            Dim unused = TV.Nodes.Add(rootnode)
-            TV.Nodes.Item(0).Expand()
+            TV.Nodes.Clear() ' Alle vorhandenen Knoten im TreeView entfernen
+            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"} ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
+            Dim unused = TV.Nodes.Add(rootnode) ' Den Wurzelknoten zum TreeView hinzufügen
+            TV.Nodes.Item(0).Expand() ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
         End Sub
 
         ''' <summary>
@@ -324,7 +325,7 @@ Namespace ExplorerTreeViewControl
             Dim path As String = String.Empty
             Select Case True
                 Case TypeOf node Is ComputerNode : path = String.Empty ' "Dieser Computer" hat keinen Pfad
-                Case TypeOf node Is DriveNode : path = CType(node, DriveNode).FullPath ' Gibt den Laufwerksbuchstaben zuück
+                Case TypeOf node Is DriveNode : path = CType(node, DriveNode).FullPath ' Gibt den Laufwerksbuchstaben zurück
                 Case TypeOf node Is SpecialFolderNode : path = CType(node, SpecialFolderNode).FullPath ' Gibt den Pfad für Spezialordner zurück
                 Case TypeOf node Is FolderNode : path = CType(node, FolderNode).FullPath ' Gibt den Pfad für alle anderen Ordner zurück
             End Select
@@ -486,8 +487,8 @@ Namespace ExplorerTreeViewControl
         ''' <param name="SearchPath">Der zu suchende Pfad</param>
         ''' <returns>Der gefundene TreeNode oder Nothing</returns>
         Private Function FindNodeByPath(Nodes As TreeNodeCollection, SearchPath As String) As TreeNode
-            ' Durchlaufe alle Knoten in der aktuellen Knotenliste
-            For Each node As TreeNode In Nodes
+
+            For Each node As TreeNode In Nodes ' Durchlaufe alle Knoten in der aktuellen Knotenliste
                 ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
                 If String.Equals(GetDirectoryPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
                     Return node ' Passender Knoten gefunden, diesen zurückgeben
@@ -606,18 +607,19 @@ Namespace ExplorerTreeViewControl
         Private Sub DW_DriveAdded(sender As Object, e As DriveAddedEventArgs) Handles DW.DriveAdded
             Dim newDriveNode As New DriveNode(New DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
             Dim inserted As Boolean = False
-            ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
-            For i As Integer = 0 To TV.Nodes.Item(0).Nodes.Count - 1
-                Dim currentNode As TreeNode = TV.Nodes.Item(0).Nodes(i)
-                ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
-                If TypeOf currentNode Is DriveNode AndAlso String.Compare(currentNode.Tag.ToString, newDriveNode.Tag.ToString, StringComparison.OrdinalIgnoreCase) > 0 Then
+            For i As Integer = 0 To TV.Nodes.Item(0).Nodes.Count - 1 ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
+                Dim currentNode As TreeNode = TV.Nodes.Item(0).Nodes(i) ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
+                If TypeOf currentNode Is DriveNode AndAlso
+                    String.Compare(
+                    currentNode.Tag.ToString,
+                    newDriveNode.Tag.ToString,
+                    StringComparison.OrdinalIgnoreCase) > 0 Then
                     TV.Nodes.Item(0).Nodes.Insert(i, newDriveNode)
                     inserted = True
                     Exit For
                 End If
             Next
-            ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
-            If Not inserted Then
+            If Not inserted Then ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
                 Dim unused = TV.Nodes.Item(0).Nodes.Add(newDriveNode)
             End If
         End Sub
@@ -629,16 +631,11 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e"></param>
         Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
             Dim drn As DriveNode
-            ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
-            For Each obj As Object In TV.Nodes.Item(0).Nodes
-                ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
-                If TypeOf obj Is DriveNode Then
-                    ' Konvertiere den Knoten in einen DriveNode
-                    drn = CType(obj, DriveNode)
-                    ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
-                    If drn.Tag.ToString() = e.DriveName Then
-                        ' Entferne den DriveNode aus der Liste
-                        drn.Remove()
+            For Each obj As Object In TV.Nodes.Item(0).Nodes ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
+                If TypeOf obj Is DriveNode Then ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
+                    drn = CType(obj, DriveNode) ' Konvertiere den Knoten in einen DriveNode
+                    If drn.Tag.ToString() = e.DriveName Then ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
+                        drn.Remove() ' Entferne den DriveNode aus der Liste
                     End If
                 End If
             Next
