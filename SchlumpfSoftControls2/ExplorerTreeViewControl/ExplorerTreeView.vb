@@ -15,13 +15,10 @@ Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
-Imports System.Linq
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 Namespace ExplorerTreeViewControl
-
-    ' CategoryAttribute Klasse: https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
 
     ''' <summary>
     ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
@@ -191,6 +188,23 @@ Namespace ExplorerTreeViewControl
             Set(value As Color)
                 MyBase.ForeColor = value
                 TV.ForeColor = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Die Schriftart des Textes im Steuerelement.
+        ''' </summary>
+        ''' <returns></returns>
+        <Category("Appearance")>
+        <Description("Die Schriftart des Textes im Steuerelement.")>
+        <Browsable(True)>
+        Public Overrides Property Font As Font
+            Get
+                Return MyBase.Font
+            End Get
+            Set(value As Font)
+                MyBase.Font = value
+                TV.Font = value
             End Set
         End Property
 
@@ -438,7 +452,7 @@ Namespace ExplorerTreeViewControl
                 ' Ressourcen freigeben
                 watcher.Dispose()
                 ' Watcher aus der Sammlung entfernen
-                _FileSystemWatchers.Remove(watcherPath)
+                Dim unused = _FileSystemWatchers.Remove(watcherPath)
             Next
         End Sub
 
@@ -468,20 +482,24 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub FSW_DirectoryChanged(sender As Object, e As FileSystemEventArgs)
-
-            Dim changeddirpath As String = CType(sender, FileSystemWatcher).Path
-            Dim changednode As TreeNode = FindNodeByPath(TV.Nodes, changeddirpath)
-
-#If DEBUG Then
-            Debug.Print($"Inhalt von Node {changednode.Text} hat sich geändert")
-            Debug.Print($"Verzeichnispfad:{changeddirpath}")
-            Select Case e.ChangeType
-                Case WatcherChangeTypes.Created : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde hinzugefügt.")
-                Case WatcherChangeTypes.Deleted : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde entfernt.")
-                Case WatcherChangeTypes.Renamed : Debug.Print($"{e.FullPath.Split(IO.Path.DirectorySeparatorChar).Last} wurde umbenannt.")
-            End Select
-#End If
-
+            ' Zugriff auf das TreeView-Steuerelement auf den UI-Thread marshallen
+            If TV.InvokeRequired Then
+                Dim unused = TV.Invoke(New MethodInvoker(Sub() FSW_DirectoryChanged(sender, e)))
+                Return
+            End If
+            ' Node suchen deren Inhalt sich geändert hat
+            Dim changednode As TreeNode = FindNodeByPath(TV.Nodes, CType(sender, FileSystemWatcher).Path )
+            ' Unterordner der geänderten Node neu einlesen
+            If changednode IsNot Nothing Then
+                Select Case True
+                    Case TypeOf changednode Is FolderNode
+                        CType(changednode, FolderNode).Nodes.Clear()
+                        CType(changednode, FolderNode).LoadSubfolders()
+                    Case TypeOf changednode Is SpecialFolderNode
+                        CType(changednode, SpecialFolderNode).Nodes.Clear()
+                        CType(changednode, SpecialFolderNode).LoadSubfolders()
+                End Select
+            End If
         End Sub
 
 #End Region
@@ -520,15 +538,6 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
-
-
-
-
-#If DEBUG Then
-            Debug.Print($"{e.Node.FullPath} wurde geöffnet")
-#End If
-
-
             ' einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
             Dim folderpath As String = GetPath(e.Node)
             CreateFileSystemWatcher(folderpath)
@@ -540,14 +549,6 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TV.AfterCollapse
-
-
-#If DEBUG Then
-            Debug.Print($"{e.Node.FullPath} wurde geschlossen")
-#End If
-
-
-
             ' den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
             Dim folderpath As String = GetPath(e.Node)
             RemoveFileSystemWatchers(folderpath)

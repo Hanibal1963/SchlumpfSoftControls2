@@ -366,3 +366,5 @@ FodyWeavers.xsd
 /Links.md
 /VS Marketplace Vorlage.md
 *.cd
+/Docs/IniFileControl.md
+/TestControls/TestControls.vbproj
