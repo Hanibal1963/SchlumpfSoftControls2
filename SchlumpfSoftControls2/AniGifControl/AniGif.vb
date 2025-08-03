@@ -16,10 +16,15 @@
 '
 ' *************************************************************************************************
 
+
+#Region "Importe"
+
 Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+
+#End Region
 
 Namespace AniGifControl
 
@@ -36,7 +41,7 @@ Namespace AniGifControl
 
         Private WithEvents Timer As Timer
         Private components As IContainer
-        Private disposedValue As Boolean ' To detect redundant calls
+        Private disposedValue As Boolean
 
 #Region "Interne Eigenschaftsvariablen"
 
@@ -62,9 +67,20 @@ Namespace AniGifControl
         <Description("Wird ausgelöst wenn die Grafik nicht animiert werden kann.")>
         Public Event NoAnimation(sender As Object, e As EventArgs)
 
-        Private Event GifChanged() ' Wird ausgelöst wenn sich das Bild geändert hat.
-        Private Event CustomDisplaySpeedChanged() ' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
-        Private Event FramesPerSecondChanged() ' Wird ausgelöst wenn sich die Frames pro Sekunde geändert haben.
+        ''' <summary>
+        ''' Wird ausgelöst wenn sich das Bild geändert hat.
+        ''' </summary>
+        Private Event GifChanged()
+
+        ''' <summary>
+        ''' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
+        ''' </summary>
+        Private Event CustomDisplaySpeedChanged()
+
+        ''' <summary>
+        ''' Wird ausgelöst wenn sich die Frames pro Sekunde geändert haben.
+        ''' </summary>
+        Private Event FramesPerSecondChanged()
 
 #End Region
 
@@ -96,9 +112,7 @@ Namespace AniGifControl
                 Return _Gif
             End Get
             Set(value As Bitmap)
-                If _Gif IsNot Nothing Then _Gif.Dispose() ' Vorhandenes Bild freigeben
-                _Gif = If(value, My.Resources.AniGif_Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
-                RaiseEvent GifChanged()
+                SetGifImage(value)
             End Set
         End Property
 
@@ -113,8 +127,7 @@ Namespace AniGifControl
                 Return _GifSizeMode
             End Get
             Set(value As SizeMode)
-                _GifSizeMode = value
-                Invalidate()
+                SetGifSizeMode(value)
             End Set
         End Property
 
@@ -130,8 +143,7 @@ Namespace AniGifControl
                 Return _CustomDisplaySpeed
             End Get
             Set(value As Boolean)
-                _CustomDisplaySpeed = value
-                RaiseEvent CustomDisplaySpeedChanged()
+                SetCustomDisplaySpeed(value)
             End Set
         End Property
 
@@ -168,8 +180,7 @@ Namespace AniGifControl
                 Return _ZoomFactor
             End Get
             Set(value As Decimal)
-                _ZoomFactor = CheckZoomFactorValue(value)
-                Invalidate() 'neu zeichnen
+                SetZoomFactor(value)
             End Set
         End Property
 
@@ -210,6 +221,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property RightToLeft() As RightToLeft
@@ -221,6 +235,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Text() As String
@@ -232,6 +249,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property AllowDrop() As Boolean
@@ -243,6 +263,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property AutoScrollOffset As Point
@@ -254,6 +277,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property AutoSize As Boolean
@@ -265,6 +291,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage() As Image
@@ -276,6 +305,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout() As ImageLayout
@@ -320,6 +352,9 @@ Namespace AniGifControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property ForeColor() As Color
@@ -356,26 +391,19 @@ Namespace AniGifControl
 
         Protected Overloads Overrides Sub InitLayout()
             MyBase.InitLayout()
-            ' Animation starten wenn nicht im Desigmodus und AutoPlay auf True
-            If Not DesignMode And ImageAnimator.CanAnimate(_Gif) Then
+            If Not DesignMode And ImageAnimator.CanAnimate(_Gif) Then ' Animation starten wenn nicht im Desigmodus und AutoPlay auf True
                 ImageAnimator.Animate(_Gif, AddressOf OnNextFrame)
             End If
         End Sub
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             MyBase.OnPaint(e)
-            ' Variable für Zeichenfläche
-            Dim g As Graphics = e.Graphics
-            ' Größe der Zeichenfläche berechnen
-            Dim rectstartsize As Size = GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100)
-            'Startpunkt der Zeichenfläche berechnen
-            Dim rectstartpoint As Point = GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize)
-            ' Zeichenfläche festlegen und Bild zeichnen
-            g.DrawImage(_Gif, New Rectangle(rectstartpoint, rectstartsize))
-            ' Bild animieren wenn AutoPlay aktiv und Benutzerdefinierte Geschwindigkeit deaktiviert
-            If Not DesignMode And _Autoplay And Not _CustomDisplaySpeed Then
-                ' im Bild gespeicherte Geschwindigkeit verwenden
-                ImageAnimator.UpdateFrames()
+            Dim g As Graphics = e.Graphics ' Variable für Zeichenfläche
+            Dim rectstartsize As Size = GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100) ' Größe der Zeichenfläche berechnen
+            Dim rectstartpoint As Point = GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
+            g.DrawImage(_Gif, New Rectangle(rectstartpoint, rectstartsize)) ' Zeichenfläche festlegen und Bild zeichnen
+            If Not DesignMode And _Autoplay And Not _CustomDisplaySpeed Then ' Bild animieren wenn AutoPlay aktiv und Benutzerdefinierte Geschwindigkeit deaktiviert
+                ImageAnimator.UpdateFrames() ' im Bild gespeicherte Geschwindigkeit verwenden
             End If
         End Sub
 
@@ -391,7 +419,9 @@ Namespace AniGifControl
             MyBase.Dispose(disposing)
         End Sub
 
-        ' IDisposable Support
+        ''' <summary>
+        ''' IDisposable Support
+        ''' </summary>
         Public Overloads Sub Dispose() Implements IDisposable.Dispose
             Dispose(True)
             GC.SuppressFinalize(Me)
@@ -401,14 +431,11 @@ Namespace AniGifControl
 
         ' Wird ausgeführt wenn das Bild gewechselt wurde.
         Private Sub AniGif_GifChange() Handles Me.GifChanged
-            'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
-            If ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then
-                'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
-                Timer.Stop()
+            If ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
+                Timer.Stop() 'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
                 _MaxFrame = 0
                 RaiseEvent NoAnimation(Me, EventArgs.Empty) ' Ereignis auslösen
-            Else
-                'Werte für Benutzerdefinierte Geschwindigkeit speichern
+            Else 'Werte für Benutzerdefinierte Geschwindigkeit speichern
                 _Dimension = New Imaging.FrameDimension(_Gif.FrameDimensionsList(0))
                 _MaxFrame = _Gif.GetFrameCount(_Dimension) - 1
                 _Frame = 0
@@ -462,7 +489,9 @@ Namespace AniGifControl
 
 #Region "Interne Hilfsfunktionen"
 
-        ' Setzt die Standardwerte für die wichtigsten Variablen der Ani Gif Control.
+        ''' <summary>
+        ''' Setzt die Standardwerte für die wichtigsten Variablen der Ani Gif Control.
+        ''' </summary>
         Private Sub InitializeValues()
             _Gif = My.Resources.AniGif_Standard ' Standard-GIF aus den Ressourcen laden
             _Autoplay = False                   ' Animation startet nicht automatisch
@@ -472,7 +501,47 @@ Namespace AniGifControl
             _ZoomFactor = 50                    ' Standard-Zoomfaktor: 50%
         End Sub
 
-        ' Prüft den Wert für Bilder/Sekunde
+        ''' <summary>
+        ''' Setzt eine neue Animation
+        ''' </summary>
+        ''' <param name="value"></param>
+        Private Sub SetGifImage(value As Bitmap)
+            If _Gif IsNot Nothing Then _Gif.Dispose() ' Vorhandenes Bild freigeben
+            _Gif = If(value, My.Resources.AniGif_Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
+            RaiseEvent GifChanged()
+        End Sub
+
+        ''' <summary>
+        ''' Setzt die Anzeigeart der Animation.
+        ''' </summary>
+        ''' <param name="value"></param>
+        Private Sub SetGifSizeMode(value As SizeMode)
+            _GifSizeMode = value
+            Invalidate()
+        End Sub
+
+        ''' <summary>
+        ''' Setzt die Benutzerdefinierte Anzeigegeschwindigkeit
+        ''' </summary>
+        ''' <param name="value"></param>
+        Private Sub SetCustomDisplaySpeed(value As Boolean)
+            _CustomDisplaySpeed = value
+            RaiseEvent CustomDisplaySpeedChanged()
+        End Sub
+
+        ''' <summary>
+        ''' Setzt den Zoomfaktor
+        ''' </summary>
+        ''' <param name="value"></param>
+        Private Sub SetZoomFactor(value As Decimal)
+            _ZoomFactor = CheckZoomFactorValue(value)
+            Invalidate() 'neu zeichnen
+        End Sub
+
+        ''' <summary>
+        '''  Prüft den Wert für Bilder/Sekunde
+        ''' </summary>
+        ''' <param name="Frames"></param>
         Private Function CheckFramesPerSecondValue(Frames As Decimal) As Decimal
             ' Überprüft, ob der FPS-Wert im zulässigen Bereich liegt (1 bis 50)
             Select Case Frames
@@ -482,21 +551,28 @@ Namespace AniGifControl
             End Select
         End Function
 
-        ' Prüft, ob der übergebene Zoomfaktor im gültigen Bereich (1-100) liegt.
-        ' Werte kleiner als 1 werden auf 1 gesetzt, Werte größer als 100 auf 100.
-        ' Gibt den korrigierten Zoomfaktor im Bereich 1 bis 100 zurück.
+        ''' <summary>
+        ''' Prüft, ob der übergebene Zoomfaktor im gültigen Bereich (1-100) liegt.
+        ''' </summary>
+        ''' <param name="ZoomFactor"></param>
+        ''' <returns>Gibt den korrigierten Zoomfaktor im Bereich 1 bis 100 zurück.</returns>
+        ''' <remarks>Werte kleiner als 1 werden auf 1 gesetzt, Werte größer als 100 auf 100.</remarks>
         Private Function CheckZoomFactorValue(ZoomFactor As Decimal) As Decimal
             Select Case ZoomFactor
-                Case Is < 1 ' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
-                    Return 1
-                Case Is > 100 ' Wenn der Zoomfaktor größer als 100 ist, auf Höchstwert 100 setzen
-                    Return 100
-                Case Else ' Ansonsten den übergebenen Wert zurückgeben
-                    Return ZoomFactor
+                Case Is < 1 : Return 1' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
+                Case Is > 100 : Return 100 ' Wenn der Zoomfaktor größer als 100 ist, auf Höchstwert 100 setzen
+                Case Else : Return ZoomFactor ' Ansonsten den übergebenen Wert zurückgeben
             End Select
         End Function
 
-        ' Bildgröße in Abhängikeit vom Zeichenodus berechnen.
+        ''' <summary>
+        ''' Bildgröße in Abhängikeit vom Zeichenodus berechnen.
+        ''' </summary>
+        ''' <param name="Mode"></param>
+        ''' <param name="Control"></param>
+        ''' <param name="Gif"></param>
+        ''' <param name="Zoom"></param>
+        ''' <returns></returns>
         Private Function GetRectStartSize(Mode As SizeMode, Control As AniGif, Gif As Bitmap, Zoom As Decimal) As Size
             Select Case Mode
                 Case SizeMode.Normal
@@ -533,7 +609,14 @@ Namespace AniGifControl
             End Select
         End Function
 
-        ' Startpunkt der Zeichenfläche in Abhängikeit vom Zeichenodus berechnen.
+        ''' <summary>
+        ''' Startpunkt der Zeichenfläche in Abhängikeit vom Zeichenodus berechnen.
+        ''' </summary>
+        ''' <param name="Mode"></param>
+        ''' <param name="Control"></param>
+        ''' <param name="Gif"></param>
+        ''' <param name="RectStartSize"></param>
+        ''' <returns></returns>
         Private Function GetRectStartPoint(Mode As SizeMode, Control As AniGif, Gif As Bitmap, RectStartSize As Size) As Point
             ' Bestimmt den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes
             Select Case Mode
