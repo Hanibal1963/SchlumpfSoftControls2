@@ -18,6 +18,7 @@ Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
+Imports System.Linq
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
@@ -270,9 +271,99 @@ Namespace ExplorerTreeViewControl
             SetRootNode() ' Setzt den Wurzelknoten des TreeViews
         End Sub
 
+
+        ' TODO: Kopilotvorschlag für Funktion zum öffnen eines übergebenen Pfades
+        ' funktioniert aber so nicht
+
+        ''' <summary>
+        ''' Öffnet und selektiert den Knoten zum angegebenen Verzeichnispfad.
+        ''' Funktioniert auch bei noch nicht geladenen Unterknoten.
+        ''' </summary>
+        ''' <param name="path">Vollständiger Verzeichnispfad</param>
+        ''' <returns>True, wenn der Knoten gefunden wurde, sonst False</returns>
+        Public Function OpenNodeByPath(Path As String) As Boolean
+
+            If String.IsNullOrWhiteSpace(Path) Then Return False
+
+            GetPathSegments(Path)
+
+
+
+
+
+            'Dim currentNode As TreeNode = TV.Nodes(0)
+            'currentNode.Expand()
+
+
+            'Dim rootPath = IO.Path.GetPathRoot(path)
+            'If Not String.IsNullOrEmpty(rootPath) Then
+            '    parts.Insert(0, rootPath.TrimEnd("\"c))
+            'End If
+
+            'For i = 0 To parts.Count - 1
+            '    ' Nach jedem Expand explizit die Unterknoten laden
+            '    Select Case True
+            '        Case TypeOf currentNode Is ComputerNode
+            '            LoadRootKindNodes(currentNode)
+            '        Case TypeOf currentNode Is DriveNode
+            '            LoadDriveSubfolders(currentNode)
+            '        Case TypeOf currentNode Is SpecialFolderNode
+            '            LoadSpecialFoldersSubfolders(currentNode)
+            '        Case TypeOf currentNode Is FolderNode
+            '            LoadFoldersSubfolders(currentNode)
+            '    End Select
+
+            '    Dim found As Boolean = False
+            '    For Each node As TreeNode In currentNode.Nodes
+            '        If i = 0 AndAlso TypeOf node Is DriveNode Then
+            '            If String.Equals(CType(node, DriveNode).FullPath.TrimEnd("\"c), parts(i), StringComparison.OrdinalIgnoreCase) Then
+            '                currentNode = node
+            '                currentNode.Expand()
+            '                found = True
+            '                Exit For
+            '            End If
+            '        ElseIf String.Equals(node.Text, parts(i), StringComparison.OrdinalIgnoreCase) Then
+            '            currentNode = node
+            '            currentNode.Expand()
+            '            found = True
+            '            Exit For
+            '        End If
+            '    Next
+            '    If Not found Then Return False
+            'Next
+
+            'TV.SelectedNode = currentNode
+            'currentNode.EnsureVisible()
+            'Return True
+        End Function
+
+
 #End Region
 
 #Region "Interne Hilfsroutinen"
+
+        ''' <summary>
+        ''' Zerlegt einen vollständigen Verzeichnispfad in seine einzelnen Segmente.
+        ''' Beispiel: "C:\Users\Test\Dokumente" → {"C:", "Users", "Test", "Dokumente"}
+        ''' Dies ist hilfreich, um den Pfad schrittweise im TreeView zu durchsuchen oder Knoten zu selektieren.
+        ''' </summary>
+        ''' <param name="Path">Der vollständige Verzeichnispfad, der zerlegt werden soll.</param>
+        ''' <returns>Eine Liste der einzelnen Verzeichnisnamen, beginnend mit dem Wurzelverzeichnis.</returns>
+        Private Shared Function GetPathSegments(Path As String) As List(Of String)
+            ' DirectoryInfo-Objekt für den angegebenen Pfad erstellen
+            Dim dirInfo As New DirectoryInfo(Path)
+            ' Ergebnisliste für die einzelnen Segmente initialisieren
+            Dim result As New List(Of String)
+            ' Solange ein übergeordnetes Verzeichnis existiert und der Name nicht leer ist
+            While dirInfo IsNot Nothing AndAlso Not String.IsNullOrEmpty(dirInfo.Name)
+                ' Das aktuelle Verzeichnis am Anfang der Liste einfügen (um die Reihenfolge von oben nach unten zu erhalten)
+                result.Insert(0, dirInfo.Name)
+                ' Zum übergeordneten Verzeichnis wechseln
+                dirInfo = dirInfo.Parent
+            End While
+            ' Die Liste der Segmente zurückgeben
+            Return result
+        End Function
 
         ''' <summary>
         ''' Setzt den Wurzelknoten des TreeViews.
@@ -283,10 +374,14 @@ Namespace ExplorerTreeViewControl
         ''' Nach dem Hinzufügen wird der Wurzelknoten automatisch erweitert, sodass dessen Unterknoten (z.B. Laufwerke) sichtbar sind.
         ''' </remarks>
         Private Sub SetRootNode()
-            TV.Nodes.Clear() ' Alle vorhandenen Knoten im TreeView entfernen
-            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"} ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
-            Dim unused = TV.Nodes.Add(rootnode) ' Den Wurzelknoten zum TreeView hinzufügen
-            TV.Nodes.Item(0).Expand() ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
+            ' Alle vorhandenen Knoten im TreeView entfernen
+            TV.Nodes.Clear()
+            ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
+            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
+            ' Den Wurzelknoten zum TreeView hinzufügen
+            Dim unused = TV.Nodes.Add(rootnode)
+            ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
+            TV.Nodes.Item(0).Expand()
         End Sub
 
         ''' <summary>
