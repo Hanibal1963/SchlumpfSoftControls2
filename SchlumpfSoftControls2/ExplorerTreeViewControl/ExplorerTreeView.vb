@@ -364,8 +364,9 @@ Namespace ExplorerTreeViewControl
             Dim result As New List(Of String)
             ' Solange ein übergeordnetes Verzeichnis existiert und der Name nicht leer ist
             While dirInfo IsNot Nothing AndAlso Not String.IsNullOrEmpty(dirInfo.Name)
-                ' Das aktuelle Verzeichnis am Anfang der Liste einfügen (um die Reihenfolge von oben nach unten zu erhalten)
-                result.Insert(0, dirInfo.Name)
+                ' Ein eventuell vorhandenes Pfadtrennzeichen "\" entfernen und das Verzeichnis am Anfang der Liste einfügen
+                ' (um die Reihenfolge von oben nach unten zu erhalten)
+                result.Insert(0, dirInfo.Name.TrimEnd("\"c))
                 ' Zum übergeordneten Verzeichnis wechseln
                 dirInfo = dirInfo.Parent
             End While
