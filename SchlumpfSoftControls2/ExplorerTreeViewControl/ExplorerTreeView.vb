@@ -282,11 +282,19 @@ Namespace ExplorerTreeViewControl
         ''' <param name="path">Vollständiger Verzeichnispfad</param>
         ''' <returns>True, wenn der Knoten gefunden wurde, sonst False</returns>
         Public Function OpenNodeByPath(Path As String) As Boolean
-
+            ' Ist der Pfad ungültig oder leer, wird keine weitere Verarbeitung durchgeführt.
             If String.IsNullOrWhiteSpace(Path) Then Return False
+            ' Verzeichnispfad in Segmente zerlegen
+            Dim pathsegments As String() = GetPathSegments(Path).ToArray
 
-            GetPathSegments(Path)
-
+#If DEBUG Then
+            Debug.Print($"OpenNodeByPath: folgende Segmente wurden ermittelt:")
+            For Each s As String In pathsegments
+                Dim i As Integer = 1
+                Debug.Print($"Segment{i}: {s}")
+                i += 1
+            Next
+#End If
 
 
 
