@@ -42,6 +42,7 @@
             'TV
             '
             Me.TV.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.TV.HideSelection = False
             Me.TV.ImageIndex = 0
             Me.TV.ImageList = Me.IL
             Me.TV.Location = New System.Drawing.Point(0, 0)
@@ -50,12 +51,12 @@
             Me.TV.Size = New System.Drawing.Size(313, 404)
             Me.TV.TabIndex = 0
             '
-            'ExplorerTreeView2
+            'ExplorerTreeView
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.Controls.Add(Me.TV)
-            Me.Name = "ExplorerTreeView2"
+            Me.Name = "ExplorerTreeView"
             Me.Size = New System.Drawing.Size(313, 404)
             Me.ResumeLayout(False)
 
