@@ -1,6 +1,10 @@
 Versionsverlauf
 ===============
 
+Version 1.2025.0811.0
+Datum 11.08.2025
+- ExplorerTreeView hinzugefügt
+
 Version 1.2025.0802.0
 Datum 02.08.2025
 - Erste Release dieser Controlsammlung (noch ohne IniFileControl)
