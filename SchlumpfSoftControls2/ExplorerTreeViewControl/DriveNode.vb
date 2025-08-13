@@ -117,7 +117,11 @@ Namespace ExplorerTreeViewControl
             If drive.IsReady Then
                 ' Wenn das Laufwerk bereit ist, wird das Label ermittelt.
                 ' Wenn das laufwerk kein Label hat, wird der LaufwerksTyp als Label benutzt
-                result = If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeDescription(drive), drive.VolumeLabel)
+                If String.IsNullOrEmpty(drive.VolumeLabel) Then
+                    result = GetDriveTypeDescription(drive)
+                Else
+                    result = drive.VolumeLabel
+                End If
             Else
                 ' Wenn das Laufwerk nicht bereit ist, wird der Laufwerkstyp als Label benutzt
                 result = GetDriveTypeDescription(drive)
@@ -134,19 +138,19 @@ Namespace ExplorerTreeViewControl
         Private Function GetDriveTypeDescription(drive As DriveInfo) As String
             Select Case drive.DriveType
                 Case DriveType.Fixed
-                    Return $"Lokaler Datenträger"
+                    Return "Lokaler Datenträger"
                 Case DriveType.CDRom
-                    Return $"CD-Laufwerk"
+                    Return "CD-Laufwerk"
                 Case DriveType.Removable
                     Return If(IsFloppyDrive(drive), $"Diskettenlaufwerk", $"Wechselmedium")
                 Case DriveType.Network
-                    Return $"Netzlaufwerk"
+                    Return "Netzlaufwerk"
                 Case DriveType.Ram
-                    Return $"Ramlaufwerk"
+                    Return "Ramlaufwerk"
                 Case DriveType.NoRootDirectory
-                    Return $"kein Root-Verzeichnis"
+                    Return "kein Root-Verzeichnis"
                 Case DriveType.Unknown
-                    Return $"Unbekanntes Laufwerk"
+                    Return "Unbekanntes Laufwerk"
             End Select
             Return String.Empty
         End Function
@@ -158,13 +162,12 @@ Namespace ExplorerTreeViewControl
         ''' Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.
         ''' </param>
         Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
-            Dim result As Boolean = False
             ' Ermitteln ob das Laufwerk das Diskettenlaufwerk A ode B ist
             If drive.Name.StartsWith($"a", StringComparison.OrdinalIgnoreCase) Or
                drive.Name.StartsWith($"b", StringComparison.OrdinalIgnoreCase) Then
-                result = True
+                Return True
             End If
-            Return result
+            Return False
         End Function
 
         ''' <summary>
