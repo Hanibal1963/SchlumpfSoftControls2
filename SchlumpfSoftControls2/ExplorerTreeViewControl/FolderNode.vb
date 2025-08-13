@@ -39,7 +39,7 @@ Namespace ExplorerTreeViewControl
 
         Public Sub New(Text As String, FullPath As String)
             ' Setzt die Eigenschaften des Knotens basierend auf dem Text und dem vollständigen Pfad
-            SetPropertys(Text, FullPath)
+            SetProperties(Text, FullPath)
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
@@ -56,11 +56,12 @@ Namespace ExplorerTreeViewControl
         ''' Vollständiger Pfad des Ordners, der im Tag des Knotens gespeichert wird.
         ''' Dies ermöglicht den Zugriff auf den Ordnerpfad, wenn der Knoten ausgewählt wird oder Unterordner geladen werden müssen.
         ''' </param>
-        Private Sub SetPropertys(Text As String, FullPath As String)
+        Private Sub SetProperties(Text As String, FullPath As String)
             Me.Text = Text
             Tag = FullPath
-            ImageKey = $"Folder"
-            SelectedImageKey = $"Folder"
+            Dim key As String = IconMapping.GetImageKey("Folder")
+            ImageKey = key
+            SelectedImageKey = key
         End Sub
 
         ''' <summary>
