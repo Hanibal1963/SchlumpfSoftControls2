@@ -41,7 +41,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
-        Friend Sub LoadSpecialFolders()
+        Public Sub LoadSpecialFolders()
             ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
             Dim unused = Nodes.Add(New SpecialFolderNode("Desktop"))
             Dim unused1 = Nodes.Add(New SpecialFolderNode("Dokumente"))
@@ -54,7 +54,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die Laufwerke des Computers und fügt sie dem Knoten hinzu.
         ''' </summary>
-        Friend Sub LoadDrives()
+        Public Sub LoadDrives()
             ' Iteriere über alle verfügbaren Laufwerke und füge sie als Knoten hinzu
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
                 Dim driveNode As New DriveNode(drive)
