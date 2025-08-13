@@ -30,7 +30,7 @@ Namespace ExplorerTreeViewControl
         ''' <remarks></remarks>
         Public Sub New()
             ' Setzt die Eigenschaften des Knotens, wie Name und Icons
-            SetPropertys()
+            SetProperties()
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
@@ -69,13 +69,14 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den
         ''' entsprechenden Icons.
         ''' </remarks>
-        Private Sub SetPropertys()
+        Private Sub SetProperties()
             ' Hole den Namen des Computers
             Dim computerName As String = Environment.MachineName
             ' Setze das Icon für den Knoten
-            ImageKey = $"Computer"
-            SelectedImageKey = $"Computer"
-            ' Setze den Text des Knotens mit dem Computernamen
+            Dim key As String = IconMapping.GetImageKey("Computer")
+            ImageKey = key
+            SelectedImageKey = key
+            'Setze den Text des Knotens mit dem Computernamen
             Text = $"Dieser Computer ({computerName})"
         End Sub
 
