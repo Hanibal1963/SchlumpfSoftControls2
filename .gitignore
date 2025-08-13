@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /Links.md
 /VS Marketplace Vorlage.md
 *.cd
+*.vsdoc

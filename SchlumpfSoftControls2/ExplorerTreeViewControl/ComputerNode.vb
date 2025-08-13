@@ -16,10 +16,18 @@ Namespace ExplorerTreeViewControl
 
     ''' <summary>
     ''' Repräsentiert den Knoten für "Dieser Computer" im ExplorerTreeViewControl.
-    ''' Dieser Knoten enthält spezielle Ordner und Laufwerke des Computers.
     ''' </summary>
-    Friend Class ComputerNode : Inherits TreeNode
+    ''' <remarks>
+    ''' Dieser Knoten enthält spezielle Ordner und Laufwerke des Computers.
+    ''' </remarks>
+    Friend Class ComputerNode
 
+        Inherits TreeNode
+
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.ComputerNode"/>. 
+        ''' </summary>
+        ''' <remarks></remarks>
         Public Sub New()
             SetPropertys()
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
@@ -55,7 +63,8 @@ Namespace ExplorerTreeViewControl
         ''' Setzt die Eigenschaften des Computer-Knotens.
         ''' </summary>
         ''' <remarks>
-        ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den entsprechenden Icons.
+        ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den
+        ''' entsprechenden Icons.
         ''' </remarks>
         Private Sub SetPropertys()
             Dim computerName As String = Environment.MachineName
