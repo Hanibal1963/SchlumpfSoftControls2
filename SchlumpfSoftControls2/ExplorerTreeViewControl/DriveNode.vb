@@ -18,7 +18,9 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Repräsentiert einen Knoten für ein Laufwerk im ExplorerTreeViewControl
     ''' </summary>
-    Friend Class DriveNode : Inherits TreeNode
+    Friend Class DriveNode
+
+        Inherits TreeNode
 
         ''' <summary>
         ''' Gibt den vollständigen Pfad des Knotens zurück
@@ -46,7 +48,7 @@ Namespace ExplorerTreeViewControl
 
         Public Sub New(Drive As DriveInfo)
             ' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
-            SetPropertys(Drive)
+            SetProperties(Drive)
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
@@ -73,18 +75,24 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt den ImageKey für den Knoten basierend auf dem Laufwerkstyp
         ''' </summary>
         ''' <param name="drive"></param>
-        Private Function GetImageKey(drive As DriveInfo) As String
-            Dim result As String = String.Empty
+        Private Function GetDriveTypeString(drive As DriveInfo) As String
             Select Case drive.DriveType
-                Case DriveType.Fixed : result = If(IsSystemDrive(drive), "DriveSystem", "DriveFixed")
-                Case DriveType.CDRom : result = "DriveCDROM"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), "DriveFloppy", "DriveRemovable")
-                Case DriveType.Network : result = "DriveNetwork"
-                Case DriveType.Ram : result = "DriveRamDisk"
-                Case DriveType.NoRootDirectory : result = "kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = "DriveUnknown"
+                Case DriveType.Fixed
+                    Return If(IsSystemDrive(drive), "System", "Fixed")
+                Case DriveType.CDRom
+                    Return "CDROM"
+                Case DriveType.Removable
+                    Return If(IsFloppyDrive(drive), "Floppy", "Removable")
+                Case DriveType.Network
+                    Return "Network"
+                Case DriveType.Ram
+                    Return "RamDisk"
+                Case DriveType.NoRootDirectory
+                    Return "NoRoot"
+                Case DriveType.Unknown
+                    Return "Unknown"
             End Select
-            Return result
+            Return String.Empty
         End Function
 
         ''' <summary>
@@ -109,10 +117,10 @@ Namespace ExplorerTreeViewControl
             If drive.IsReady Then
                 ' Wenn das Laufwerk bereit ist, wird das Label ermittelt.
                 ' Wenn das laufwerk kein Label hat, wird der LaufwerksTyp als Label benutzt
-                result = If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeString(drive), drive.VolumeLabel)
+                result = If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeDescription(drive), drive.VolumeLabel)
             Else
                 ' Wenn das Laufwerk nicht bereit ist, wird der Laufwerkstyp als Label benutzt
-                result = GetDriveTypeString(drive)
+                result = GetDriveTypeDescription(drive)
             End If
             Return result
         End Function
@@ -123,18 +131,24 @@ Namespace ExplorerTreeViewControl
         ''' <param name="drive">
         ''' Das Laufwerk, dessen Typ ermittelt werden soll.
         ''' </param>
-        Private Function GetDriveTypeString(drive As DriveInfo) As String
-            Dim result As String = String.Empty
+        Private Function GetDriveTypeDescription(drive As DriveInfo) As String
             Select Case drive.DriveType
-                Case DriveType.Fixed : result = $"Lokaler Datenträger"
-                Case DriveType.CDRom : result = $"CD-Laufwerk"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), $"Diskettenlaufwerk", $"Wechselmedium")
-                Case DriveType.Network : result = $"Netzlaufwerk"
-                Case DriveType.Ram : result = $"Ramlaufwerk"
-                Case DriveType.NoRootDirectory : result = $"kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = $"Unbekanntes Laufwerk"
+                Case DriveType.Fixed
+                    Return $"Lokaler Datenträger"
+                Case DriveType.CDRom
+                    Return $"CD-Laufwerk"
+                Case DriveType.Removable
+                    Return If(IsFloppyDrive(drive), $"Diskettenlaufwerk", $"Wechselmedium")
+                Case DriveType.Network
+                    Return $"Netzlaufwerk"
+                Case DriveType.Ram
+                    Return $"Ramlaufwerk"
+                Case DriveType.NoRootDirectory
+                    Return $"kein Root-Verzeichnis"
+                Case DriveType.Unknown
+                    Return $"Unbekanntes Laufwerk"
             End Select
-            Return result
+            Return String.Empty
         End Function
 
         ''' <summary>
@@ -174,11 +188,13 @@ Namespace ExplorerTreeViewControl
         ''' <param name="Drive">
         ''' Das Laufwerk, dessen Eigenschaften gesetzt werden sollen.
         ''' </param>
-        Private Sub SetPropertys(Drive As DriveInfo)
+        Private Sub SetProperties(Drive As DriveInfo)
             Text = $"{GetVolumeLabel(Drive)} ({GetDriveName(Drive)})"
             Tag = Drive.Name
-            ImageKey = GetImageKey(Drive)
-            SelectedImageKey = GetImageKey(Drive)
+            Dim drivetypestring As String = GetDriveTypeString(Drive)
+            Dim key As String = IconMapping.GetImageKey(drivetypestring)
+            ImageKey = key
+            SelectedImageKey = key
         End Sub
 
     End Class
