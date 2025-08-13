@@ -124,6 +124,7 @@
   </data>
   <data name="Computer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Computer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für MyComputer</comment>
   </data>
   <data name="CriticalError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CriticalError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -131,27 +132,39 @@
   </data>
   <data name="DriveCDRom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveCDRom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für CD- oder DVD-Laufwerke</comment>
   </data>
   <data name="DriveDisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveDisk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Diskettenlaufwerke</comment>
   </data>
   <data name="DriveFixed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveFixed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Festplattenlaufwerke</comment>
   </data>
   <data name="DriveNetwork" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveNetwork.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Netzlaufwerke</comment>
+  </data>
+  <data name="DriveNoRoot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DriveNoRoot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Laufwerk ohne Rootverzeichnis</comment>
   </data>
   <data name="DriveRamDisk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveRamDisk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Ramdisklaufwerke</comment>
   </data>
   <data name="DriveRemovable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveRemovable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Wechsellaufwerke</comment>
   </data>
   <data name="DriveSystem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveSystem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für Systemlaufwerk</comment>
   </data>
   <data name="DriveUnknown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DriveUnknown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Symbol für unbekannte Laufwerke</comment>
   </data>
   <data name="Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
