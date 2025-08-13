@@ -29,6 +29,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub New()
+            ' Setzt die Eigenschaften des Knotens, wie Name und Icons
             SetPropertys()
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
@@ -41,6 +42,7 @@ Namespace ExplorerTreeViewControl
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
         Friend Sub LoadSpecialFolders()
+            ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
             Dim unused = Nodes.Add(New SpecialFolderNode("Desktop"))
             Dim unused1 = Nodes.Add(New SpecialFolderNode("Dokumente"))
             Dim unused2 = Nodes.Add(New SpecialFolderNode("Downloads"))
@@ -53,6 +55,7 @@ Namespace ExplorerTreeViewControl
         ''' Lädt die Laufwerke des Computers und fügt sie dem Knoten hinzu.
         ''' </summary>
         Friend Sub LoadDrives()
+            ' Iteriere über alle verfügbaren Laufwerke und füge sie als Knoten hinzu
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
                 Dim driveNode As New DriveNode(drive)
                 Dim unused = Nodes.Add(driveNode)
@@ -67,9 +70,12 @@ Namespace ExplorerTreeViewControl
         ''' entsprechenden Icons.
         ''' </remarks>
         Private Sub SetPropertys()
+            ' Hole den Namen des Computers
             Dim computerName As String = Environment.MachineName
+            ' Setze das Icon für den Knoten
             ImageKey = $"Computer"
             SelectedImageKey = $"Computer"
+            ' Setze den Text des Knotens mit dem Computernamen
             Text = $"Dieser Computer ({computerName})"
         End Sub
 
