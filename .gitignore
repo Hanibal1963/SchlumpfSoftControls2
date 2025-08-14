@@ -367,6 +367,5 @@ FodyWeavers.xsd
 /VS Marketplace Vorlage.md
 *.cd
 *.vsdoc
-/TestControls/TestControls.vbproj
 /SchlumpfSoftControls2/SchlumpfSoftControls2.xml
 /SchlumpfSoftControls2/VSdoc

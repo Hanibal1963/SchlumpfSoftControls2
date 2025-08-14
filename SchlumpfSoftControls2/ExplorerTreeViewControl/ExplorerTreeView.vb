@@ -37,11 +37,6 @@ Namespace ExplorerTreeViewControl
 #Region "Interne Variablen"
 
         ''' <summary>
-        ''' Zwischenspeicher für den Pfad des aktuell ausgewählten Knotens.
-        ''' </summary>
-        Private _SelectedPath As String = String.Empty
-
-        ''' <summary>
         ''' Liste der zu überwachenden Verzeichnisse.
         ''' </summary>
         Private _FileSystemWatchers As New Dictionary(Of String, FileSystemWatcher)
@@ -62,29 +57,11 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         <Description("wird ausgelöst wenn sich der ausgewähte Pfad geändert hat.")>
         <Browsable(True)>
-        Public Event SelectedPathChanged(sender As Object, e As EventArgs)
+        Public Event SelectedPathChanged(sender As Object, e As SelectedPathChangedEventArgs)
 
 #End Region
 
 #Region "Öffentliche Eigenschaften"
-
-        ''' <summary>
-        ''' Gibt den vollständigen Pfad des ausgewählten Knotens zurück.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Diese Eigenschaft wird aktualisiert, wenn ein Knoten im TreeView
-        ''' ausgewählt wird. </para>
-        ''' <para>Sie ermöglicht den Zugriff auf den Pfad des aktuell ausgewählten Knotens,
-        ''' was für weitere Operationen wie das Öffnen oder Bearbeiten von Dateien und
-        ''' Ordnern nützlich ist.</para>
-        ''' </remarks>
-        <Description("Gibt den vollständigen Pfad des ausgewählten Knotens zurück.")>
-        <Browsable(False)>
-        Public ReadOnly Property SelectedPath As String
-            Get
-                Return _SelectedPath
-            End Get
-        End Property
 
         ''' <summary>
         ''' Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.
@@ -230,7 +207,21 @@ Namespace ExplorerTreeViewControl
 #Region "ausgeblendete Eigenschaften"
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant
+        ''' Ist für dieses Control nicht relevant.
+        ''' </summary>
+        <Browsable(False)>
+        <EditorBrowsable(EditorBrowsableState.Never)>
+        Public Overrides Property Text As String
+            Get
+                Return MyBase.Text
+            End Get
+            Set(value As String)
+                MyBase.Text = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Ist für dieses Control nicht relevant.
         ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
@@ -244,7 +235,7 @@ Namespace ExplorerTreeViewControl
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant
+        ''' Ist für dieses Control nicht relevant.
         ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
@@ -753,9 +744,8 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
-            ' Pfad des ausgewählten node ermitteln und Ereignis auslösen
-            _SelectedPath = GetDirectoryPath(e.Node)
-            RaiseEvent SelectedPathChanged(Me, EventArgs.Empty)
+            ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
+            RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(GetDirectoryPath(e.Node)))
         End Sub
 
 #End Region
