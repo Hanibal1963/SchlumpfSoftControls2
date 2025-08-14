@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' ComputerNode.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Repräsentiert den Knoten für "Dieser Computer" im ExplorerTreeViewControl.
-'
 ' *************************************************************************************************
 
 Imports System
@@ -29,7 +23,8 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub New()
-            SetPropertys()
+            ' Setzt die Eigenschaften des Knotens, wie Name und Icons
+            SetProperties()
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
@@ -40,7 +35,8 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
-        Friend Sub LoadSpecialFolders()
+        Public Sub LoadSpecialFolders()
+            ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
             Dim unused = Nodes.Add(New SpecialFolderNode("Desktop"))
             Dim unused1 = Nodes.Add(New SpecialFolderNode("Dokumente"))
             Dim unused2 = Nodes.Add(New SpecialFolderNode("Downloads"))
@@ -52,7 +48,8 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die Laufwerke des Computers und fügt sie dem Knoten hinzu.
         ''' </summary>
-        Friend Sub LoadDrives()
+        Public Sub LoadDrives()
+            ' Iteriere über alle verfügbaren Laufwerke und füge sie als Knoten hinzu
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
                 Dim driveNode As New DriveNode(drive)
                 Dim unused = Nodes.Add(driveNode)
@@ -66,10 +63,14 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den
         ''' entsprechenden Icons.
         ''' </remarks>
-        Private Sub SetPropertys()
+        Private Sub SetProperties()
+            ' Hole den Namen des Computers
             Dim computerName As String = Environment.MachineName
-            ImageKey = $"Computer"
-            SelectedImageKey = $"Computer"
+            ' Setze das Icon für den Knoten
+            Dim key As String = IconMapping.GetImageKey("Computer")
+            ImageKey = key
+            SelectedImageKey = key
+            'Setze den Text des Knotens mit dem Computernamen
             Text = $"Dieser Computer ({computerName})"
         End Sub
 

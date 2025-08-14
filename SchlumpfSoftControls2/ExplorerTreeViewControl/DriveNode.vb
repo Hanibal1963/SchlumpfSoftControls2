@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' DriveNode.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Repräsentiert einen Knoten für ein Laufwerk im ExplorerTreeViewControl
-'
 ' *************************************************************************************************
 
 Imports System
@@ -18,7 +12,9 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Repräsentiert einen Knoten für ein Laufwerk im ExplorerTreeViewControl
     ''' </summary>
-    Friend Class DriveNode : Inherits TreeNode
+    Friend Class DriveNode
+
+        Inherits TreeNode
 
         ''' <summary>
         ''' Gibt den vollständigen Pfad des Knotens zurück
@@ -46,7 +42,7 @@ Namespace ExplorerTreeViewControl
 
         Public Sub New(Drive As DriveInfo)
             ' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
-            SetPropertys(Drive)
+            SetProperties(Drive)
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
@@ -56,7 +52,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die Unterordner des Laufwerks
         ''' </summary>
-        Friend Sub LoadSubfolders()
+        Public Sub LoadSubfolders()
             Try
                 Dim drive As New DriveInfo(FullPath)
                 If drive.IsReady Then
@@ -70,115 +66,29 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Ermittelt den ImageKey für den Knoten basierend auf dem Laufwerkstyp
-        ''' </summary>
-        ''' <param name="drive"></param>
-        Private Function GetImageKey(drive As DriveInfo) As String
-            Dim result As String = String.Empty
-            Select Case drive.DriveType
-                Case DriveType.Fixed : result = If(IsSystemDrive(drive), "DriveSystem", "DriveFixed")
-                Case DriveType.CDRom : result = "DriveCDROM"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), "DriveFloppy", "DriveRemovable")
-                Case DriveType.Network : result = "DriveNetwork"
-                Case DriveType.Ram : result = "DriveRamDisk"
-                Case DriveType.NoRootDirectory : result = "kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = "DriveUnknown"
-            End Select
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' Ermittelt den Laufwerksnamen ohne den abschließenden Backslash
-        ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Name ermittelt werden soll.
-        ''' </param>
-        Private Function GetDriveName(drive As DriveInfo) As String
-            ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
-            Return drive.Name.Substring(0, drive.Name.Length - 1)
-        End Function
-
-        ''' <summary>
-        ''' Ermittelt das Laufwerkslabel
-        ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Label ermittelt werden soll.
-        ''' </param>
-        Private Function GetVolumeLabel(drive As DriveInfo) As String
-            Dim result As String
-            If drive.IsReady Then
-                ' Wenn das Laufwerk bereit ist, wird das Label ermittelt.
-                ' Wenn das laufwerk kein Label hat, wird der LaufwerksTyp als Label benutzt
-                result = If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeString(drive), drive.VolumeLabel)
-            Else
-                ' Wenn das Laufwerk nicht bereit ist, wird der Laufwerkstyp als Label benutzt
-                result = GetDriveTypeString(drive)
-            End If
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' Ermittelt den Laufwerkstyp als String
-        ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Typ ermittelt werden soll.
-        ''' </param>
-        Private Function GetDriveTypeString(drive As DriveInfo) As String
-            Dim result As String = String.Empty
-            Select Case drive.DriveType
-                Case DriveType.Fixed : result = $"Lokaler Datenträger"
-                Case DriveType.CDRom : result = $"CD-Laufwerk"
-                Case DriveType.Removable : result = If(IsFloppyDrive(drive), $"Diskettenlaufwerk", $"Wechselmedium")
-                Case DriveType.Network : result = $"Netzlaufwerk"
-                Case DriveType.Ram : result = $"Ramlaufwerk"
-                Case DriveType.NoRootDirectory : result = $"kein Root-Verzeichnis"
-                Case DriveType.Unknown : result = $"Unbekanntes Laufwerk"
-            End Select
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' Ermittelt ob das Laufwerk ein Diskettenlaufwerk ist
-        ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.
-        ''' </param>
-        Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
-            Dim result As Boolean = False
-            ' Ermitteln ob das Laufwerk das Diskettenlaufwerk A ode B ist
-            If drive.Name.StartsWith($"a", StringComparison.OrdinalIgnoreCase) Or
-               drive.Name.StartsWith($"b", StringComparison.OrdinalIgnoreCase) Then
-                result = True
-            End If
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' Ermittelt ob das Laufwerk das Systemlaufwerk ist
-        ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, welches auf den Typ SystemDrive geprüft werden soll.
-        ''' </param>
-        Private Function IsSystemDrive(drive As DriveInfo) As Boolean
-            Dim result As Boolean
-            Dim systemdrive As String = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows))
-            If String.Equals(drive.Name, systemdrive, StringComparison.OrdinalIgnoreCase) Then
-                result = True
-            End If
-            Return result
-        End Function
-
-        ''' <summary>
         ''' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
         ''' </summary>
         ''' <param name="Drive">
         ''' Das Laufwerk, dessen Eigenschaften gesetzt werden sollen.
         ''' </param>
-        Private Sub SetPropertys(Drive As DriveInfo)
-            Text = $"{GetVolumeLabel(Drive)} ({GetDriveName(Drive)})"
+        ''' <summary>
+        ''' Setzt die Eigenschaften des Knotens basierend auf dem übergebenen Laufwerk.
+        ''' </summary>
+        ''' <param name="Drive">
+        ''' Das Laufwerk, dessen Eigenschaften verwendet werden sollen.
+        ''' </param>
+        Private Sub SetProperties(Drive As DriveInfo)
+            ' Setzt den Text des Knotens auf das Laufwerkslabel und den Laufwerksnamen (z. B. "Lokaler Datenträger (C:)").
+            Text = $"{NodeHelpers.GetVolumeLabel(Drive)} ({NodeHelpers.GetDriveName(Drive)})"
+            ' Speichert den Laufwerksnamen (z. B. "C:\") im Tag des Knotens.
             Tag = Drive.Name
-            ImageKey = GetImageKey(Drive)
-            SelectedImageKey = GetImageKey(Drive)
+            ' Ermittelt den Laufwerkstyp als String (z. B. "Lokaler Datenträger", "CD-Laufwerk").
+            Dim drivetypestring As String = NodeHelpers.GetDriveTypeString(Drive)
+            ' Ermittelt den Schlüssel für das Symbol basierend auf dem Laufwerkstyp.
+            Dim key As String = IconMapping.GetImageKey(drivetypestring)
+            ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
+            ImageKey = key
+            SelectedImageKey = key
         End Sub
 
     End Class

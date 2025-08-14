@@ -133,6 +133,16 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property DriveNoRoot() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("DriveNoRoot", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property DriveRamDisk() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DriveRamDisk", resourceCulture)

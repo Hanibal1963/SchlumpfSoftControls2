@@ -1,14 +1,7 @@
 ﻿' *************************************************************************************************
-' 
 ' ExplorerTreeView.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
-'
 ' *************************************************************************************************
-
 
 #Region "Importe"
 
@@ -26,14 +19,20 @@ Imports SchlumpfSoft.Controls.DriveWatcherControl
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
-    ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
-    ''' Ermöglicht die Auswahl von Laufwerken, speziellen Ordnern und Unterordnern in einer hierarchischen Baumstruktur.
+    ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des
+    ''' Computers bereit.
     ''' </summary>
+    ''' <remarks>
+    ''' Ermöglicht die Auswahl von Laufwerken, speziellen Ordnern und Unterordnern in
+    ''' einer hierarchischen Baumstruktur.
+    ''' </remarks>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeViewControl.ExplorerTreeView.bmp")>
-    Public Class ExplorerTreeView : Inherits UserControl
+    Public Class ExplorerTreeView
+
+        Inherits UserControl
 
 #Region "Interne Variablen"
 
@@ -52,14 +51,16 @@ Namespace ExplorerTreeViewControl
 #Region "Definition der öffentlichen Ereignisse"
 
         ''' <summary>
-        ''' Ereignis, das ausgelöst wird, wenn sich der ausgewählte Pfad ändert.
-        ''' Dieses Ereignis wird verwendet, um andere Steuerelemente oder Logik zu benachrichtigen,
-        ''' wenn der Benutzer einen anderen Knoten im TreeView auswählt.
-        ''' Es ermöglicht eine reaktive Programmierung, bei der andere Teile der Anwendung auf Änderungen im ausgewählten Pfad reagieren können.
+        ''' Ereignis, das ausgelöst wird, wenn sich der ausgewählte Pfad geändert hat.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        <Description("")>
+        ''' <remarks>
+        ''' <para>Dieses Ereignis wird verwendet, um andere Steuerelemente oder Logik zu
+        ''' benachrichtigen, wenn der Benutzer einen anderen Knoten im TreeView auswählt.
+        ''' </para>
+        ''' <para>Es ermöglicht eine reaktive Programmierung, bei der andere Teile der
+        ''' Anwendung auf Änderungen im ausgewählten Pfad reagieren können.</para>
+        ''' </remarks>
+        <Description("wird ausgelöst wenn sich der ausgewähte Pfad geändert hat.")>
         <Browsable(True)>
         Public Event SelectedPathChanged(sender As Object, e As EventArgs)
 
@@ -69,10 +70,14 @@ Namespace ExplorerTreeViewControl
 
         ''' <summary>
         ''' Gibt den vollständigen Pfad des ausgewählten Knotens zurück.
-        ''' Diese Eigenschaft wird aktualisiert, wenn ein Knoten im TreeView ausgewählt wird.
-        ''' Sie ermöglicht den Zugriff auf den Pfad des aktuell ausgewählten Knotens,
-        ''' was für weitere Operationen wie das Öffnen oder Bearbeiten von Dateien und Ordnern nützlich ist.
         ''' </summary>
+        ''' <remarks>
+        ''' <para>Diese Eigenschaft wird aktualisiert, wenn ein Knoten im TreeView
+        ''' ausgewählt wird. </para>
+        ''' <para>Sie ermöglicht den Zugriff auf den Pfad des aktuell ausgewählten Knotens,
+        ''' was für weitere Operationen wie das Öffnen oder Bearbeiten von Dateien und
+        ''' Ordnern nützlich ist.</para>
+        ''' </remarks>
         <Description("Gibt den vollständigen Pfad des ausgewählten Knotens zurück.")>
         <Browsable(False)>
         Public ReadOnly Property SelectedPath As String
@@ -260,8 +265,10 @@ Namespace ExplorerTreeViewControl
         ''' Konstruktor für das ExplorerTreeView-Steuerelement.
         ''' </summary>
         ''' <remarks>
-        ''' Dieser Konstruktor initialisiert das Steuerelement und lädt die erforderlichen Bilder.
-        ''' Außerdem wird der Wurzelknoten des TreeViews gesetzt, um die Struktur des Steuerelements zu definieren.
+        ''' <para>Dieser Konstruktor initialisiert das Steuerelement und lädt die
+        ''' erforderlichen Bilder. </para>
+        ''' <para>Außerdem wird der Wurzelknoten des TreeViews gesetzt, um die Struktur des
+        ''' Steuerelements zu definieren.</para>
         ''' </remarks>
         Public Sub New()
             ' Dieser Aufruf ist für den Designer erforderlich.
@@ -274,13 +281,14 @@ Namespace ExplorerTreeViewControl
 
         ''' <summary>
         ''' Öffnet und selektiert den Knoten zum angegebenen Verzeichnispfad.
-        ''' Funktioniert auch bei noch nicht geladenen Unterknoten.
         ''' </summary>
-        ''' <param name="path">
-        ''' Vollständiger Verzeichnispfad
-        ''' </param>
+        ''' <remarks>
+        ''' Funktioniert auch bei noch nicht geladenen Unterknoten.
+        ''' </remarks>
+        ''' <param name="Path">Vollständiger Pfad der göffnet werden soll.</param>
         ''' <returns>
-        ''' True, wenn der Knoten gefunden wurde, sonst False
+        ''' <see langword="true"/>, wenn der Knoten gefunden wurde, sonst <see
+        ''' langword="false"/>
         ''' </returns>
         Public Function ExpandPath(Path As String) As Boolean
             ' Ist der Pfad ungültig oder leer, wird keine weitere Verarbeitung durchgeführt.

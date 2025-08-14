@@ -57,18 +57,18 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="ClassDiagramms\AniGifControl.cd" />
-    <None Include="ClassDiagramms\ExplorerTreeViewControl.cd" />
-    <None Include="ClassDiagramms\NotifyFormControl.cd" />
-    <None Include="ClassDiagramms\DriveWacherControl.cd" />
-    <None Include="ClassDiagramms\ColorProgressBar.cd" />
-    <None Include="ClassDiagramms\SevenSegmentControl.cd" />
-    <None Include="ClassDiagramms\ShapeControl.cd" />
+    <None Include="AniGifControl\AniGifControl.cd" />
+    <None Include="ExplorerTreeViewControl\ExplorerTreeViewControl.cd" />
+    <None Include="NotifyFormControl\NotifyFormControl.cd" />
+    <None Include="DriveWatcherControl\DriveWacherControl.cd" />
+    <None Include="ColorProgressBarControl\ColorProgressBar.cd" />
+    <None Include="SevenSegmentControl\SevenSegmentControl.cd" />
+    <None Include="ShapeControl\ShapeControl.cd" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ClassDiagramms\TransparentLabelControl.cd" />
-    <None Include="ClassDiagramms\WizzardControl.cd" />
+    <None Include="TransparentLabelControl\TransparentLabelControl.cd" />
+    <None Include="WizardControl\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AniGifControl\AniGif.vb">
@@ -85,6 +85,7 @@
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
     <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
     <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.Designer.vb">
@@ -195,6 +196,7 @@
     <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\DriveNoRoot.png" />
     <EmbeddedResource Include="Resources\ExplorerTreeViewControl.ExplorerTreeView.bmp" />
     <EmbeddedResource Include="Resources\FolderVideos.png" />
     <EmbeddedResource Include="Resources\FolderMusic.png" />
