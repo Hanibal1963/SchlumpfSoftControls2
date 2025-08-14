@@ -40,5 +40,3 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 - Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
 - Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
 - Neues Control zum Auswählen einer Uhrzeit hinzufügen.
-
-[Doku](SchlumpfSoftControls2/VSdoc/index.html)
