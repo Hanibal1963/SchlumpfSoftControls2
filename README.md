@@ -25,7 +25,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 - [Shape Control](./Docs/ShapeControl.md) - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
 - [TransparentLabel Control](./Docs/TransparentLabelControl.md) - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
 - [SevenSegment Control](./Docs/SevenSegmentControl.md) - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige. 
-- **NEU HINZUGEFÜGT** [ColorProgressBar Control](./Docs/ColorProgressBarControl.md) - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
+- [ColorProgressBar Control](./Docs/ColorProgressBarControl.md) - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
 - **NEU HINZUGEFÜGT** [ExplorerTreeView Control](./Docs/ExplorerTreeViewControl.md) - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
 
 ---
@@ -35,7 +35,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 - Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
 - ~~Hinzufügen des ursprünglichen ColorProgressBar Controls.~~
 - ~~Hinzufügen des ursprünglichen ExplorerTreeView Controls.~~
-- Hinzufügen einer funktion zum öffnen eines bestimmten Pfades.
+- ~~Hinzufügen einer Funktion zum öffnen eines bestimmten Pfades.~~
 - Hinzufügen des ursprünglichen IniFile Controls.
 - Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
 - Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
