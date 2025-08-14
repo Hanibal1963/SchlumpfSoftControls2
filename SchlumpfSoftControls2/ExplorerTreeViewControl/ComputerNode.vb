@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' ComputerNode.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Repräsentiert den Knoten für "Dieser Computer" im ExplorerTreeViewControl.
-'
 ' *************************************************************************************************
 
 Imports System

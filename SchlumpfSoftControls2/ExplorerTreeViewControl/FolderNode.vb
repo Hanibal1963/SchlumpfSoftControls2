@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' FolderNode.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Stellt einen Knoten für einen Ordner im ExplorerTreeViewControl dar.
-'
 ' *************************************************************************************************
 
 Imports System
@@ -47,6 +41,24 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
+        ''' Lädt die Unterordner des Knotens und fügt sie dem Knoten hinzu.
+        ''' Diese Methode wird aufgerufen, wenn der Knoten erweitert wird, um die Unterordner des Ordners zu laden.
+        ''' </summary>
+        ''' <remarks>
+        ''' Diese Methode versucht, alle Unterordner des Ordners zu laden, der im Tag des Knotens gespeichert ist.
+        ''' Bei Zugriff verweigert (UnauthorizedAccessException) wird der Ordner übersprungen.
+        ''' </remarks
+        Public Sub LoadSubfolders()
+            Try
+                For Each dir As String In IO.Directory.GetDirectories(FullPath)
+                    Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+                Next
+            Catch ex As UnauthorizedAccessException
+                ' Zugriff verweigert – Ordner wird übersprungen
+            End Try
+        End Sub
+
+        ''' <summary>
         ''' Setzt die Eigenschaften des Knotens basierend auf dem Text und des Pfades.
         ''' </summary>
         ''' <param name="Text">
@@ -62,24 +74,6 @@ Namespace ExplorerTreeViewControl
             Dim key As String = IconMapping.GetImageKey("Folder")
             ImageKey = key
             SelectedImageKey = key
-        End Sub
-
-        ''' <summary>
-        ''' Lädt die Unterordner des Knotens und fügt sie dem Knoten hinzu.
-        ''' Diese Methode wird aufgerufen, wenn der Knoten erweitert wird, um die Unterordner des Ordners zu laden.
-        ''' </summary>
-        ''' <remarks>
-        ''' Diese Methode versucht, alle Unterordner des Ordners zu laden, der im Tag des Knotens gespeichert ist.
-        ''' Bei Zugriff verweigert (UnauthorizedAccessException) wird der Ordner übersprungen.
-        ''' </remarks
-        Friend Sub LoadSubfolders()
-            Try
-                For Each dir As String In IO.Directory.GetDirectories(FullPath)
-                    Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
-                Next
-            Catch ex As UnauthorizedAccessException
-                ' Zugriff verweigert – Ordner wird übersprungen
-            End Try
         End Sub
 
     End Class

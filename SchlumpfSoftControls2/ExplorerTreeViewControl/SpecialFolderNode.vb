@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' SpecialFolderNode.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Stellt einen TreeNode für einen speziellen Windows-Ordner (z.B. Desktop, Dokumente, Downloads) dar.
-'
 ' *************************************************************************************************
 
 Imports System
@@ -45,7 +39,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die Unterordner des speziellen Ordners und fügt sie dem Knoten hinzu.
         ''' </summary>
-        Friend Sub LoadSubfolders()
+        Public Sub LoadSubfolders()
             Try
                 For Each dir As String In IO.Directory.GetDirectories(FullPath)
                     Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
@@ -66,24 +60,6 @@ Namespace ExplorerTreeViewControl
             ImageKey = key
             SelectedImageKey = key
         End Sub
-
-        ''' <summary>
-        ''' Ermittelt den vollständigen Pfad des speziellen Ordners basierend auf dem Text.
-        ''' </summary>
-        ''' <param name="Text"></param>
-        ''' <returns></returns>
-        Private Function GetFolderPath(Text As String) As String
-            Dim result As String = String.Empty
-            Select Case Text
-                Case $"Desktop" : result = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-                Case $"Dokumente" : result = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                Case $"Downloads" : result = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Downloads"
-                Case $"Musik" : result = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
-                Case $"Bilder" : result = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-                Case $"Videos" : result = Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)
-            End Select
-            Return result
-        End Function
 
     End Class
 

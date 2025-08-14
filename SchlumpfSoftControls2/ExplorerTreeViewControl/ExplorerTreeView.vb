@@ -1,14 +1,7 @@
 ﻿' *************************************************************************************************
-' 
 ' ExplorerTreeView.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.
-'
 ' *************************************************************************************************
-
 
 #Region "Importe"
 
