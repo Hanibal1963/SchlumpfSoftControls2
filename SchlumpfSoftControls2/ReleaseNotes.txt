@@ -1,6 +1,10 @@
 Versionsverlauf
 ===============
 
+Version 1.2025.0814.0
+Datum 14.08.2025
+- Codeoptimierungen im ExplorerTreeViewControl
+
 Version 1.2025.0811.0
 Datum 11.08.2025
 - ExplorerTreeView hinzugefügt
