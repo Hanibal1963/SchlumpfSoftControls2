@@ -85,7 +85,7 @@ Namespace ExplorerTreeViewControl
             ' Ermittelt den Laufwerkstyp als String (z. B. "Lokaler Datenträger", "CD-Laufwerk").
             Dim drivetypestring As String = NodeHelpers.GetDriveTypeString(Drive)
             ' Ermittelt den Schlüssel für das Symbol basierend auf dem Laufwerkstyp.
-            Dim key As String = IconMapping.GetImageKey(drivetypestring)
+            Dim key As String = NodeHelpers.GetImageKey(drivetypestring)
             ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
             ImageKey = key
             SelectedImageKey = key

@@ -71,7 +71,7 @@ Namespace ExplorerTreeViewControl
         Private Sub SetProperties(Text As String, FullPath As String)
             Me.Text = Text
             Tag = FullPath
-            Dim key As String = IconMapping.GetImageKey("Folder")
+            Dim key As String = NodeHelpers.GetImageKey("Folder")
             ImageKey = key
             SelectedImageKey = key
         End Sub

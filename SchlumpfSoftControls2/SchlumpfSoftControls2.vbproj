@@ -95,6 +95,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ExplorerTreeViewControl\FolderNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\SelectedPathChangedEventArgs.vb" />
     <Compile Include="ExplorerTreeViewControl\SpecialFolderNode.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">

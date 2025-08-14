@@ -67,7 +67,7 @@ Namespace ExplorerTreeViewControl
             ' Hole den Namen des Computers
             Dim computerName As String = Environment.MachineName
             ' Setze das Icon für den Knoten
-            Dim key As String = IconMapping.GetImageKey("Computer")
+            Dim key As String = NodeHelpers.GetImageKey("Computer")
             ImageKey = key
             SelectedImageKey = key
             'Setze den Text des Knotens mit dem Computernamen

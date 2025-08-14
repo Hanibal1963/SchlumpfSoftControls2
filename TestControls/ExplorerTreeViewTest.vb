@@ -1,12 +1,12 @@
-﻿
+﻿Imports SchlumpfSoft.Controls.ExplorerTreeViewControl
 
 Public Class ExplorerTreeViewTest
 
-    Private Sub ExplorerTreeView1_SelectedPathChanged(sender As Object, e As EventArgs) Handles _
+    Private Sub ExplorerTreeView1_SelectedPathChanged(sender As Object, e As SelectedPathChangedEventArgs) Handles _
         ExplorerTreeView1.SelectedPathChanged
 
-        Dim selpath As String = CType(sender, SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView).SelectedPath
-        Label1.Text = $"aktuell ausgewählter Pfad:{vbCrLf}{selpath}"
+        'Dim selpath As String = CType(sender, SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView).SelectedPath
+        Label1.Text = $"aktuell ausgewählter Pfad:{vbCrLf}{e.SelectedPath}"
 
     End Sub
 
@@ -15,7 +15,7 @@ Public Class ExplorerTreeViewTest
 
         Dim result As DialogResult = FolderBrowserDialog1.ShowDialog
         If result = DialogResult.OK Then
-            ExplorerTreeView1.ExpandPath(FolderBrowserDialog1.SelectedPath)
+            Dim unused = ExplorerTreeView1.ExpandPath(FolderBrowserDialog1.SelectedPath)
         End If
 
     End Sub
