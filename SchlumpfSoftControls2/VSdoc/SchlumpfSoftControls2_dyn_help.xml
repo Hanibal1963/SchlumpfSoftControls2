@@ -1,0 +1,2401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DynamicHelp xmlns="http://msdn.microsoft.com/vsdata/xsd/vsdh.xsd" xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance" xsi:schemaLocation="http://msdn.microsoft.com/vsdata/xsd/vsdh.xsd">	
+   <LINKGROUP ID="SchlumpfSoftControls2" Title="SchlumpfSoftControls2 Reference Help" Priority="2100">
+      <GLYPH Expanded="vs:/ctxhelp_show.gif" Collapsed="vs:/ctxhelp_hide.gif"/>
+   </LINKGROUP>
+
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.Add" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FB.html" LinkGroup="SchlumpfSoftControls2">Add -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.AddRange" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FC.html" LinkGroup="SchlumpfSoftControls2">AddRange -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.AfterSwitchPages" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C3.html" LinkGroup="SchlumpfSoftControls2">AfterSwitchPages -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E4.html" LinkGroup="SchlumpfSoftControls2">AfterSwitchPagesEventArgs -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.AfterSwitchPagesEventHandler" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C1.html" LinkGroup="SchlumpfSoftControls2">AfterSwitchPagesEventHandler -Delegat</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.AllowDrop" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000E.html" LinkGroup="SchlumpfSoftControls2">AllowDrop -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000001.html" LinkGroup="SchlumpfSoftControls2">AniGif -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000017.html" LinkGroup="SchlumpfSoftControls2">AniGif -Konstructor {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.AutoPlay" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000003.html" LinkGroup="SchlumpfSoftControls2">AutoPlay -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.AutoScrollOffset" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000F.html" LinkGroup="SchlumpfSoftControls2">AutoScrollOffset -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.AutoSize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000010.html" LinkGroup="SchlumpfSoftControls2">AutoSize -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.AvailableFreeSpace" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003D.html" LinkGroup="SchlumpfSoftControls2">AvailableFreeSpace -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Back" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D9.html" LinkGroup="SchlumpfSoftControls2">Back -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002B.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004F.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007B.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008E.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A1.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B8.html" LinkGroup="SchlumpfSoftControls2">BackColor -Eigenschaft {SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.BackEnabled" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D2.html" LinkGroup="SchlumpfSoftControls2">BackEnabled -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.BackText" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D4.html" LinkGroup="SchlumpfSoftControls2">BackText -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000011.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002C.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000052.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007D.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000090.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A2.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackgroundImage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B9.html" LinkGroup="SchlumpfSoftControls2">BackgroundImage -Eigenschaft {SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000012.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002D.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000053.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007E.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000091.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A3.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackgroundImageLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BA.html" LinkGroup="SchlumpfSoftControls2">BackgroundImageLayout -Eigenschaft {SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BarColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000026.html" LinkGroup="SchlumpfSoftControls2">BarColor -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.BeforeSwitchPages" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C2.html" LinkGroup="SchlumpfSoftControls2">BeforeSwitchPages -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E8.html" LinkGroup="SchlumpfSoftControls2">BeforeSwitchPagesEventArgs -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.BeforeSwitchPagesEventHandler" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C0.html" LinkGroup="SchlumpfSoftControls2">BeforeSwitchPagesEventHandler -Delegat</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BorderColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000028.html" LinkGroup="SchlumpfSoftControls2">BorderColor -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BorderStyle" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002E.html" LinkGroup="SchlumpfSoftControls2">BorderStyle -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs.Cancel" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E9.html" LinkGroup="SchlumpfSoftControls2">Cancel -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Cancel" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C4.html" LinkGroup="SchlumpfSoftControls2">Cancel -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.CancelText" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D5.html" LinkGroup="SchlumpfSoftControls2">CancelText -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Click" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000023.html" LinkGroup="SchlumpfSoftControls2">Click -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ColonActive" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008D.html" LinkGroup="SchlumpfSoftControls2">ColonActive -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000022.html" LinkGroup="SchlumpfSoftControls2">ColorProgressBar -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000031.html" LinkGroup="SchlumpfSoftControls2">ColorProgressBar -Konstructor {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.Contains" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000100.html" LinkGroup="SchlumpfSoftControls2">Contains -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.ContextMenuStrip" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000013.html" LinkGroup="SchlumpfSoftControls2">ContextMenuStrip -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.CreateParams" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A0.html" LinkGroup="SchlumpfSoftControls2">CreateParams -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.CreateParams" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BC.html" LinkGroup="SchlumpfSoftControls2">CreateParams -Eigenschaft {SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.CustomBitPattern" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000089.html" LinkGroup="SchlumpfSoftControls2">CustomBitPattern -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.CustomDisplaySpeed" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000006.html" LinkGroup="SchlumpfSoftControls2">CustomDisplaySpeed -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.DecimalPointActive" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008B.html" LinkGroup="SchlumpfSoftControls2">DecimalPointActive -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage.Description" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000EE.html" LinkGroup="SchlumpfSoftControls2">Description -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Design" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005A.html" LinkGroup="SchlumpfSoftControls2">Design -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.DiagonalLineModes" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B2.html" LinkGroup="SchlumpfSoftControls2">DiagonalLineModes -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModus" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009F.html" LinkGroup="SchlumpfSoftControls2">DiagonalLineModus -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.DigitCount" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000078.html" LinkGroup="SchlumpfSoftControls2">DigitCount -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.DigitPadding" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000079.html" LinkGroup="SchlumpfSoftControls2">DigitPadding -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.DigitValue" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000088.html" LinkGroup="SchlumpfSoftControls2">DigitValue -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000001B_overloads--.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000001A_overloads--.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000032.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000039_overloads--.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000056.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A9_overloads--.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BD_overloads--.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Dispose" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E3.html" LinkGroup="SchlumpfSoftControls2">Dispose -Methode {SchlumpfSoft.Controls.WizardControl.Wizard}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Dock" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000014.html" LinkGroup="SchlumpfSoftControls2">Dock -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Dock" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CB.html" LinkGroup="SchlumpfSoftControls2">Dock -Eigenschaft {SchlumpfSoft.Controls.WizardControl.Wizard}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveAdded" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000035.html" LinkGroup="SchlumpfSoftControls2">DriveAdded -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003A.html" LinkGroup="SchlumpfSoftControls2">DriveAddedEventArgs -Struktur</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveFormat" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000040.html" LinkGroup="SchlumpfSoftControls2">DriveFormat -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveName" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003B.html" LinkGroup="SchlumpfSoftControls2">DriveName -Eigenschaft {SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs.DriveName" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000044.html" LinkGroup="SchlumpfSoftControls2">DriveName -Eigenschaft {SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveRemoved" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000036.html" LinkGroup="SchlumpfSoftControls2">DriveRemoved -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000043.html" LinkGroup="SchlumpfSoftControls2">DriveRemovedEventArgs -Struktur</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveType" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000041.html" LinkGroup="SchlumpfSoftControls2">DriveType -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000037_overloads--.html" LinkGroup="SchlumpfSoftControls2">New -Konstructor</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000038_overloads--.html" LinkGroup="SchlumpfSoftControls2">New -Konstructor</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000034.html" LinkGroup="SchlumpfSoftControls2">DriveWatcher -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.EmptyColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000027.html" LinkGroup="SchlumpfSoftControls2">EmptyColor -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ExpandPath" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000055.html" LinkGroup="SchlumpfSoftControls2">ExpandPath -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000046.html" LinkGroup="SchlumpfSoftControls2">ExplorerTreeView -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000054.html" LinkGroup="SchlumpfSoftControls2">ExplorerTreeView -Konstructor {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.FillColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009E.html" LinkGroup="SchlumpfSoftControls2">FillColor -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Finalize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000097.html" LinkGroup="SchlumpfSoftControls2">Finalize -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Finish" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C5.html" LinkGroup="SchlumpfSoftControls2">Finish -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.FlatStyle" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BB.html" LinkGroup="SchlumpfSoftControls2">FlatStyle -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Font" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000015.html" LinkGroup="SchlumpfSoftControls2">Font -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Font" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000051.html" LinkGroup="SchlumpfSoftControls2">Font -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Font" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007F.html" LinkGroup="SchlumpfSoftControls2">Font -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Font" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000092.html" LinkGroup="SchlumpfSoftControls2">Font -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.Font" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A4.html" LinkGroup="SchlumpfSoftControls2">Font -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000016.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002F.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000050.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007C.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008F.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.ForeColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A5.html" LinkGroup="SchlumpfSoftControls2">ForeColor -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000007.html" LinkGroup="SchlumpfSoftControls2">FramesPerSecond -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Gif" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000004.html" LinkGroup="SchlumpfSoftControls2">Gif -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.GifSizeMode" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000005.html" LinkGroup="SchlumpfSoftControls2">GifSizeMode -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.HeaderFont" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CD.html" LinkGroup="SchlumpfSoftControls2">HeaderFont -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.HeaderTitleFont" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CE.html" LinkGroup="SchlumpfSoftControls2">HeaderTitleFont -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Help" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C6.html" LinkGroup="SchlumpfSoftControls2">Help -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.HelpText" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D6.html" LinkGroup="SchlumpfSoftControls2">HelpText -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.ImageHeader" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C9.html" LinkGroup="SchlumpfSoftControls2">ImageHeader -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.ImageWelcome" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CA.html" LinkGroup="SchlumpfSoftControls2">ImageWelcome -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.InactiveColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000074.html" LinkGroup="SchlumpfSoftControls2">InactiveColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.InactiveColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000085.html" LinkGroup="SchlumpfSoftControls2">InactiveColor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Indent" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004D.html" LinkGroup="SchlumpfSoftControls2">Indent -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.IndexOf" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FD.html" LinkGroup="SchlumpfSoftControls2">IndexOf -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000018.html" LinkGroup="SchlumpfSoftControls2">InitLayout -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SchlumpfSoftControls2Package.InitializeAsync" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000070_overloads--.html" LinkGroup="SchlumpfSoftControls2">InitializeAsync -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.Insert" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FE.html" LinkGroup="SchlumpfSoftControls2">Insert -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.IsGlossy" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000002A.html" LinkGroup="SchlumpfSoftControls2">IsGlossy -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.IsReady" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000042.html" LinkGroup="SchlumpfSoftControls2">IsReady -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ItalicFactor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000076.html" LinkGroup="SchlumpfSoftControls2">ItalicFactor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ItalicFactor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000087.html" LinkGroup="SchlumpfSoftControls2">ItalicFactor -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.Item" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FA.html" LinkGroup="SchlumpfSoftControls2">Item -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ItemHeight" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004E.html" LinkGroup="SchlumpfSoftControls2">ItemHeight -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.LineColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000049.html" LinkGroup="SchlumpfSoftControls2">LineColor -Eigenschaft {SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.LineColor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009D.html" LinkGroup="SchlumpfSoftControls2">LineColor -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.LineWidth" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009C.html" LinkGroup="SchlumpfSoftControls2">LineWidth -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.MaximumSize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000009.html" LinkGroup="SchlumpfSoftControls2">MaximumSize -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Message" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005B.html" LinkGroup="SchlumpfSoftControls2">Message -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.MinimumSize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000A.html" LinkGroup="SchlumpfSoftControls2">MinimumSize -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000072.html" LinkGroup="SchlumpfSoftControls2">MultiDigit -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000073.html" LinkGroup="SchlumpfSoftControls2">MultiDigit -Konstructor {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs.NewIndex" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E7.html" LinkGroup="SchlumpfSoftControls2">NewIndex -Eigenschaft {SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs.NewIndex" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000EA.html" LinkGroup="SchlumpfSoftControls2">NewIndex -Eigenschaft {SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Next" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D8.html" LinkGroup="SchlumpfSoftControls2">Next -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.NextEnabled" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D1.html" LinkGroup="SchlumpfSoftControls2">NextEnabled -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.NextText" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D3.html" LinkGroup="SchlumpfSoftControls2">NextText -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.NoAnimation" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000002.html" LinkGroup="SchlumpfSoftControls2">NoAnimation -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000059.html" LinkGroup="SchlumpfSoftControls2">NotifyForm -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005F.html" LinkGroup="SchlumpfSoftControls2">NotifyForm -Konstructor {SchlumpfSoft.Controls.NotifyFormControl.NotifyForm}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyFormDesign" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000061.html" LinkGroup="SchlumpfSoftControls2">NotifyFormDesign -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyFormStyle" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000065.html" LinkGroup="SchlumpfSoftControls2">NotifyFormStyle -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs.OldIndex" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E6.html" LinkGroup="SchlumpfSoftControls2">OldIndex -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnAfterSwitchPages" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DB.html" LinkGroup="SchlumpfSoftControls2">OnAfterSwitchPages -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnBeforeSwitchPages" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DA.html" LinkGroup="SchlumpfSoftControls2">OnBeforeSwitchPages -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnCancel" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DC.html" LinkGroup="SchlumpfSoftControls2">OnCancel -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnControlAdded" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E2.html" LinkGroup="SchlumpfSoftControls2">OnControlAdded -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnFinish" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DD.html" LinkGroup="SchlumpfSoftControls2">OnFinish -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnHelp" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DE.html" LinkGroup="SchlumpfSoftControls2">OnHelp -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.OnInsertComplete" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000101_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnInsertComplete -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnLoad" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000DF_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnLoad -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.OnPaddingChanged" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000095_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnPaddingChanged -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000019.html" LinkGroup="SchlumpfSoftControls2">OnPaint -Methode {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.OnPaint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A8_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnPaint -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage.OnPaint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F0.html" LinkGroup="SchlumpfSoftControls2">OnPaint -Methode {SchlumpfSoft.Controls.WizardControl.WizardPage}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnPaint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E1.html" LinkGroup="SchlumpfSoftControls2">OnPaint -Methode {SchlumpfSoft.Controls.WizardControl.Wizard}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.OnPaintBackground" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000082_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnPaintBackground -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.OnPaintBackground" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000096_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnPaintBackground -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.OnRemoveComplete" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000102_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnRemoveComplete -Methode</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.OnResize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E0_overloads--.html" LinkGroup="SchlumpfSoftControls2">OnResize -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SchlumpfSoftControls2Package.PackageGuidString" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006F.html" LinkGroup="SchlumpfSoftControls2">PackageGuidString -Feld</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Padding" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000B.html" LinkGroup="SchlumpfSoftControls2">Padding -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Padding" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000030.html" LinkGroup="SchlumpfSoftControls2">Padding -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageCustom" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F5.html" LinkGroup="SchlumpfSoftControls2">PageCustom -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageFinish" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F7.html" LinkGroup="SchlumpfSoftControls2">PageFinish -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageStandard" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F3.html" LinkGroup="SchlumpfSoftControls2">PageStandard -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageStyle" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000103.html" LinkGroup="SchlumpfSoftControls2">PageStyle -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageWelcome" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F1.html" LinkGroup="SchlumpfSoftControls2">PageWelcome -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.Pages" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C8.html" LinkGroup="SchlumpfSoftControls2">Pages -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F9.html" LinkGroup="SchlumpfSoftControls2">PagesCollection -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ProgressMaximumValue" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000025.html" LinkGroup="SchlumpfSoftControls2">ProgressMaximumValue -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ProvideToolboxControlAttribute" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006A.html" LinkGroup="SchlumpfSoftControls2">ProvideToolboxControlAttribute -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ProvideToolboxControlAttribute.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006B.html" LinkGroup="SchlumpfSoftControls2">ProvideToolboxControlAttribute -Konstructor {SchlumpfSoft.Controls.ProvideToolboxControlAttribute}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ProvideToolboxControlAttribute.Register" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006C_overloads--.html" LinkGroup="SchlumpfSoftControls2">Register -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PagesCollection.Remove" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000FF.html" LinkGroup="SchlumpfSoftControls2">Remove -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.RightToLeft" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000C.html" LinkGroup="SchlumpfSoftControls2">RightToLeft -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.RightToLeft" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000081.html" LinkGroup="SchlumpfSoftControls2">RightToLeft -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.RightToLeft" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000094.html" LinkGroup="SchlumpfSoftControls2">RightToLeft -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.RightToLeft" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A6.html" LinkGroup="SchlumpfSoftControls2">RightToLeft -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000109.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000000.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.AniGifControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000021.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.ColorProgressBarControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000033.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.DriveWatcherControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000045.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.ExplorerTreeViewControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000058.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.NotifyFormControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000071.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.SevenSegmentControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000098.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.ShapeControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B5.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.TransparentLabelControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BE.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoft.Controls.WizardControl -Namespace</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoftControls2 Reference" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000108.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoftControls2 Reference</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SchlumpfSoftControls2Package" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006E.html" LinkGroup="SchlumpfSoftControls2">SchlumpfSoftControls2Package -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.SegmentWidth" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000075.html" LinkGroup="SchlumpfSoftControls2">SegmentWidth -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.SegmentWidth" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000086.html" LinkGroup="SchlumpfSoftControls2">SegmentWidth -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.SelectedPage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CC.html" LinkGroup="SchlumpfSoftControls2">SelectedPage -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.SelectedPath" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000048.html" LinkGroup="SchlumpfSoftControls2">SelectedPath -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.SelectedPathChanged" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000047.html" LinkGroup="SchlumpfSoftControls2">SelectedPathChanged -Ereignis</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000099.html" LinkGroup="SchlumpfSoftControls2">Shape -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009A.html" LinkGroup="SchlumpfSoftControls2">Shape -Konstructor {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.ShapeModes" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000AA.html" LinkGroup="SchlumpfSoftControls2">ShapeModes -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModus" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000009B.html" LinkGroup="SchlumpfSoftControls2">ShapeModus -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Show" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000060.html" LinkGroup="SchlumpfSoftControls2">Show -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ShowBorder" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000029.html" LinkGroup="SchlumpfSoftControls2">ShowBorder -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ShowColon" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008C.html" LinkGroup="SchlumpfSoftControls2">ShowColon -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ShowDecimalPoint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000077.html" LinkGroup="SchlumpfSoftControls2">ShowDecimalPoint -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ShowDecimalPoint" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000008A.html" LinkGroup="SchlumpfSoftControls2">ShowDecimalPoint -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowLines" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004A.html" LinkGroup="SchlumpfSoftControls2">ShowLines -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowPlusMinus" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004B.html" LinkGroup="SchlumpfSoftControls2">ShowPlusMinus -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowRootLines" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000004C.html" LinkGroup="SchlumpfSoftControls2">ShowRootLines -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.ShowTime" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005C.html" LinkGroup="SchlumpfSoftControls2">ShowTime -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000083.html" LinkGroup="SchlumpfSoftControls2">SingleDigit -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000084.html" LinkGroup="SchlumpfSoftControls2">SingleDigit -Konstructor {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.SizeMode" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000001C.html" LinkGroup="SchlumpfSoftControls2">SizeMode -Enumeration</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005D.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.NotifyFormControl.NotifyForm}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageCustom.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F6.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.WizardControl.PageCustom}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageFinish.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F8.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.WizardControl.PageFinish}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageStandard.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F4.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.WizardControl.PageStandard}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.PageWelcome.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000F2.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.WizardControl.PageWelcome}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage.Style" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000EC.html" LinkGroup="SchlumpfSoftControls2">Style -Eigenschaft {SchlumpfSoft.Controls.WizardControl.WizardPage}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.Text" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000000D.html" LinkGroup="SchlumpfSoftControls2">Text -Eigenschaft {SchlumpfSoft.Controls.AniGifControl.AniGif}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Text" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000080.html" LinkGroup="SchlumpfSoftControls2">Text -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Text" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000093.html" LinkGroup="SchlumpfSoftControls2">Text -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ShapeControl.Shape.Text" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000A7.html" LinkGroup="SchlumpfSoftControls2">Text -Eigenschaft {SchlumpfSoft.Controls.ShapeControl.Shape}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Title" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000005E.html" LinkGroup="SchlumpfSoftControls2">Title -Eigenschaft {SchlumpfSoft.Controls.NotifyFormControl.NotifyForm}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage.Title" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000ED.html" LinkGroup="SchlumpfSoftControls2">Title -Eigenschaft {SchlumpfSoft.Controls.WizardControl.WizardPage}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalFreeSpace" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003E.html" LinkGroup="SchlumpfSoftControls2">TotalFreeSpace -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalSize" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003F.html" LinkGroup="SchlumpfSoftControls2">TotalSize -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B6.html" LinkGroup="SchlumpfSoftControls2">TransparentLabel -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000B7.html" LinkGroup="SchlumpfSoftControls2">TransparentLabel -Konstructor {SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel}</LItem>
+      </Links>
+   </Context>
+   
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ProvideToolboxControlAttribute.Unregister" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000006D_overloads--.html" LinkGroup="SchlumpfSoftControls2">Unregister -Methode</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Value" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000024.html" LinkGroup="SchlumpfSoftControls2">Value -Eigenschaft {SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Value" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000007A.html" LinkGroup="SchlumpfSoftControls2">Value -Eigenschaft {SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.VisibleHelp" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000C7.html" LinkGroup="SchlumpfSoftControls2">VisibleHelp -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.VolumeLabel" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_000000000000003C.html" LinkGroup="SchlumpfSoftControls2">VolumeLabel -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.WelcomeFont" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000CF.html" LinkGroup="SchlumpfSoftControls2">WelcomeFont -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.WelcomeTitleFont" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D0.html" LinkGroup="SchlumpfSoftControls2">WelcomeTitleFont -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000BF.html" LinkGroup="SchlumpfSoftControls2">Wizard -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.Wizard.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000D7.html" LinkGroup="SchlumpfSoftControls2">Wizard -Konstructor {SchlumpfSoft.Controls.WizardControl.Wizard}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000EB.html" LinkGroup="SchlumpfSoftControls2">WizardPage -Klasse</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.WizardPage.New" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000EF.html" LinkGroup="SchlumpfSoftControls2">WizardPage -Konstructor {SchlumpfSoft.Controls.WizardControl.WizardPage}</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.AniGifControl.AniGif.ZoomFactor" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_0000000000000008.html" LinkGroup="SchlumpfSoftControls2">ZoomFactor -Eigenschaft</LItem>
+      </Links>
+   </Context>
+   
+
+   <Context>
+      <Keywords>
+         <KItem Name="SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs._NewIndex" />
+      </Keywords>
+      <Links>
+         <LItem URL="ms-its:SchlumpfSoftControls2.chm::/topic_00000000000000E5.html" LinkGroup="SchlumpfSoftControls2">_NewIndex -Feld</LItem>
+      </Links>
+   </Context>
+   
+
+</DynamicHelp>
+
