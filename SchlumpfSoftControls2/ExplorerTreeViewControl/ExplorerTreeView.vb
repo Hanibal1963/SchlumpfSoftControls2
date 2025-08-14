@@ -229,12 +229,9 @@ Namespace ExplorerTreeViewControl
 
 #Region "ausgeblendete Eigenschaften"
 
-        ''' <doc>
-        '''       <summary>
-        '''               Stellt ein leeres Steuerelement zum Erstellen anderer
-        ''' Steuerelemente bereit.
-        '''             </summary>
-        '''     </doc>
+        ''' <summary>
+        ''' Ist für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Text As String
