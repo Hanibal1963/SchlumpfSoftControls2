@@ -29,7 +29,9 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="Path">Der neue ausgewählte Pfad.</param>
         Public Sub New(Path As String)
+
             SelectedPath = Path
+
         End Sub
 
     End Class

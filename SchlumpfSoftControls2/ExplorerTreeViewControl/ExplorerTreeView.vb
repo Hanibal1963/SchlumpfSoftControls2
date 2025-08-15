@@ -371,22 +371,24 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode wird einmalig beim Initialisieren des Steuerelements aufgerufen, um sicherzustellen, dass alle benötigten Bilder vorhanden sind.
         ''' </remarks>
         Private Sub LoadImages()
+
             TV.ImageList.Images.Clear()
-            TV.ImageList.Images.Add($"Computer", My.Resources.Computer)
-            TV.ImageList.Images.Add($"DriveSystem", My.Resources.DriveSystem)
-            TV.ImageList.Images.Add($"DriveFixed", My.Resources.DriveFixed)
-            TV.ImageList.Images.Add($"DriveCDROM", My.Resources.DriveCDRom)
-            TV.ImageList.Images.Add($"DriveRemovable", My.Resources.DriveRemovable)
-            TV.ImageList.Images.Add($"DriveNetwork", My.Resources.DriveNetwork)
-            TV.ImageList.Images.Add($"DriveRamDisk", My.Resources.DriveRamDisk)
-            TV.ImageList.Images.Add($"DriveFloppy", My.Resources.DriveDisk)
-            TV.ImageList.Images.Add($"DriveUnknown", My.Resources.DriveUnknown)
-            TV.ImageList.Images.Add($"Folder", My.Resources.Folder)
-            TV.ImageList.Images.Add($"FolderDesktop", My.Resources.FolderDesktop)
-            TV.ImageList.Images.Add($"FolderDocuments", My.Resources.FolderDocuments)
-            TV.ImageList.Images.Add($"FolderDownloads", My.Resources.FolderDownloads)
-            TV.ImageList.Images.Add($"FolderMusic", My.Resources.FolderMusic)
-            TV.ImageList.Images.Add($"FolderPictures", My.Resources.FolderPictures)
+            TV.ImageList.Images.Add(ICON_COMPUTER, My.Resources.Computer)
+            TV.ImageList.Images.Add(ICON_DRIVE_SYSTEM, My.Resources.DriveSystem)
+            TV.ImageList.Images.Add(ICON_DRIVE_FIXED, My.Resources.DriveFixed)
+            TV.ImageList.Images.Add(ICON_DRIVE_CDROM, My.Resources.DriveCDRom)
+            TV.ImageList.Images.Add(ICON_DRIVE_REMOVABLE, My.Resources.DriveRemovable)
+            TV.ImageList.Images.Add(ICON_DRIVE_NETWORK, My.Resources.DriveNetwork)
+            TV.ImageList.Images.Add(ICON_DRIVE_RAM, My.Resources.DriveRamDisk)
+            TV.ImageList.Images.Add(ICON_DRIVE_FLOPPY, My.Resources.DriveDisk)
+            TV.ImageList.Images.Add(ICON_DRIVE_UNKNOWN, My.Resources.DriveUnknown)
+            TV.ImageList.Images.Add(ICON_FOLDER_FOLDER, My.Resources.Folder)
+            TV.ImageList.Images.Add(ICON_FOLDER_DESKTOP, My.Resources.FolderDesktop)
+            TV.ImageList.Images.Add(ICON_FOLDER_DOCUMENTS, My.Resources.FolderDocuments)
+            TV.ImageList.Images.Add(ICON_FOLDER_DOWNLOADS, My.Resources.FolderDownloads)
+            TV.ImageList.Images.Add(ICON_FOLDER_MUSIC, My.Resources.FolderMusic)
+            TV.ImageList.Images.Add(ICON_FOLDER_PICTURES, My.Resources.FolderPictures)
+
         End Sub
 
         ''' <summary>

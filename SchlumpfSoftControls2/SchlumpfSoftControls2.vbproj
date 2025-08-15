@@ -93,6 +93,10 @@
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewControl\DriveDescConstantDefinitions.vb" />
+    <Compile Include="ExplorerTreeViewControl\DriveTypeKeyConstantDefinitions.vb" />
+    <Compile Include="ExplorerTreeViewControl\FolderNamesKeyConstantDefinitions.vb" />
+    <Compile Include="ExplorerTreeViewControl\IconKeyConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
     <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
