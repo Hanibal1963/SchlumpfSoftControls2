@@ -22,13 +22,13 @@ Namespace ExplorerTreeViewControl
         ''' Dieses Dictionary wird verwendet, um den Typ eines Laufwerks in eine menschenlesbare Zeichenfolge zu übersetzen.
         ''' </remarks>
         Private ReadOnly driveTypeMappings As New Dictionary(Of DriveType, String) From {
-            {DriveType.Fixed, "Fixed"},
-            {DriveType.CDRom, "CDROM"},
-            {DriveType.Removable, "Removable"},
-            {DriveType.Network, "Network"},
-            {DriveType.Ram, "RamDisk"},
-            {DriveType.NoRootDirectory, "NoRoot"},
-            {DriveType.Unknown, "Unknown"}
+            {DriveType.Fixed, DRIVETYPE_FIXED},
+            {DriveType.CDRom, DRIVETYPE_CDROM},
+            {DriveType.Removable, DRIVETYPE_REMOVABLE},
+            {DriveType.Network, DRIVETYPE_NETWORK},
+            {DriveType.Ram, DRIVETYPE_RAM},
+            {DriveType.NoRootDirectory, DRIVETYPE_NOROOT},
+            {DriveType.Unknown, DRIVETYPE_UNKNOWN}
         }
 
         ''' <summary>
@@ -53,23 +53,23 @@ Namespace ExplorerTreeViewControl
         ''' Dieses Dictionary wird verwendet, um die Imagekeys für Ordner und Laufwerke zu ermitteln.
         ''' </remarks>
         Private ReadOnly imageKeyMappings As New Dictionary(Of String, String) From {
-            {"Computer", "Computer"},
-            {"Desktop", "FolderDesktop"},
-            {"Dokumente", "FolderDocuments"},
-            {"Downloads", "FolderDownloads"},
-            {"Musik", "FolderMusic"},
-            {"Bilder", "FolderPictures"},
-            {"Videos", "FolderVideos"},
-            {"Folder", "Folder"},
-            {"System", "DriveSystem"},
-            {"Fixed", "DriveFixed"},
-            {"CDROM", "DriveCDROM"},
-            {"Floppy", "DriveFloppy"},
-            {"Removable", "DriveRemovable"},
-            {"Network", "DriveNetwork"},
-            {"RamDisk", "DiveRamDisk"},
-            {"NoRoot", "DriveNoRoot"},
-            {"Unknown", "DriveUnknown"}
+            {"Computer", ICON_COMPUTER},
+            {"Desktop", ICON_FOLDER_DESKTOP},
+            {"Dokumente", ICON_FOLDER_DOCUMENTS},
+            {"Downloads", ICON_FOLDER_DOWNLOADS},
+            {"Musik", ICON_FOLDER_MUSIC},
+            {"Bilder", ICON_FOLDER_PICTURES},
+            {"Videos", ICON_FOLDER_VIDEOS},
+            {"Folder", ICON_FOLDER_FOLDER},
+            {DRIVETYPE_SYSTEM, ICON_DRIVE_SYSTEM},
+            {DRIVETYPE_FIXED, ICON_DRIVE_FIXED},
+            {DRIVETYPE_CDROM, ICON_DRIVE_CDROM},
+            {DRIVETYPE_FLOPPY, ICON_DRIVE_FLOPPY},
+            {DRIVETYPE_REMOVABLE, ICON_DRIVE_REMOVABLE},
+            {DRIVETYPE_NETWORK, ICON_DRIVE_NETWORK},
+            {DRIVETYPE_RAM, ICON_DRIVE_RAM},
+            {DRIVETYPE_NOROOT, ICON_DRIVE_NOROOT},
+            {DRIVETYPE_UNKNOWN, ICON_DRIVE_UNKNOWN}
         }
 
 #Region "öffentliche Methoden"
@@ -81,31 +81,50 @@ Namespace ExplorerTreeViewControl
         ''' Das Laufwerk, dessen Name ermittelt werden soll.
         ''' </param>
         Public Function GetDriveName(drive As DriveInfo) As String
+
             ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
             Return drive.Name.Substring(0, drive.Name.Length - 1)
+
         End Function
 
         ''' <summary>
         ''' Ermittelt das Laufwerkslabel
         ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Label ermittelt werden soll.
-        ''' </param>
+        ''' <remarks>
+        ''' <para>Wenn das Laufwerk bereit ist, wird das VolumeLabel (Laufwerksbezeichnung)
+        ''' ermittelt.</para>
+        ''' <para><br/>
+        ''' Falls das Laufwerk kein Label besitzt (VolumeLabel ist leer oder
+        ''' Nothing),</para>
+        ''' <para><br/>
+        ''' wird stattdessen die Beschreibung des Laufwerkstyps als Label verwendet.<br/>
+        ''' </para>
+        ''' </remarks>
+        ''' <param name="drive">Das Laufwerk, dessen Label ermittelt werden soll.</param>
+        ''' <returns>
+        ''' Der Volumename, der Laufwerkstyp oder leer als String.
+        ''' </returns>
         Public Function GetVolumeLabel(drive As DriveInfo) As String
-            Dim result As String
+
+            ' Überprüfen, ob das Laufwerk bereit ist (z. B. ob ein Medium eingelegt und lesbar ist)
             If drive.IsReady Then
-                ' Wenn das Laufwerk bereit ist, wird das Label ermittelt.
-                ' Wenn das laufwerk kein Label hat, wird der LaufwerksTyp als Label benutzt
-                If String.IsNullOrEmpty(drive.VolumeLabel) Then
-                    result = GetDriveTypeDescription(drive)
-                Else
-                    result = drive.VolumeLabel
-                End If
+
+                ' Wenn das Laufwerk bereit ist, wird das VolumeLabel (Laufwerksbezeichnung) ermittelt.
+                ' Falls das Laufwerk kein Label besitzt (VolumeLabel ist leer oder Nothing),
+                ' wird stattdessen die Beschreibung des Laufwerkstyps als Label verwendet.
+                Return If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeDescription(drive), drive.VolumeLabel)
+
             Else
-                ' Wenn das Laufwerk nicht bereit ist, wird der Laufwerkstyp als Label benutzt
-                result = GetDriveTypeDescription(drive)
+
+                ' Wenn das Laufwerk nicht bereit ist (z. B. kein Medium eingelegt),
+                ' wird die Beschreibung des Laufwerkstyps als Label verwendet.
+                Return GetDriveTypeDescription(drive)
+
             End If
-            Return result
+
+            ' Rückgabe eines leeren Strings als Fallback (sollte eigentlich nie erreicht werden)
+            Return String.Empty
+
         End Function
 
         ''' <summary>
@@ -116,23 +135,28 @@ Namespace ExplorerTreeViewControl
         ''' Die Zeichenfolge die den laufwerkstyp darstellt oder eine leere Zeichenfolge.
         ''' </returns>
         Public Function GetDriveTypeString(Drive As DriveInfo) As String
+
             ' Überprüfen, ob das angegebene Laufwerk ein Systemlaufwerk ist.
             ' Systemlaufwerke sind in der Regel die primären Laufwerke, auf denen das Betriebssystem installiert ist.
             If IsSystemDrive(Drive) Then
-                Return "System"
+                Return ConstantDefinitions.DRIVETYPE_SYSTEM
             End If
+
             ' Überprüfen, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
             ' Diskettenlaufwerke sind veraltete Speichermedien, die selten verwendet werden.
             If IsFloppyDrive(Drive) Then
-                Return "Floppy"
+                Return ConstantDefinitions.DRIVETYPE_FLOPPY
             End If
+
             ' Versuchen, den Laufwerkstyp (DriveType) aus der vordefinierten Mapping-Tabelle zu ermitteln.
             ' Die Mapping-Tabelle ordnet DriveType-Werte (z. B. Fixed, CDRom) entsprechenden Zeichenfolgen zu.
             If driveTypeMappings.ContainsKey(Drive.DriveType) Then
                 Return driveTypeMappings(Drive.DriveType)
             End If
+
             ' Wenn der Laufwerkstyp nicht erkannt wird, wird eine leere Zeichenfolge zurückgegeben.
             Return String.Empty
+
         End Function
 
         ''' <summary>
@@ -141,23 +165,35 @@ Namespace ExplorerTreeViewControl
         ''' <param name="Text"></param>
         ''' <returns></returns>
         Public Function GetFolderPath(Text As String) As String
+
             Return If(folderMappings.ContainsKey(Text), folderMappings(Text), String.Empty)
+
         End Function
 
         ''' <summary>
         ''' Gibt den ImageKey für den angegebenen Namen zurück.
         ''' </summary>
-        ''' <param name="IconTypeString">Der Name (z. B. Ordner- oder
-        ''' Laufwerksname).</param>
+        ''' <param name="IconTypeString">Der Name (z. B. Ordner- oder Laufwerksname).</param>
         ''' <returns>
         ''' Der zugehörige ImageKey oder eine leere Zeichenfolge.
         ''' </returns>
         Public Function GetImageKey(IconTypeString As String) As String
+
+            ' Überprüft, ob das Dictionary "imageKeyMappings" den angegebenen Schlüssel ("IconTypeString") enthält.
+            ' Dies ist z. B. der Name eines Ordners oder Laufwerkstyps, für den ein passender ImageKey gesucht wird.
             If imageKeyMappings.ContainsKey(IconTypeString) Then
+
+                ' Wenn der Schlüssel gefunden wurde, wird der zugehörige ImageKey aus dem Dictionary zurückgegeben.
                 Return imageKeyMappings(IconTypeString)
+
             Else
-                Return String.Empty ' Standardwert für unbekannte Schlüssel
+
+                ' Falls der Schlüssel nicht existiert, wird eine leere Zeichenfolge zurückgegeben.
+                ' Dies dient als Standardwert für unbekannte oder nicht zugeordnete Schlüssel.
+                Return String.Empty
+
             End If
+
         End Function
 
 #End Region
@@ -171,27 +207,47 @@ Namespace ExplorerTreeViewControl
         ''' Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.
         ''' </param>
         Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
-            ' Ermitteln ob das Laufwerk das Diskettenlaufwerk A ode B ist
-            If drive.Name.StartsWith($"a", StringComparison.OrdinalIgnoreCase) Or
-               drive.Name.StartsWith($"b", StringComparison.OrdinalIgnoreCase) Then
+
+            ' Überprüft, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
+            ' Diskettenlaufwerke sind traditionell die Laufwerke "A:" und "B:" unter Windows.
+            ' Die Methode prüft, ob der Name des Laufwerks mit "a" oder "b" beginnt (unabhängig von Groß-/Kleinschreibung).
+            ' Dies ist eine einfache Heuristik, da Diskettenlaufwerke in modernen Systemen selten sind,
+            ' aber historisch immer mit diesen Buchstaben bezeichnet wurden.
+            If drive.Name.StartsWith("a", StringComparison.OrdinalIgnoreCase) Or
+               drive.Name.StartsWith("b", StringComparison.OrdinalIgnoreCase) Then
+
+                ' Wenn das Laufwerk mit "A" oder "B" beginnt, handelt es sich um ein Diskettenlaufwerk.
                 Return True
+
             End If
+
+            ' Wenn das Laufwerk nicht mit "A" oder "B" beginnt, ist es kein Diskettenlaufwerk.
             Return False
+
         End Function
 
         ''' <summary>
         ''' Ermittelt ob das Laufwerk das Systemlaufwerk ist
         ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, welches auf den Typ SystemDrive geprüft werden soll.
-        ''' </param>
+        ''' <param name="drive">Das Laufwerk, welches auf den Typ SystemDrive geprüft werden soll.</param>
         Private Function IsSystemDrive(drive As DriveInfo) As Boolean
-            Dim result As Boolean
+
+            ' Ermittelt das Root-Verzeichnis des Systemlaufwerks, indem der Pfad des Windows-Ordners verwendet wird.
+            ' Beispiel: Wenn Windows auf "C:\Windows" installiert ist, ergibt Path.GetPathRoot(...) "C:\".
             Dim systemdrive As String = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+
+            ' Vergleicht den Namen des übergebenen Laufwerks mit dem ermittelten Systemlaufwerk.
+            ' String.Equals wird verwendet, um eine kulturunabhängige, nicht case-sensitive Prüfung durchzuführen.
             If String.Equals(drive.Name, systemdrive, StringComparison.OrdinalIgnoreCase) Then
-                result = True
+
+                ' Wenn die Namen übereinstimmen, handelt es sich um das Systemlaufwerk.
+                Return True
+
             End If
-            Return result
+
+            ' Falls keine Übereinstimmung vorliegt, ist das Laufwerk kein Systemlaufwerk.
+            Return False
+
         End Function
 
         ''' <summary>
@@ -204,23 +260,37 @@ Namespace ExplorerTreeViewControl
         ''' Eine Beschreibung des Laufwerkstyps, z. B. "Lokaler Datenträger" oder "CD-Laufwerk".
         ''' </returns>
         Private Function GetDriveTypeDescription(drive As DriveInfo) As String
+
             Select Case drive.DriveType
+
                 Case DriveType.Fixed
-                    Return "Lokaler Datenträger"
+                    Return ConstantDefinitions.DRIVE_DESC_FIXED
+
                 Case DriveType.CDRom
-                    Return "CD-Laufwerk"
+                    Return ConstantDefinitions.DRIVE_DESC_CDROM
+
                 Case DriveType.Removable
-                    Return If(IsFloppyDrive(drive), "Diskettenlaufwerk", "Wechselmedium")
+                    Return If(IsFloppyDrive(drive), ConstantDefinitions.DRIVE_DESC_FLOPPY, ConstantDefinitions.DRIVE_DESC_REMOVABLE)
+
                 Case DriveType.Network
-                    Return "Netzlaufwerk"
+                    Return ConstantDefinitions.DRIVE_DESC_NETWORK
+
                 Case DriveType.Ram
-                    Return "Ramlaufwerk"
+                    Return ConstantDefinitions.DRIVE_DESC_RAM
+
                 Case DriveType.NoRootDirectory
-                    Return "kein Root-Verzeichnis"
+                    Return ConstantDefinitions.DRIVE_DESC_NOROOT
+
                 Case DriveType.Unknown
-                    Return "Unbekanntes Laufwerk"
+                    Return ConstantDefinitions.DRIVE_DESC_UNKNOWN
+
+                Case Else
+
+                    ' Fallback für unbekannte oder zukünftige DriveType-Werte
+                    Return String.Empty
+
             End Select
-            Return String.Empty
+
         End Function
 
 #End Region
