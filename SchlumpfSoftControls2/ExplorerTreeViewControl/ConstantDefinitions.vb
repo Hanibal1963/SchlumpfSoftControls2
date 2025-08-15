@@ -21,7 +21,7 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
-#Region "Konstanten für Lauwerkstypen"
+#Region "Keykonstanten für Lauwerkstypen"
 
         Public Const DRIVETYPE_FIXED As String = "Fixed"
         Public Const DRIVETYPE_CDROM As String = "CDROM"
@@ -35,7 +35,7 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
-#Region "Konstanten für Symbolbezeichnungen"
+#Region "Keykonstanten für Symbolbezeichnungen"
 
         Public Const ICON_COMPUTER As String = "Computer"
         Public Const ICON_FOLDER_DESKTOP As String = "FolderDesktop"
@@ -57,7 +57,18 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
+#Region "Keykonstanten für Ordnernamen"
 
+        Public Const FOLDER_COMPUTER As String = "Computer"
+        Public Const FOLDER_DESKTOP As String = "Desktop"
+        Public Const FOLDER_DOKUMENTE As String = "Dokumente"
+        Public Const FOLDER_DOWNLOADS As String = "Downloads"
+        Public Const FOLDER_MUSIK As String = "Musik"
+        Public Const FOLDER_BILDER As String = "Bilder"
+        Public Const FOLDER_VIDEOS As String = "Videos"
+        Public Const FOLDER_FOLDER As String = "Folder"
+
+#End Region
 
 
 
