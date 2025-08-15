@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{829B9490-4CCA-40BC-4DD4-7D38DB01FE48}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		LICENSE.txt = LICENSE.txt
+		LICENSE.rtf = LICENSE.rtf
 		Links.md = Links.md
 		README.md = README.md
 		VS Marketplace Vorlage.md = VS Marketplace Vorlage.md
