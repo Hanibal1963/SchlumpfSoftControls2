@@ -42,42 +42,72 @@ Namespace ExplorerTreeViewControl
 
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New(Drive As DriveInfo)
+
             ' Setzt den Text des Knotens auf das Laufwerkslabel und den Laufwerksnamen (z. B. "Lokaler Datenträger (C:)").
             Text = $"{NodeHelpers.GetVolumeLabel(Drive)} ({NodeHelpers.GetDriveName(Drive)})"
+
             ' Speichert den Laufwerksnamen (z. B. "C:\") im Tag des Knotens.
             Tag = Drive.Name
+
             ' Ermittelt den Laufwerkstyp als String (z. B. "Lokaler Datenträger", "CD-Laufwerk").
             Dim drivetypestring As String = NodeHelpers.GetDriveTypeString(Drive)
+
             ' Ermittelt den Schlüssel für das Symbol basierend auf dem Laufwerkstyp.
             Dim key As String = NodeHelpers.GetImageKey(drivetypestring)
+
             ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
             ImageKey = key
             SelectedImageKey = key
+
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
+
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
             Nodes.Add(New TreeNode($"Ordner laden ..."))
+
         End Sub
 
         ''' <summary>
         ''' Lädt die Unterordner des Laufwerks
         ''' </summary>
+        ''' <remarks>
+        ''' <para>Diese Methode überprüft, ob das Laufwerk bereit ist, und lädt dann alle
+        ''' Unterordner als FolderNode-Knoten. </para>
+        ''' <para>Fehler wie Zugriffsverletzungen oder IO-Probleme werden abgefangen und
+        ''' führen nicht zum Abbruch.</para>
+        ''' </remarks>
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSubfolders()
+
             Try
+
+                ' Erstellt ein DriveInfo-Objekt für das aktuelle Laufwerk
                 Dim drive As New DriveInfo(FullPath)
+
+                ' Prüft, ob das Laufwerk bereit ist (z. B. CD eingelegt, Netzwerk verbunden)
                 If drive.IsReady Then
+
+                    ' Durchläuft alle Unterverzeichnisse des Laufwerks
                     For Each dir As String In IO.Directory.GetDirectories(FullPath)
+
+                        ' Fügt jeden gefundenen Ordner als FolderNode dem Knoten hinzu
                         Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+
                     Next
+
                 End If
+
             Catch ex As UnauthorizedAccessException
-                ' Zugriff verweigert – Ordner wird übersprungen
+                ' Zugriff verweigert – Ordner wird übersprungen, keine Fehlermeldung
+
             Catch ex As IOException
-                ' IO-Fehler – z.B. Laufwerk nicht verfügbar
+                ' IO-Fehler – z.B. Laufwerk nicht verfügbar, keine Fehlermeldung
+
             Catch ex As Exception
-                ' Allgemeiner Fehler – optional loggen
+                ' Allgemeiner Fehler – optional loggen, keine Fehlermeldung
+
             End Try
+
         End Sub
 
     End Class
