@@ -38,12 +38,12 @@ Namespace ExplorerTreeViewControl
         ''' Dieses Dictionary wird verwendet, um den vollständigen Pfad eines speziellen Ordners basierend auf seinem Namen zu ermitteln.
         ''' </remarks>
         Private ReadOnly folderMappings As New Dictionary(Of String, String) From {
-            {"Desktop", Environment.GetFolderPath(Environment.SpecialFolder.Desktop)},
-            {"Dokumente", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)},
-            {"Downloads", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads")},
-            {"Musik", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)},
-            {"Bilder", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)},
-            {"Videos", Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)}
+            {FOLDER_DESKTOP, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)},
+            {FOLDER_DOKUMENTE, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)},
+            {FOLDER_DOWNLOADS, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads")},
+            {FOLDER_MUSIK, Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)},
+            {FOLDER_BILDER, Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)},
+            {FOLDER_VIDEOS, Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)}
         }
 
         ''' <summary>
@@ -53,14 +53,14 @@ Namespace ExplorerTreeViewControl
         ''' Dieses Dictionary wird verwendet, um die Imagekeys für Ordner und Laufwerke zu ermitteln.
         ''' </remarks>
         Private ReadOnly imageKeyMappings As New Dictionary(Of String, String) From {
-            {"Computer", ICON_COMPUTER},
-            {"Desktop", ICON_FOLDER_DESKTOP},
-            {"Dokumente", ICON_FOLDER_DOCUMENTS},
-            {"Downloads", ICON_FOLDER_DOWNLOADS},
-            {"Musik", ICON_FOLDER_MUSIC},
-            {"Bilder", ICON_FOLDER_PICTURES},
-            {"Videos", ICON_FOLDER_VIDEOS},
-            {"Folder", ICON_FOLDER_FOLDER},
+            {FOLDER_COMPUTER, ICON_COMPUTER},
+            {FOLDER_DESKTOP, ICON_FOLDER_DESKTOP},
+            {FOLDER_DOKUMENTE, ICON_FOLDER_DOCUMENTS},
+            {FOLDER_DOWNLOADS, ICON_FOLDER_DOWNLOADS},
+            {FOLDER_MUSIK, ICON_FOLDER_MUSIC},
+            {FOLDER_BILDER, ICON_FOLDER_PICTURES},
+            {FOLDER_VIDEOS, ICON_FOLDER_VIDEOS},
+            {FOLDER_FOLDER, ICON_FOLDER_FOLDER},
             {DRIVETYPE_SYSTEM, ICON_DRIVE_SYSTEM},
             {DRIVETYPE_FIXED, ICON_DRIVE_FIXED},
             {DRIVETYPE_CDROM, ICON_DRIVE_CDROM},
@@ -263,31 +263,14 @@ Namespace ExplorerTreeViewControl
 
             Select Case drive.DriveType
 
-                Case DriveType.Fixed
-                    Return ConstantDefinitions.DRIVE_DESC_FIXED
-
-                Case DriveType.CDRom
-                    Return ConstantDefinitions.DRIVE_DESC_CDROM
-
-                Case DriveType.Removable
-                    Return If(IsFloppyDrive(drive), ConstantDefinitions.DRIVE_DESC_FLOPPY, ConstantDefinitions.DRIVE_DESC_REMOVABLE)
-
-                Case DriveType.Network
-                    Return ConstantDefinitions.DRIVE_DESC_NETWORK
-
-                Case DriveType.Ram
-                    Return ConstantDefinitions.DRIVE_DESC_RAM
-
-                Case DriveType.NoRootDirectory
-                    Return ConstantDefinitions.DRIVE_DESC_NOROOT
-
-                Case DriveType.Unknown
-                    Return ConstantDefinitions.DRIVE_DESC_UNKNOWN
-
-                Case Else
-
-                    ' Fallback für unbekannte oder zukünftige DriveType-Werte
-                    Return String.Empty
+                Case DriveType.Fixed : Return DRIVE_DESC_FIXED
+                Case DriveType.CDRom : Return DRIVE_DESC_CDROM
+                Case DriveType.Removable : Return If(IsFloppyDrive(drive), DRIVE_DESC_FLOPPY, DRIVE_DESC_REMOVABLE)
+                Case DriveType.Network : Return DRIVE_DESC_NETWORK
+                Case DriveType.Ram : Return DRIVE_DESC_RAM
+                Case DriveType.NoRootDirectory : Return DRIVE_DESC_NOROOT
+                Case DriveType.Unknown : Return DRIVE_DESC_UNKNOWN
+                Case Else : Return String.Empty ' Fallback für unbekannte oder zukünftige DriveType-Werte
 
             End Select
 
