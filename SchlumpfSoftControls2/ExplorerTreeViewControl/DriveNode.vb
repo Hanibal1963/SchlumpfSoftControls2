@@ -40,44 +40,8 @@ Namespace ExplorerTreeViewControl
             End Get
         End Property
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New(Drive As DriveInfo)
-            ' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
-            SetProperties(Drive)
-            ' Leert die Knoten, um Platz für Unterordner zu schaffen
-            Nodes.Clear()
-            ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Dim unused = Nodes.Add(New TreeNode($"Ordner laden ..."))
-        End Sub
-
-        ''' <summary>
-        ''' Lädt die Unterordner des Laufwerks
-        ''' </summary>
-        Public Sub LoadSubfolders()
-            Try
-                Dim drive As New DriveInfo(FullPath)
-                If drive.IsReady Then
-                    For Each dir As String In IO.Directory.GetDirectories(FullPath)
-                        Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
-                    Next
-                End If
-            Catch ex As UnauthorizedAccessException
-                ' Zugriff verweigert – Ordner wird übersprungen
-            End Try
-        End Sub
-
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Knotens basierend auf dem Laufwerk
-        ''' </summary>
-        ''' <param name="Drive">
-        ''' Das Laufwerk, dessen Eigenschaften gesetzt werden sollen.
-        ''' </param>
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Knotens basierend auf dem übergebenen Laufwerk.
-        ''' </summary>
-        ''' <param name="Drive">
-        ''' Das Laufwerk, dessen Eigenschaften verwendet werden sollen.
-        ''' </param>
-        Private Sub SetProperties(Drive As DriveInfo)
             ' Setzt den Text des Knotens auf das Laufwerkslabel und den Laufwerksnamen (z. B. "Lokaler Datenträger (C:)").
             Text = $"{NodeHelpers.GetVolumeLabel(Drive)} ({NodeHelpers.GetDriveName(Drive)})"
             ' Speichert den Laufwerksnamen (z. B. "C:\") im Tag des Knotens.
@@ -89,6 +53,31 @@ Namespace ExplorerTreeViewControl
             ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
             ImageKey = key
             SelectedImageKey = key
+            ' Leert die Knoten, um Platz für Unterordner zu schaffen
+            Nodes.Clear()
+            ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
+            Nodes.Add(New TreeNode($"Ordner laden ..."))
+        End Sub
+
+        ''' <summary>
+        ''' Lädt die Unterordner des Laufwerks
+        ''' </summary>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
+        Public Sub LoadSubfolders()
+            Try
+                Dim drive As New DriveInfo(FullPath)
+                If drive.IsReady Then
+                    For Each dir As String In IO.Directory.GetDirectories(FullPath)
+                        Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+                    Next
+                End If
+            Catch ex As UnauthorizedAccessException
+                ' Zugriff verweigert – Ordner wird übersprungen
+            Catch ex As IOException
+                ' IO-Fehler – z.B. Laufwerk nicht verfügbar
+            Catch ex As Exception
+                ' Allgemeiner Fehler – optional loggen
+            End Try
         End Sub
 
     End Class
