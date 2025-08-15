@@ -15,6 +15,9 @@ Namespace ExplorerTreeViewControl
     ''' <remarks></remarks>
     Friend Module NodeHelpers
 
+
+#Region "Definition der internen Dictionarys"
+
         ''' <summary>
         ''' Dictionary mit Zuordnungen von DriveType-Werten zu entsprechenden Zeichenfolgen.
         ''' </summary>
@@ -71,6 +74,8 @@ Namespace ExplorerTreeViewControl
             {DRIVETYPE_NOROOT, ICON_DRIVE_NOROOT},
             {DRIVETYPE_UNKNOWN, ICON_DRIVE_UNKNOWN}
         }
+
+#End Region
 
 #Region "öffentliche Methoden"
 
