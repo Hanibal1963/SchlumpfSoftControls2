@@ -142,7 +142,10 @@
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2094" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2101">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AniGifControl\AniGif.resx">
@@ -215,7 +218,7 @@
     <EmbeddedResource Include="Resources\DriveNetwork.png" />
     <EmbeddedResource Include="Resources\DriveCDRom.png" />
     <EmbeddedResource Include="Resources\DriveFixed.png" />
-    <Content Include="Icon.jpg">
+    <Content Include="Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
