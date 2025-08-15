@@ -24,13 +24,25 @@ Namespace ExplorerTreeViewControl
         ''' <remarks></remarks>        
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New()
-            ' Setzt die Eigenschaften des Knotens, wie Name und Icons
-            SetProperties()
+
+            ' Hole den Namen des Computers
+            Dim computerName As String = Environment.MachineName
+
+            'Setze den Text des Knotens mit dem Computernamen
+            Text = $"Dieser Computer ({computerName})"
+
+            ' Setze das Icon für den Knoten
+            Dim key As String = NodeHelpers.GetImageKey("Computer")
+            ImageKey = key
+            SelectedImageKey = key
+
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
+
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
             Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
             Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+
         End Sub
 
         ''' <summary>
@@ -38,6 +50,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSpecialFolders()
+
             ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
             Nodes.Add(New SpecialFolderNode("Desktop"))
             Nodes.Add(New SpecialFolderNode("Dokumente"))
@@ -45,6 +58,7 @@ Namespace ExplorerTreeViewControl
             Nodes.Add(New SpecialFolderNode("Musik"))
             Nodes.Add(New SpecialFolderNode("Bilder"))
             Nodes.Add(New SpecialFolderNode("Videos"))
+
         End Sub
 
         ''' <summary>
@@ -52,29 +66,15 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadDrives()
+
             ' Iteriere über alle verfügbaren Laufwerke und füge sie als Knoten hinzu
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
+
                 Dim driveNode As New DriveNode(drive)
                 Nodes.Add(driveNode)
-            Next
-        End Sub
 
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Computer-Knotens.
-        ''' </summary>
-        ''' <remarks>
-        ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den
-        ''' entsprechenden Icons.
-        ''' </remarks>
-        Private Sub SetProperties()
-            ' Hole den Namen des Computers
-            Dim computerName As String = Environment.MachineName
-            ' Setze das Icon für den Knoten
-            Dim key As String = NodeHelpers.GetImageKey("Computer")
-            ImageKey = key
-            SelectedImageKey = key
-            'Setze den Text des Knotens mit dem Computernamen
-            Text = $"Dieser Computer ({computerName})"
+            Next
+
         End Sub
 
     End Class
