@@ -21,57 +21,60 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.ComputerNode"/>. 
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks></remarks>        
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New()
-            ' Setzt die Eigenschaften des Knotens, wie Name und Icons
-            SetProperties()
+
+            ' Hole den Namen des Computers
+            Dim computerName As String = Environment.MachineName
+
+            'Setze den Text des Knotens mit dem Computernamen
+            Text = $"Dieser Computer ({computerName})"
+
+            ' Setze das Icon für den Knoten
+            Dim key As String = NodeHelpers.GetImageKey("Computer")
+            ImageKey = key
+            SelectedImageKey = key
+
             ' Leert die Knoten, um Platz für spezielle Ordner und Laufwerke zu schaffen
             Nodes.Clear()
+
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
-            Dim unused = Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
-            Dim unused1 = Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+            Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
+            Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+
         End Sub
 
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSpecialFolders()
+
             ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
-            Dim unused = Nodes.Add(New SpecialFolderNode("Desktop"))
-            Dim unused1 = Nodes.Add(New SpecialFolderNode("Dokumente"))
-            Dim unused2 = Nodes.Add(New SpecialFolderNode("Downloads"))
-            Dim unused3 = Nodes.Add(New SpecialFolderNode("Musik"))
-            Dim unused4 = Nodes.Add(New SpecialFolderNode("Bilder"))
-            Dim unused5 = Nodes.Add(New SpecialFolderNode("Videos"))
+            Nodes.Add(New SpecialFolderNode("Desktop"))
+            Nodes.Add(New SpecialFolderNode("Dokumente"))
+            Nodes.Add(New SpecialFolderNode("Downloads"))
+            Nodes.Add(New SpecialFolderNode("Musik"))
+            Nodes.Add(New SpecialFolderNode("Bilder"))
+            Nodes.Add(New SpecialFolderNode("Videos"))
+
         End Sub
 
         ''' <summary>
         ''' Lädt die Laufwerke des Computers und fügt sie dem Knoten hinzu.
         ''' </summary>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadDrives()
+
             ' Iteriere über alle verfügbaren Laufwerke und füge sie als Knoten hinzu
             For Each drive As IO.DriveInfo In IO.DriveInfo.GetDrives()
-                Dim driveNode As New DriveNode(drive)
-                Dim unused = Nodes.Add(driveNode)
-            Next
-        End Sub
 
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Computer-Knotens.
-        ''' </summary>
-        ''' <remarks>
-        ''' Diese Methode initialisiert den Knoten mit dem Computernamen und den
-        ''' entsprechenden Icons.
-        ''' </remarks>
-        Private Sub SetProperties()
-            ' Hole den Namen des Computers
-            Dim computerName As String = Environment.MachineName
-            ' Setze das Icon für den Knoten
-            Dim key As String = NodeHelpers.GetImageKey("Computer")
-            ImageKey = key
-            SelectedImageKey = key
-            'Setze den Text des Knotens mit dem Computernamen
-            Text = $"Dieser Computer ({computerName})"
+                Dim driveNode As New DriveNode(drive)
+                Nodes.Add(driveNode)
+
+            Next
+
         End Sub
 
     End Class

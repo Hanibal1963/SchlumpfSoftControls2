@@ -31,49 +31,61 @@ Namespace ExplorerTreeViewControl
             End Get
         End Property
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see
+        ''' cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.FolderNode"/>.
+        ''' </summary>
+        ''' <param name="Text">Text der den Name des Ordners wiederspiegelt.</param>
+        ''' <param name="FullPath">Der komplette Pfad auf dem Datenträger für diesen
+        ''' Ordner.</param>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New(Text As String, FullPath As String)
-            ' Setzt die Eigenschaften des Knotens basierend auf dem Text und dem vollständigen Pfad
-            SetProperties(Text, FullPath)
+
+            ' Setzt den angezeigten Namen des Knotens
+            Me.Text = Text
+
+            ' Speichert den vollständigen Pfad des Ordners im Tag-Property
+            Tag = FullPath
+
+            ' Holt den Bildschlüssel für das Ordner-Icon und weist ihn zu
+            Dim key As String = NodeHelpers.GetImageKey("Folder")
+            ImageKey = key
+            SelectedImageKey = key
+
             ' Leert die Knoten, um Platz für Unterordner zu schaffen
             Nodes.Clear()
+
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Dim unused = Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Nodes.Add(New TreeNode($"Ordner laden ..."))
+
         End Sub
 
         ''' <summary>
         ''' Lädt die Unterordner des Knotens und fügt sie dem Knoten hinzu.
-        ''' Diese Methode wird aufgerufen, wenn der Knoten erweitert wird, um die Unterordner des Ordners zu laden.
         ''' </summary>
         ''' <remarks>
-        ''' Diese Methode versucht, alle Unterordner des Ordners zu laden, der im Tag des Knotens gespeichert ist.
-        ''' Bei Zugriff verweigert (UnauthorizedAccessException) wird der Ordner übersprungen.
-        ''' </remarks
+        ''' Diese Methode wird aufgerufen, wenn der Knoten erweitert wird, um die
+        ''' Unterordner des Ordners zu laden.
+        ''' </remarks>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSubfolders()
+
             Try
+
+                ' Durchlaufe alle Unterverzeichnisse des aktuellen Ordners
                 For Each dir As String In IO.Directory.GetDirectories(FullPath)
-                    Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+
+                    ' Füge für jedes Unterverzeichnis einen neuen FolderNode hinzu
+                    Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+
                 Next
+
             Catch ex As UnauthorizedAccessException
                 ' Zugriff verweigert – Ordner wird übersprungen
-            End Try
-        End Sub
+                ' Hier könnte optional Logging oder eine Benutzerbenachrichtigung erfolgen
 
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Knotens basierend auf dem Text und des Pfades.
-        ''' </summary>
-        ''' <param name="Text">
-        ''' Name des Orners, der im Knoten angezeigt wird.
-        ''' </param>
-        ''' <param name="FullPath">
-        ''' Vollständiger Pfad des Ordners, der im Tag des Knotens gespeichert wird.
-        ''' Dies ermöglicht den Zugriff auf den Ordnerpfad, wenn der Knoten ausgewählt wird oder Unterordner geladen werden müssen.
-        ''' </param>
-        Private Sub SetProperties(Text As String, FullPath As String)
-            Me.Text = Text
-            Tag = FullPath
-            Dim key As String = NodeHelpers.GetImageKey("Folder")
-            ImageKey = key
-            SelectedImageKey = key
+            End Try
+
         End Sub
 
     End Class

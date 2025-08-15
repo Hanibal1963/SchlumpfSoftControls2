@@ -27,38 +27,65 @@ Namespace ExplorerTreeViewControl
             End Get
         End Property
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see
+        ''' cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.SpecialFolderNode"/>.
+        ''' </summary>
+        ''' <param name="Text">Text der den Ordner</param>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New(Text As String)
-            ' Setzt die Eigenschaften des Knotens basierend auf dem Text
-            SetProperties(Text)
-            ' Leert die Knoten, um Platz für Unterordner zu schaffen
+
+            ' Setzt den angezeigten Text des Knotens auf den übergebenen Namen des Spezialordners
+            Me.Text = Text
+
+            ' Speichert den vollständigen Pfad des Spezialordners im Tag-Property des Knotens
+            ' Die Methode GetFolderPath(Text) ermittelt den Pfad basierend auf dem Namen des Spezialordners (z.B. "Desktop")
+            Tag = GetFolderPath(Text)
+
+            ' Ermittelt den Schlüssel für das anzuzeigende Symbol (ImageKey) anhand des Ordnernamens
+            ' Die Hilfsmethode NodeHelpers.GetImageKey(Text) liefert einen passenden Schlüssel für die Bildliste
+            Dim key As String = NodeHelpers.GetImageKey(Text)
+
+            ' Setzt das Symbol des Knotens auf den ermittelten Schlüssel
+            ImageKey = key
+
+            ' Setzt das Symbol des Knotens, wenn er ausgewählt ist, ebenfalls auf den ermittelten Schlüssel
+            SelectedImageKey = key
+
+            ' Entfernt alle vorhandenen untergeordneten Knoten, um Platz für die später geladenen Unterordner zu schaffen
             Nodes.Clear()
-            ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Dim unused = Nodes.Add(New TreeNode($"Ordner laden ..."))
+
+            ' Fügt einen Platzhalterknoten hinzu, der dem Benutzer anzeigt, dass die Unterordner noch geladen werden
+            ' Dieser Platzhalter wird später durch die tatsächlichen Unterordner ersetzt, sobald diese geladen wurden
+            Nodes.Add(New TreeNode($"Ordner laden ..."))
+
         End Sub
 
         ''' <summary>
         ''' Lädt die Unterordner des speziellen Ordners und fügt sie dem Knoten hinzu.
         ''' </summary>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSubfolders()
-            Try
-                For Each dir As String In IO.Directory.GetDirectories(FullPath)
-                    Dim unused = Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
-                Next
-            Catch ex As UnauthorizedAccessException
-                ' Zugriff verweigert – Ordner wird übersprungen
-            End Try
-        End Sub
 
-        ''' <summary>
-        ''' Setzt die Eigenschaften des Knotens basierend auf dem Text.
-        ''' </summary>
-        ''' <param name="Text"></param>
-        Private Sub SetProperties(Text As String)
-            Me.Text = Text
-            Tag = GetFolderPath(Text)
-            Dim key As String = NodeHelpers.GetImageKey(Text)
-            ImageKey = key
-            SelectedImageKey = key
+            ' Versucht, die Unterordner des angegebenen Spezialordners zu laden
+            Try
+
+                ' Durchläuft alle Verzeichnisse (Unterordner) im Pfad des Spezialordners
+                For Each dir As String In IO.Directory.GetDirectories(FullPath)
+
+                    ' Fügt für jeden gefundenen Unterordner einen neuen FolderNode zum aktuellen Knoten hinzu
+                    ' IO.Path.GetFileName(dir) extrahiert den Ordnernamen aus dem vollständigen Pfad
+                    ' "dir" ist der vollständige Pfad des Unterordners
+                    Nodes.Add(New FolderNode(IO.Path.GetFileName(dir), dir))
+
+                Next
+
+            Catch ex As UnauthorizedAccessException
+                ' Falls der Zugriff auf einen Ordner verweigert wird, wird die Ausnahme abgefangen
+                ' und der entsprechende Ordner übersprungen, ohne die Anwendung zu unterbrechen
+
+            End Try
+
         End Sub
 
     End Class
