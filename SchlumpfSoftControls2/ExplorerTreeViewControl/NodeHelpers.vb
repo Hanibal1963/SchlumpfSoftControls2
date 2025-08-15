@@ -15,7 +15,6 @@ Namespace ExplorerTreeViewControl
     ''' <remarks></remarks>
     Friend Module NodeHelpers
 
-
 #Region "Definition der internen Dictionarys"
 
         ''' <summary>
@@ -144,13 +143,13 @@ Namespace ExplorerTreeViewControl
             ' Überprüfen, ob das angegebene Laufwerk ein Systemlaufwerk ist.
             ' Systemlaufwerke sind in der Regel die primären Laufwerke, auf denen das Betriebssystem installiert ist.
             If IsSystemDrive(Drive) Then
-                Return ConstantDefinitions.DRIVETYPE_SYSTEM
+                Return DRIVETYPE_SYSTEM
             End If
 
             ' Überprüfen, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
             ' Diskettenlaufwerke sind veraltete Speichermedien, die selten verwendet werden.
             If IsFloppyDrive(Drive) Then
-                Return ConstantDefinitions.DRIVETYPE_FLOPPY
+                Return DRIVETYPE_FLOPPY
             End If
 
             ' Versuchen, den Laufwerkstyp (DriveType) aus der vordefinierten Mapping-Tabelle zu ermitteln.
