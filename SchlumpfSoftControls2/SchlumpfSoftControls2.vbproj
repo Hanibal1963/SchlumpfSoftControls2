@@ -59,9 +59,17 @@
   <ItemGroup>
     <None Include="AniGifControl\AniGifControl.cd" />
     <None Include="ExplorerTreeViewControl\ExplorerTreeViewControl.cd" />
+    <Content Include="LICENSE.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="NotifyFormControl\NotifyFormControl.cd" />
     <None Include="DriveWatcherControl\DriveWacherControl.cd" />
     <None Include="ColorProgressBarControl\ColorProgressBar.cd" />
+    <Content Include="ReleaseNotes.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="SevenSegmentControl\SevenSegmentControl.cd" />
     <None Include="ShapeControl\ShapeControl.cd" />
     <None Include="source.extension.vsixmanifest">
@@ -219,14 +227,6 @@
     <EmbeddedResource Include="Resources\DriveCDRom.png" />
     <EmbeddedResource Include="Resources\DriveFixed.png" />
     <Content Include="Icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="LICENSE.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="ReleaseNotes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
