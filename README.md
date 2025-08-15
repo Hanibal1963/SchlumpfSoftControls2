@@ -1,4 +1,4 @@
-# SchlumpfSoftControls2
+# SchlumpfSoftControls V2
 
 Eine Sammlung verschiedener Controls.
 
@@ -18,15 +18,15 @@ Das vorherige Projekt werde ich nach der Veröffentlichung dieses Projekts archi
 
 Zurzeit sind folgende Steuerelemente vorhanden:
 
-- AniGif Control - Ein Control zum anzeigen von animierten Grafiken.
-- DriveWatcher Control - Ein Control zum Überwachen der Laufwerke.
-- NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.
-- Wizard Control - Ein Control zum erstellen eines Assistenten.
-- Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
-- TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
-- SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige. 
-- ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
-- **NEU HINZUGEFÜGT** ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
+- **AniGif Control** - Ein Control zum anzeigen von animierten Grafiken.
+- **DriveWatcher Control** - Ein Control zum Überwachen der Laufwerke.
+- **NotifyForm Control** - Ein Control zum anzeigen eines Benachrichtigungsfensters.
+- **Wizard Control** - Ein Control zum erstellen eines Assistenten.
+- **Shape Control** - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
+- **TransparentLabel** Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
+- **SevenSegment Control** - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige. 
+- **ColorProgressBar Control** - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
+- **NEU HINZUGEFÜGT ExplorerTreeView Control** - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
 
 ---
 
