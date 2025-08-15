@@ -93,6 +93,7 @@
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewControl\ConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
     <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
