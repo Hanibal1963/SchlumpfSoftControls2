@@ -1,0 +1,58 @@
+﻿' *************************************************************************************************
+' ConstantDefinitions.vb
+' Copyright (c) 2025 by Andreas Sauer 
+' *************************************************************************************************
+
+Imports System.Security.Cryptography.X509Certificates
+
+Namespace ExplorerTreeViewControl
+    Friend Module ConstantDefinitions
+
+#Region "Konstanten für die Anzeigenamen der Laufwerkstypen"
+
+        Public Const DRIVE_DESC_FIXED As String = "Lokaler Datenträger"
+        Public Const DRIVE_DESC_CDROM As String = "CD-Laufwerk"
+        Public Const DRIVE_DESC_FLOPPY As String = "Diskettenlaufwerk"
+        Public Const DRIVE_DESC_REMOVABLE As String = "Wechselmedium"
+        Public Const DRIVE_DESC_NETWORK As String = "Netzlaufwerk"
+        Public Const DRIVE_DESC_RAM As String = "Ramlaufwerk"
+        Public Const DRIVE_DESC_NOROOT As String = "kein Root-Verzeichnis"
+        Public Const DRIVE_DESC_UNKNOWN As String = "Unbekanntes Laufwerk"
+
+#End Region
+
+#Region "Konstanten für Lauwerkstypen"
+
+        Public Const DRIVETYPE_FIXED As String = "Fixed"
+        Public Const DRIVETYPE_CDROM As String = "CDROM"
+        Public Const DRIVETYPE_REMOVABLE As String = "Removable"
+        Public Const DRIVETYPE_NETWORK As String = "Network"
+        Public Const DRIVETYPE_RAM As String = "RamDisk"
+        Public Const DRIVETYPE_NOROOT As String = "NoRoot"
+        Public Const DRIVETYPE_UNKNOWN As String = "Unknown"
+        Public Const DRIVETYPE_SYSTEM As String = "System"
+        Public Const DRIVETYPE_FLOPPY As String = "Floppy"
+
+#End Region
+
+#Region "Konstanten für Symbolbezeichnungen"
+
+        Public Const ICON_COMPUTER As String = "Computer"
+        Public Const ICON_FOLDER_DESKTOP As String = "FolderDesktop"
+        Public Const ICON_FOLDER_DOCUMENTS As String = "FolderDocuments"
+        Public Const ICON_FOLDER_DOWNLOADS As String = "FolderDownloads"
+        Public Const ICON_FOLDER_MUSIC As String = "FolderMusic"
+        Public Const ICON_FOLDER_PICTURES As String = "FolderPictures"
+        Public Const ICON_FOLDER_VIDEOS As String = "FolderVideos"
+        Public Const ICON_FOLDER_FOLDER As String = "Folder"
+
+#End Region
+
+
+
+
+
+
+    End Module
+
+End Namespace
