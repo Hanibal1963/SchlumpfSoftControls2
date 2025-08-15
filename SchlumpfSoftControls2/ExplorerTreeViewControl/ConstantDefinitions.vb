@@ -3,9 +3,8 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System.Security.Cryptography.X509Certificates
-
 Namespace ExplorerTreeViewControl
+
     Friend Module ConstantDefinitions
 
 #Region "Konstanten für die Anzeigenamen der Laufwerkstypen"
@@ -69,9 +68,6 @@ Namespace ExplorerTreeViewControl
         Public Const FOLDER_FOLDER As String = "Folder"
 
 #End Region
-
-
-
 
     End Module
 
