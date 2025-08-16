@@ -262,12 +262,16 @@ Namespace ExplorerTreeViewControl
         ''' Steuerelements zu definieren.</para>
         ''' </remarks>
         Public Sub New()
+
             ' Dieser Aufruf ist für den Designer erforderlich.
             InitializeComponent()
+
             ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
             LoadImages()
+
             ' Setzt den Wurzelknoten des TreeViews
             SetRootNode()
+
         End Sub
 
         ''' <summary>
@@ -282,32 +286,45 @@ Namespace ExplorerTreeViewControl
         ''' langword="false"/>
         ''' </returns>
         Public Function ExpandPath(Path As String) As Boolean
+
             ' Ist der Pfad ungültig oder leer, wird keine weitere Verarbeitung durchgeführt.
             If String.IsNullOrWhiteSpace(Path) Then Return False
+
             ' Startet mit einem leeren Pfad (wird schrittweise aufgebaut)
             Dim lastpath As String = String.Empty
+
             ' Beginnt beim Wurzelknoten ("Dieser Computer") und öffnet diesen
             Dim lastnode As TreeNode = TV.Nodes.Item(0)
             lastnode.Expand()
-            Dim foundNode As TreeNode
+
             ' Zerlegt den Zielpfad in einzelne Segmente (z.B. "C:", "Benutzer", "Name", "Dokumente")
+            Dim foundNode As TreeNode
             For Each pathsegment As String In GetPathSegments(Path)
+
                 ' Fügt das aktuelle Segment zum bisherigen Pfad hinzu
                 lastpath = IO.Path.Combine(lastpath, pathsegment)
+
                 ' Sucht unter den Kindknoten von lastnode nach einem Knoten mit dem aktuellen Pfad
                 foundNode = FindNodeByPath(lastnode.Nodes, lastpath)
+
                 ' Falls kein passender Knoten gefunden wurde, bricht die Methode ab (Pfad existiert nicht im TreeView)
                 If IsNothing(foundNode) Then Return False
+
                 ' Expandiert den gefundenen Knoten, damit dessen Unterknoten geladen werden
                 foundNode.Expand()
+
                 ' Setzt lastnode auf den gefundenen Knoten, um in der nächsten Iteration darunter weiterzusuchen
                 lastnode = foundNode
+
             Next
+
             ' Nach der Schleife: lastnode ist der Knoten, der dem Zielpfad entspricht
             ' Setzt diesen Knoten als ausgewählt im TreeView
             TV.SelectedNode = lastnode
+
             ' Gibt zurück, dass der Knoten erfolgreich gefunden und selektiert wurde
             Return True
+
         End Function
 
 #End Region
@@ -326,20 +343,28 @@ Namespace ExplorerTreeViewControl
         ''' Eine Liste der einzelnen Pfadsegmente, beginnend mit dem Wurzelverzeichnis.
         ''' </returns>
         Private Shared Function GetPathSegments(Path As String) As List(Of String)
+
             ' Erzeugt ein DirectoryInfo-Objekt für den angegebenen Pfad
             Dim dirInfo As New DirectoryInfo(Path)
+
             ' Liste, in der die einzelnen Segmente gesammelt werden
             Dim result As New List(Of String)
+
             ' Solange das DirectoryInfo-Objekt gültig ist und einen Namen hat
             While dirInfo IsNot Nothing AndAlso Not String.IsNullOrEmpty(dirInfo.Name)
+
                 ' Fügt den aktuellen Verzeichnisnamen am Anfang der Liste ein
-                ' (so bleibt die Reihenfolge von Wurzel zu Blatt erhalten)
+                ' (so bleibt die Reihenfolge erhalten)
                 result.Insert(0, dirInfo.Name)
+
                 ' Geht ein Verzeichnis nach oben (Parent)
                 dirInfo = dirInfo.Parent
+
             End While
+
             ' Gibt die Liste der Segmente zurück
             Return result
+
         End Function
 
         ''' <summary>
@@ -350,15 +375,21 @@ Namespace ExplorerTreeViewControl
         ''' Der Wurzelknoten repräsentiert "Dieser Computer" und bildet die Basis für die Anzeige von Laufwerken und speziellen Ordnern.
         ''' Nach dem Hinzufügen wird der Wurzelknoten automatisch erweitert, sodass dessen Unterknoten (z.B. Laufwerke) sichtbar sind.
         ''' </remarks>
+        <CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Private Sub SetRootNode()
+
             ' Alle vorhandenen Knoten im TreeView entfernen
             TV.Nodes.Clear()
+
             ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
             Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
+
             ' Den Wurzelknoten zum TreeView hinzufügen
-            Dim unused = TV.Nodes.Add(rootnode)
+            TV.Nodes.Add(rootnode)
+
             ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
             TV.Nodes.Item(0).Expand()
+
         End Sub
 
         ''' <summary>
@@ -396,104 +427,64 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="node"></param>
         Private Function GetDirectoryPath(node As TreeNode) As String
-            Dim path As String = String.Empty
+
             Select Case True
+
                 Case TypeOf node Is ComputerNode
                     ' "Dieser Computer" hat keinen Pfad
-                    path = String.Empty
+                    Return String.Empty
+
                 Case TypeOf node Is DriveNode
                     ' Gibt den Laufwerksbuchstaben zurück
-                    path = CType(node, DriveNode).FullPath
+                    Return CType(node, DriveNode).FullPath
+
                 Case TypeOf node Is SpecialFolderNode
                     ' Gibt den Pfad für Spezialordner zurück
-                    path = CType(node, SpecialFolderNode).FullPath
+                    Return CType(node, SpecialFolderNode).FullPath
+
                 Case TypeOf node Is FolderNode
                     ' Gibt den Pfad für alle anderen Ordner zurück
-                    path = CType(node, FolderNode).FullPath
+                    Return CType(node, FolderNode).FullPath
+
+                Case Else
+                    '
+                    Return String.Empty
+
             End Select
-            Return path
+
         End Function
 
         ''' <summary>
-        ''' Lädt die Unterordner eines Ordners, wenn der Knoten erweitert wird.
+        ''' Lädt die untergeordneten Knoten neu ein.
         ''' </summary>
-        ''' <param name="e"></param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn ein Ordnerknoten im TreeView erweitert wird.
-        ''' Sie leert die vorhandenen Knoten und lädt die Unterordner des Ordners neu.
-        ''' Diese Methode ist entscheidend für die Anzeige der Unterordner eines Ordners im TreeView.
-        ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer einen Ordner öffnet.
-        ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
-        ''' </remarks>
-        Private Sub LoadFoldersSubfolders(Node As TreeNode)
-            ' Typumwandlung des Knotens in FolderNode
-            Dim foldernode As FolderNode = CType(Node, FolderNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            foldernode.Nodes.Clear()
-            ' Laden der Unterordner des Ordners
-            foldernode.LoadSubfolders()
-        End Sub
+        ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden sollen.</param>
+        Private Sub LoadSubfolders(Node As TreeNode)
 
-        ''' <summary>
-        ''' Lädt die Unterordner eines Laufwerks, wenn der Knoten erweitert wird.
-        ''' </summary>
-        ''' <param name="e"></param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn ein Laufwerksknoten im TreeView erweitert wird.
-        ''' Sie leert die vorhandenen Knoten und lädt die Unterordner des Laufwerks neu.
-        ''' Diese Methode ist entscheidend für die Anzeige der Unterordner von Laufwerken im TreeView.
-        ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer ein Laufwerk öffnet.
-        ''' Dadurch wird eine effiziente Navigation durch die Ordnerstruktur ermöglicht.
-        ''' </remarks>
-        Private Sub LoadDriveSubfolders(Node As TreeNode)
-            ' Typumwandlung des Knotens in DriveNode
-            Dim drivenode As DriveNode = CType(Node, DriveNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            drivenode.Nodes.Clear()
-            ' Laden der Unterordner des Laufwerks
-            drivenode.LoadSubfolders()
-        End Sub
+            ' löscht alle untergeordneten Knoten
+            Node.Nodes.Clear()
 
-        ''' <summary>
-        ''' Lädt die Unterordner eines speziellen Ordners, wenn der Knoten erweitert wird.
-        ''' </summary>
-        ''' <param name="e"></param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn ein spezieller Ordnerknoten im TreeView erweitert wird.
-        ''' Sie leert die vorhandenen Knoten und lädt die Unterordner des speziellen Ordners neu.
-        ''' 
-        ''' Diese Methode ist entscheidend für die Anzeige der Unterordner von speziellen Ordnern wie "Desktop", "Dokumente" usw.
-        ''' Sie sorgt dafür, dass die Struktur des TreeViews dynamisch erweitert wird, wenn der Benutzer einen speziellen Ordner öffnet.
-        ''' </remarks>
-        Private Sub LoadSpecialFoldersSubfolders(Node As TreeNode)
-            ' Typumwandlung des Knotens in SpecialFolderNode
-            Dim spezialfoldernode As SpecialFolderNode = CType(Node, SpecialFolderNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            spezialfoldernode.Nodes.Clear()
-            ' Laden der Unterordner des speziellen Ordners
-            spezialfoldernode.LoadSubfolders()
-        End Sub
+            ' lädt die untergeordneten Knoten des entsprechenden Knotentyps neu
+            Select Case True
 
-        ''' <summary>
-        ''' Lädt die speziellen Ordner und Laufwerke, wenn der Computer-Knoten erweitert wird.
-        ''' </summary>
-        ''' <param name="e"></param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn der Computer-Knoten im TreeView erweitert wird.
-        ''' Sie leert die vorhandenen Knoten und lädt die speziellen Ordner sowie die Laufwerke neu. 
-        ''' 
-        ''' Diese Methode ist entscheidend für die initiale Struktur des TreeViews, 
-        ''' da sie die Basis für die Anzeige der verfügbaren Laufwerke und Ordner bildet.
-        ''' </remarks>
-        Private Sub LoadRootKindNodes(Node As TreeNode)
-            ' Typumwandlung des Knotens in Computernode
-            Dim computernode As ComputerNode = CType(Node, ComputerNode)
-            ' Leeren der Knoten, um sie neu zu laden
-            computernode.Nodes.Clear()
-            ' Laden der speziellen Ordner
-            computernode.LoadSpecialFolders()
-            ' Laden der Laufwerke
-            computernode.LoadDrives()
+                Case TypeOf Node Is ComputerNode
+                    ' untergeordnete Knoten (spezielle Ordner und Laufwerke) von Computernoten neu laden
+                    CType(Node, ComputerNode).LoadSpecialFolders()
+                    CType(Node, ComputerNode).LoadDrives()
+
+                Case TypeOf Node Is SpecialFolderNode
+                    ' untergeordnete Knoten von speziellen Ordner neu laden
+                    CType(Node, SpecialFolderNode).LoadSubfolders()
+
+                Case TypeOf Node Is DriveNode
+                    ' untergeordnete Knoten von Laufwerken neu laden
+                    CType(Node, DriveNode).LoadSubfolders()
+
+                Case TypeOf Node Is FolderNode
+                    ' untergeordnete Knoten von Ordnern neu laden
+                    CType(Node, FolderNode).LoadSubfolders()
+
+            End Select
+
         End Sub
 
         ''' <summary>
@@ -503,31 +494,42 @@ Namespace ExplorerTreeViewControl
         ''' Der zu überwachende Verzeichnispfad
         ''' </param>
         Private Sub CreateFileSystemWatcher(FolderPath As String)
+
             ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
             If String.IsNullOrEmpty(FolderPath) OrElse Not Directory.Exists(FolderPath) Then Return
+
             ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
             If _FileSystemWatchers.ContainsKey(FolderPath) Then Return
 
             Try
-                ' Neuen FileSystemWatcher erstellen
+
+                ' Neuen FileSystemWatcher erstellen (Verzeichnisse überwachen,Nur das aktuelle Verzeichnis überwachen)
                 Dim FSW As New FileSystemWatcher(FolderPath) With {
-                    .NotifyFilter = NotifyFilters.DirectoryName,' Verzeichnisse überwachen
-                    .IncludeSubdirectories = False ' Nur das aktuelle Verzeichnis überwachen
-                    }
+                    .NotifyFilter = NotifyFilters.DirectoryName,
+                    .IncludeSubdirectories = False}
+
                 ' Event-Handler für neu erstellten Ordner hinzufügen
                 AddHandler FSW.Created, AddressOf FSW_DirectoryChanged
+
                 ' Event-Handler für gelöschten Ordner hinzufügen
                 AddHandler FSW.Deleted, AddressOf FSW_DirectoryChanged
+
                 ' Event-Handler für umbenannten Ordner hinzufügen
                 AddHandler FSW.Renamed, AddressOf FSW_DirectoryChanged
+
                 ' Watcher in die Sammlung einfügen
                 _FileSystemWatchers.Add(FolderPath, FSW)
+
                 ' Watcher aktivieren
                 FSW.EnableRaisingEvents = True
+
             Catch ex As Exception
+
                 ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
                 Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
+
             End Try
+
         End Sub
 
         ''' <summary>
@@ -538,12 +540,16 @@ Namespace ExplorerTreeViewControl
         ''' Das Verzeichnis, für das die zugehörigen Watcher entfernt werden sollen.
         ''' </param>
         Private Sub RemoveFileSystemWatchers(FolderPath As String)
+
             ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
             Dim toRemove As New List(Of String)
+
             ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
             FindWatchersToRemove(FolderPath, toRemove)
+
             ' Entferne und entsorge alle gefundenen Watcher
             RemoveAndDisposeWatchers(toRemove)
+
         End Sub
 
         ''' <summary>
@@ -558,15 +564,21 @@ Namespace ExplorerTreeViewControl
         ''' Liste, in die alle zu entfernenden Watcher-Pfade eingetragen werden.
         ''' </param>
         Private Sub FindWatchersToRemove(FolderPath As String, toRemove As List(Of String))
+
             ' Durchlaufe alle aktuell überwachten Verzeichnispfade
             For Each watcherPath In _FileSystemWatchers.Keys
+
                 ' Prüfe, ob der Pfad exakt übereinstimmt oder ein Unterverzeichnis des angegebenen Verzeichnisses ist
                 If watcherPath.Equals(FolderPath, StringComparison.OrdinalIgnoreCase) OrElse
                    watcherPath.StartsWith(FolderPath & IO.Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) Then
+
                     ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
                     toRemove.Add(watcherPath)
+
                 End If
+
             Next
+
         End Sub
 
         ''' <summary>
@@ -622,21 +634,32 @@ Namespace ExplorerTreeViewControl
         ''' Der gefundene TreeNode oder Nothing
         ''' </returns>
         Private Function FindNodeByPath(Nodes As TreeNodeCollection, SearchPath As String) As TreeNode
+
             ' Durchlaufe alle Knoten in der aktuellen Knotenliste
             For Each node As TreeNode In Nodes
+
                 ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
                 If String.Equals(GetDirectoryPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
-                    Return node ' Passender Knoten gefunden, diesen zurückgeben
+
+                    ' Passender Knoten gefunden, diesen zurückgeben
+                    Return node
+
                 End If
+
                 ' Wenn nicht gefunden, rekursiv in den Unterknoten weitersuchen
                 Dim found As TreeNode = FindNodeByPath(node.Nodes, SearchPath)
                 If found IsNot Nothing Then
+
                     ' Passenden Knoten in den Unterknoten gefunden, diesen zurückgeben
                     Return found
+
                 End If
+
             Next
+
             ' Kein passender Knoten gefunden, Nothing zurückgeben
             Return Nothing
+
         End Function
 
 #End Region
@@ -647,34 +670,39 @@ Namespace ExplorerTreeViewControl
         ''' Wird aufgerufen, wenn sich der Inhalt eines überwachten Verzeichnisses geändert hat (z.B. Ordner wurde erstellt, gelöscht oder umbenannt).
         ''' Aktualisiert die betroffenen Knoten im TreeView, damit die Anzeige immer dem aktuellen Dateisystem entspricht.
         ''' </summary>
-        ''' <param name="sender">
-        ''' Der FileSystemWatcher, der das Ereignis ausgelöst hat.
-        ''' </param>
-        ''' <param name="e">
-        ''' Informationen über die Änderung (z.B. Pfad, Art der Änderung).
-        ''' </param>
+        ''' <param name="sender">Der FileSystemWatcher, der das Ereignis ausgelöst hat.</param>
+        ''' <param name="e">Informationen über die Änderung (z.B. Pfad, Art der Änderung).</param>
+        <CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Private Sub FSW_DirectoryChanged(sender As Object, e As FileSystemEventArgs)
+
             ' Prüfen, ob der Methodenaufruf aus einem anderen Thread als dem UI-Thread kommt.
             ' Falls ja, Methode erneut im UI-Thread ausführen (wichtig für Thread-Sicherheit bei UI-Elementen).
             If TV.InvokeRequired Then
-                Dim unused = TV.Invoke(New MethodInvoker(Sub() FSW_DirectoryChanged(sender, e)))
+                TV.Invoke(New MethodInvoker(Sub() FSW_DirectoryChanged(sender, e)))
                 Return
             End If
+
             ' Sucht im TreeView den Knoten, dessen Pfad dem überwachten Verzeichnis entspricht.
-            Dim changednode As TreeNode = FindNodeByPath(TV.Nodes, CType(sender, FileSystemWatcher).Path)
+            Dim node As TreeNode = FindNodeByPath(TV.Nodes, CType(sender, FileSystemWatcher).Path)
+
             ' Je nach Knotentyp (normaler Ordner oder spezieller Ordner) werden die Unterknoten neu geladen,
             ' damit neue, gelöschte oder umbenannte Unterordner sofort angezeigt werden.
             Select Case True
-                Case TypeOf changednode Is DriveNode
+
+                Case TypeOf node Is DriveNode
                     ' Unterknoten des Laufwerks leeren und neu laden
-                    LoadDriveSubfolders(changednode)
-                Case TypeOf changednode Is SpecialFolderNode
+                    LoadSubfolders(node)
+
+                Case TypeOf node Is SpecialFolderNode
                     ' Unterknoten des speziellen Ordners leeren und neu laden
-                    LoadSpecialFoldersSubfolders(changednode)
-                Case TypeOf changednode Is FolderNode
+                    LoadSubfolders(node)
+
+                Case TypeOf node Is FolderNode
                     ' Unterknoten des Ordners leeren und neu laden
-                    LoadFoldersSubfolders(changednode)
+                    LoadSubfolders(node)
+
             End Select
+
         End Sub
 
 #End Region
@@ -695,23 +723,10 @@ Namespace ExplorerTreeViewControl
         ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
         ''' </remarks>
         Private Sub TV_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV.BeforeExpand
-            ' Knoten merken der erweitert werden soll
-            Dim expandnode As TreeNode = e.Node
-            ' Typ des Knotens ermitteln und entsprechend verzweigen
-            Select Case True
-                Case TypeOf expandnode Is ComputerNode
-                    ' Spezielle Ordner und Laufwerke laden
-                    LoadRootKindNodes(expandnode)
-                Case TypeOf expandnode Is SpecialFolderNode
-                    ' Unterordner der speziellen Ordner laden
-                    LoadSpecialFoldersSubfolders(expandnode)
-                Case TypeOf expandnode Is DriveNode
-                    ' Unterordner des Laufwerks laden
-                    LoadDriveSubfolders(expandnode)
-                Case TypeOf expandnode Is FolderNode
-                    ' Unterordner des Ordners laden
-                    LoadFoldersSubfolders(expandnode)
-            End Select
+
+            ' Lädt die untergeordneten Knoten des aktuellen Knotens.
+            LoadSubfolders(e.Node)
+
         End Sub
 
         ''' <summary>
@@ -720,9 +735,10 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
-            ' einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
-            Dim folderpath As String = GetDirectoryPath(e.Node)
-            CreateFileSystemWatcher(folderpath)
+
+            ' Einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
+            CreateFileSystemWatcher(GetDirectoryPath(e.Node))
+
         End Sub
 
         ''' <summary>
@@ -731,9 +747,10 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TV.AfterCollapse
-            ' den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
-            Dim folderpath As String = GetDirectoryPath(e.Node)
-            RemoveFileSystemWatchers(folderpath)
+
+            ' Den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
+            RemoveFileSystemWatchers(GetDirectoryPath(e.Node))
+
         End Sub
 
         ''' <summary>
@@ -746,8 +763,10 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
+
             ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
             RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(GetDirectoryPath(e.Node)))
+
         End Sub
 
 #End Region
@@ -760,26 +779,33 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub DW_DriveAdded(sender As Object, e As DriveAddedEventArgs) Handles DW.DriveAdded
-            Dim newDriveNode As New DriveNode(New DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
+
+            Dim newNode As New DriveNode(New DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
             Dim inserted As Boolean = False
+
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
             For i As Integer = 0 To TV.Nodes.Item(0).Nodes.Count - 1
+
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
-                Dim currentNode As TreeNode = TV.Nodes.Item(0).Nodes(i)
-                If TypeOf currentNode Is DriveNode AndAlso
+                Dim currNode As TreeNode = TV.Nodes.Item(0).Nodes(i)
+
+                If TypeOf currNode Is DriveNode AndAlso
                     String.Compare(
-                    currentNode.Tag.ToString,
-                    newDriveNode.Tag.ToString,
+                    currNode.Tag.ToString,
+                    newNode.Tag.ToString,
                     StringComparison.OrdinalIgnoreCase) > 0 Then
-                    TV.Nodes.Item(0).Nodes.Insert(i, newDriveNode)
+                    TV.Nodes.Item(0).Nodes.Insert(i, newNode)
                     inserted = True
                     Exit For
                 End If
+
             Next
+
             ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
             If Not inserted Then
-                Dim unused = TV.Nodes.Item(0).Nodes.Add(newDriveNode)
+                Dim unused = TV.Nodes.Item(0).Nodes.Add(newNode)
             End If
+
         End Sub
 
         ''' <summary>
@@ -788,20 +814,25 @@ Namespace ExplorerTreeViewControl
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
         Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
-            Dim drn As DriveNode
+
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
-            For Each obj As Object In TV.Nodes.Item(0).Nodes
+            For Each node As TreeNode In TV.Nodes.Item(0).Nodes
+
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
-                If TypeOf obj Is DriveNode Then
-                    ' Konvertiere den Knoten in einen DriveNode
-                    drn = CType(obj, DriveNode)
+                If TypeOf node Is DriveNode Then
+
                     ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
-                    If drn.Tag.ToString() = e.DriveName Then
+                    If CType(node, DriveNode).Tag.ToString() = e.DriveName Then
+
                         ' Entferne den DriveNode aus der Liste
-                        drn.Remove()
+                        CType(node, DriveNode).Remove()
+
                     End If
+
                 End If
+
             Next
+
         End Sub
 
 #End Region
