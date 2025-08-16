@@ -10,9 +10,11 @@ Imports System.IO
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
-    ''' Definiert Hilfsfunktionen für die DriveNode-Klasse
+    ''' <para>Definiert Hilfsfunktionen für die Klassen <see cref="ComputerNode"/>,
+    ''' </para>
+    ''' <para><see cref="SpecialFolderNode"/>, <see cref="DriveNode"/> und <see
+    ''' cref="FolderNode"/></para>
     ''' </summary>
-    ''' <remarks></remarks>
     Friend Module NodeHelpers
 
 #Region "Definition der internen Dictionarys"
@@ -81,9 +83,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ermittelt den Laufwerksnamen ohne den abschließenden Backslash
         ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Name ermittelt werden soll.
-        ''' </param>
+        ''' <param name="drive">Das Laufwerk, dessen Name ermittelt werden soll.</param>
         Public Function GetDriveName(drive As DriveInfo) As String
 
             ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
@@ -105,9 +105,7 @@ Namespace ExplorerTreeViewControl
         ''' </para>
         ''' </remarks>
         ''' <param name="drive">Das Laufwerk, dessen Label ermittelt werden soll.</param>
-        ''' <returns>
-        ''' Der Volumename, der Laufwerkstyp oder leer als String.
-        ''' </returns>
+        ''' <returns>Der Volumename, der Laufwerkstyp oder leer als String. </returns>
         Public Function GetVolumeLabel(drive As DriveInfo) As String
 
             ' Überprüfen, ob das Laufwerk bereit ist (z. B. ob ein Medium eingelegt und lesbar ist)
@@ -135,9 +133,7 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt den String der den Laufwerkstyp darstellt.
         ''' </summary>
         ''' <param name="Drive">Das Laufwerk dessen Typ ermittelt werden soll.</param>
-        ''' <returns>
-        ''' Die Zeichenfolge die den laufwerkstyp darstellt oder eine leere Zeichenfolge.
-        ''' </returns>
+        ''' <returns>Die Zeichenfolge die den laufwerkstyp darstellt oder eine leere Zeichenfolge.</returns>
         Public Function GetDriveTypeString(Drive As DriveInfo) As String
 
             ' Überprüfen, ob das angegebene Laufwerk ein Systemlaufwerk ist.
@@ -168,7 +164,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="Text"></param>
         ''' <returns></returns>
-        Public Function GetFolderPath(Text As String) As String
+        Public Function GetSpezialFolderPath(Text As String) As String
 
             Return If(folderMappings.ContainsKey(Text), folderMappings(Text), String.Empty)
 
@@ -178,9 +174,7 @@ Namespace ExplorerTreeViewControl
         ''' Gibt den ImageKey für den angegebenen Namen zurück.
         ''' </summary>
         ''' <param name="IconTypeString">Der Name (z. B. Ordner- oder Laufwerksname).</param>
-        ''' <returns>
-        ''' Der zugehörige ImageKey oder eine leere Zeichenfolge.
-        ''' </returns>
+        ''' <returns>Der zugehörige ImageKey oder eine leere Zeichenfolge. </returns>
         Public Function GetImageKey(IconTypeString As String) As String
 
             ' Überprüft, ob das Dictionary "imageKeyMappings" den angegebenen Schlüssel ("IconTypeString") enthält.
@@ -207,9 +201,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ermittelt ob das Laufwerk ein Diskettenlaufwerk ist
         ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.
-        ''' </param>
+        ''' <param name="drive">Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.</param>
         Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
 
             ' Überprüft, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
@@ -257,12 +249,8 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ermittelt den Laufwerkstyp als String.
         ''' </summary>
-        ''' <param name="drive">
-        ''' Das Laufwerk, dessen Typ ermittelt werden soll.
-        ''' </param>
-        ''' <returns>
-        ''' Eine Beschreibung des Laufwerkstyps, z. B. "Lokaler Datenträger" oder "CD-Laufwerk".
-        ''' </returns>
+        ''' <param name="drive">Das Laufwerk, dessen Typ ermittelt werden soll.</param>
+        ''' <returns>Eine Beschreibung des Laufwerkstyps, z. B. "Lokaler Datenträger" oder "CD-Laufwerk".</returns>
         Private Function GetDriveTypeDescription(drive As DriveInfo) As String
 
             Select Case drive.DriveType

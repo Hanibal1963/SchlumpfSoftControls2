@@ -332,42 +332,6 @@ Namespace ExplorerTreeViewControl
 #Region "Interne Hilfsroutinen"
 
         ''' <summary>
-        ''' Zerlegt einen vollständigen Verzeichnispfad in seine einzelnen Segmente.
-        ''' Beispiel: "C:\Benutzer\Name\Dokumente" wird zu {"C:", "Benutzer", "Name", "Dokumente"}.
-        ''' Dies ist notwendig, um im TreeView schrittweise durch die Knotenstruktur zu navigieren.
-        ''' </summary>
-        ''' <param name="Path">
-        ''' Der vollständige Verzeichnispfad, der zerlegt werden soll.
-        ''' </param>
-        ''' <returns>
-        ''' Eine Liste der einzelnen Pfadsegmente, beginnend mit dem Wurzelverzeichnis.
-        ''' </returns>
-        Private Shared Function GetPathSegments(Path As String) As List(Of String)
-
-            ' Erzeugt ein DirectoryInfo-Objekt für den angegebenen Pfad
-            Dim dirInfo As New DirectoryInfo(Path)
-
-            ' Liste, in der die einzelnen Segmente gesammelt werden
-            Dim result As New List(Of String)
-
-            ' Solange das DirectoryInfo-Objekt gültig ist und einen Namen hat
-            While dirInfo IsNot Nothing AndAlso Not String.IsNullOrEmpty(dirInfo.Name)
-
-                ' Fügt den aktuellen Verzeichnisnamen am Anfang der Liste ein
-                ' (so bleibt die Reihenfolge erhalten)
-                result.Insert(0, dirInfo.Name)
-
-                ' Geht ein Verzeichnis nach oben (Parent)
-                dirInfo = dirInfo.Parent
-
-            End While
-
-            ' Gibt die Liste der Segmente zurück
-            Return result
-
-        End Function
-
-        ''' <summary>
         ''' Setzt den Wurzelknoten des TreeViews.
         ''' </summary>
         ''' <remarks>
@@ -423,41 +387,10 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Ermittelt den Verzeichnispfad basierend auf dem ausgewählten Knoten im TreeView.
-        ''' </summary>
-        ''' <param name="node"></param>
-        Private Function GetDirectoryPath(node As TreeNode) As String
-
-            Select Case True
-
-                Case TypeOf node Is ComputerNode
-                    ' "Dieser Computer" hat keinen Pfad
-                    Return String.Empty
-
-                Case TypeOf node Is DriveNode
-                    ' Gibt den Laufwerksbuchstaben zurück
-                    Return CType(node, DriveNode).FullPath
-
-                Case TypeOf node Is SpecialFolderNode
-                    ' Gibt den Pfad für Spezialordner zurück
-                    Return CType(node, SpecialFolderNode).FullPath
-
-                Case TypeOf node Is FolderNode
-                    ' Gibt den Pfad für alle anderen Ordner zurück
-                    Return CType(node, FolderNode).FullPath
-
-                Case Else
-                    '
-                    Return String.Empty
-
-            End Select
-
-        End Function
-
-        ''' <summary>
         ''' Lädt die untergeordneten Knoten neu ein.
         ''' </summary>
-        ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden sollen.</param>
+        ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden
+        ''' sollen.</param>
         Private Sub LoadSubfolders(Node As TreeNode)
 
             ' löscht alle untergeordneten Knoten
@@ -589,18 +522,25 @@ Namespace ExplorerTreeViewControl
         ''' Liste der Verzeichnispfade, deren Watcher entfernt und entsorgt werden sollen.
         ''' </param>
         Private Sub RemoveAndDisposeWatchers(toRemove As List(Of String))
+
             ' Durchlaufe alle zu entfernenden Watcher-Pfade
             For Each watcherPath In toRemove
+
                 ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
                 Dim watcher = _FileSystemWatchers(watcherPath)
+
                 ' Deaktiviere die Ereignisauslösung
                 watcher.EnableRaisingEvents = False
+
                 ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
                 RemoveWatcherHandlers(watcher)
+
                 ' Gib die Ressourcen des Watchers frei
                 watcher.Dispose()
+
                 ' Entferne den Watcher aus der internen Sammlung
                 Dim unused = _FileSystemWatchers.Remove(watcherPath)
+
             Next
         End Sub
 
@@ -613,54 +553,17 @@ Namespace ExplorerTreeViewControl
         ''' Der FileSystemWatcher, von dem die Handler entfernt werden sollen.
         ''' </param>
         Private Sub RemoveWatcherHandlers(watcher As FileSystemWatcher)
+
             ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
             RemoveHandler watcher.Created, AddressOf FSW_DirectoryChanged
+
             ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
             RemoveHandler watcher.Deleted, AddressOf FSW_DirectoryChanged
+
             ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
             RemoveHandler watcher.Renamed, AddressOf FSW_DirectoryChanged
+
         End Sub
-
-        ''' <summary>
-        ''' Sucht rekursiv im gesamten TreeView nach einem Knoten mit dem angegebenen Verzeichnispfad.
-        ''' </summary>
-        ''' <param name="Nodes">
-        ''' Die NodesCollection, in der gesucht werden soll (z.B. TV.Nodes)
-        ''' </param>
-        ''' <param name="SearchPath">
-        ''' Der zu suchende Pfad
-        ''' </param>
-        ''' <returns>
-        ''' Der gefundene TreeNode oder Nothing
-        ''' </returns>
-        Private Function FindNodeByPath(Nodes As TreeNodeCollection, SearchPath As String) As TreeNode
-
-            ' Durchlaufe alle Knoten in der aktuellen Knotenliste
-            For Each node As TreeNode In Nodes
-
-                ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
-                If String.Equals(GetDirectoryPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
-
-                    ' Passender Knoten gefunden, diesen zurückgeben
-                    Return node
-
-                End If
-
-                ' Wenn nicht gefunden, rekursiv in den Unterknoten weitersuchen
-                Dim found As TreeNode = FindNodeByPath(node.Nodes, SearchPath)
-                If found IsNot Nothing Then
-
-                    ' Passenden Knoten in den Unterknoten gefunden, diesen zurückgeben
-                    Return found
-
-                End If
-
-            Next
-
-            ' Kein passender Knoten gefunden, Nothing zurückgeben
-            Return Nothing
-
-        End Function
 
 #End Region
 
