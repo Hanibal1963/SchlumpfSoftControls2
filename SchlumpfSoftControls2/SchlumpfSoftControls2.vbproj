@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="ExplorerTreeViewControl\DriveDescConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveTypeKeyConstantDefinitions.vb" />
+    <Compile Include="ExplorerTreeViewControl\ExplorerTreeViewHelpers.vb" />
     <Compile Include="ExplorerTreeViewControl\FolderNamesKeyConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\IconKeyConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />

@@ -39,8 +39,8 @@ Namespace ExplorerTreeViewControl
             Me.Text = Text
 
             ' Speichert den vollständigen Pfad des Spezialordners im Tag-Property des Knotens
-            ' Die Methode GetFolderPath(Text) ermittelt den Pfad basierend auf dem Namen des Spezialordners (z.B. "Desktop")
-            Tag = GetFolderPath(Text)
+            ' Die Methode GetSpezialFolderPath(Text) ermittelt den Pfad basierend auf dem Namen des Spezialordners (z.B. "Desktop")
+            Tag = GetSpezialFolderPath(Text)
 
             ' Ermittelt den Schlüssel für das anzuzeigende Symbol (ImageKey) anhand des Ordnernamens
             ' Die Hilfsmethode NodeHelpers.GetImageKey(Text) liefert einen passenden Schlüssel für die Bildliste
