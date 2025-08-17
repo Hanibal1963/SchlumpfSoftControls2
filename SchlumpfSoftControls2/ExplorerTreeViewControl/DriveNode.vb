@@ -44,16 +44,16 @@ Namespace ExplorerTreeViewControl
         Public Sub New(Drive As DriveInfo)
 
             ' Setzt den Text des Knotens auf das Laufwerkslabel und den Laufwerksnamen (z. B. "Lokaler Datenträger (C:)").
-            Text = $"{NodeHelpers.GetVolumeLabel(Drive)} ({NodeHelpers.GetDriveName(Drive)})"
+            Text = $"{GetVolumeLabel(Drive)} ({GetDriveName(Drive)})"
 
             ' Speichert den Laufwerksnamen (z. B. "C:\") im Tag des Knotens.
             Tag = Drive.Name
 
             ' Ermittelt den Laufwerkstyp als String (z. B. "Lokaler Datenträger", "CD-Laufwerk").
-            Dim drivetypestring As String = NodeHelpers.GetDriveTypeString(Drive)
+            Dim drivetypestring As String = GetDriveTypeString(Drive)
 
             ' Ermittelt den Schlüssel für das Symbol basierend auf dem Laufwerkstyp.
-            Dim key As String = NodeHelpers.GetImageKey(drivetypestring)
+            Dim key As String = GetImageKey(drivetypestring)
 
             ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
             ImageKey = key
@@ -63,7 +63,7 @@ Namespace ExplorerTreeViewControl
             Nodes.Clear()
 
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Nodes.Add(New TreeNode("Ordner laden ..."))
 
         End Sub
 
