@@ -10,21 +10,25 @@ Namespace ExplorerTreeViewControl
 
     ''' <summary>
     ''' Stellt einen Knoten für einen Ordner im ExplorerTreeViewControl dar.
-    ''' Dieser Knoten speichert den angezeigten Namen sowie den vollständigen Pfad des Ordners
-    ''' und kann Unterordner dynamisch laden.
     ''' </summary>
+    ''' <remarks>
+    ''' Dieser Knoten speichert den angezeigten Namen sowie den vollständigen Pfad des
+    ''' Ordners und kann Unterordner dynamisch laden.
+    ''' </remarks>
     Friend Class FolderNode : Inherits TreeNode
 
         ''' <summary>
-        ''' Gibt den vollständigen Pfad des Knotens zurück.
-        ''' Diese Eigenschaft gibt den Pfad des Ordners zurück, der im Tag gespeichert ist.
-        ''' Sie wird verwendet, um auf den Ordner zuzugreifen, wenn Unterordner geladen oder andere Operationen durchgeführt werden müssen.
+        ''' <para>Gibt den vollständigen Pfad des Knotens zurück. Diese Eigenschaft gibt den
+        ''' Pfad des Ordners zurück, der im Tag gespeichert ist.</para>
+        ''' <para>Sie wird verwendet, um auf den Ordner zuzugreifen, wenn Unterordner
+        ''' geladen oder andere Operationen durchgeführt werden müssen.</para>
         ''' </summary>
         ''' <remarks>
-        ''' Diese Eigenschaft ist eine Überladung der Standard-TreeNode-Eigenschaft FullPath.
-        ''' Sie gibt den Pfad des Ordners zurück, der im Tag des Knotens gespeichert ist.
+        ''' <para>Diese Eigenschaft ist eine Überladung der Standard-TreeNode-Eigenschaft
+        ''' FullPath. </para>
+        ''' <para>Sie gibt den Pfad des Ordners zurück, der im Tag des Knotens gespeichert
+        ''' ist.</para>
         ''' </remarks>
-        ''' <returns></returns>
         Public Overloads ReadOnly Property FullPath As String
             Get
                 Return Tag.ToString()
@@ -48,7 +52,7 @@ Namespace ExplorerTreeViewControl
             Tag = FullPath
 
             ' Holt den Bildschlüssel für das Ordner-Icon und weist ihn zu
-            Dim key As String = NodeHelpers.GetImageKey("Folder")
+            Dim key As String = GetImageKey(ICON_FOLDER_FOLDER)
             ImageKey = key
             SelectedImageKey = key
 
@@ -56,7 +60,7 @@ Namespace ExplorerTreeViewControl
             Nodes.Clear()
 
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Nodes.Add(New TreeNode("Ordner laden ..."))
 
         End Sub
 
