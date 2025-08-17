@@ -57,14 +57,12 @@ Namespace ExplorerTreeViewControl
         End Function
 
         ''' <summary>
-        ''' Sucht rekursiv im gesamten TreeView nach einem Knoten mit dem angegebenen Verzeichnispfad.
+        ''' Sucht rekursiv im gesamten TreeView nach einem Knoten mit dem angegebenen
+        ''' Verzeichnispfad.
         ''' </summary>
-        ''' <param name="Nodes">
-        ''' Die NodesCollection, in der gesucht werden soll (z.B. TV.Nodes)
-        ''' </param>
-        ''' <param name="SearchPath">
-        ''' Der zu suchende Pfad
-        ''' </param>
+        ''' <param name="Nodes">Die NodesCollection, in der gesucht werden soll (z.B.
+        ''' TV.Nodes)</param>
+        ''' <param name="SearchPath">Der zu suchende Pfad</param>
         ''' <returns>
         ''' Der gefundene TreeNode oder Nothing
         ''' </returns>
