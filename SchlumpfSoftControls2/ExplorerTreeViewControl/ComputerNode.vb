@@ -25,14 +25,11 @@ Namespace ExplorerTreeViewControl
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New()
 
-            ' Hole den Namen des Computers
-            Dim computerName As String = Environment.MachineName
-
             'Setze den Text des Knotens mit dem Computernamen
-            Text = $"Dieser Computer ({computerName})"
+            Text = $"Dieser Computer ({Environment.MachineName})"
 
             ' Setze das Icon für den Knoten
-            Dim key As String = NodeHelpers.GetImageKey("Computer")
+            Dim key As String = GetImageKey(ICON_COMPUTER)
             ImageKey = key
             SelectedImageKey = key
 
@@ -40,8 +37,10 @@ Namespace ExplorerTreeViewControl
             Nodes.Clear()
 
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
-            Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
-            Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+            Nodes.AddRange({
+                New TreeNode("Spezielle Ordner laden ..."),
+                New TreeNode("Laufwerke laden ...")
+                })
 
         End Sub
 
