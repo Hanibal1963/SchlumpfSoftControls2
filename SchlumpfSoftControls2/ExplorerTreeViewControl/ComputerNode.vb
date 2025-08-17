@@ -22,7 +22,6 @@ Namespace ExplorerTreeViewControl
         ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.ComputerNode"/>. 
         ''' </summary>
         ''' <remarks></remarks>        
-        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New()
 
             'Setze den Text des Knotens mit dem Computernamen
