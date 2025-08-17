@@ -46,17 +46,16 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
-        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSpecialFolders()
 
             ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
-            Nodes.Add(New SpecialFolderNode("Desktop"))
-            Nodes.Add(New SpecialFolderNode("Dokumente"))
-            Nodes.Add(New SpecialFolderNode("Downloads"))
-            Nodes.Add(New SpecialFolderNode("Musik"))
-            Nodes.Add(New SpecialFolderNode("Bilder"))
-            Nodes.Add(New SpecialFolderNode("Videos"))
-
+            Nodes.AddRange({
+                  New SpecialFolderNode("Desktop"),
+                  New SpecialFolderNode("Dokumente"),
+                  New SpecialFolderNode("Downloads"),
+                  New SpecialFolderNode("Musik"),
+                  New SpecialFolderNode("Bilder"),
+                  New SpecialFolderNode("Videos")})
         End Sub
 
         ''' <summary>
