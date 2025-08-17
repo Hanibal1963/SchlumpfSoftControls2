@@ -10,17 +10,18 @@ Imports System.Windows.Forms
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
-    ''' Stellt einen TreeNode für einen speziellen Windows-Ordner (z.B. Desktop, Dokumente, Downloads) dar.
-    ''' Dieser Knoten lädt und zeigt die Unterordner des jeweiligen Spezialordners an.
+    ''' Stellt einen TreeNode für einen speziellen Windows-Ordner (z.B. Desktop,
+    ''' Dokumente, Downloads) dar.
     ''' </summary>
+    ''' <remarks>
+    ''' Dieser Knoten lädt und zeigt die Unterordner des jeweiligen Spezialordners an.
+    ''' </remarks>
     Friend Class SpecialFolderNode : Inherits TreeNode
 
         ''' <summary>
         ''' Gibt den vollständigen Pfad des Knotens zurück.
         ''' </summary>
-        ''' <remarks>
-        ''' Diese Eigenschaft gibt den Pfad des speziellen Ordners zurück, der im Tag gespeichert ist.
-        ''' </remarks>
+        ''' <remarks>Diese Eigenschaft gibt den Pfad des speziellen Ordners zurück, der im Tag gespeichert ist. </remarks>
         Public Overloads ReadOnly Property FullPath As String
             Get
                 Return Tag.ToString()
@@ -44,12 +45,10 @@ Namespace ExplorerTreeViewControl
 
             ' Ermittelt den Schlüssel für das anzuzeigende Symbol (ImageKey) anhand des Ordnernamens
             ' Die Hilfsmethode NodeHelpers.GetImageKey(Text) liefert einen passenden Schlüssel für die Bildliste
-            Dim key As String = NodeHelpers.GetImageKey(Text)
+            Dim key As String = GetImageKey(Text)
 
             ' Setzt das Symbol des Knotens auf den ermittelten Schlüssel
             ImageKey = key
-
-            ' Setzt das Symbol des Knotens, wenn er ausgewählt ist, ebenfalls auf den ermittelten Schlüssel
             SelectedImageKey = key
 
             ' Entfernt alle vorhandenen untergeordneten Knoten, um Platz für die später geladenen Unterordner zu schaffen
@@ -57,7 +56,7 @@ Namespace ExplorerTreeViewControl
 
             ' Fügt einen Platzhalterknoten hinzu, der dem Benutzer anzeigt, dass die Unterordner noch geladen werden
             ' Dieser Platzhalter wird später durch die tatsächlichen Unterordner ersetzt, sobald diese geladen wurden
-            Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Nodes.Add(New TreeNode("Ordner laden ..."))
 
         End Sub
 
