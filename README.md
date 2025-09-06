@@ -6,7 +6,7 @@ Eine Sammlung verschiedener Controls.
 
 ## Einführung
 
-Dieses Projekt enthält die Controls aus meinem vorherigen Projekt [SchlumpfSoftControls](https://github.com/Hanibal1963/SchlumpfSoftControls) mit dem Unterschied das alle Control in einer einzigen DLL enthalten sind.
+Dieses Projekt enthält die Controls aus meinem vorherigen Projekt [SchlumpfSoftControls](https://github.com/Hanibal1963/SchlumpfSoftControls) und ist anders strukturiert.
 
 Ich bin diesen Schritt gegangen da das vorherige Projekt zu unübersichtlich wurde und auch noch einige Fehler enthielt.
 
