@@ -23,6 +23,7 @@ Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 #End Region
 
@@ -31,11 +32,13 @@ Namespace AniGifControl
     ''' <summary>
     ''' Control zum anzeigen von animierten Grafiken.
     ''' </summary>
-    <ProvideToolboxControl("SchlumpfSoft Controls", False)>
+    <ProvideToolboxControlAttribute("SchlumpfSoft Controls", False)>
     <Description("Control zum Anzeigen von animierten Grafiken.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGifControl.AniGif.bmp")>
-    Public Class AniGif : Inherits UserControl
+    <ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGif.bmp")>
+    Public Class AniGif
+
+        Inherits UserControl
 
         Implements IDisposable
 
@@ -493,7 +496,7 @@ Namespace AniGifControl
         ''' Setzt die Standardwerte für die wichtigsten Variablen der Ani Gif Control.
         ''' </summary>
         Private Sub InitializeValues()
-            _Gif = My.Resources.AniGif_Standard ' Standard-GIF aus den Ressourcen laden
+            _Gif = My.Resources.Standard ' Standard-GIF aus den Ressourcen laden
             _Autoplay = False                   ' Animation startet nicht automatisch
             _GifSizeMode = SizeMode.Normal      ' GIF wird in Originalgröße angezeigt
             _CustomDisplaySpeed = False         ' Keine benutzerdefinierte Geschwindigkeit
@@ -507,7 +510,7 @@ Namespace AniGifControl
         ''' <param name="value"></param>
         Private Sub SetGifImage(value As Bitmap)
             If _Gif IsNot Nothing Then _Gif.Dispose() ' Vorhandenes Bild freigeben
-            _Gif = If(value, My.Resources.AniGif_Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
+            _Gif = If(value, My.Resources.Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
             RaiseEvent GifChanged()
         End Sub
 
