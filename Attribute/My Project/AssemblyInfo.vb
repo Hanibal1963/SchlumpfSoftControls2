@@ -9,12 +9,12 @@ Imports System.Runtime.InteropServices
 
 ' Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("SchlumpfSoftAttribute")>
+<Assembly: AssemblyTitle("SchlumpfSoft Attribute")>
 <Assembly: AssemblyDescription("Bibliothek mit Benutzerdefinierten Attributen")>
 <Assembly: AssemblyCompany("SchlumpfSoft")>
 <Assembly: AssemblyProduct("SchlumpfSoft Controls")>
-<Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2024")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2024 - 2025")>
+<Assembly: AssemblyTrademark("privat")>
 
 <Assembly: ComVisible(False)>
 
@@ -29,6 +29,6 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 
-<Assembly: AssemblyVersion("1.2024.12.23")>
-<Assembly: AssemblyFileVersion("1.2024.12.23")>
+<Assembly: AssemblyVersion("1.2025.0906.00")>
+<Assembly: AssemblyFileVersion("1.2025.0906.00")>
 <Assembly: NeutralResourcesLanguage("de-DE")>

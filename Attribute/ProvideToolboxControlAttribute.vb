@@ -1,6 +1,6 @@
 ﻿' ****************************************************************************************************************
 ' ProvideToolboxControlAttribute.vb
-' © 2024 by Andreas Sauer
+' © 2024 - 2025 by Andreas Sauer
 ' ****************************************************************************************************************
 '
 
@@ -24,8 +24,6 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     Inherits RegistrationAttribute
 
     Private Const ToolboxControlsInstallerPath As String = "ToolboxControlsInstaller"
-    Private _isWpfControls As Boolean
-    Private _name As String
 
     ''' <summary>
     ''' Erstellt ein neues Attribut „Provide Toolbox Control“, um die Assembly für das 
@@ -48,25 +46,11 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     ''' Ruft ab, ob die Toolbox-Steuerelemente für WPF gelten.
     ''' </summary>
     Private Property IsWpfControls As Boolean
-        Get
-            Return Me._isWpfControls
-        End Get
-        Set(value As Boolean)
-            Me._isWpfControls = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' Ruft den Namen für die Steuerelemente ab.
     ''' </summary>
     Private Property Name As String
-        Get
-            Return Me._name
-        End Get
-        Set(value As String)
-            Me._name = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' Wird aufgerufen, um dieses Attribut im angegebenen Kontext zu registrieren. 
@@ -109,14 +93,10 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     ''' </param>
     Public Overrides Sub Unregister(context As RegistrationAttribute.RegistrationContext)
 
-        If context IsNot Nothing Then
-
-            context.RemoveKey(
+        context?.RemoveKey(
                 String.Format(
                 System.Globalization.CultureInfo.InvariantCulture, "{0}\{1}",
                 ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
-
-        End If
 
     End Sub
 

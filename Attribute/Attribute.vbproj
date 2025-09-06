@@ -7,7 +7,7 @@
     <ProjectGuid>{411C55DA-B346-4B5A-A28A-4E5B31F5B0BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SchlumpfSoft.Attribute</RootNamespace>
-    <AssemblyName>SchlumpfSoftAttribute</AssemblyName>
+    <AssemblyName>SchlumpfSoft.Attribute</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -33,7 +33,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>SchlumpfSoftAttribute.xml</DocumentationFile>
+    <DocumentationFile>SchlumpfSoft.Attribute.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,7 +42,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SchlumpfSoftAttribute.xml</DocumentationFile>
+    <DocumentationFile>SchlumpfSoft.Attribute.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
