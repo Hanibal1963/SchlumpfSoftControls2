@@ -62,7 +62,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="NotifyFormControl\NotifyFormControl.cd" />
     <Content Include="ReleaseNotes.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -98,10 +97,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="NotifyFormControl\NotifyFormEnums.vb" />
-    <Compile Include="NotifyFormControl\NotifyForm.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="SchlumpfSoftControls2Package.vb" />
     <Compile Include="SevenSegmentControl\MultiDigit.vb">
@@ -162,19 +157,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="NotifyFormControl\NotifyForm.resx">
-      <DependentUpon>NotifyForm.vb</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CriticalError.png" />
-    <EmbeddedResource Include="Resources\Information.png" />
-    <EmbeddedResource Include="Resources\NotifyFormControl.NotifyForm.bmp" />
-    <EmbeddedResource Include="Resources\Question.png" />
-    <EmbeddedResource Include="Resources\Warning.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />

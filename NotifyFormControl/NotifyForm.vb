@@ -20,6 +20,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Threading
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace NotifyFormControl
 
@@ -29,8 +30,10 @@ Namespace NotifyFormControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Control zum anzeigen von Benachrichtigungsfenstern.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(NotifyFormControl.NotifyForm), "NotifyFormControl.NotifyForm.bmp")>
-    Public Class NotifyForm : Inherits Component
+    <ToolboxBitmap(GetType(NotifyFormControl.NotifyForm), "NotifyForm.bmp")>
+    Public Class NotifyForm
+
+        Inherits Component
 
 #Region "Interne Eigenschaftsvariablen"
 
