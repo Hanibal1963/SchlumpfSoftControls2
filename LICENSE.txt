@@ -1,0 +1,45 @@
+MIT License
+
+Copyright (c) 2024 - 2025 Andreas Sauer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Deutsche Übersetzung:
+
+MIT-Lizenz 
+
+Copyright (c) 2024 - 2025 Andreas Sauer
+
+Hiermit wird jeder Person, die eine Kopie 
+dieser Software und der zugehörigen Dokumentationsdateien (die „Software“) erhält, unentgeltlich die Genehmigung erteilt 
+, mit der Software uneingeschränkt zu verfahren, insbesondere das Recht, die Software 
+zu verwenden, zu kopieren, zu ändern, zusammenzufügen, zu veröffentlichen, zu verteilen, unterzulizenzieren und/oder 
+Kopien der Software zu verkaufen und diese Rechte 
+unter folgenden Bedingungen anderen zu übertragen: 
+
+Der oben genannte Copyright-Vermerk und dieser Genehmigungsvermerk müssen in allen 
+Kopien oder wesentlichen Teilen der Software enthalten sein. 
+
+DIE SOFTWARE WIRD „WIE VORLIEGEND“ BEREITGESTELLT, OHNE JEGLICHE AUSDRÜCKLICHE ODER 
+STILLSCHWEIGENDE GARANTIE, EINSCHLIESSLICH DER GARANTIE DER MARKTGÄNGIGKEIT, 
+DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG. DIE 
+AUTOREN ODER URHEBERRECHTSINHABER SIND IN KEINEM FALL FÜR JEGLICHE ANSPRÜCHE, SCHÄDEN ODER ANDERE VERBINDLICHKEITEN VERANTWORTLICH, 
+OB AUS VERTRAG, UNERLAUBTER HANDLUNG ODER ANDERWEITIG, DIE AUS 
+DER SOFTWARE ODER DER VERWENDUNG ODER ANDEREN UMGANG MIT DER 
+SOFTWARE ENTSTEHEN, DAMIT IN VERBINDUNG STEHEN.

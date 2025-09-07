@@ -103,7 +103,6 @@
     <Compile Include="NotifyFormControl\NotifyForm.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
     <Compile Include="SevenSegmentControl\MultiDigit.vb">
       <SubType>Component</SubType>
@@ -226,9 +225,9 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
-    <ProjectReference Include="..\DriveWatcherConrol\DriveWatcherConrol.vbproj">
+    <ProjectReference Include="..\DriveWatcherConrol\DriveWatcherControl.vbproj">
       <Project>{58092D89-9E0A-4976-B1D3-A91CE0824DA9}</Project>
-      <Name>DriveWatcherConrol</Name>
+      <Name>DriveWatcherControl</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
