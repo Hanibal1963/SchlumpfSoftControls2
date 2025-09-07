@@ -28,6 +28,8 @@
         <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="AniGifControl" Path="|AniGifControl;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ColorProgressBarControl" Path="|ColorProgressBarControl;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="DriveWatcherConrol" Path="|DriveWatcherConrol;PkgdefProjectOutputGroup|" />
     </Assets>
 </PackageManifest>

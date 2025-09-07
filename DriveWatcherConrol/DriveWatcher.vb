@@ -21,6 +21,7 @@ Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace DriveWatcherControl
 
@@ -30,8 +31,10 @@ Namespace DriveWatcherControl
     <ProvideToolboxControl("Schlumpfsoft Controls", False)>
     <ToolboxItem(True)>
     <Description("Steuerelement um die Laufwerke zu überwachen.")>
-    <ToolboxBitmap(GetType(DriveWatcherControl.DriveWatcher), "DriveWatcherControl.DriveWatcher.bmp")>
-    Public Class DriveWatcher : Inherits Component
+    <ToolboxBitmap(GetType(DriveWatcherControl.DriveWatcher), "DriveWatcher.bmp")>
+    Public Class DriveWatcher
+
+        Inherits Component
 
         Private ReadOnly components As IContainer ' Wird vom Komponenten-Designer benötigt.
         Private WithEvents NatForm As New NativeForm ' Internes Formular welches die Meldungen empfängt.
