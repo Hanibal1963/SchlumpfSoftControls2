@@ -69,7 +69,6 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="WizardControl\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExplorerTreeViewControl\DriveDescConstantDefinitions.vb" />
@@ -96,13 +95,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="WizardControl\WizardEventArgs.vb" />
-    <Compile Include="WizardControl\WizardPages.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WizardControl\Wizard.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -157,9 +149,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <EmbeddedResource Include="Resources\WizardHeaderImage.jpg" />
-    <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />
-    <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />

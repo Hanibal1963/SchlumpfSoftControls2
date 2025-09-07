@@ -1,29 +1,21 @@
 ﻿' *************************************************************************************************
-' 
 ' Wizard.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Ein Control zum erstellen eines Assistenten
-'
-' weitere Infos:
-' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
-' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
-' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
-' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
-'
 ' *************************************************************************************************
 
 Imports System
 Imports System.ComponentModel
-Imports System.ComponentModel.Design
 Imports System.Drawing
 Imports System.Drawing.Design
 Imports System.Windows.Forms
-Imports System.Windows.Forms.Design
+Imports SchlumpfSoft.Attribute
 
 Namespace WizardControl
+
+    ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
+    ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
+    ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+    ' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
 
     ''' <summary>
     ''' Ein Control zum erstellen eines Assistenten
@@ -31,9 +23,11 @@ Namespace WizardControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Ein Control zum erstellen eines Assistenen")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(WizardControl.Wizard), "WizardControl.Wizard.bmp")>
+    <ToolboxBitmap(GetType(WizardControl.Wizard), "Wizard.bmp")>
     <Designer(GetType(WizardControl.WizardDesigner))>
-    Public Class Wizard : Inherits UserControl
+    Public Class Wizard
+
+        Inherits UserControl
 
         Friend _ImageHeader As Image
         Friend _ImageWelcome As Image
@@ -597,10 +591,7 @@ Namespace WizardControl
         Protected Overrides Sub OnResize(e As EventArgs)
 
             MyBase.OnResize(e)
-            If Me._SelectedPage IsNot Nothing Then
-                Me._SelectedPage.SetBounds(0, 0, Me.Width, Me.Height - 48)
-
-            End If
+            Me._SelectedPage?.SetBounds(0, 0, Me.Width, Me.Height - 48)
             Me.ButtonHelp.Location = New Point(Me.ButtonHelp.Location.X, Me.Height - Me._OffsetBack.Y)
             Me.ButtonBack.Location = New Point(Me.Width - Me._OffsetBack.X, Me.Height - Me._OffsetBack.Y)
             Me.ButtonNext.Location = New Point(Me.Width - Me._OffsetNext.X, Me.Height - Me._OffsetNext.Y)
@@ -626,9 +617,7 @@ Namespace WizardControl
         Protected Overrides Sub OnControlAdded(e As ControlEventArgs)
 
             If Not (TypeOf e.Control Is WizardPage) AndAlso e.Control IsNot Me.ButtonCancel AndAlso e.Control IsNot Me.ButtonNext AndAlso e.Control IsNot Me.ButtonBack Then
-                If Me._SelectedPage IsNot Nothing Then
-                    Me._SelectedPage.Controls.Add(e.Control)
-                End If
+                Me._SelectedPage?.Controls.Add(e.Control)
 
             Else
                 MyBase.OnControlAdded(e)
@@ -686,7 +675,7 @@ Namespace WizardControl
         End Sub
 
         'Erforderlich für den Windows Form Designer
-        Private components As System.ComponentModel.IContainer
+        Private ReadOnly components As System.ComponentModel.IContainer
 
         'HINWEIS: Das folgende Verfahren ist für den Windows Form Designer erforderlich
         'Es kann mit dem Windows Form Designer geändert werden.
@@ -701,7 +690,7 @@ Namespace WizardControl
             '
             'ButtonHelp
             '
-            Me.ButtonHelp.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+            Me.ButtonHelp.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left, System.Windows.Forms.AnchorStyles)
             Me.ButtonHelp.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.ButtonHelp.Location = New System.Drawing.Point(8, 188)
             Me.ButtonHelp.Name = "ButtonHelp"
@@ -711,7 +700,7 @@ Namespace WizardControl
             '
             'ButtonBack
             '
-            Me.ButtonBack.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.ButtonBack.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             Me.ButtonBack.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.ButtonBack.Location = New System.Drawing.Point(130, 188)
             Me.ButtonBack.Name = "ButtonBack"
@@ -721,7 +710,7 @@ Namespace WizardControl
             '
             'ButtonNext
             '
-            Me.ButtonNext.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.ButtonNext.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             Me.ButtonNext.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.ButtonNext.Location = New System.Drawing.Point(210, 188)
             Me.ButtonNext.Name = "ButtonNext"
@@ -731,7 +720,7 @@ Namespace WizardControl
             '
             'ButtonCancel
             '
-            Me.ButtonCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.ButtonCancel.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             Me.ButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.ButtonCancel.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.ButtonCancel.Location = New System.Drawing.Point(290, 188)
@@ -756,59 +745,6 @@ Namespace WizardControl
         Friend WithEvents ButtonBack As System.Windows.Forms.Button
         Friend WithEvents ButtonNext As System.Windows.Forms.Button
         Friend WithEvents ButtonCancel As System.Windows.Forms.Button
-
-    End Class
-
-    ''' <summary>
-    ''' Designer für dieses Control
-    ''' </summary>
-    Friend Class WizardDesigner
-
-        Inherits ParentControlDesigner
-
-        Protected Overrides Property DrawGrid As Boolean
-            Get
-                Return MyBase.DrawGrid
-            End Get
-            Set(value As Boolean)
-                MyBase.DrawGrid = value
-            End Set
-        End Property
-
-        Protected Overrides Sub WndProc(ByRef msg As Message)
-
-            If msg.Msg = 513 OrElse msg.Msg = 515 Then
-
-                Dim selectionService = CType(MyBase.GetService(
-                    GetType(ISelectionService)),
-                    ISelectionService)
-
-                Dim wizard As Wizard = TryCast(selectionService.PrimarySelection, Wizard)
-
-                If wizard IsNot Nothing Then
-
-                    Dim x As Integer = CShort(CInt(msg.LParam) And &HFFFF)
-                    Dim y As Integer = CShort(CUInt(CInt(msg.LParam) And -65536) >> 16)
-                    Dim pt As New Point(x, y)
-
-                    If msg.HWnd = wizard.ButtonNext.Handle Then
-
-                        If wizard.ButtonNext.Enabled AndAlso wizard.ButtonNext.ClientRectangle.Contains(pt) Then
-                            wizard.Next()
-                        End If
-
-                    ElseIf msg.HWnd = wizard.ButtonBack.Handle AndAlso wizard.ButtonBack.Enabled AndAlso wizard.ButtonBack.ClientRectangle.Contains(pt) Then
-                        wizard.Back()
-                    End If
-
-                    Return
-
-                End If
-
-            End If
-            MyBase.WndProc(msg)
-
-        End Sub
 
     End Class
 
