@@ -1,6 +1,6 @@
 # NotifyForm Control
 
-Dient zum Anzeigen von Benachrichtigungsfenstern.
+Ein Steuerelement zum Anzeigen von Benachrichtigungsfenstern.
 
 ---
 

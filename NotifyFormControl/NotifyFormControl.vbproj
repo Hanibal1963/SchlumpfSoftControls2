@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5FBF3367-6FE9-430E-BABB-82800C838C9A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>NotifyFormControl</RootNamespace>
+    <RootNamespace>SchlumpfSoft.Controls</RootNamespace>
     <AssemblyName>NotifyFormControl</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -74,6 +74,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
