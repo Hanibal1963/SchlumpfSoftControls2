@@ -66,7 +66,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="ShapeControl\ShapeControl.cd" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -98,10 +97,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="ShapeControl\ShapeEnums.vb" />
-    <Compile Include="ShapeControl\Shape.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TransparentLabelControl\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -139,15 +134,9 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ShapeControl\Shape.resx">
-      <DependentUpon>Shape.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ShapeControl.Shape.bmp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DriveNoRoot.png" />
