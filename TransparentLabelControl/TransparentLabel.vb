@@ -17,6 +17,7 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace TransparentLabelControl
 
@@ -26,8 +27,10 @@ Namespace TransparentLabelControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(TransparentLabelControl.TransparentLabel), "TransparentLabelControl.TransparentLabel.bmp")>
-    Public Class TransparentLabel : Inherits Label
+    <ToolboxBitmap(GetType(TransparentLabelControl.TransparentLabel), "TransparentLabel.bmp")>
+    Public Class TransparentLabel
+
+        Inherits Label
 
         Private components As IContainer
 
@@ -90,8 +93,7 @@ Namespace TransparentLabelControl
         Protected Overrides ReadOnly Property CreateParams As CreateParams
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
-                'WS EX TRANSPARENT aktivieren
-                'https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles
+                ' WS EX TRANSPARENT aktivieren (https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles)
                 cp.ExStyle = cp.ExStyle Or &H20
                 Return cp
             End Get

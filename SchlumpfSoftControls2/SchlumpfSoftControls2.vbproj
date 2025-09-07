@@ -69,7 +69,6 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="TransparentLabelControl\TransparentLabelControl.cd" />
     <None Include="WizardControl\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +96,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="TransparentLabelControl\TransparentLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="WizardControl\WizardEventArgs.vb" />
     <Compile Include="WizardControl\WizardPages.vb">
       <SubType>Component</SubType>
@@ -164,7 +160,6 @@
     <EmbeddedResource Include="Resources\WizardHeaderImage.jpg" />
     <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />
     <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
-    <EmbeddedResource Include="Resources\TransparentLabelControl.TransparentLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
