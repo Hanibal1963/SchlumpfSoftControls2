@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{58092D89-9E0A-4976-B1D3-A91CE0824DA9}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SchlumpfSoft.Conrols</RootNamespace>
+    <RootNamespace>SchlumpfSoft.Controls</RootNamespace>
     <AssemblyName>DriveWatcherConrol</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
