@@ -66,7 +66,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="SevenSegmentControl\SevenSegmentControl.cd" />
     <None Include="ShapeControl\ShapeControl.cd" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -99,12 +98,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="SevenSegmentControl\MultiDigit.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="SevenSegmentControl\SingleDigit.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ShapeControl\ShapeEnums.vb" />
     <Compile Include="ShapeControl\Shape.vb">
       <SubType>Component</SubType>
@@ -146,12 +139,6 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SevenSegmentControl\MultiDigit.resx">
-      <DependentUpon>MultiDigit.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SevenSegmentControl\SingleDigit.resx">
-      <DependentUpon>SingleDigit.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ShapeControl\Shape.resx">
       <DependentUpon>Shape.vb</DependentUpon>
     </EmbeddedResource>
@@ -185,8 +172,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <EmbeddedResource Include="Resources\SevenSegmentControl.MultiDigit.bmp" />
-    <EmbeddedResource Include="Resources\SevenSegmentControl.SingleDigit.bmp" />
     <EmbeddedResource Include="Resources\WizardHeaderImage.jpg" />
     <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />
     <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
@@ -211,6 +196,12 @@
     <ProjectReference Include="..\DriveWatcherConrol\DriveWatcherControl.vbproj">
       <Project>{58092D89-9E0A-4976-B1D3-A91CE0824DA9}</Project>
       <Name>DriveWatcherControl</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\NotifyFormControl\NotifyFormControl.vbproj">
+      <Project>{5FBF3367-6FE9-430E-BABB-82800C838C9A}</Project>
+      <Name>NotifyFormControl</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

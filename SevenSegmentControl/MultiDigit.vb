@@ -19,6 +19,7 @@ Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace SevenSegmentControl
 
@@ -28,7 +29,7 @@ Namespace SevenSegmentControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("ClassDescriptionSevSegMultiDigit")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "SevenSegmentControl.MultiDigit.bmp")>
+    <ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "MultiDigit.bmp")>
     Public Class MultiDigit : Inherits Control
 
 #Region "Eigenschaftsvariablen"

@@ -20,6 +20,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace SevenSegmentControl
 
@@ -30,7 +31,7 @@ Namespace SevenSegmentControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(SevenSegmentControl.SingleDigit), "SevenSegmentControl.SingleDigit.bmp")>
+    <ToolboxBitmap(GetType(SevenSegmentControl.SingleDigit), "SingleDigit.bmp")>
     Public Class SingleDigit : Inherits Control
 
 #Region "interne Eigenschaftsvariablen"
