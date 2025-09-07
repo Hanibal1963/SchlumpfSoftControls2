@@ -64,7 +64,6 @@
     </Content>
     <None Include="NotifyFormControl\NotifyFormControl.cd" />
     <None Include="DriveWatcherControl\DriveWacherControl.cd" />
-    <None Include="ColorProgressBarControl\ColorProgressBar.cd" />
     <Content Include="ReleaseNotes.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -78,12 +77,6 @@
     <None Include="WizardControl\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
-      <DependentUpon>ColorProgressBar.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="DriveWatcherControl\DriveWatcherEventArgs.vb" />
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
@@ -156,9 +149,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ColorProgressBarControl\ColorProgressBar.resx">
-      <DependentUpon>ColorProgressBar.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DriveWatcherControl\DriveWatcher.resx">
       <DependentUpon>DriveWatcher.vb</DependentUpon>
     </EmbeddedResource>

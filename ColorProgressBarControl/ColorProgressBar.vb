@@ -19,6 +19,7 @@ Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 
 Namespace ColorProgressBarControl
 
