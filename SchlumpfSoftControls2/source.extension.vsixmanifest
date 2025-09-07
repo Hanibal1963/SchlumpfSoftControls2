@@ -32,5 +32,7 @@
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ColorProgressBarControl" Path="|ColorProgressBarControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="DriveWatcherControl" Path="|DriveWatcherControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="NotifyFormControl" Path="|NotifyFormControl;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="SevenSegmentControl" Path="|SevenSegmentControl;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ShapeControl" Path="|ShapeControl;PkgdefProjectOutputGroup|" />
     </Assets>
 </PackageManifest>
