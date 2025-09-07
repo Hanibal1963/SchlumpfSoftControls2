@@ -57,7 +57,6 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="ExplorerTreeViewControl\ExplorerTreeViewControl.cd" />
     <Content Include="LICENSE.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -71,23 +70,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExplorerTreeViewControl\DriveDescConstantDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\DriveTypeKeyConstantDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\ExplorerTreeViewHelpers.vb" />
-    <Compile Include="ExplorerTreeViewControl\FolderNamesKeyConstantDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\IconKeyConstantDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
-    <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
-    <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
-    <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.Designer.vb">
-      <DependentUpon>ExplorerTreeView.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ExplorerTreeViewControl\FolderNode.vb" />
-    <Compile Include="ExplorerTreeViewControl\SelectedPathChangedEventArgs.vb" />
-    <Compile Include="ExplorerTreeViewControl\SpecialFolderNode.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -114,9 +96,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExplorerTreeViewControl\ExplorerTreeView.resx">
-      <DependentUpon>ExplorerTreeView.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -127,24 +106,6 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DriveNoRoot.png" />
-    <EmbeddedResource Include="Resources\ExplorerTreeViewControl.ExplorerTreeView.bmp" />
-    <EmbeddedResource Include="Resources\FolderVideos.png" />
-    <EmbeddedResource Include="Resources\FolderMusic.png" />
-    <EmbeddedResource Include="Resources\FolderPictures.png" />
-    <EmbeddedResource Include="Resources\FolderDownloads.png" />
-    <EmbeddedResource Include="Resources\FolderDocuments.png" />
-    <EmbeddedResource Include="Resources\FolderDesktop.png" />
-    <EmbeddedResource Include="Resources\Folder.png" />
-    <None Include="Resources\DriveSystem.png" />
-    <None Include="Resources\DriveDisk.png" />
-    <EmbeddedResource Include="Resources\DriveUnknown.png" />
-    <EmbeddedResource Include="Resources\DriveRamDisk.png" />
-    <EmbeddedResource Include="Resources\Computer.png" />
-    <EmbeddedResource Include="Resources\DriveRemovable.png" />
-    <EmbeddedResource Include="Resources\DriveNetwork.png" />
-    <EmbeddedResource Include="Resources\DriveCDRom.png" />
-    <EmbeddedResource Include="Resources\DriveFixed.png" />
     <Content Include="Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -202,6 +163,9 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3bPkgdefProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -13,6 +13,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Linq
 Imports System.Windows.Forms
+Imports SchlumpfSoft.Attribute
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 #End Region
@@ -30,7 +31,7 @@ Namespace ExplorerTreeViewControl
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.")>
     <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeViewControl.ExplorerTreeView.bmp")>
+    <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeView.bmp")>
     Public Class ExplorerTreeView
 
         Inherits UserControl

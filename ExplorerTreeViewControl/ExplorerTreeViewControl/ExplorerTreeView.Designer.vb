@@ -50,7 +50,7 @@
 
         End Sub
 
-        Private WithEvents DW As DriveWatcherControl.DriveWatcher
+        Private WithEvents DW As SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher
         Private WithEvents IL As System.Windows.Forms.ImageList
         Private WithEvents TV As System.Windows.Forms.TreeView
     End Class
