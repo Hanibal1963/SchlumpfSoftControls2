@@ -9,11 +9,11 @@ Imports System.Runtime.InteropServices
 ' Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("AniGifControl")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Stueelemnt zum Anzeigen von animierten Grafiken.")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("AniGifControl")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("privat")>
 
 <Assembly: ComVisible(False)>
 
@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 ' indem Sie "*" wie unten gezeigt eingeben:
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("2.2025.0907.0")>
+<Assembly: AssemblyFileVersion("2.2025.0907.0")>
