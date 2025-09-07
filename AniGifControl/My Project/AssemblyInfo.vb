@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Werte der Assemblyattribute überprüfen
 
-<Assembly: AssemblyTitle("TestControls")>
+<Assembly: AssemblyTitle("AniGifControl")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
-<Assembly: AssemblyProduct("TestControls")>
+<Assembly: AssemblyProduct("AniGifControl")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'Die folgende GUID wird für die typelib-ID verwendet, wenn dieses Projekt für COM verfügbar gemacht wird.
-<Assembly: Guid("54476842-96ab-45cd-9b60-0238f7f4d421")>
+<Assembly: Guid("1b5f6955-2a33-458a-b180-99dc36ecd84b")>
 
 ' Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 '

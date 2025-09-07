@@ -22,17 +22,13 @@ Namespace ExplorerTreeViewControl
         ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.ComputerNode"/>. 
         ''' </summary>
         ''' <remarks></remarks>        
-        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New()
 
-            ' Hole den Namen des Computers
-            Dim computerName As String = Environment.MachineName
-
             'Setze den Text des Knotens mit dem Computernamen
-            Text = $"Dieser Computer ({computerName})"
+            Text = $"Dieser Computer ({Environment.MachineName})"
 
             ' Setze das Icon für den Knoten
-            Dim key As String = NodeHelpers.GetImageKey("Computer")
+            Dim key As String = GetImageKey(ICON_COMPUTER)
             ImageKey = key
             SelectedImageKey = key
 
@@ -40,25 +36,26 @@ Namespace ExplorerTreeViewControl
             Nodes.Clear()
 
             ' Füge Platzhalterknoten hinzu, die später durch spezielle Ordner und Laufwerke ersetzt werden
-            Nodes.Add(New TreeNode($"Spezielle Ordner laden ..."))
-            Nodes.Add(New TreeNode($"Laufwerke laden ..."))
+            Nodes.AddRange({
+                New TreeNode("Spezielle Ordner laden ..."),
+                New TreeNode("Laufwerke laden ...")
+                })
 
         End Sub
 
         ''' <summary>
         ''' Lädt die speziellen Ordner und fügt sie dem Knoten hinzu.
         ''' </summary>
-        <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub LoadSpecialFolders()
 
             ' Füge spezielle Ordner wie Desktop, Dokumente, Downloads usw. als Knoten hinzu
-            Nodes.Add(New SpecialFolderNode("Desktop"))
-            Nodes.Add(New SpecialFolderNode("Dokumente"))
-            Nodes.Add(New SpecialFolderNode("Downloads"))
-            Nodes.Add(New SpecialFolderNode("Musik"))
-            Nodes.Add(New SpecialFolderNode("Bilder"))
-            Nodes.Add(New SpecialFolderNode("Videos"))
-
+            Nodes.AddRange({
+                  New SpecialFolderNode("Desktop"),
+                  New SpecialFolderNode("Dokumente"),
+                  New SpecialFolderNode("Downloads"),
+                  New SpecialFolderNode("Musik"),
+                  New SpecialFolderNode("Bilder"),
+                  New SpecialFolderNode("Videos")})
         End Sub
 
         ''' <summary>

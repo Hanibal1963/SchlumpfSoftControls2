@@ -19,9 +19,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Gibt den vollständigen Pfad des Knotens zurück
         ''' </summary>
-        ''' <remarks>
-        ''' Diese Eigenschaft gibt den Pfad des Laufwerks zurück, das im Tag gespeichert ist.
-        ''' </remarks>
+        ''' <remarks>Diese Eigenschaft gibt den Pfad des Laufwerks zurück, das im Tag gespeichert ist.</remarks>
         Public Overloads ReadOnly Property FullPath As String
             Get
                 Return Tag.ToString()
@@ -31,29 +29,32 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Gibt den Laufwerkstyp des Knotens zurück
         ''' </summary>
-        ''' <remarks>
-        ''' Diese Eigenschaft verwendet die DriveInfo-Klasse, um den Typ des Laufwerks zu ermitteln.
-        ''' </remarks>
+        ''' <remarks>Diese Eigenschaft verwendet <see cref="DriveInfo"/>, um den Typ des Laufwerks zu ermitteln.</remarks>
         Public ReadOnly Property DriveType As DriveType
             Get
                 Return New DriveInfo(Tag.ToString()).DriveType
             End Get
         End Property
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.DriveNode"/>. 
+        ''' </summary>
+        ''' <param name="Drive">Laufwerk für welches diese Instanz erstellt werden soll als <see cref="DriveInfo"/></param>
+        ''' <remarks></remarks>
         <Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Public Sub New(Drive As DriveInfo)
 
             ' Setzt den Text des Knotens auf das Laufwerkslabel und den Laufwerksnamen (z. B. "Lokaler Datenträger (C:)").
-            Text = $"{NodeHelpers.GetVolumeLabel(Drive)} ({NodeHelpers.GetDriveName(Drive)})"
+            Text = $"{GetVolumeLabel(Drive)} ({GetDriveName(Drive)})"
 
             ' Speichert den Laufwerksnamen (z. B. "C:\") im Tag des Knotens.
             Tag = Drive.Name
 
             ' Ermittelt den Laufwerkstyp als String (z. B. "Lokaler Datenträger", "CD-Laufwerk").
-            Dim drivetypestring As String = NodeHelpers.GetDriveTypeString(Drive)
+            Dim drivetypestring As String = GetDriveTypeString(Drive)
 
             ' Ermittelt den Schlüssel für das Symbol basierend auf dem Laufwerkstyp.
-            Dim key As String = NodeHelpers.GetImageKey(drivetypestring)
+            Dim key As String = GetImageKey(drivetypestring)
 
             ' Setzt das Symbol des Knotens (ImageKey) und das Symbol für den ausgewählten Zustand (SelectedImageKey).
             ImageKey = key
@@ -63,7 +64,7 @@ Namespace ExplorerTreeViewControl
             Nodes.Clear()
 
             ' Füge einen Platzhalterknoten hinzu, der später durch die Unterordner ersetzt wird
-            Nodes.Add(New TreeNode($"Ordner laden ..."))
+            Nodes.Add(New TreeNode("Ordner laden ..."))
 
         End Sub
 

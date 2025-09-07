@@ -11,6 +11,7 @@ Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Drawing
 Imports System.IO
+Imports System.Linq
 Imports System.Windows.Forms
 Imports SchlumpfSoft.Controls.DriveWatcherControl
 
@@ -33,6 +34,8 @@ Namespace ExplorerTreeViewControl
     Public Class ExplorerTreeView
 
         Inherits UserControl
+        Implements IDisposable
+        Private disposedValue As Boolean = False
 
 #Region "Interne Variablen"
 
@@ -566,6 +569,51 @@ Namespace ExplorerTreeViewControl
         End Sub
 
 #End Region
+
+        ''' <summary>
+        ''' Gibt Ressourcen frei, die von dem ExplorerTreeView-Steuerelement verwendet werden.
+        ''' </summary>
+        ''' <param name="disposing">
+        ''' <see langword="True"/>, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben;
+        ''' <see langword="False"/>, um nur nicht verwaltete Ressourcen freizugeben.
+        ''' </param>
+        ''' <remarks>
+        ''' Diese Methode wird aufgerufen, wenn das Steuerelement explizit oder implizit entsorgt wird.
+        ''' Sie sorgt dafür, dass alle FileSystemWatcher-Objekte entfernt und entsorgt werden,
+        ''' um Speicherlecks und unerwünschte Ereignisauslösungen zu vermeiden.
+        ''' Zusätzlich können hier weitere verwaltete Ressourcen freigegeben werden.
+        ''' Nicht verwaltete Ressourcen können ebenfalls an dieser Stelle freigegeben werden.
+        ''' </remarks>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+
+            ' Prüfen, ob das Objekt bereits entsorgt wurde, um doppelte Freigabe zu verhindern
+            If Not disposedValue Then
+
+                If disposing Then
+                    ' Verwaltete Ressourcen freigeben:
+                    ' Entfernt und entsorgt alle FileSystemWatcher-Objekte, die zur Überwachung von Verzeichnissen verwendet werden.
+                    RemoveAndDisposeWatchers(_FileSystemWatchers.Keys.ToList())
+
+                    ' Falls weitere verwaltete Ressourcen existieren, sollten diese ebenfalls hier freigegeben werden.
+                    DW.Dispose()
+                    IL.Dispose()
+                    TV.Dispose()
+
+                End If
+
+                ' Nicht verwaltete Ressourcen freigeben (falls vorhanden):
+                ' Hier können z.B. Handles oder andere native Ressourcen freigegeben werden.
+
+                ' Markiert das Objekt als entsorgt, damit Dispose nicht mehrfach ausgeführt wird
+                disposedValue = True
+
+            End If
+
+            ' Ruft die Basisklassen-Implementierung von Dispose auf, um sicherzustellen,
+            ' dass auch die Ressourcen der Basisklasse korrekt freigegeben werden.
+            MyBase.Dispose(disposing)
+
+        End Sub
 
 #Region "Ereignisbehandlung FileSystemWatcher"
 

@@ -57,7 +57,6 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="AniGifControl\AniGifControl.cd" />
     <None Include="ExplorerTreeViewControl\ExplorerTreeViewControl.cd" />
     <Content Include="LICENSE.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -79,10 +78,6 @@
     <None Include="WizardControl\WizzardControl.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AniGifControl\AniGif.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="AniGifControl\SizeMode.vb" />
     <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
       <DependentUpon>ColorProgressBar.vb</DependentUpon>
     </Compile>
@@ -161,9 +156,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AniGifControl\AniGif.resx">
-      <DependentUpon>AniGif.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ColorProgressBarControl\ColorProgressBar.resx">
       <DependentUpon>ColorProgressBar.vb</DependentUpon>
     </EmbeddedResource>
