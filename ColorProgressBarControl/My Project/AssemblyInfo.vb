@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("ColorProgressBarControl")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Ein Steuerelement welches zum Anzeigen animierter Grafiken dient.")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("ColorProgressBarControl")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 ' indem Sie "*" wie unten gezeigt eingeben:
 
-<Assembly: AssemblyVersion("2.2025.0.0")>
-<Assembly: AssemblyFileVersion("2.2025.0.0")>
+<Assembly: AssemblyVersion("2.2025.0909.0")>
+<Assembly: AssemblyFileVersion("2.2025.0909.0")>

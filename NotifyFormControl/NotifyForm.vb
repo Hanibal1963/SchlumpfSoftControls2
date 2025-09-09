@@ -1,18 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' NotifyForm.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Control zum anzeigen von Benachrichtigungsfenstern.
-'
-' weitere Infos:
-' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
-' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
-' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
-' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
-'
 ' *************************************************************************************************
 
 Imports System
@@ -20,9 +8,14 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Threading
 Imports System.Windows.Forms
-Imports SchlumpfSoft.Attribute
+Imports SchlumpfSoft.Controls.Attribute
 
 Namespace NotifyFormControl
+
+    ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
+    ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
+    ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+    ' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
 
     ''' <summary>
     ''' Control zum anzeigen von Benachrichtigungsfenstern.

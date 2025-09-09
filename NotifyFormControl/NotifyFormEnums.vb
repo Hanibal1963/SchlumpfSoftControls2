@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' NotifyFormEnums.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Auflistung der Designs und Styles
-'
 ' *************************************************************************************************
 
 Namespace NotifyFormControl

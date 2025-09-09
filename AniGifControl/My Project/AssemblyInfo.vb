@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("AniGifControl")>
-<Assembly: AssemblyDescription("Stueelemnt zum Anzeigen von animierten Grafiken.")>
+<Assembly: AssemblyDescription("Steuerelement zum Anzeigen von animierten Grafiken.")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("AniGifControl")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>

@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("NotifyFormControl")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("privat")>
 
 <Assembly: ComVisible(False)>
 

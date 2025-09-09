@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="1.2025.0814.0" Language="de-DE" Publisher="Andreas Sauer" />
+        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="2.2025.0907.0" Language="de-DE" Publisher="Andreas Sauer" />
         <DisplayName>SchlumpfSoftControls2</DisplayName>
         <Description xml:space="preserve">Eine Sammlung verschiedener Steuerelemente.</Description>
         <MoreInfo>https://github.com/Hanibal1963/SchlumpfSoftControls2</MoreInfo>
@@ -30,11 +30,6 @@
     <Assets>
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="AniGifControl" Path="|AniGifControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ColorProgressBarControl" Path="|ColorProgressBarControl;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="DriveWatcherControl" Path="|DriveWatcherControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="NotifyFormControl" Path="|NotifyFormControl;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="SevenSegmentControl" Path="|SevenSegmentControl;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ShapeControl" Path="|ShapeControl;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="TransparentLabelControl" Path="|TransparentLabelControl;PkgdefProjectOutputGroup|" />
-        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="WizardControl" Path="|WizardControl;PkgdefProjectOutputGroup|" />
     </Assets>
 </PackageManifest>

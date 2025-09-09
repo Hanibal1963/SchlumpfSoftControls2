@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
 ' SizeMode.vb
-' Copyright (c) 2024-2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-'
-' Dieses Modul enthält Auflistungen und Funktionen für die Anzeigemodi von GIFs.
-'
+' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
 Namespace AniGifControl

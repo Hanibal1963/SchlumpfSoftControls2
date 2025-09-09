@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{411C55DA-B346-4B5A-A28A-4E5B31F5B0BB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SchlumpfSoft.Attribute</RootNamespace>
+    <RootNamespace>SchlumpfSoft.Controls.Attribute</RootNamespace>
     <AssemblyName>SchlumpfSoft.Attribute</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
