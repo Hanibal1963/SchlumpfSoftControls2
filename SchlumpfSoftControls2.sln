@@ -22,6 +22,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ColorProgressBarControl", "
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NotifyFormControl", "NotifyFormControl\NotifyFormControl.vbproj", "{229F0D45-6F1B-4705-A176-57D897504A34}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TransparentLabelControl", "TransparentLabelControl\TransparentLabelControl.vbproj", "{0AE93122-642B-4C42-B705-1A0B2B277B49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,18 @@ Global
 		{229F0D45-6F1B-4705-A176-57D897504A34}.Release|arm64.Build.0 = Release|arm64
 		{229F0D45-6F1B-4705-A176-57D897504A34}.Release|x86.ActiveCfg = Release|x86
 		{229F0D45-6F1B-4705-A176-57D897504A34}.Release|x86.Build.0 = Release|x86
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|arm64.ActiveCfg = Debug|arm64
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|arm64.Build.0 = Debug|arm64
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|x86.ActiveCfg = Debug|x86
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Debug|x86.Build.0 = Debug|x86
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|arm64.ActiveCfg = Release|arm64
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|arm64.Build.0 = Release|arm64
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|x86.ActiveCfg = Release|x86
+		{0AE93122-642B-4C42-B705-1A0B2B277B49}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

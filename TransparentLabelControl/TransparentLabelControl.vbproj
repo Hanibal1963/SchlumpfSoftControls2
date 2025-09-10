@@ -19,10 +19,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
-    <ProjectGuid>{229F0D45-6F1B-4705-A176-57D897504A34}</ProjectGuid>
+    <ProjectGuid>{0AE93122-642B-4C42-B705-1A0B2B277B49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>SchlumpfSoft.Controls</RootNamespace>
-    <AssemblyName>NotifyFormControl</AssemblyName>
+    <AssemblyName>TransparentLabelControl</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -65,16 +65,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="NotifyForm.vb">
+    <Compile Include="TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="NotifyFormControlPackage.vb" />
-    <Compile Include="NotifyFormEnums.vb" />
+    <Compile Include="TransparentLabelControlPackage.vb" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime">
@@ -83,31 +84,24 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2101" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Attribute\Attribute.vbproj">
+      <Project>{411c55da-b346-4b5a-a28a-4e5b31f5b0bb}</Project>
+      <Name>Attribute</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotifyForm.resx">
-      <DependentUpon>NotifyForm.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NotifyFormControl.cd" />
-    <None Include="NotifyFormControl.md" />
+    <None Include="TransparentLabelControl.cd" />
+    <None Include="TransparentLabelControl.md" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CriticalError.png" />
-    <EmbeddedResource Include="Resources\Information.png" />
-    <EmbeddedResource Include="Resources\NotifyForm.bmp" />
-    <EmbeddedResource Include="Resources\Question.png" />
-    <EmbeddedResource Include="Resources\Warning.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Attribute\Attribute.vbproj">
-      <Project>{411c55da-b346-4b5a-a28a-4e5b31f5b0bb}</Project>
-      <Name>Attribute</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Resources\TransparentLabel.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

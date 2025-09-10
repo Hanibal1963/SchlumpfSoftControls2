@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic
 <Assembly: AssemblyTitle("SchlumpfSoftControls2")>
 <Assembly: AssemblyDescription("Eine sammlung verschiedener Cotrols.")>
 <Assembly: AssemblyConfiguration("")>
-<Assembly: AssemblyCompany("SchlumpfSoft")>
+<Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("SchlumpfSoftControls2")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
 <Assembly: AssemblyTrademark("privat")>
