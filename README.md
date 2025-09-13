@@ -26,7 +26,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 - TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
 - SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige. 
 - ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
-- **NEU HINZUGEFÜGT** ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
+-  ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
 
 ---
 
