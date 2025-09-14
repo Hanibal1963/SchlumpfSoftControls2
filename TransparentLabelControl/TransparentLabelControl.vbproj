@@ -97,8 +97,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="TransparentLabelControl.cd" />
-    <None Include="TransparentLabelControl.md" />
+    <None Include="TransparentLabel.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\TransparentLabel.bmp" />

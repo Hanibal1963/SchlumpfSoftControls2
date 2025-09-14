@@ -23,7 +23,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.
 * Wizard Control - Ein Control zum erstellen eines Assistenten.
 * Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
-* TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
+* [TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.](./Doc/TransparentLabelcontrol.md)
 * SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige. 
 * ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
 * ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.

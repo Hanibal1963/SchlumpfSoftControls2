@@ -7,20 +7,23 @@ Imports Task = System.Threading.Tasks.Task
 
 
 ''' <summary>
-''' This is the class that implements the package exposed by this assembly.
+''' Diese Klasse implementiert das von diesem Assembly bereitgestellte Package.
 ''' </summary>
 ''' <remarks>
-''' <para>
-''' The minimum requirement for a class to be considered a valid package for Visual Studio
-''' Is to implement the IVsPackage interface And register itself with the shell.
-''' This package uses the helper classes defined inside the Managed Package Framework (MPF)
-''' to do it: it derives from the Package Class that provides the implementation Of the 
-''' IVsPackage interface And uses the registration attributes defined in the framework to 
-''' register itself And its components with the shell. These attributes tell the pkgdef creation
-''' utility what data to put into .pkgdef file.
+''' <para> Die Mindestanforderung für eine Klasse, um als gültiges Package für
+''' Visual Studio zu gelten, ist die Implementierung des IVsPackage-Interfaces und
+''' die Registrierung bei der Shell. </para>
+''' <para>Dieses Package verwendet die Hilfsklassen aus dem Managed Package
+''' Framework (MPF), um dies zu tun: </para>
+''' <para>Es erbt von der Package-Klasse, die die Implementierung des
+''' IVsPackage-Interfaces bereitstellt, und verwendet die im Framework definierten
+''' Registrierungsattribute, </para>
+''' <para>um sich selbst und seine Komponenten bei der Shell zu registrieren.
 ''' </para>
-''' <para>
-''' To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
+''' <para>Diese Attribute geben dem pkgdef-Erstellungstool an, welche Daten in die
+''' .pkgdef-Datei geschrieben werden sollen. </para>
+''' <para> Damit das Package in VS geladen wird, muss es im .vsixmanifest mit
+''' &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; referenziert werden.
 ''' </para>
 ''' </remarks>
 <PackageRegistration(UseManagedResourcesOnly:=True, AllowsBackgroundLoading:=True)>
@@ -29,22 +32,31 @@ Public NotInheritable Class TransparentLabelControlPackage
     Inherits AsyncPackage
 
     ''' <summary>
-    ''' Package guid
+    ''' Package-GUID
     ''' </summary>
     Public Const PackageGuidString As String = "41fe6750-9b7b-4ebc-a241-c68d131e0306"
 
 #Region "Package Members"
 
     ''' <summary>
-    ''' Initialization of the package; this method is called right after the package is sited, so this is the place
-    ''' where you can put all the initialization code that rely on services provided by VisualStudio.
+    ''' <para>Initialisierung des Packages; diese Methode wird direkt nach dem Einbinden
+    ''' des Packages aufgerufen. </para>
+    ''' <para>Hier kann sämtlicher Initialisierungscode platziert werden, der auf von
+    ''' Visual Studio bereitgestellte Dienste angewiesen ist.</para>
     ''' </summary>
-    ''' <param name="cancellationToken">A cancellation token to monitor for initialization cancellation, which can occur when VS is shutting down.</param>
-    ''' <param name="progress">A provider for progress updates.</param>
-    ''' <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
+    ''' <param name="cancellationToken">Ein CancellationToken zur Überwachung einer
+    ''' möglichen Abbruchanforderung während der Initialisierung, z.B. beim
+    ''' Herunterfahren von VS.</param>
+    ''' <param name="progress">Ein Provider für Fortschrittsmeldungen.</param>
+    ''' <returns>
+    ''' <para>Ein Task, der die asynchrone Initialisierung des Packages repräsentiert,
+    ''' oder ein bereits abgeschlossener Task, falls keine Initialisierung erforderlich
+    ''' ist. </para>
+    ''' <para>Es darf kein null zurückgegeben werden.</para>
+    ''' </returns>
     Protected Overrides Async Function InitializeAsync(cancellationToken As CancellationToken, progress As IProgress(Of ServiceProgressData)) As Task
-        ' When initialized asynchronously, the current thread may be a background thread at this point.
-        ' Do any initialization that requires the UI thread after switching to the UI thread.
+        ' Bei asynchroner Initialisierung kann der aktuelle Thread zu diesem Zeitpunkt ein Hintergrundthread sein.
+        ' Jegliche Initialisierung, die den UI-Thread benötigt, sollte nach dem Umschalten auf den UI-Thread erfolgen.
         Await Me.JoinableTaskFactory.SwitchToMainThreadAsync()
     End Function
 

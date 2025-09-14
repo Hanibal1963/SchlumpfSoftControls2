@@ -34,6 +34,9 @@ Namespace TransparentLabelControl
 
         Private components As IContainer
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz der <see cref="TransparentLabel"/>-Klasse.
+        ''' </summary>
         Public Sub New()
             'Dieser Aufruf ist für den Designer erforderlich.
             InitializeComponent()
@@ -43,6 +46,9 @@ Namespace TransparentLabelControl
 
 #Region "ausgeblendete Eigenschaften"
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackColor As Color
@@ -54,6 +60,9 @@ Namespace TransparentLabelControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage As Image
@@ -65,6 +74,9 @@ Namespace TransparentLabelControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout As ImageLayout
@@ -76,6 +88,9 @@ Namespace TransparentLabelControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ausgeblendet da für dieses Control nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overloads Property FlatStyle As FlatStyle
@@ -89,7 +104,10 @@ Namespace TransparentLabelControl
 
 #End Region
 
-        ' Hiermit wird die Möglichkeit der Transparenz aktiviert
+        ''' <summary>
+        ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
+        ''' </summary>
+        ''' <returns>Die angepassten <see cref="CreateParams"/> mit aktiviertem WS_EX_TRANSPARENT-Stil.</returns>
         Protected Overrides ReadOnly Property CreateParams As CreateParams
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
@@ -99,13 +117,19 @@ Namespace TransparentLabelControl
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
+        ''' </summary>
         Private Sub InitializeStyles()
             SetStyle(ControlStyles.Opaque, True)
             SetStyle(ControlStyles.SupportsTransparentBackColor, True)
             SetStyle(ControlStyles.OptimizedDoubleBuffer, False)
         End Sub
 
-        ' Das Steuerelement überschreibt den Löschvorgang zum Bereinigen der Komponentenliste.
+        ''' <summary>
+        ''' Bereinigt die von der <see cref="TransparentLabel"/> verwendeten Ressourcen.
+        ''' </summary>
+        ''' <param name="disposing">Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.</param>
         <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
@@ -117,9 +141,15 @@ Namespace TransparentLabelControl
             End Try
         End Sub
 
-        ' Die folgende Prozedur ist für den Komponenten-Designer erforderlich.<br/>
-        ' Sie kann mit dem Komponenten-Designer geändert werden.
-        ' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <summary>
+        ''' Initialisiert die Komponenten des Steuerelements.
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>Die folgende Prozedur ist für den Komponenten-Designer
+        ''' erforderlich.</para>
+        ''' <para>Sie kann mit dem Komponenten-Designer geändert werden.</para>
+        ''' <para>Das Bearbeiten mit dem Code-Editor ist nicht möglich.</para>
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             components = New Container()

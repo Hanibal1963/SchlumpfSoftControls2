@@ -36,6 +36,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ExplorerTreeViewControl", "
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemo", "SchlumpfSoftControlsDemo\SchlumpfSoftControlsDemo.vbproj", "{49BCC191-3D02-4E35-A477-1CA81F1889AF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{6F7BC048-0A70-B1BE-8A35-89890EA57E92}"
+	ProjectSection(SolutionItems) = preProject
+		Doc\TransparentLabelControl.md = Doc\TransparentLabelControl.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
