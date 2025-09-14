@@ -9,11 +9,11 @@ Imports System.Runtime.InteropServices
 ' Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("SchlumpfSoftControlsDemo")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Demoprogramm für SchlumpfSoft Controls")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("SchlumpfSoftControlsDemo")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyTrademark("privat")>
 
 <Assembly: ComVisible(False)>
 
@@ -28,5 +28,5 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.2025.0914.0")>
+<Assembly: AssemblyFileVersion("1.2025.0914.0")>
