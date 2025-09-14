@@ -15,8 +15,6 @@ Imports SchlumpfSoft.Controls.Attribute
 
 Namespace AniGifControl
 
-    ' TODO: Dokumentation für alle Methoden und Eigenschaften ergänzen
-
     ''' <summary>
     ''' Control zum anzeigen von animierten Grafiken.
     ''' </summary>
