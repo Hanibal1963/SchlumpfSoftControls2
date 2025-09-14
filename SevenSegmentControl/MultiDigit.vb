@@ -23,6 +23,9 @@ Imports SchlumpfSoft.Controls.Attribute
 
 Namespace SevenSegmentControl
 
+    ' TODO: Dokumentation für alle Methoden und Eigenschaften ergänzen
+
+
     ''' <summary>
     ''' Stellt ein Control dar, das mehrere Siebensegmentanzeigen enthält.
     ''' </summary>
