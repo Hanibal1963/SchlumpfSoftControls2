@@ -1,17 +1,17 @@
-# TransparenLabelControl
+# TransparentLabelControl
 
-Ein .NET Windows Forms-Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
+Ein .NET Windows Forms Steuerelement (`TransparentLabel`) zum Anzeigen von Text mit durchscheinendem (quasi transparentem) Hintergrund über anderen Steuerelementen oder Grafiken.
 
 ---
 
-## Ãœbersicht
+## Übersicht
 
-`TransparentLabel` ist ein benutzerdefiniertes Label-Control, das es ermÃ¶glicht, Text mit transparentem Hintergrund darzustellen. 
+`TransparentLabel` ist ein benutzerdefiniertes Label-Control, das es ermöglicht, Text mit transparentem Hintergrund darzustellen. 
 
-Es eignet sich besonders fÃ¼r OberflÃ¤chen, bei denen der Hintergrund durchscheinen soll, z. B. bei Ã¼berlagerten Texten auf Bildern oder farbigen FlÃ¤chen.
+Es eignet sich besonders für Oberflächen, bei denen der Hintergrund durchscheinen soll, z. B. bei überlagerten Texten auf Bildern oder farbigen Flächen.
 
-Die Idee hinter diesem Projekt ist, z.Bsp. einen Text teilweise Ã¼ber ein Bild 
-zu legen ohne sich groÃŸartig Gedanken Ã¼ber 
+Die Idee hinter diesem Projekt ist, z.Bsp. einen Text teilweise über ein Bild 
+zu legen ohne sich großartig Gedanken über 
 Grafikroutinen zu machen.
 
 Mit diesem Control ist das in wenigen Zeilen Code erledigt bzw. im 
@@ -19,111 +19,178 @@ Designer zusammengeklickt.
 
 ---
 
-## Eigenschaften
+## Inhaltsverzeichnis
 
-### Ausgeblendete Eigenschaften
+1. Einordnung & Motivation
+2. Funktionsprinzip von Transparenz unter WinForms
+3. Hauptmerkmale
+4. Öffentliche / Verwendbare Eigenschaften
+5. Ausgeblendete Eigenschaften (Design-Entscheidung)
+6. Verwendung
+   - 6.1 Designer
+   - 6.2 Laufzeit (dynamische Erzeugung)
+   - 6.3 Über anderen Controls / Hintergrundgrafiken
+7. Leistungs- & Zeichenverhalten
+8. Unterschiede zu Standard `Label`
+9. Grenzen / Bekannte Einschränkungen
+10. Troubleshooting
+11. Erweiterung / Anpassung
+12. Versionierung / Changelog
+13. Beispielcode (kompakt)
+14. Lizenz / Hinweise
+15. Beitrag / Contributing
 
-Die folgenden Eigenschaften sind im Designer und zur Laufzeit ausgeblendet, da sie fÃ¼r dieses Control nicht relevant sind:
+---
 
+## 1. Einordnung & Motivation
+
+Das Standard-`Label`-Control von WinForms unterstützt keine echte Alphatransparenz beim Überlagern auf anderen Steuerelementen (z.B. `PictureBox`, benutzerdefinierte Zeichenflächen). `BackColor = Color.Transparent` führt häufig nur zur Transparent-Behandlung relativ zum Elterncontainer – nicht jedoch zu einer echten Überlagerung mehrerer Controls mit durchscheinendem Hintergrund.
+
+`TransparentLabel` erzwingt transparentes Zeichnen durch Setzen des erweiterten Fensterstils (`WS_EX_TRANSPARENT`) und geeigneter ControlStyles. Dadurch kann Text "schwebend" über einer darunterliegenden Oberfläche erscheinen.
+
+## 2. Funktionsprinzip von Transparenz unter WinForms
+
+Windows Forms ist GDI basierend und kennt keine generische per-Pixel-Alpha-Durchzeichnung zwischen Controls. Der Ansatz dieses Controls:
+- Setzen des Extended Window Styles `WS_EX_TRANSPARENT` (Hex: `0x20`).
+- Verhindern unnötiger Doppel-Pufferung (bewusste Kontrolle über `OptimizedDoubleBuffer`).
+- Erzwingen von Repaint-Reihenfolgen: Das transparente Control wird später gezeichnet / erlaubt darunterliegendem Parent die Hintergrunddarstellung.
+
+Das Ergebnis ist *praktische* Transparenz für typische Szenarien: Text wirkt freigestellt.
+
+## 3. Hauptmerkmale
+
+- Transparent wirkender Hintergrund (Parent-Inhalt scheint durch).
+- Verwendet Standard-Label-Funktionalitäten für Textausgabe, AutoSize, Font, ForeColor etc.
+- Reduzierte Design-Oberfläche: irrelevante Eigenschaften werden im Designer ausgeblendet (vereinfachte Bedienung).
+- Toolbox-Integration mittels `ProvideToolboxControl` & `ToolboxBitmap`.
+- Ressourcen-schonende Implementierung (keine komplexe Overhead-Paint-Pipeline).
+
+## 4. Öffentliche / Verwendbare Eigenschaften
+
+Alle nicht überschriebenen, vom Basistyp `Label` geerbten, weiterhin sichtbaren Eigenschaften können verwendet werden, u.a.:
+- `Text`
+- `Font`
+- `ForeColor`
+- `AutoSize`
+- `TextAlign`
+- `Dock` / `Anchor`
+- `UseMnemonic`
+- `Enabled`, `Visible`
+- Ereignisse wie `Click`, `DoubleClick`, `MouseEnter`, etc.
+
+## 5. Ausgeblendete Eigenschaften (Design-Entscheidung)
+
+Folgende Properties sind für das Konzept (bewusst transparenter Hintergrund) nicht sinnvoll und wurden deshalb mit `[Browsable(False)]` & `[EditorBrowsable(Never)]` versteckt:
 - `BackColor`
 - `BackgroundImage`
 - `BackgroundImageLayout`
 - `FlatStyle`
 
-Diese Eigenschaften sind zwar technisch vorhanden, werden aber nicht angezeigt oder verwendet.
+Begründung: Diese Eigenschaften erzeugen Erwartungshaltungen (Farbfüllung, Layout), die das Transparenzkonzept konterkarieren würden.
 
----
+## 6. Verwendung
 
-## Konstruktor
+### 6.1 Im Designer
 
-Initialisiert eine neue Instanz des `TransparentLabel`. Setzt die erforderlichen Styles fÃ¼r Transparenz.
+1. Projekt referenzieren (falls das Control in anderem Projekt genutzt wird).
+2. Build ausführen, damit `TransparentLabel` in der Toolbox unter "SchlumpfSoft Controls" erscheint.
+3. Control auf ein Formular ziehen.
+4. `Text`, `Font`, `ForeColor`, `AutoSize` konfigurieren.
+5. Position über anderen Steuerelementen (z.B. `PictureBox`) platzieren.
 
----
+### 6.2 Dynamische Erzeugung zur Laufzeit
 
-## Methoden und Funktionen
-
-### Dispose
-
-Bereinigt die von `TransparentLabel` verwendeten Ressourcen.
-
-**Parameter:**
-- `disposing` â€“ Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.
-
----
-
-### CreateParams
-
-Gibt die Erstellungsparameter fÃ¼r das Steuerelement zurÃ¼ck und aktiviert die Transparenz durch Setzen des `WS_EX_TRANSPARENT`-Stils.
-
----
-
-### InitializeStyles
-
-Setzt die erforderlichen ControlStyles, um Transparenz zu ermÃ¶glichen.
-
----
-
-### InitializeComponent
-
-Initialisiert die Komponenten des Steuerelements (wird vom Designer verwendet).
-
----
-
-## Beispiel
-
-Einbinden des Controls in ein Formular:
-
-```vbnet
-Imports TransparentLabelControl
-
-Public Class MainForm Inherits Form
-
-    Private transparentLabel As TransparentLabel
-
-    Public Sub New()
-
-        Me.transparentLabel = New TransparentLabel()
-        Me.transparentLabel.Text = "Transparenter Text"
-        Me.transparentLabel.Font = New Font("Arial", 24, FontStyle.Bold)
-        Me.transparentLabel.ForeColor = Color.White
-        Me.transparentLabel.Location = New Point(50, 50)
-        Me.transparentLabel.AutoSize = True
-
-        ' Hintergrundbild fÃ¼r das Formular setzen
-        Me.BackgroundImage = Image.FromFile("background.jpg")
-        Me.BackgroundImageLayout = ImageLayout.Stretch
-
-        ' TransparentLabel zum Formular hinzufÃ¼gen
-        Me.Controls.Add(Me.transparentLabel)
-
-        ' Formulareigenschaften setzen
-        Me.Text = "TransparentLabel Beispiel"
-        Me.Size = New Size(800, 600)
-
-    End Sub
-
-End Class
+```vb
+Dim lbl As New TransparentLabelControl.TransparentLabel() With {
+    .Text = "Überlagerter Text",
+    .ForeColor = Color.Yellow,
+    .Font = New Font("Segoe UI", 14, FontStyle.Bold),
+    .AutoSize = True,
+    .Location = New Point(32, 32)
+}
+Me.Controls.Add(lbl)
 ```
 
----
+### 6.3 Über anderen Controls / Hintergrundgrafiken
 
-## Hinweise
+- Am besten liegt das `TransparentLabel` direkt auf demselben Parent wie das darunterliegende Element.
+- Reihenfolge kontrollieren: `BringToFront()` verwenden.
+- Bei flackernden Neu-Zeichnungen (häufig bei sich ändernden Hintergrundbildern) ggf. manuell `Parent.Invalidate()` oder gezieltes Redraw steuern.
 
-- Das Control ist fÃ¼r die Verwendung im Designer geeignet.
-- Die Transparenz wird durch den Windows-Stil `WS_EX_TRANSPARENT` und entsprechende ControlStyles realisiert.
-- Die Hintergrundfarbe und Hintergrundbilder werden ignoriert.
+## 7. Leistungs- & Zeichenverhalten
 
----
+- Durch `WS_EX_TRANSPARENT` kann Windows das Control beim Neuzeichnen mehrfach anstoßen (Overdraw). Für statischen Text ist das unkritisch.
+- `OptimizedDoubleBuffer = False`: Hintergrund wird nicht fälschlich weggedoppelt (vermeidet, dass Transparenzwirkung zerstört wird). Bei stark flackernder Umgebung könnte ein eigener Offscreen-Puffer in einer erweiterten Version implementiert werden.
+- Für Masseneinsatz (viele Dutzend Labels) prüfen, ob Redraw-Frequenzen akzeptabel bleiben.
 
-## Lizenz
+## 8. Unterschiede zu Standard `Label`
 
-Copyright (c) 2025 Andreas Sauer
+| Aspekt | Standard Label | TransparentLabel |
+|-------|----------------|------------------|
+| Transparenter Hintergrund | Nur Parent-Hintergrund | Parent-Inhalt scheint durch (overdraw) |
+| Designer-Properties | Vollständig | Reduzierte, kuratierte Menge |
+| Hintergrund-Bitmap | Unterstützt | Deaktiviert/ausgeblendet |
+| Einsatz über bewegten Grafiken | Eingeschränkt | Besser geeignet (aber kein echtes Alpha-Blend) |
 
----
+## 9. Grenzen / Bekannte Einschränkungen
 
-## WeiterfÃ¼hrende Links
+- Keine echte Per-Pixel-Alpha-Komposition; es wird neu über darunter liegende Inhalte gezeichnet.
+- Flackern möglich bei sehr häufigem Repaint anderer Controls.
+- Nicht ideal für Szenarien mit Videos / hochfrequent animierten Hintergründen.
+- Hintergrundinteraktion (Mausereignisse) unter dem Label erfolgt nicht, solange das Label `Enabled` ist (normaler Windows-Message-HitTest).
 
-- [Browsable-Attribut](https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2)
-- [Category-Attribut](https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2)
-- [Description-Attribut](https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2)
+## 10. Troubleshooting
 
+| Problem | Mögliche Ursache | Lösung |
+|---------|------------------|--------|
+| Text flackert | Häufige Parent-Neuzeichnung | DoubleBuffering für Parent aktivieren / Redraw reduzieren |
+| Scheint nicht transparent | Falscher Parent oder Reihenfolge | Sicherstellen: `Parent` korrekt, `BringToFront()` ausführen |
+| Nicht in Toolbox sichtbar | Projekt nicht gebaut | Lösung: Build ausführen |
+| Hintergrund wirkt grau | OS Theme / falsches Zeichenereignis | Prüfen, ob Parent korrekt rendert (kein benutzerdefiniertes Überschreiben ohne BaseCall) |
+
+## 11. Erweiterung / Anpassung
+
+Ideen für zukünftige Versionen:
+- Optionale Alphafarb-Hinterlegung (teiltransparente Box hinter Text via Custom Paint).
+- Optionaler Rand / Umriss (Outline) zur besseren Lesbarkeit.
+- Schattenwurf (z.B. über `TextRenderer.DrawText` zweimal mit Versatz zeichnen).
+- Performance-Optimierung durch eigenes Caching des Hintergrundausschnitts.
+
+### Beispiel: Override für individuellen Text-Renderstil
+
+```vb
+Protected Overrides Sub OnPaint(e As PaintEventArgs)
+    MyBase.OnPaint(e)
+    ' Erweiterungspunkt: zusätzlicher Effekt
+    ' e.Graphics.DrawRectangle(Pens.Yellow, 0, 0, Me.Width - 1, Me.Height - 1)
+End Sub
+```
+
+## 13. Beispielcode (kompakt)
+
+### Formular mit Hintergrundgrafik und TransparentLabel
+
+```vb
+Public Class Form1
+    Public Sub New()
+        InitializeComponent()
+        Dim bg As New PictureBox() With {
+            .Image = Image.FromFile("hintergrund.jpg"),
+            .SizeMode = PictureBoxSizeMode.StretchImage,
+            .Dock = DockStyle.Fill
+        }
+        Me.Controls.Add(bg)
+
+        Dim overlay As New TransparentLabelControl.TransparentLabel() With {
+            .Text = "Overlay Text",
+            .Font = New Font("Segoe UI", 24, FontStyle.Bold),
+            .ForeColor = Color.White,
+            .AutoSize = True,
+            .BackColor = Color.Transparent, ' (wird intern ignoriert / nicht genutzt)
+            .Location = New Point(30, 30)
+        }
+        Me.Controls.Add(overlay)
+        overlay.BringToFront()
+    End Sub
+End Class
+```
