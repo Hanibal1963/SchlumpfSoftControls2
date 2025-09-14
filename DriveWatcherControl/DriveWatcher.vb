@@ -25,6 +25,9 @@ Imports SchlumpfSoft.Controls.Attribute
 
 Namespace DriveWatcherControl
 
+    ' TODO: Dokumentation für alle Methoden und Eigenschaften ergänzen
+
+
     ''' <summary>
     ''' Steuerelement um die Laufwerke zu überwachen.
     ''' </summary>

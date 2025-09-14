@@ -24,6 +24,9 @@ Imports SchlumpfSoft.Controls.Attribute
 
 Namespace SevenSegmentControl
 
+    ' TODO: Dokumentation für alle Methoden und Eigenschaften ergänzen
+
+
     ''' <summary>
     ''' Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar,<br/> 
     ''' das eine Ziffer oder einen Buchstaben anzeigt.

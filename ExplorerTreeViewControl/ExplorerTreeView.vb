@@ -21,6 +21,9 @@ Imports Microsoft.VisualBasic
 
 Namespace ExplorerTreeViewControl
 
+    ' TODO: Dokumentation für alle Methoden und Eigenschaften ergänzen
+
+
     ''' <summary>
     ''' Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des
     ''' Computers bereit.
