@@ -27,7 +27,11 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * [SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.](Doc/SevenSegmentControl.md) 
 * [ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.](Doc/ColorProgressBarControl.md)
 * [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](Doc/ExplorerTreeViewControl.md)
- 
+
+>  **Hinweis:**
+> 
+>  Die Dokumentation wurde mit GitHub Copilot erstellt und kann Fehler enthalten.
+
 ---
 
 ## geplante Änderungen und Erweiterungen
