@@ -119,9 +119,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExplorerTreeViewControl.md" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Computer.png" />
     <EmbeddedResource Include="Resources\DriveCDRom.png" />
     <EmbeddedResource Include="Resources\DriveDisk.png" />

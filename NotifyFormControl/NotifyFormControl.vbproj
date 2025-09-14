@@ -94,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NotifyFormControl.cd" />
-    <None Include="NotifyFormControl.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\CriticalError.png" />

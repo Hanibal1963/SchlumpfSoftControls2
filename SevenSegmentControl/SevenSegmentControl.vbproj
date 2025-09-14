@@ -110,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SevenSegmentControl.cd" />
-    <None Include="SevenSegmentControl.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\MultiDigit.bmp" />

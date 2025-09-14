@@ -122,9 +122,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WizardControl.md" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\WizardControl.Wizard.bmp" />
     <EmbeddedResource Include="Resources\WizardHeaderImage.jpg" />
     <EmbeddedResource Include="Resources\WizardWelcomeImage.jpg" />

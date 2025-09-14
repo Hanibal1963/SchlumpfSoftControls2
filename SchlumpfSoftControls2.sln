@@ -38,7 +38,15 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemo", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{6F7BC048-0A70-B1BE-8A35-89890EA57E92}"
 	ProjectSection(SolutionItems) = preProject
+		Doc\AniGifControl.md = Doc\AniGifControl.md
+		Doc\ColorProgressBarControl.md = Doc\ColorProgressBarControl.md
+		Doc\DriveWatcherControl.md = Doc\DriveWatcherControl.md
+		Doc\ExplorerTreeViewControl.md = Doc\ExplorerTreeViewControl.md
+		Doc\NotifyFormControl.md = Doc\NotifyFormControl.md
+		Doc\SevenSegmentControl.md = Doc\SevenSegmentControl.md
+		Doc\ShapeControl.md = Doc\ShapeControl.md
 		Doc\TransparentLabelControl.md = Doc\TransparentLabelControl.md
+		Doc\WizardControl.md = Doc\WizardControl.md
 	EndProjectSection
 EndProject
 Global

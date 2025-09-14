@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ColorProgressBar.cd" />
-    <None Include="ColorProgressBarControl.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ColorProgressBar.resx">

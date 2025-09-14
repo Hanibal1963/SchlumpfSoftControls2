@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DriveWacherControl.cd" />
-    <None Include="DriveWatcherControl.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Attribute\Attribute.vbproj">
