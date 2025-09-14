@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49BCC191-3D02-4E35-A477-1CA81F1889AF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SchlumpfSoftControlsDemo.My.MyApplication</StartupObject>
+    <RootNamespace>SchlumpfSoftControlsDemo</RootNamespace>
+    <AssemblyName>SchlumpfSoftControlsDemo</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControlsDemo.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControlsDemo.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AniGifControl\AniGifControl.vbproj">
+      <Project>{68bf9d38-6469-4fa7-877e-a2f9613bcbca}</Project>
+      <Name>AniGifControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ColorProgressBarControl\ColorProgressBarControl.vbproj">
+      <Project>{7b106f43-970a-4750-b639-dd65a3e43126}</Project>
+      <Name>ColorProgressBarControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DriveWatcherControl\DriveWatcherControl.vbproj">
+      <Project>{3b44aea3-0aa4-4e7b-af58-3631ff2c4db6}</Project>
+      <Name>DriveWatcherControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExplorerTreeViewControl\ExplorerTreeViewControl.vbproj">
+      <Project>{801c2639-9bb1-44fe-899a-1a688378f5dc}</Project>
+      <Name>ExplorerTreeViewControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NotifyFormControl\NotifyFormControl.vbproj">
+      <Project>{229f0d45-6f1b-4705-a176-57d897504a34}</Project>
+      <Name>NotifyFormControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SevenSegmentControl\SevenSegmentControl.vbproj">
+      <Project>{ab7bbd29-67ef-4fba-b0a9-e34f7bbe6cdb}</Project>
+      <Name>SevenSegmentControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShapeControl\ShapeControl.vbproj">
+      <Project>{d71dda22-ebee-4b4d-a0d5-723c5c87f423}</Project>
+      <Name>ShapeControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TransparentLabelControl\TransparentLabelControl.vbproj">
+      <Project>{0ae93122-642b-4c42-b705-1a0b2b277b49}</Project>
+      <Name>TransparentLabelControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WizardControl\WizardControl.vbproj">
+      <Project>{52f7d68a-fd09-4fa0-b389-f6c65fbdf3b5}</Project>
+      <Name>WizardControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
