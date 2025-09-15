@@ -37,9 +37,6 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 ## geplante Änderungen und Erweiterungen
 
 * Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
-* ~~Hinzufügen des ursprünglichen ColorProgressBar Controls.~~
-* ~~Hinzufügen des ursprünglichen ExplorerTreeView Controls.~~
-* ~~Hinzufügen einer Funktion zum öffnen eines bestimmten Pfades.~~
 * Hinzufügen des ursprünglichen IniFile Controls.
 * Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
 * Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
