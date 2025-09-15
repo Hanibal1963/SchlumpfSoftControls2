@@ -109,7 +109,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SevenSegmentControl.cd" />
+    <None Include="SingleDigit.cd" />
+    <None Include="MultiDigit.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\MultiDigit.bmp" />
