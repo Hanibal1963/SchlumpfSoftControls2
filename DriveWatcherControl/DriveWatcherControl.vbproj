@@ -59,10 +59,11 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DriveAddedEventArgs.vb" />
     <Compile Include="DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DriveWatcherEventArgs.vb" />
+    <Compile Include="DriveRemovedEventArgs.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="DriveWatcherControlPackage.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
@@ -98,7 +99,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DriveWacherControl.cd" />
+    <None Include="DriveRemovedEventArgs.cd" />
+    <None Include="DriveAddedEventArgs.cd" />
+    <None Include="DriveWatcher.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Attribute\Attribute.vbproj">

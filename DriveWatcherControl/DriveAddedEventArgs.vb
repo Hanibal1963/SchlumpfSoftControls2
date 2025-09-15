@@ -1,12 +1,6 @@
 ﻿' *************************************************************************************************
-' 
-' DriveWatcherEventArgs.vb
+' DriveAddedEventArgs.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-'
-' Kurzbeschreibung:
-' 
-' Übergibt die Argumente für das hinzugefügte oder entfernte Laufwerk.
-'
 ' *************************************************************************************************
 
 Namespace DriveWatcherControl
@@ -55,18 +49,6 @@ Namespace DriveWatcherControl
         ''' Ruft einen Wert ab, der angibt, ob ein Laufwerk bereit ist.
         ''' </summary>
         Public Property IsReady As Boolean
-
-    End Structure
-
-    ''' <summary>
-    ''' Übergibt das entfernte Laufwerk.
-    ''' </summary>
-    Public Structure DriveRemovedEventArgs
-
-        ''' <summary>
-        ''' Ruft den Namen eines Laufwerks ab, z.B. C:\.
-        ''' </summary>
-        Public Property DriveName As String
 
     End Structure
 
