@@ -69,7 +69,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="NotifyFormControlPackage.vb" />
-    <Compile Include="NotifyFormEnums.vb" />
+    <Compile Include="NotifyFormDesign.vb" />
+    <Compile Include="NotifyFormStyle.vb" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,7 +94,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NotifyFormControl.cd" />
+    <None Include="NotifyFormStyle.cd" />
+    <None Include="NotifyFormDesign.cd" />
+    <None Include="NotifyForm.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\CriticalError.png" />
