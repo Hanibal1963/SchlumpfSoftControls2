@@ -50,6 +50,7 @@ Weitere Infos unter:
 - Verschiedene Darstellungsmodi (Original, Zentriert, Zoom, Fill)
 - Ereignis bei nicht animierbaren Bildern
 - Zoomfaktor bei `SizeMode.Zoom`
+- Manuelles Starten/Stoppen der Animation über `StartAnimation()` / `StopAnimation()`
 
 Das Control ist für .NET Framework 4.7.2 (aus dem Projekt abgeleitet) konzipiert und für den Toolbox-Einsatz vorbereitet.
 
@@ -63,6 +64,7 @@ Das Control ist für .NET Framework 4.7.2 (aus dem Projekt abgeleitet) konzipier
 - Ressourcen-Unterstützung (Fallback auf Standard-GIF)
 - Doppelt gepuffertes Rendering (verringerte Flackereffekte)
 - Design-Time-freundlich (keine Animation im Designer)
+- Öffentliche Steuerungsmethoden: `StartAnimation()` und `StopAnimation()`
 
 ---
 
@@ -219,7 +221,7 @@ Private Sub ButtonLoadNewGif_Click(...) Handles ButtonLoadNewGif.Click
                 AniGif1.Gif = bmp
             Catch ex As Exception
                 MessageBox.Show("Fehler beim Laden: " & ex.Message)
-            End If
+            End Try
         End If
     End Using
 End Sub
@@ -231,6 +233,22 @@ End Sub
 AddHandler AniGif1.NoAnimation, Sub(s, e)
     ToolStripStatusLabel1.Text = "Grafik ist nicht animierbar"
 End Sub
+```
+
+### F: Manuelles Starten und Stoppen der Animation
+
+```vbnet
+' Autoplay bewusst deaktivieren
+dim aniManual = New AniGifControl.AniGif() With {
+    .AutoPlay = False,
+    .GifSizeMode = AniGifControl.SizeMode.Zoom
+}
+aniManual.Gif = New Bitmap("anim.gif")
+Me.Controls.Add(aniManual)
+
+' Später z.B. über Buttons
+aniManual.StartAnimation()
+aniManual.StopAnimation()
 ```
 
 ---
@@ -295,7 +313,6 @@ A: Speicher- und CPU-Verbrauch steigen. Vorverkleinern empfohlen.
 
 ## 17. Geplante Erweiterungen (Ideen)
 
-- Pause/Play-API (explizite Methoden `Play() / Pause()`)
 - Unterstützung für Schleifenbegrenzung
 - Ereignis `FrameChanged`
 - Asynchrones Laden aus Stream/URL
@@ -316,6 +333,27 @@ A: Speicher- und CPU-Verbrauch steigen. Vorverkleinern empfohlen.
 | `CheckZoomFactorValue` | Bereichsprüfung Zoom |
 | `GetRectStartSize` | Zielgröße nach Modus |
 | `GetRectStartPoint` | Startpunkt nach Modus |
+| `StartAnimation` | Aktiviert `AutoPlay`, initialisiert und startet ggf. `ImageAnimator`/Timer |
+| `StopAnimation` | Deaktiviert `AutoPlay`, stoppt Timer & `ImageAnimator` |
+
+---
+
+## Öffentliche Steuerungsmethoden (Details)
+
+### `StartAnimation()`
+
+Startet die Animation, falls `AutoPlay=False`. Intern wird:
+- `_Autoplay` auf `True` gesetzt
+- `InitLayout()` aufgerufen (registriert Animation bei animierbaren GIFs)
+
+### `StopAnimation()`
+
+Stoppt eine laufende Animation. Intern wird:
+- `_Autoplay` auf `False` gesetzt
+- `ImageAnimator.StopAnimate` (falls animierbar) ausgeführt
+- Der interne `Timer` gestoppt (bei benutzerdefinierter Geschwindigkeit)
+
+Einsatzszenario: Wenn man GIFs erst nach einer Benutzeraktion (Button, Hover, Sichtbarkeit) animieren möchte.
 
 ---
 
