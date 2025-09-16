@@ -73,6 +73,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AniGifDemo.Designer.vb">
+      <DependentUpon>AniGifDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AniGifDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AniGifDemo.resx">
+      <DependentUpon>AniGifDemo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>

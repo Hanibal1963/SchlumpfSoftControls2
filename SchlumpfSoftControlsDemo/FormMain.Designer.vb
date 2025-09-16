@@ -23,34 +23,36 @@ Partial Class FormMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.ToolStripContainer = New System.Windows.Forms.ToolStripContainer()
-        Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
-        Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItemAnsicht = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItemBeenden = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPageAniGif = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemAniGifTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageColorProgressBar = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemColorProgressBarTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageDriveWatcher = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemDriveWatcherTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemExplorerTreeViewTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemNotifyFormTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageSevenSegment = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemSevenSegmentTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageShape = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageTransparentLabel = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabPageWizard = New System.Windows.Forms.TabPage()
+        Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
+        Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemBeenden = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemAnsicht = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemAniGifTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemColorProgressBarTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemDriveWatcherTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemExplorerTreeViewTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemNotifyFormTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemSevenSegmentTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AniGifDemo1 = New SchlumpfSoftControlsDemo.AniGifDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
-        Me.MenuStripMain.SuspendLayout()
         Me.TabControl.SuspendLayout()
+        Me.TabPageAniGif.SuspendLayout()
+        Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStripContainer
@@ -70,37 +72,6 @@ Partial Class FormMain
         'ToolStripContainer.TopToolStripPanel
         '
         Me.ToolStripContainer.TopToolStripPanel.Controls.Add(Me.MenuStripMain)
-        '
-        'MenuStripMain
-        '
-        Me.MenuStripMain.Dock = System.Windows.Forms.DockStyle.None
-        Me.MenuStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible
-        Me.MenuStripMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemDatei, Me.ToolStripMenuItemAnsicht})
-        Me.MenuStripMain.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStripMain.Name = "MenuStripMain"
-        Me.MenuStripMain.Size = New System.Drawing.Size(599, 24)
-        Me.MenuStripMain.TabIndex = 0
-        Me.MenuStripMain.Text = "MenuStripMain"
-        '
-        'ToolStripMenuItemDatei
-        '
-        Me.ToolStripMenuItemDatei.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemBeenden})
-        Me.ToolStripMenuItemDatei.Name = "ToolStripMenuItemDatei"
-        Me.ToolStripMenuItemDatei.Size = New System.Drawing.Size(46, 20)
-        Me.ToolStripMenuItemDatei.Text = "Datei"
-        '
-        'ToolStripMenuItemAnsicht
-        '
-        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest})
-        Me.ToolStripMenuItemAnsicht.Name = "ToolStripMenuItemAnsicht"
-        Me.ToolStripMenuItemAnsicht.Size = New System.Drawing.Size(59, 20)
-        Me.ToolStripMenuItemAnsicht.Text = "Ansicht"
-        '
-        'ToolStripMenuItemBeenden
-        '
-        Me.ToolStripMenuItemBeenden.Name = "ToolStripMenuItemBeenden"
-        Me.ToolStripMenuItemBeenden.Size = New System.Drawing.Size(180, 22)
-        Me.ToolStripMenuItemBeenden.Text = "Beenden"
         '
         'TabControl
         '
@@ -122,6 +93,7 @@ Partial Class FormMain
         '
         'TabPageAniGif
         '
+        Me.TabPageAniGif.Controls.Add(Me.AniGifDemo1)
         Me.TabPageAniGif.Location = New System.Drawing.Point(4, 22)
         Me.TabPageAniGif.Name = "TabPageAniGif"
         Me.TabPageAniGif.Padding = New System.Windows.Forms.Padding(3)
@@ -129,12 +101,6 @@ Partial Class FormMain
         Me.TabPageAniGif.TabIndex = 0
         Me.TabPageAniGif.Text = "AniGif"
         Me.TabPageAniGif.UseVisualStyleBackColor = True
-        '
-        'ToolStripMenuItemAniGifTest
-        '
-        Me.ToolStripMenuItemAniGifTest.Name = "ToolStripMenuItemAniGifTest"
-        Me.ToolStripMenuItemAniGifTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemAniGifTest.Text = "AniGif Test"
         '
         'TabPageColorProgressBar
         '
@@ -145,12 +111,6 @@ Partial Class FormMain
         Me.TabPageColorProgressBar.Text = "ColorProgressBar"
         Me.TabPageColorProgressBar.UseVisualStyleBackColor = True
         '
-        'ToolStripMenuItemColorProgressBarTest
-        '
-        Me.ToolStripMenuItemColorProgressBarTest.Name = "ToolStripMenuItemColorProgressBarTest"
-        Me.ToolStripMenuItemColorProgressBarTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemColorProgressBarTest.Text = "ColorProgressBar Test"
-        '
         'TabPageDriveWatcher
         '
         Me.TabPageDriveWatcher.Location = New System.Drawing.Point(4, 22)
@@ -160,12 +120,6 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.Text = "DriveWatcher"
         Me.TabPageDriveWatcher.UseVisualStyleBackColor = True
         '
-        'ToolStripMenuItemDriveWatcherTest
-        '
-        Me.ToolStripMenuItemDriveWatcherTest.Name = "ToolStripMenuItemDriveWatcherTest"
-        Me.ToolStripMenuItemDriveWatcherTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemDriveWatcherTest.Text = "DriveWatcher Test"
-        '
         'TabPageExplorerTreeView
         '
         Me.TabPageExplorerTreeView.Location = New System.Drawing.Point(4, 22)
@@ -174,12 +128,6 @@ Partial Class FormMain
         Me.TabPageExplorerTreeView.TabIndex = 3
         Me.TabPageExplorerTreeView.Text = "ExplorerTreeView"
         Me.TabPageExplorerTreeView.UseVisualStyleBackColor = True
-        '
-        'ToolStripMenuItemExplorerTreeViewTest
-        '
-        Me.ToolStripMenuItemExplorerTreeViewTest.Name = "ToolStripMenuItemExplorerTreeViewTest"
-        Me.ToolStripMenuItemExplorerTreeViewTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemExplorerTreeViewTest.Text = "ExplorerTreeView Test"
         '
         'TabPageNotifyForm
         '
@@ -191,12 +139,6 @@ Partial Class FormMain
         Me.TabPageNotifyForm.Text = "NotifyForm"
         Me.TabPageNotifyForm.UseVisualStyleBackColor = True
         '
-        'ToolStripMenuItemNotifyFormTest
-        '
-        Me.ToolStripMenuItemNotifyFormTest.Name = "ToolStripMenuItemNotifyFormTest"
-        Me.ToolStripMenuItemNotifyFormTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemNotifyFormTest.Text = "NotifyForm Test"
-        '
         'TabPageSevenSegment
         '
         Me.TabPageSevenSegment.Location = New System.Drawing.Point(4, 22)
@@ -206,12 +148,6 @@ Partial Class FormMain
         Me.TabPageSevenSegment.TabIndex = 5
         Me.TabPageSevenSegment.Text = "SevenSegment"
         Me.TabPageSevenSegment.UseVisualStyleBackColor = True
-        '
-        'ToolStripMenuItemSevenSegmentTest
-        '
-        Me.ToolStripMenuItemSevenSegmentTest.Name = "ToolStripMenuItemSevenSegmentTest"
-        Me.ToolStripMenuItemSevenSegmentTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemSevenSegmentTest.Text = "SevenSegment Test"
         '
         'TabPageShape
         '
@@ -223,12 +159,6 @@ Partial Class FormMain
         Me.TabPageShape.Text = "Shape"
         Me.TabPageShape.UseVisualStyleBackColor = True
         '
-        'ToolStripMenuItemShapeTest
-        '
-        Me.ToolStripMenuItemShapeTest.Name = "ToolStripMenuItemShapeTest"
-        Me.ToolStripMenuItemShapeTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemShapeTest.Text = "Shape Test"
-        '
         'TabPageTransparentLabel
         '
         Me.TabPageTransparentLabel.Location = New System.Drawing.Point(4, 22)
@@ -238,12 +168,6 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.TabIndex = 7
         Me.TabPageTransparentLabel.Text = "TransparentLabel"
         Me.TabPageTransparentLabel.UseVisualStyleBackColor = True
-        '
-        'ToolStripMenuItemTransparentLabelTest
-        '
-        Me.ToolStripMenuItemTransparentLabelTest.Name = "ToolStripMenuItemTransparentLabelTest"
-        Me.ToolStripMenuItemTransparentLabelTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemTransparentLabelTest.Text = "TransparentLabel Test"
         '
         'TabPageWizard
         '
@@ -255,11 +179,97 @@ Partial Class FormMain
         Me.TabPageWizard.Text = "Wizard"
         Me.TabPageWizard.UseVisualStyleBackColor = True
         '
+        'MenuStripMain
+        '
+        Me.MenuStripMain.Dock = System.Windows.Forms.DockStyle.None
+        Me.MenuStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible
+        Me.MenuStripMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemDatei, Me.ToolStripMenuItemAnsicht})
+        Me.MenuStripMain.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStripMain.Name = "MenuStripMain"
+        Me.MenuStripMain.Size = New System.Drawing.Size(599, 24)
+        Me.MenuStripMain.TabIndex = 0
+        Me.MenuStripMain.Text = "MenuStripMain"
+        '
+        'ToolStripMenuItemDatei
+        '
+        Me.ToolStripMenuItemDatei.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemBeenden})
+        Me.ToolStripMenuItemDatei.Name = "ToolStripMenuItemDatei"
+        Me.ToolStripMenuItemDatei.Size = New System.Drawing.Size(46, 20)
+        Me.ToolStripMenuItemDatei.Text = "Datei"
+        '
+        'ToolStripMenuItemBeenden
+        '
+        Me.ToolStripMenuItemBeenden.Name = "ToolStripMenuItemBeenden"
+        Me.ToolStripMenuItemBeenden.Size = New System.Drawing.Size(120, 22)
+        Me.ToolStripMenuItemBeenden.Text = "Beenden"
+        '
+        'ToolStripMenuItemAnsicht
+        '
+        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest})
+        Me.ToolStripMenuItemAnsicht.Name = "ToolStripMenuItemAnsicht"
+        Me.ToolStripMenuItemAnsicht.Size = New System.Drawing.Size(59, 20)
+        Me.ToolStripMenuItemAnsicht.Text = "Ansicht"
+        '
+        'ToolStripMenuItemAniGifTest
+        '
+        Me.ToolStripMenuItemAniGifTest.Name = "ToolStripMenuItemAniGifTest"
+        Me.ToolStripMenuItemAniGifTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemAniGifTest.Text = "AniGif Test"
+        '
+        'ToolStripMenuItemColorProgressBarTest
+        '
+        Me.ToolStripMenuItemColorProgressBarTest.Name = "ToolStripMenuItemColorProgressBarTest"
+        Me.ToolStripMenuItemColorProgressBarTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemColorProgressBarTest.Text = "ColorProgressBar Test"
+        '
+        'ToolStripMenuItemDriveWatcherTest
+        '
+        Me.ToolStripMenuItemDriveWatcherTest.Name = "ToolStripMenuItemDriveWatcherTest"
+        Me.ToolStripMenuItemDriveWatcherTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemDriveWatcherTest.Text = "DriveWatcher Test"
+        '
+        'ToolStripMenuItemExplorerTreeViewTest
+        '
+        Me.ToolStripMenuItemExplorerTreeViewTest.Name = "ToolStripMenuItemExplorerTreeViewTest"
+        Me.ToolStripMenuItemExplorerTreeViewTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemExplorerTreeViewTest.Text = "ExplorerTreeView Test"
+        '
+        'ToolStripMenuItemNotifyFormTest
+        '
+        Me.ToolStripMenuItemNotifyFormTest.Name = "ToolStripMenuItemNotifyFormTest"
+        Me.ToolStripMenuItemNotifyFormTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemNotifyFormTest.Text = "NotifyForm Test"
+        '
+        'ToolStripMenuItemSevenSegmentTest
+        '
+        Me.ToolStripMenuItemSevenSegmentTest.Name = "ToolStripMenuItemSevenSegmentTest"
+        Me.ToolStripMenuItemSevenSegmentTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemSevenSegmentTest.Text = "SevenSegment Test"
+        '
+        'ToolStripMenuItemShapeTest
+        '
+        Me.ToolStripMenuItemShapeTest.Name = "ToolStripMenuItemShapeTest"
+        Me.ToolStripMenuItemShapeTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemShapeTest.Text = "Shape Test"
+        '
+        'ToolStripMenuItemTransparentLabelTest
+        '
+        Me.ToolStripMenuItemTransparentLabelTest.Name = "ToolStripMenuItemTransparentLabelTest"
+        Me.ToolStripMenuItemTransparentLabelTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemTransparentLabelTest.Text = "TransparentLabel Test"
+        '
         'ToolStripMenuItemWizardTest
         '
         Me.ToolStripMenuItemWizardTest.Name = "ToolStripMenuItemWizardTest"
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
+        '
+        'AniGifDemo1
+        '
+        Me.AniGifDemo1.Location = New System.Drawing.Point(8, 6)
+        Me.AniGifDemo1.Name = "AniGifDemo1"
+        Me.AniGifDemo1.Size = New System.Drawing.Size(575, 343)
+        Me.AniGifDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -281,9 +291,10 @@ Partial Class FormMain
         Me.ToolStripContainer.TopToolStripPanel.PerformLayout()
         Me.ToolStripContainer.ResumeLayout(False)
         Me.ToolStripContainer.PerformLayout()
+        Me.TabControl.ResumeLayout(False)
+        Me.TabPageAniGif.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
-        Me.TabControl.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -312,4 +323,5 @@ Partial Class FormMain
     Private WithEvents ToolStripMenuItemTransparentLabelTest As ToolStripMenuItem
     Private WithEvents TabPageWizard As TabPage
     Private WithEvents ToolStripMenuItemWizardTest As ToolStripMenuItem
+    Friend WithEvents AniGifDemo1 As AniGifDemo
 End Class
