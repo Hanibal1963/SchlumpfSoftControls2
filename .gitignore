@@ -369,3 +369,7 @@ FodyWeavers.xsd
 *.vsdoc
 /SchlumpfSoftControls2/SchlumpfSoftControls2.xml
 /SchlumpfSoftControls2/VSdoc
+/SchlumpfSoftControlsDemo/FormAniGifControl.Designer.vb
+/SchlumpfSoftControlsDemo/FormAniGifControl.en-US.resx
+/SchlumpfSoftControlsDemo/FormAniGifControl.resx
+/SchlumpfSoftControlsDemo/FormAniGifControl.vb

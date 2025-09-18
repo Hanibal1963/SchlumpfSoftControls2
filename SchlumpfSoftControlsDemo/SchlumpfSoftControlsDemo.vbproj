@@ -79,6 +79,10 @@
     <Compile Include="AniGifDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="FormAniGifControl.Designer.vb">
+      <DependentUpon>FormAniGifControl.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAniGifControl.vb" />
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +110,12 @@
   <ItemGroup>
     <EmbeddedResource Include="AniGifDemo.resx">
       <DependentUpon>AniGifDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAniGifControl.en-US.resx">
+      <DependentUpon>FormAniGifControl.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAniGifControl.resx">
+      <DependentUpon>FormAniGifControl.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
