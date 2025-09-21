@@ -23,27 +23,64 @@ Partial Class AniGifDemo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AniGifDemo))
-        Me.AniGif = New SchlumpfSoft.Controls.AniGifControl.AniGif()
         Me.TableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.AniGif = New SchlumpfSoft.Controls.AniGifControl.AniGif()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.NumericUpDownFramesPerSecound = New System.Windows.Forms.NumericUpDown()
+        Me.NumericUpDownZoomFactor = New System.Windows.Forms.NumericUpDown()
+        Me.CheckBoxAutoplay = New System.Windows.Forms.CheckBox()
+        Me.CheckBoxCustomDisplaySpeed = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.NumericUpDown1 = New System.Windows.Forms.NumericUpDown()
-        Me.NumericUpDown2 = New System.Windows.Forms.NumericUpDown()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
+        Me.ComboBoxAnsicht = New System.Windows.Forms.ComboBox()
+        Me.ButtonBack = New System.Windows.Forms.Button()
+        Me.ButtonForward = New System.Windows.Forms.Button()
+        Me.LabelAni = New System.Windows.Forms.Label()
+        Me.ButtonStart = New System.Windows.Forms.Button()
+        Me.ButtonStop = New System.Windows.Forms.Button()
         Me.TableLayoutPanel.SuspendLayout()
-        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDownFramesPerSecound, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDownZoomFactor, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
+        '
+        'TableLayoutPanel
+        '
+        Me.TableLayoutPanel.ColumnCount = 3
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
+        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116.0!))
+        Me.TableLayoutPanel.Controls.Add(Me.AniGif, 0, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.Label1, 1, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.NumericUpDownFramesPerSecound, 2, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.NumericUpDownZoomFactor, 2, 4)
+        Me.TableLayoutPanel.Controls.Add(Me.CheckBoxAutoplay, 2, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.CheckBoxCustomDisplaySpeed, 2, 2)
+        Me.TableLayoutPanel.Controls.Add(Me.Label2, 1, 1)
+        Me.TableLayoutPanel.Controls.Add(Me.Label3, 1, 2)
+        Me.TableLayoutPanel.Controls.Add(Me.Label4, 1, 3)
+        Me.TableLayoutPanel.Controls.Add(Me.Label5, 1, 4)
+        Me.TableLayoutPanel.Controls.Add(Me.ComboBoxAnsicht, 2, 0)
+        Me.TableLayoutPanel.Controls.Add(Me.ButtonBack, 0, 5)
+        Me.TableLayoutPanel.Controls.Add(Me.ButtonForward, 1, 5)
+        Me.TableLayoutPanel.Controls.Add(Me.LabelAni, 0, 6)
+        Me.TableLayoutPanel.Controls.Add(Me.ButtonStart, 0, 7)
+        Me.TableLayoutPanel.Controls.Add(Me.ButtonStop, 1, 7)
+        Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel.Name = "TableLayoutPanel"
+        Me.TableLayoutPanel.RowCount = 8
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel.Size = New System.Drawing.Size(562, 261)
+        Me.TableLayoutPanel.TabIndex = 1
         '
         'AniGif
         '
@@ -62,43 +99,6 @@ Partial Class AniGifDemo
         Me.AniGif.TabIndex = 0
         Me.AniGif.ZoomFactor = New Decimal(New Integer() {50, 0, 0, 0})
         '
-        'TableLayoutPanel
-        '
-        Me.TableLayoutPanel.ColumnCount = 3
-        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200.0!))
-        Me.TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110.0!))
-        Me.TableLayoutPanel.Controls.Add(Me.AniGif, 0, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.Label1, 1, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.NumericUpDown1, 2, 3)
-        Me.TableLayoutPanel.Controls.Add(Me.NumericUpDown2, 2, 4)
-        Me.TableLayoutPanel.Controls.Add(Me.CheckBox1, 2, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.CheckBox2, 2, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.Label2, 1, 1)
-        Me.TableLayoutPanel.Controls.Add(Me.Label3, 1, 2)
-        Me.TableLayoutPanel.Controls.Add(Me.Label4, 1, 3)
-        Me.TableLayoutPanel.Controls.Add(Me.Label5, 1, 4)
-        Me.TableLayoutPanel.Controls.Add(Me.ComboBox1, 2, 0)
-        Me.TableLayoutPanel.Controls.Add(Me.Button1, 0, 5)
-        Me.TableLayoutPanel.Controls.Add(Me.Button2, 1, 5)
-        Me.TableLayoutPanel.Controls.Add(Me.Label6, 0, 6)
-        Me.TableLayoutPanel.Controls.Add(Me.Button3, 0, 7)
-        Me.TableLayoutPanel.Controls.Add(Me.Button4, 1, 7)
-        Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel.Location = New System.Drawing.Point(0, 0)
-        Me.TableLayoutPanel.Name = "TableLayoutPanel"
-        Me.TableLayoutPanel.RowCount = 8
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
-        Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel.Size = New System.Drawing.Size(562, 261)
-        Me.TableLayoutPanel.TabIndex = 1
-        '
         'Label1
         '
         Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -109,6 +109,39 @@ Partial Class AniGifDemo
         Me.Label1.Size = New System.Drawing.Size(194, 13)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Anzeigemodus"
+        '
+        'NumericUpDownFramesPerSecound
+        '
+        Me.NumericUpDownFramesPerSecound.Location = New System.Drawing.Point(449, 87)
+        Me.NumericUpDownFramesPerSecound.Maximum = New Decimal(New Integer() {50, 0, 0, 0})
+        Me.NumericUpDownFramesPerSecound.Name = "NumericUpDownFramesPerSecound"
+        Me.NumericUpDownFramesPerSecound.Size = New System.Drawing.Size(57, 20)
+        Me.NumericUpDownFramesPerSecound.TabIndex = 6
+        '
+        'NumericUpDownZoomFactor
+        '
+        Me.NumericUpDownZoomFactor.Location = New System.Drawing.Point(449, 115)
+        Me.NumericUpDownZoomFactor.Name = "NumericUpDownZoomFactor"
+        Me.NumericUpDownZoomFactor.Size = New System.Drawing.Size(57, 20)
+        Me.NumericUpDownZoomFactor.TabIndex = 7
+        '
+        'CheckBoxAutoplay
+        '
+        Me.CheckBoxAutoplay.AutoSize = True
+        Me.CheckBoxAutoplay.Location = New System.Drawing.Point(449, 31)
+        Me.CheckBoxAutoplay.Name = "CheckBoxAutoplay"
+        Me.CheckBoxAutoplay.Size = New System.Drawing.Size(15, 14)
+        Me.CheckBoxAutoplay.TabIndex = 4
+        Me.CheckBoxAutoplay.UseVisualStyleBackColor = True
+        '
+        'CheckBoxCustomDisplaySpeed
+        '
+        Me.CheckBoxCustomDisplaySpeed.AutoSize = True
+        Me.CheckBoxCustomDisplaySpeed.Location = New System.Drawing.Point(449, 59)
+        Me.CheckBoxCustomDisplaySpeed.Name = "CheckBoxCustomDisplaySpeed"
+        Me.CheckBoxCustomDisplaySpeed.Size = New System.Drawing.Size(15, 14)
+        Me.CheckBoxCustomDisplaySpeed.TabIndex = 5
+        Me.CheckBoxCustomDisplaySpeed.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -123,44 +156,14 @@ Partial Class AniGifDemo
         '
         'Label3
         '
+        Me.Label3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(249, 56)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(173, 13)
+        Me.Label3.Size = New System.Drawing.Size(194, 13)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "Benutzerdefinierte Geschwindigkeit"
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(449, 31)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(15, 14)
-        Me.CheckBox1.TabIndex = 4
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'CheckBox2
-        '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Location = New System.Drawing.Point(449, 59)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(15, 14)
-        Me.CheckBox2.TabIndex = 5
-        Me.CheckBox2.UseVisualStyleBackColor = True
-        '
-        'NumericUpDown1
-        '
-        Me.NumericUpDown1.Location = New System.Drawing.Point(449, 87)
-        Me.NumericUpDown1.Name = "NumericUpDown1"
-        Me.NumericUpDown1.Size = New System.Drawing.Size(57, 20)
-        Me.NumericUpDown1.TabIndex = 6
-        '
-        'NumericUpDown2
-        '
-        Me.NumericUpDown2.Location = New System.Drawing.Point(449, 115)
-        Me.NumericUpDown2.Name = "NumericUpDown2"
-        Me.NumericUpDown2.Size = New System.Drawing.Size(57, 20)
-        Me.NumericUpDown2.TabIndex = 7
         '
         'Label4
         '
@@ -184,62 +187,63 @@ Partial Class AniGifDemo
         Me.Label5.TabIndex = 9
         Me.Label5.Text = "Zoomfaktor"
         '
-        'ComboBox1
+        'ComboBoxAnsicht
         '
-        Me.ComboBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.ComboBoxAnsicht.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(449, 3)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(110, 21)
-        Me.ComboBox1.TabIndex = 10
+        Me.ComboBoxAnsicht.FormattingEnabled = True
+        Me.ComboBoxAnsicht.Items.AddRange(New Object() {"Normal", "Zentriert", "Zoom", "Fill"})
+        Me.ComboBoxAnsicht.Location = New System.Drawing.Point(449, 3)
+        Me.ComboBoxAnsicht.Name = "ComboBoxAnsicht"
+        Me.ComboBoxAnsicht.Size = New System.Drawing.Size(110, 21)
+        Me.ComboBoxAnsicht.TabIndex = 10
         '
-        'Label6
+        'ButtonBack
         '
-        Me.Label6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.ButtonBack.Location = New System.Drawing.Point(3, 165)
+        Me.ButtonBack.Name = "ButtonBack"
+        Me.ButtonBack.Size = New System.Drawing.Size(111, 24)
+        Me.ButtonBack.TabIndex = 12
+        Me.ButtonBack.Text = "< zurück"
+        Me.ButtonBack.UseVisualStyleBackColor = True
+        '
+        'ButtonForward
+        '
+        Me.ButtonForward.Location = New System.Drawing.Point(249, 165)
+        Me.ButtonForward.Name = "ButtonForward"
+        Me.ButtonForward.Size = New System.Drawing.Size(111, 24)
+        Me.ButtonForward.TabIndex = 13
+        Me.ButtonForward.Text = "vorwärts >"
+        Me.ButtonForward.UseVisualStyleBackColor = True
+        '
+        'LabelAni
+        '
+        Me.LabelAni.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel.SetColumnSpan(Me.Label6, 3)
-        Me.Label6.Location = New System.Drawing.Point(3, 192)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(556, 19)
-        Me.Label6.TabIndex = 11
-        Me.Label6.Text = "Standardanimation"
+        Me.TableLayoutPanel.SetColumnSpan(Me.LabelAni, 3)
+        Me.LabelAni.Location = New System.Drawing.Point(3, 192)
+        Me.LabelAni.Name = "LabelAni"
+        Me.LabelAni.Size = New System.Drawing.Size(556, 19)
+        Me.LabelAni.TabIndex = 11
+        Me.LabelAni.Text = "Standardanimation"
         '
-        'Button1
+        'ButtonStart
         '
-        Me.Button1.Location = New System.Drawing.Point(3, 165)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(111, 24)
-        Me.Button1.TabIndex = 12
-        Me.Button1.Text = "< zurück"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ButtonStart.Location = New System.Drawing.Point(3, 223)
+        Me.ButtonStart.Name = "ButtonStart"
+        Me.ButtonStart.Size = New System.Drawing.Size(111, 23)
+        Me.ButtonStart.TabIndex = 14
+        Me.ButtonStart.Text = "Start"
+        Me.ButtonStart.UseVisualStyleBackColor = True
         '
-        'Button2
+        'ButtonStop
         '
-        Me.Button2.Location = New System.Drawing.Point(249, 165)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(111, 24)
-        Me.Button2.TabIndex = 13
-        Me.Button2.Text = "vorwärts >"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Button3
-        '
-        Me.Button3.Location = New System.Drawing.Point(3, 223)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(111, 23)
-        Me.Button3.TabIndex = 14
-        Me.Button3.Text = "Start"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'Button4
-        '
-        Me.Button4.Location = New System.Drawing.Point(249, 223)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(111, 23)
-        Me.Button4.TabIndex = 15
-        Me.Button4.Text = "Stop"
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.ButtonStop.Location = New System.Drawing.Point(249, 223)
+        Me.ButtonStop.Name = "ButtonStop"
+        Me.ButtonStop.Size = New System.Drawing.Size(111, 23)
+        Me.ButtonStop.TabIndex = 15
+        Me.ButtonStop.Text = "Stop"
+        Me.ButtonStop.UseVisualStyleBackColor = True
         '
         'AniGifDemo
         '
@@ -250,8 +254,8 @@ Partial Class AniGifDemo
         Me.Size = New System.Drawing.Size(562, 261)
         Me.TableLayoutPanel.ResumeLayout(False)
         Me.TableLayoutPanel.PerformLayout()
-        CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumericUpDown2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDownFramesPerSecound, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDownZoomFactor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -259,18 +263,18 @@ Partial Class AniGifDemo
     Private WithEvents AniGif As SchlumpfSoft.Controls.AniGifControl.AniGif
     Private WithEvents TableLayoutPanel As TableLayoutPanel
     Private WithEvents Label1 As Label
-    Private WithEvents NumericUpDown1 As NumericUpDown
-    Private WithEvents NumericUpDown2 As NumericUpDown
-    Private WithEvents CheckBox1 As CheckBox
-    Private WithEvents CheckBox2 As CheckBox
+    Private WithEvents NumericUpDownFramesPerSecound As NumericUpDown
+    Private WithEvents NumericUpDownZoomFactor As NumericUpDown
+    Private WithEvents CheckBoxAutoplay As CheckBox
+    Private WithEvents CheckBoxCustomDisplaySpeed As CheckBox
     Private WithEvents Label2 As Label
     Private WithEvents Label3 As Label
     Private WithEvents Label4 As Label
     Private WithEvents Label5 As Label
-    Private WithEvents ComboBox1 As ComboBox
-    Private WithEvents Label6 As Label
-    Private WithEvents Button1 As Button
-    Private WithEvents Button2 As Button
-    Private WithEvents Button3 As Button
-    Private WithEvents Button4 As Button
+    Private WithEvents ComboBoxAnsicht As ComboBox
+    Private WithEvents LabelAni As Label
+    Private WithEvents ButtonBack As Button
+    Private WithEvents ButtonForward As Button
+    Private WithEvents ButtonStart As Button
+    Private WithEvents ButtonStop As Button
 End Class
