@@ -44,7 +44,7 @@ Namespace AniGifControl
         Private _MaxFrame As Integer ' Die maximale Anzahl der Frames im GIF
         Private _Autoplay As Boolean ' Gibt an, ob die Animation automatisch abgespielt wird
         Private _ZoomFactor As Decimal ' Zoomfaktor für die Anzeige des GIFs
-        Private _AnimationHandler As EventHandler = AddressOf OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
+        Private ReadOnly _AnimationHandler As EventHandler = AddressOf OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
 
 #End Region
 
@@ -88,7 +88,8 @@ Namespace AniGifControl
                 Return _Autoplay
             End Get
             Set(value As Boolean)
-                _Autoplay = value ' AutoPlay nur setzen; Animation wird bei Bedarf in InitLayout/GifChange gestartet
+                _Autoplay = value ' AutoPlay setzen und Animation starten/stoppen
+                InitLayout()
             End Set
         End Property
 
