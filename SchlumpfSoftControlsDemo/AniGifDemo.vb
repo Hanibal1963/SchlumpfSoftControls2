@@ -64,9 +64,9 @@ Public Class AniGifDemo
                 Me.ButtonBack.Enabled = True  ' Zurück-Button aktivieren
                 If Me._Ani = 20 Then Me.ButtonForward.Enabled = False ' Vor-Button deaktivieren wenn Animationsnummer = 20
             Case sender Is Me.ButtonStop
-                'Me.AniGif.Stop() ' Animation stoppen
+                Me.AniGif.StopAnimation() ' Animation stoppen
             Case sender Is Me.ButtonStart
-                'Me.AniGif.Start() ' Animation starten
+                Me.AniGif.StartAnimation() ' Animation starten
         End Select
         Me.ChangeAni()   ' Animation umschalten
     End Sub
