@@ -17,29 +17,29 @@ Da die Donwnloads auf der Seite nicht mehr zu funktionieren scheinen und die Bes
 
 ## Inhaltsverzeichnis
 
-1. Überblick
-2. Features
-3. Architektur & Aufbau
-4. Öffentliche API
-   - Eigenschaften
-   - Ereignisse
-5. Versteckte / unterdrückte Eigenschaften
-6. Darstellung & Render-Logik
-7. Verwendung
-   - Schnelles Beispiel
-   - Dynamische Aktualisierung
-   - Designer-Nutzung
-8. Verhalten bei Größenänderung
-9. Glossy-Effekt
-10. Fehler- und Grenzfälle
-11. Performance-Hinweise
-12. Erweiterungsideen / Roadmap
-13. Migration & Versionierung
-14. Changelog
-15. Lizenz / Hinweise
+1. [Überblick](#ueberblick)
+2. [Features](#features)
+3. [Architektur & Aufbau](#architektur_aufbau)
+4. [Öffentliche API](#oeffentliche_api)
+   - [Eigenschaften](#eigenschaften)
+   - [Ereignisse](#ereignisse)
+5. [Versteckte / unterdrückte Eigenschaften](#versteckte_eigenschaften)
+6. [Darstellung & Render-Logik](#darstellung_render_logik)
+7. [Verwendung](#verwendung)
+   - [Schnelles Beispiel](#schnelles_beispiel)
+   - [Dynamische Aktualisierung](#dynamische_aktualisierung)
+   - [Designer-Nutzung](#designer_nutzung)
+8. [Verhalten bei Größenänderung](#verhalten_bei_groessenanderung)
+9. [Glossy-Effekt](#glossy_effekt)
+10. [Fehler- und Grenzfälle](#fehler_und_grenzfaelle)
+11. [Performance-Hinweise](#performance_hinweise)
+12. [Erweiterungsideen / Roadmap](#erweiterungsideen_roadmap)
+13. [Migration & Versionierung](#migration_versionierung)
+14. [Kurzübersicht](#kurzuebersicht)
 
 ---
 
+<a id="ueberblick"></a>
 ## 1. Überblick
 
 `ColorProgressBar` ist ein leichtgewichtiges Windows Forms UserControl zur Visualisierung eines fortschreitenden Wertes mittels farbigem Balken mit optionalem Rahmen und Glanzeffekt. Es eignet sich für Szenarien, in denen ein einfacher, visuell anpassbarer Fortschrittsindikator benötigt wird und der Standard-`ProgressBar` nicht ausreichend flexibel ist.
@@ -48,6 +48,7 @@ Das Control wird über das Attribut `[ProvideToolboxControl]` einer Toolbox-Kate
 
 ---
 
+<a id="features"></a>
 ## 2. Features
 
 - Einstellbarer Maximal- und Ist-Wert (Ganzzahlen)
@@ -61,6 +62,7 @@ Das Control wird über das Attribut `[ProvideToolboxControl]` einer Toolbox-Kate
 
 ---
 
+<a id="architektur_aufbau"></a>
 ## 3. Architektur & Aufbau
 
 Das Control erbt von `UserControl` und besteht intern (laut Code) aus mehreren Panel-Elementen:
@@ -75,8 +77,10 @@ Die Berechnungslogik ist in zwei interne Methoden gekapselt:
 
 ---
 
+<a id="oeffentliche_api"></a>
 ## 4. Öffentliche API
 
+<a id="eigenschaften"></a>
 ### 4.1 Eigenschaften
 
 | Eigenschaft | Typ | Standard | Kategorie | Beschreibung |
@@ -89,6 +93,7 @@ Die Berechnungslogik ist in zwei interne Methoden gekapselt:
 | `ShowBorder` | `Boolean` | `True` | Appearance | Steuert Rahmenanzeige (intern via `Padding = 1`). |
 | `IsGlossy` | `Boolean` | `True` | Appearance | Aktiviert/Deaktiviert Glanzoverlays. |
 
+<a id="ereignisse"></a>
 ### 4.2 Ereignisse
 
 | Ereignis | Beschreibung |
@@ -97,6 +102,7 @@ Die Berechnungslogik ist in zwei interne Methoden gekapselt:
 
 ---
 
+<a id="versteckte_eigenschaften"></a>
 ## 5. Versteckte / unterdrückte Eigenschaften
 
 Folgende geerbte Eigenschaften wurden mittels `Browsable(False)` und `EditorBrowsable(EditorBrowsableState.Never)` ausgeblendet, um die API zu verschlanken:
@@ -111,6 +117,7 @@ Hinweis: Änderungen über Code sind weiterhin möglich, werden aber ggf. von de
 
 ---
 
+<a id="darstellung_render_logik"></a>
 ## 6. Darstellung & Render-Logik
 
 - Breitenberechnung: `ProgressFull.Width = Value * (Width / MaxValue)`
@@ -120,8 +127,10 @@ Hinweis: Änderungen über Code sind weiterhin möglich, werden aber ggf. von de
 
 ---
 
+<a id="verwendung"></a>
 ## 7. Verwendung
 
+<a id="schnelles_beispiel"></a>
 ### 7.1 Schnelles Beispiel (Code Behind)
 
 ```vbnet
@@ -144,6 +153,7 @@ AddHandler cpb.Click, Sub(sender, e) Console.WriteLine($"Progress: {cpb.Value}/{
 Me.Controls.Add(cpb)
 ```
 
+<a id="dynamische_aktualisierung"></a>
 ### 7.2 Dynamische Aktualisierung
 
 ```vbnet
@@ -154,6 +164,7 @@ For i = 1 To cpb.ProgressMaximumValue
 Next
 ```
 
+<a id="designer_nutzung"></a>
 ### 7.3 Nutzung im Designer
 
 1. Projekt bauen – das Control erscheint in der Toolbox-Kategorie „SchlumpfSoft Controls“.
@@ -163,6 +174,7 @@ Next
 
 ---
 
+<a id="verhalten_bei_groessenanderung"></a>
 ## 8. Verhalten bei Größenänderung
 
 Das `Resize`-Ereignis aktualisiert automatisch:
@@ -175,6 +187,7 @@ Empfehlung: Bei starker Dynamik (Layout Panels, Anchoring) nicht manuell `Update
 
 ---
 
+<a id="glossy_effekt"></a>
 ## 9. Glossy-Effekt
 
 Der Glanzeffekt simuliert ein reflektierendes Highlight durch zwei übereinander liegende halbtransparente Panels. Abschaltbar über `IsGlossy = False`.
@@ -187,6 +200,7 @@ Visuelle Anpassungsideen (derzeit nicht implementiert):
 
 ---
 
+<a id="fehler_und_grenzfaelle"></a>
 ## 10. Fehler- und Grenzfälle
 
 | Szenario | Verhalten |
@@ -201,6 +215,7 @@ Empfehlung: Vor Setzen des Wertes zuerst Maximum definieren.
 
 ---
 
+<a id="performance_hinweise"></a>
 ## 11. Performance-Hinweise
 
 - Keine GDI+ benutzerdefinierte OnPaint-Routinen – reine Panel-Manipulation → sehr leichtgewichtig.
@@ -213,6 +228,7 @@ Mögliche Optimierung:
 
 ---
 
+<a id="erweiterungsideen_roadmap"></a>
 ## 12. Erweiterungsideen / Roadmap
 
 | Idee | Beschreibung |
@@ -231,6 +247,7 @@ Mögliche Optimierung:
 
 ---
 
+<a id="migration_versionierung"></a>
 ## 13. Migration & Versionierung
 
 Aktuell frühe Basisversion ohne Breaking Changes. Bei zukünftiger Einführung zusätzlicher Eigenschaften sollte darauf geachtet werden:
@@ -240,7 +257,8 @@ Aktuell frühe Basisversion ohne Breaking Changes. Bei zukünftiger Einführung 
 
 ---
 
-## Kurzübersicht (Cheat Sheet)
+<a id="kurzuebersicht"></a>
+## 14. Kurzübersicht (Cheat Sheet)
 
 ```text
 Max setzen:   ProgressMaximumValue = 100
