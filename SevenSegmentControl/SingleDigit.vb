@@ -18,8 +18,9 @@ Namespace SevenSegmentControl
     ' <ToolboxBitmap> - https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/
 
     ''' <summary>
-    ''' Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar,<br/> 
-    ''' das eine Ziffer oder einen Buchstaben anzeigt.
+    ''' <para>Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar,
+    ''' </para>
+    ''' <para>das eine Ziffer oder einen Buchstaben anzeigt.</para>
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
@@ -197,8 +198,10 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten angezeigt werden soll.<br/> 
-        ''' Dies ist ein ganzzahliger Wert, bei dem die Bits 0 bis 6 den jeweiligen LED-Segmenten entsprechen.
+        ''' <para>Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten
+        ''' angezeigt werden soll.</para>
+        ''' <para>Dies ist ein ganzzahliger Wert, bei dem die Bits 0 bis 6 den jeweiligen
+        ''' LED-Segmenten entsprechen.</para>
         ''' </summary>
         <Category("Appearance")>
         <Description("Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten angezeigt werden soll.")>
@@ -312,6 +315,9 @@ Namespace SevenSegmentControl
 
 #Region "Ausgeblendete Eigenschaften"
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage As Image
@@ -323,6 +329,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout As ImageLayout
@@ -334,6 +343,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Font As Font
@@ -345,6 +357,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Text As String
@@ -356,6 +371,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property RightToLeft As RightToLeft
@@ -371,7 +389,11 @@ Namespace SevenSegmentControl
 
 #Region "interne Ereignisbehandlung"
 
-        ' Tritt ein, wenn das Steuerelement neu gezeichnet wird.
+        ''' <summary>
+        ''' Tritt ein, wenn das Steuerelement neu gezeichnet wird.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub SevSegsingleDigit_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
             Dim useValue = _customBitPattern
             Dim brushLight As Brush = New SolidBrush(_foreColor)
@@ -402,7 +424,15 @@ Namespace SevenSegmentControl
             e.Graphics.EndContainer(containerState)
         End Sub
 
-        ' Zeichnet die Segmente basierend darauf, ob das entsprechende Bit hoch ist
+
+        ''' <summary>
+        ''' Zeichnet die Segmente basierend darauf, ob das entsprechende Bit hoch ist
+        ''' </summary>
+        ''' <param name="e"></param>
+        ''' <param name="BitPattern"></param>
+        ''' <param name="BrushLight"></param>
+        ''' <param name="BrushDark"></param>
+        ''' <param name="SegmentPoints"></param>
         Private Sub PaintSegments(e As PaintEventArgs, BitPattern As Integer, BrushLight As Brush, BrushDark As Brush, ByRef SegmentPoints As Point()())
             e.Graphics.FillPolygon(If((BitPattern And &H1) = &H1, BrushLight, BrushDark), SegmentPoints(0))
             e.Graphics.FillPolygon(If((BitPattern And &H2) = &H2, BrushLight, BrushDark), SegmentPoints(1))
@@ -413,7 +443,12 @@ Namespace SevenSegmentControl
             e.Graphics.FillPolygon(If((BitPattern And &H40) = &H40, BrushLight, BrushDark), SegmentPoints(6))
         End Sub
 
-        ' Tritt beim Ändern der Größe des Steuerelements ein.
+
+        ''' <summary>
+        ''' Tritt beim Ändern der Größe des Steuerelements ein.
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
         Private Sub SevSegSingleDigit_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             Invalidate()
         End Sub
@@ -422,20 +457,33 @@ Namespace SevenSegmentControl
 
 #Region "geänderte Methoden"
 
-        ' Löst das PaddingChanged-Ereignis aus.
+
+        ''' <summary>
+        ''' Löst das PaddingChanged-Ereignis aus.
+        ''' </summary>
+        ''' <param name="e"></param>
         Protected Overrides Sub OnPaddingChanged(e As EventArgs)
             MyBase.OnPaddingChanged(e)
             Invalidate()
         End Sub
 
-        ' Zeichnet den Hintergrund des Steuerelements.
+
+        ''' <summary>
+        ''' Zeichnet den Hintergrund des Steuerelements.
+        ''' </summary>
+        ''' <param name="e"></param>
         Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
             'MyBase.OnPaintBackground(e)
             e.Graphics.Clear(_backgroundColor)
         End Sub
 
-        ' Gibt nicht verwaltete Ressourcen frei und führt andere Bereinigungsvorgänge durch, 
-        ' bevor die Component durch die Garbage Collection wieder zugänglich gemacht wird.
+
+        ''' <summary>
+        ''' <para>Gibt nicht verwaltete Ressourcen frei und führt weitere
+        ''' Bereinigungsvorgänge durch, </para>
+        ''' <para>bevor <see cref="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit"/>
+        ''' durch die Garbage Collection zurückgefordert wird.</para>
+        ''' </summary>
         Protected Overrides Sub Finalize()
             MyBase.Finalize()
         End Sub
@@ -449,8 +497,17 @@ Namespace SevenSegmentControl
 
 #Region "Interne Hilfsfunktionen"
 
-        ' Berechnet die Punkte, die die Polygone der sieben Segmente darstellen, 
-        ' unabhängig davon, ob initialisiert oder die Segmentbreite geändert wird.
+
+        ''' <summary>
+        ''' <para>Berechnet die Punkte, die die Polygone der sieben Segmente darstellen,
+        ''' </para>
+        ''' <para>unabhängig davon, ob initialisiert oder die Segmentbreite geändert
+        ''' wird.</para>
+        ''' </summary>
+        ''' <param name="SegmentCornerPoints"></param>
+        ''' <param name="DigitHeight"></param>
+        ''' <param name="DigitWidth"></param>
+        ''' <param name="SegmentWidth"></param>
         Private Sub CalculatePoints(ByRef SegmentCornerPoints As Point()(), DigitHeight As Integer, DigitWidth As Integer, SegmentWidth As Integer)
             Dim halfHeight As Integer = CInt(DigitHeight / 2)
             Dim halfWidth As Integer = CInt(SegmentWidth / 2)
@@ -549,9 +606,15 @@ Namespace SevenSegmentControl
 
 #End Region
 
-        ' Dies sind die verschiedenen Bitmuster, die die Zeichen darstellen, 
-        ' die in den sieben Segmenten angezeigt werden können. 
-        ' Die Bits 0 bis 6 entsprechen den einzelnen LEDs, von oben nach unten!
+
+        ''' <summary>
+        ''' <para>Dies sind die verschiedenen Bitmuster, die die Zeichen darstellen, </para>
+        ''' <para>die in den sieben Segmenten angezeigt werden können.<br/>
+        ''' </para>
+        ''' </summary>
+        ''' <remarks>
+        ''' Die Bits 0 bis 6 entsprechen den einzelnen LEDs, von oben nach unten!
+        ''' </remarks>
         Private Enum CharacterPattern
             None = &H0
             Zero = &H77

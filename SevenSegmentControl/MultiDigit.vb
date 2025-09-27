@@ -40,7 +40,7 @@ Namespace SevenSegmentControl
 #End Region
 
         ''' <summary>
-        ''' Wird ausgeführt wenn eine neue Instanz dieses Controls erstellt wird.
+        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit"/>.
         ''' </summary>
         Public Sub New()
             SuspendLayout()
@@ -56,13 +56,12 @@ Namespace SevenSegmentControl
 #Region "interne Methoden"
 
         ''' <summary>
-        ''' Ändert die Anzahl der Elemente im LED-Array. 
-        ''' Dadurch werden die vorherigen Elemente zerstört und an ihrer Stelle neue erstellt, 
-        ''' wobei alle aktuellen Optionen auf die neuen angewendet werden.
+        ''' <para>Ändert die Anzahl der Elemente im LED-Array. </para>
+        ''' <para>Dadurch werden die vorherigen Elemente zerstört und an ihrer Stelle neue
+        ''' erstellt, </para>
+        ''' <para>wobei alle aktuellen Optionen auf die neuen angewendet werden.</para>
         ''' </summary>
-        ''' <param name="count">
-        ''' Anzahl der zu erstellenden Elemente.
-        ''' </param>
+        ''' <param name="count">Anzahl der zu erstellenden Elemente.</param>
         Private Sub CreateSegments(count As Integer)
             If _digits IsNot Nothing Then
                 For i = 0 To _digits.Length - 1
@@ -87,8 +86,8 @@ Namespace SevenSegmentControl
         End Sub
 
         ''' <summary>
-        ''' Richtet die Elemente des Arrays so aus, 
-        ''' dass sie genau in die Breite des übergeordneten Steuerelements passen.
+        ''' Richtet die Elemente des Arrays so aus, dass sie genau in die Breite des
+        ''' übergeordneten Steuerelements passen.
         ''' </summary>
         Private Sub ResizeSegments()
             Dim segWidth As Integer = CInt(Width / _digits.Length)
@@ -99,8 +98,7 @@ Namespace SevenSegmentControl
         End Sub
 
         ''' <summary>
-        ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften
-        ''' we have stored.
+        ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften.
         ''' </summary>
         Private Sub UpdateSegments()
             For i = 0 To _digits.Length - 1
@@ -205,10 +203,11 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' Auffüllung, die für jedes Digit im Control gilt. 
+        ''' Auffüllung, die für jedes Digit im Control gilt.
         ''' </summary>
         ''' <remarks>
-        ''' Passen Sie diese Zahlen an, um das perfekte Erscheinungsbild für das Control Ihrer Größe zu erhalten.
+        ''' Passen Sie diese Zahlen an, um das perfekte Erscheinungsbild für das Control
+        ''' Ihrer Größe zu erhalten.
         ''' </remarks>
         <Category("Appearance")>
         <Description("Auffüllung, die für jedes Digit im Control gilt.")>
@@ -294,6 +293,9 @@ Namespace SevenSegmentControl
 
 #Region "Ausgeblendete Eigenschaften"
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage As Image
@@ -305,6 +307,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout As ImageLayout
@@ -316,6 +321,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Font As Font
@@ -338,6 +346,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property RightToLeft As RightToLeft
