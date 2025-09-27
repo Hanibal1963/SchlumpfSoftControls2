@@ -32,6 +32,7 @@ Partial Class FormMain
         Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
+        Me.NotifyFormDemo1 = New SchlumpfSoftControlsDemo.NotifyFormDemo()
         Me.TabPageSevenSegment = New System.Windows.Forms.TabPage()
         Me.TabPageShape = New System.Windows.Forms.TabPage()
         Me.TabPageTransparentLabel = New System.Windows.Forms.TabPage()
@@ -49,7 +50,7 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NotifyFormDemo1 = New SchlumpfSoftControlsDemo.NotifyFormDemo()
+        Me.ExplorerTreeViewDemo1 = New SchlumpfSoftControlsDemo.ExplorerTreeViewDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -57,6 +58,7 @@ Partial Class FormMain
         Me.TabPageAniGif.SuspendLayout()
         Me.TabPageColorProgressBar.SuspendLayout()
         Me.TabPageDriveWatcher.SuspendLayout()
+        Me.TabPageExplorerTreeView.SuspendLayout()
         Me.TabPageNotifyForm.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
@@ -67,11 +69,11 @@ Partial Class FormMain
         'ToolStripContainer.ContentPanel
         '
         Me.ToolStripContainer.ContentPanel.Controls.Add(Me.TabControl)
-        Me.ToolStripContainer.ContentPanel.Size = New System.Drawing.Size(599, 383)
+        Me.ToolStripContainer.ContentPanel.Size = New System.Drawing.Size(687, 489)
         Me.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ToolStripContainer.Location = New System.Drawing.Point(0, 0)
         Me.ToolStripContainer.Name = "ToolStripContainer"
-        Me.ToolStripContainer.Size = New System.Drawing.Size(599, 407)
+        Me.ToolStripContainer.Size = New System.Drawing.Size(687, 513)
         Me.ToolStripContainer.TabIndex = 0
         Me.ToolStripContainer.Text = "ToolStripContainer1"
         '
@@ -94,7 +96,7 @@ Partial Class FormMain
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(599, 383)
+        Me.TabControl.Size = New System.Drawing.Size(687, 489)
         Me.TabControl.TabIndex = 0
         '
         'TabPageAniGif
@@ -151,9 +153,10 @@ Partial Class FormMain
         '
         'TabPageExplorerTreeView
         '
+        Me.TabPageExplorerTreeView.Controls.Add(Me.ExplorerTreeViewDemo1)
         Me.TabPageExplorerTreeView.Location = New System.Drawing.Point(4, 22)
         Me.TabPageExplorerTreeView.Name = "TabPageExplorerTreeView"
-        Me.TabPageExplorerTreeView.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageExplorerTreeView.Size = New System.Drawing.Size(679, 463)
         Me.TabPageExplorerTreeView.TabIndex = 3
         Me.TabPageExplorerTreeView.Text = "ExplorerTreeView"
         Me.TabPageExplorerTreeView.UseVisualStyleBackColor = True
@@ -168,6 +171,13 @@ Partial Class FormMain
         Me.TabPageNotifyForm.TabIndex = 4
         Me.TabPageNotifyForm.Text = "NotifyForm"
         Me.TabPageNotifyForm.UseVisualStyleBackColor = True
+        '
+        'NotifyFormDemo1
+        '
+        Me.NotifyFormDemo1.Location = New System.Drawing.Point(8, 6)
+        Me.NotifyFormDemo1.Name = "NotifyFormDemo1"
+        Me.NotifyFormDemo1.Size = New System.Drawing.Size(395, 260)
+        Me.NotifyFormDemo1.TabIndex = 0
         '
         'TabPageSevenSegment
         '
@@ -216,7 +226,7 @@ Partial Class FormMain
         Me.MenuStripMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemDatei, Me.ToolStripMenuItemAnsicht})
         Me.MenuStripMain.Location = New System.Drawing.Point(0, 0)
         Me.MenuStripMain.Name = "MenuStripMain"
-        Me.MenuStripMain.Size = New System.Drawing.Size(599, 24)
+        Me.MenuStripMain.Size = New System.Drawing.Size(687, 24)
         Me.MenuStripMain.TabIndex = 0
         Me.MenuStripMain.Text = "MenuStripMain"
         '
@@ -294,18 +304,19 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
-        'NotifyFormDemo1
+        'ExplorerTreeViewDemo1
         '
-        Me.NotifyFormDemo1.Location = New System.Drawing.Point(8, 6)
-        Me.NotifyFormDemo1.Name = "NotifyFormDemo1"
-        Me.NotifyFormDemo1.Size = New System.Drawing.Size(395, 260)
-        Me.NotifyFormDemo1.TabIndex = 0
+        Me.ExplorerTreeViewDemo1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ExplorerTreeViewDemo1.Location = New System.Drawing.Point(0, 0)
+        Me.ExplorerTreeViewDemo1.Name = "ExplorerTreeViewDemo1"
+        Me.ExplorerTreeViewDemo1.Size = New System.Drawing.Size(679, 463)
+        Me.ExplorerTreeViewDemo1.TabIndex = 0
         '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(599, 407)
+        Me.ClientSize = New System.Drawing.Size(687, 513)
         Me.Controls.Add(Me.ToolStripContainer)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -325,6 +336,7 @@ Partial Class FormMain
         Me.TabPageAniGif.ResumeLayout(False)
         Me.TabPageColorProgressBar.ResumeLayout(False)
         Me.TabPageDriveWatcher.ResumeLayout(False)
+        Me.TabPageExplorerTreeView.ResumeLayout(False)
         Me.TabPageNotifyForm.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
@@ -360,4 +372,5 @@ Partial Class FormMain
     Friend WithEvents ColorProgressBarDemo1 As ColorProgressBarDemo
     Friend WithEvents DriveWatcherDemo1 As DriveWatcherDemo
     Friend WithEvents NotifyFormDemo1 As NotifyFormDemo
+    Friend WithEvents ExplorerTreeViewDemo1 As ExplorerTreeViewDemo
 End Class

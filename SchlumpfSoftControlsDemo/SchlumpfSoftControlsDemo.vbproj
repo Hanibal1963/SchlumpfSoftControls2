@@ -91,6 +91,12 @@
     <Compile Include="DriveWatcherDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ExplorerTreeViewDemo.Designer.vb">
+      <DependentUpon>ExplorerTreeViewDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorerTreeViewDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DriveWatcherDemo.resx">
       <DependentUpon>DriveWatcherDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExplorerTreeViewDemo.resx">
+      <DependentUpon>ExplorerTreeViewDemo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
