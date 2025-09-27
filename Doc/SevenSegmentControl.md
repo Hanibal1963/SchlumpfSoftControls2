@@ -8,12 +8,39 @@ Nach einigen Fehlversuchen und einer intensive Internetrecherche, bin ich auf Gi
 
 Ich habe mich entschlossen den Code in VisualBasic neu zu erstellen da ich mit C# keinerlei Erfahrung habe. 
 
-## Übersicht
+## Inhaltsverzeichnis
+
+1. [Übersicht](#1-übersicht)
+2. [Ziele / Einsatzzweck](#2-ziele--einsatzzweck)
+3. [Architekturüberblick](#3-architekturüberblick)
+4. [Darstellung & Bitmuster](#4-darstellung--bitmuster)
+5. [Klassen im Detail](#5-klassen-im-detail)
+   - [SingleDigit](#51-singledigit)
+   - [MultiDigit](#52-multidigit)
+6. [Unterstützte Zeichen](#6-unterstützte-zeichen)
+7. [Wichtige interne Aspekte](#7-wichtige-interne-aspekte)
+8. [Beispielverwendung (WinForms)](#8-beispielverwendung-winforms)
+   - [Einzelnes Digit](#81-einzelnes-digit)
+   - [Mehrere Digits (z. B. Anzeige einer Spannung)](#82-mehrere-digits-z-b-anzeige-einer-spannung)
+   - [Direkte Bitsteuerung](#83-direkte-bitsteuerung)
+9. [Design-Time Unterstützung](#9-design-time-unterstützung)
+10. [Performancehinweise](#10-performancehinweise)
+11. [Erweiterungsideen](#11-erweiterungsideen)
+12. [Fehlerquellen / Bekannte Einschränkungen](#12-fehlerquellen--bekannte-einschränkungen)
+13. [Styling-Empfehlungen](#13-styling-empfehlungen)
+14. [Testideen](#14-testideen)
+15. [Wartung / Codequalität](#15-wartung--codequalität)
+16. [Weitere Literatur](#16-weitere-literatur)
+
+---
+
+<a name="1-übersicht"></a>
+## 1. Übersicht
 
 Das Projekt `SevenSegmentControl` stellt zwei Windows Forms Steuerelemente bereit, die klassische 7-Segment-(LED)-Anzeige(n) simulieren:
 
-1. `SingleDigit` – Ein einzelnes 7-Segment-Display mit optionalem Dezimalpunkt und (optionalem) Doppelpunktbereich.
-2. `MultiDigit` – Ein Container für mehrere `SingleDigit`-Instanzen zur Darstellung kompletter numerischer/teilweise alphanumerischer Werte.
+   - `SingleDigit` – Ein einzelnes 7-Segment-Display mit optionalem Dezimalpunkt und (optionalem) Doppelpunktbereich.
+   - `MultiDigit` – Ein Container für mehrere `SingleDigit`-Instanzen zur Darstellung kompletter numerischer/teilweise alphanumerischer Werte.
 
 Der Fokus liegt auf:
 
@@ -22,7 +49,10 @@ Der Fokus liegt auf:
 - Anpassbarer Segmentbreite und Schrägstellung (kursiver Effekt via Shear-Transformation)
 - Optionalen Dezimalpunkten und Doppelpunkt (z. B. für Uhr- oder Zeitformat)
 
-## Ziele / Einsatzzweck
+---
+
+<a name="2-ziele--einsatzzweck"></a>
+## 2. Ziele / Einsatzzweck
 
 Typische Anwendungsfälle:
 
@@ -31,7 +61,10 @@ Typische Anwendungsfälle:
 - Zähler, einfache Statusanzeigen
 - Simulation klassischer Hardwareanzeigen im UI
 
-## Architekturüberblick
+---
+
+<a name="3-architekturüberblick"></a>
+## 3. Architekturüberblick
 
 | Bestandteil | Beschreibung |
 |-------------|-------------|
@@ -40,7 +73,10 @@ Typische Anwendungsfälle:
 | `CharacterPattern` (Enum, intern) | Bitmasken für Segmente (Bits 0–6) zur Darstellung der Zeichen. |
 | `SevenSegmentControlPackage` | VS-Package-Klasse (Infrastruktur; bei Nutzung als Erweiterung irrelevant für Laufzeit der Controls). |
 
-## Darstellung & Bitmuster
+---
+
+<a name="4-darstellung--bitmuster"></a>
+## 4. Darstellung & Bitmuster
 
 Jedes Segment wird durch ein Bit in einem Integer repräsentiert:
 - Bit 0: Oberes Segment
@@ -53,9 +89,13 @@ Jedes Segment wird durch ein Bit in einem Integer repräsentiert:
 
 Beispiel: Ziffer "0" (`CharacterPattern.Zero = &H77` = Binär `0b1110111`) – alle bis auf das mittlere Segment aktiv.
 
-## Klassen im Detail
+---
 
-### SingleDigit
+<a name="5-klassen-im-detail"></a>
+## 5. Klassen im Detail
+
+<a name="51-singledigit"></a>
+### 5.1. SingleDigit
 
 Ein einzelnes anzeigendes Control.
 
@@ -78,7 +118,8 @@ Zeichenlogik:
 - Buchstaben werden (soweit darstellbar) auf definierte Muster gemappt (z. B. A, b, C, d, E, F, H, L, P, U, Y, etc.).
 - Sonderzeichen: `-`, `_`, `°`, `'`, `"`, `=` u. a.
 
-### MultiDigit
+<a name="52-multidigit"></a>
+### 5.2. MultiDigit
 
 Container für mehrere `SingleDigit`-Instanzen.
 
@@ -99,7 +140,10 @@ Layout:
 - Breitenzuweisung linear: Gesamtsumme / Anzahl Digits.
 - Positionierung aktuell einfach proportioniert (keine Zwischenräume außer `DigitPadding` innerhalb der Digits selbst).
 
-## Unterstützte Zeichen
+---
+
+<a name="6-unterstützte-zeichen"></a>
+## 6. Unterstützte Zeichen
 
 (Je nach Lesbarkeit auf 7 Segmenten angepasst.)
 - Ziffern: 0–9
@@ -110,7 +154,10 @@ Layout:
 
 Nicht eindeutig darstellbare Buchstaben werden approximiert (z. B. `S` nutzt Muster der „5“).
 
-## Wichtige interne Aspekte
+---
+
+<a name="7-wichtige-interne-aspekte"></a>
+## 7. Wichtige interne Aspekte
 
 - Zeichnen erfolgt in `OnPaint` (bzw. Paint-Handler) mit Anti-Aliasing.
 - Kursivdarstellung mittels `Matrix.Shear`.
@@ -118,9 +165,13 @@ Nicht eindeutig darstellbare Buchstaben werden approximiert (z. B. `S` nutzt Mus
 - `DoubleBuffered` aktiv für flimmerarmes Rendern.
 - `CustomBitPattern` hat Vorrang, wenn direkt gesetzt (bis `DigitValue` erneut geändert wird).
 
-## Beispielverwendung (WinForms)
+---
 
-### Einzelnes Digit
+<a name="8-beispielverwendung-winforms"></a>
+## 8. Beispielverwendung (WinForms)
+
+<a name="81-einzelnes-digit"></a>
+### 8.1. Einzelnes Digit
 
 ```vbnet
 Dim seg As New SevenSegmentControl.SingleDigit() With {
@@ -140,7 +191,8 @@ Dim seg As New SevenSegmentControl.SingleDigit() With {
 seg.DecimalPointActive = True
 ```
 
-### Mehrere Digits (z. B. Anzeige einer Spannung)
+<a name="82-mehrere-digits-z-b-anzeige-einer-spannung"></a>
+### 8.2. Mehrere Digits (z. B. Anzeige einer Spannung)
 
 ```vbnet
 Dim multi As New SevenSegmentControl.MultiDigit() With {
@@ -161,26 +213,36 @@ Dim multi As New SevenSegmentControl.MultiDigit() With {
 multi.Value = "12.345"
 ```
 
-### Direkte Bitsteuerung
+<a name="83-direkte-bitsteuerung"></a>
+### 8.3. Direkte Bitsteuerung
 
 ```vbnet
 ' Mittleres Segment + unteres Segment einschalten
 seg.CustomBitPattern = &H48 ' Beispiel (abhängig von Bitdefinitionen)
 ```
 
-## Design-Time Unterstützung
+---
+
+<a name="9-design-time-unterstützung"></a>
+## 9. Design-Time Unterstützung
 
 - `Category`, `Description`, `Browsable` Attribute für saubere PropertyGrid-Darstellung.
 - Toolbox-Bitmap via `ToolboxBitmap`-Attribut (falls Ressource vorhanden).
 - Ausgeblendete Standard-Properties (`Font`, `Text`, `BackgroundImage`, etc.), um Fokus auf funktionale Anzeigeeigenschaften zu legen.
 
-## Performancehinweise
+---
+
+<a name="10-performancehinweise"></a>
+## 10. Performancehinweise
 
 - Rendering ist leichtgewichtig für moderate Digit-Anzahlen (< 50).
 - Für sehr große `DigitCount` ggf. DoubleBuffer auf Containerform aktivieren.
 - Minimieren von unnötigen `Invalidate()`-Aufrufen bei Massenupdates (kaskadierte Set-Operationen bündeln).
 
-## Erweiterungsideen
+---
+
+<a name="11-erweiterungsideen"></a>
+## 11. Erweiterungsideen
 
 - Unterstützung für animiertes Dimmen/Fading.
 - Mehrfarbige Segmente / Gradient.
@@ -189,14 +251,20 @@ seg.CustomBitPattern = &H48 ' Beispiel (abhängig von Bitdefinitionen)
 - Unterstützung für zusätzliche Symbole (°C, Ω, …) via zusammengesetzte Segmente.
 - Externes Mapping bereitstellen (Benutzerdefinierte Glyph-Tabelle).
 
-## Fehlerquellen / Bekannte Einschränkungen
+---
+
+<a name="12-fehlerquellen--bekannte-einschränkungen"></a>
+## 12. Fehlerquellen / Bekannte Einschränkungen
 
 - Einige Buchstaben sind schwer eindeutig darstellbar (z. B. K, M, W, X, Z fehlen).
 - `Value`-Parsing setzt voraus, dass Dezimalpunkte immer einem vorherigen Digit zugeordnet werden können.
 - Kein automatisches Trimmen oder Overflow-Hinweis, wenn `Value` länger als `DigitCount` ist (überschüssige Zeichen werden ignoriert).
 - Kein Right-To-Left Support (explizit ausgeblendet).
 
-## Styling-Empfehlungen
+---
+
+<a name="13-styling-empfehlungen"></a>
+## 13. Styling-Empfehlungen
 
 | Ziel | Einstellung |
 |------|-------------|
@@ -204,14 +272,20 @@ seg.CustomBitPattern = &H48 ' Beispiel (abhängig von Bitdefinitionen)
 | Rotes Retro-Display | `ForeColor = Color.Red`, `InactiveColor = Color.FromArgb(70, 0, 0)`, `BackColor = Color.Black` |
 | Modern (Bernstein) | `ForeColor = Color.Orange`, `InactiveColor = Color.FromArgb(80, 40, 0)` |
 
-## Testideen
+---
+
+<a name="14-testideen"></a>
+## 14. Testideen
 
 - Einzelzeichen-Sequenz 0–9 und A–Z durchlaufen.
 - `DigitCount` dynamisch ändern (Resize-Verhalten prüfen).
 - Performance-Test mit 50–100 Digits.
 - Randfälle: Leerstring, nur Dezimalpunkte, ungültige Zeichen.
 
-## Wartung / Codequalität
+---
+
+<a name="15-wartung--codequalität"></a>
+## 15. Wartung / Codequalität
 
 Empfohlene nächste Schritte:
 
@@ -219,3 +293,14 @@ Empfohlene nächste Schritte:
 - Unit-Tests für Mapping `DigitValue -> BitPattern`.
 - Refactoring: Separates Mapping-Modul (Dictionary) statt `Select Case`.
 - Optional: Caching der berechneten Segment-Punkte bei Größenänderungen.
+
+---
+
+<a name="16-weitere-literatur"></a>
+## 16. Weitere Literatur
+
+- [Erstellen eines Windows Forms-Toolbox-Steuerelements](https://docs.microsoft.com/de-de/visualstudio/extensibility/creating-a-windows-forms-toolbox-control?view=vs-2022)
+- [ToolboxBitmapAttribute Konstruktoren](https://learn.microsoft.com/de-de/dotnet/api/system.drawing.toolboxbitmapattribute.-ctor?view=dotnet-plat-ext-7.0#system-drawing-toolboxbitmapattribute-ctor(system-type-system-string))
+- [Entwickeln benutzerdefinierter Windows Forms-Steuerelemente mit .NET Framework](https://learn.microsoft.com/de-de/dotnet/desktop/winforms/controls/developing-custom-windows-forms-controls?view=netframeworkdesktop-4.8)
+- [Control-Techniken: Eigenes Toolboxicon für Steuerelement](https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/)
+
