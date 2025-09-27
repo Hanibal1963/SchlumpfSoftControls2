@@ -25,7 +25,9 @@ Partial Class FormMain
         Me.ToolStripContainer = New System.Windows.Forms.ToolStripContainer()
         Me.TabControl = New System.Windows.Forms.TabControl()
         Me.TabPageAniGif = New System.Windows.Forms.TabPage()
+        Me.AniGifDemo1 = New SchlumpfSoftControlsDemo.AniGifDemo()
         Me.TabPageColorProgressBar = New System.Windows.Forms.TabPage()
+        Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.TabPageDriveWatcher = New System.Windows.Forms.TabPage()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
@@ -46,12 +48,12 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AniGifDemo1 = New SchlumpfSoftControlsDemo.AniGifDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPageAniGif.SuspendLayout()
+        Me.TabPageColorProgressBar.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -102,14 +104,29 @@ Partial Class FormMain
         Me.TabPageAniGif.Text = "AniGif"
         Me.TabPageAniGif.UseVisualStyleBackColor = True
         '
+        'AniGifDemo1
+        '
+        Me.AniGifDemo1.Location = New System.Drawing.Point(8, 6)
+        Me.AniGifDemo1.Name = "AniGifDemo1"
+        Me.AniGifDemo1.Size = New System.Drawing.Size(575, 278)
+        Me.AniGifDemo1.TabIndex = 0
+        '
         'TabPageColorProgressBar
         '
+        Me.TabPageColorProgressBar.Controls.Add(Me.ColorProgressBarDemo1)
         Me.TabPageColorProgressBar.Location = New System.Drawing.Point(4, 22)
         Me.TabPageColorProgressBar.Name = "TabPageColorProgressBar"
         Me.TabPageColorProgressBar.Size = New System.Drawing.Size(591, 357)
         Me.TabPageColorProgressBar.TabIndex = 1
         Me.TabPageColorProgressBar.Text = "ColorProgressBar"
         Me.TabPageColorProgressBar.UseVisualStyleBackColor = True
+        '
+        'ColorProgressBarDemo1
+        '
+        Me.ColorProgressBarDemo1.Location = New System.Drawing.Point(8, 15)
+        Me.ColorProgressBarDemo1.Name = "ColorProgressBarDemo1"
+        Me.ColorProgressBarDemo1.Size = New System.Drawing.Size(359, 124)
+        Me.ColorProgressBarDemo1.TabIndex = 0
         '
         'TabPageDriveWatcher
         '
@@ -264,13 +281,6 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
-        'AniGifDemo1
-        '
-        Me.AniGifDemo1.Location = New System.Drawing.Point(8, 6)
-        Me.AniGifDemo1.Name = "AniGifDemo1"
-        Me.AniGifDemo1.Size = New System.Drawing.Size(575, 343)
-        Me.AniGifDemo1.TabIndex = 0
-        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -293,6 +303,7 @@ Partial Class FormMain
         Me.ToolStripContainer.PerformLayout()
         Me.TabControl.ResumeLayout(False)
         Me.TabPageAniGif.ResumeLayout(False)
+        Me.TabPageColorProgressBar.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -324,4 +335,5 @@ Partial Class FormMain
     Private WithEvents TabPageWizard As TabPage
     Private WithEvents ToolStripMenuItemWizardTest As ToolStripMenuItem
     Friend WithEvents AniGifDemo1 As AniGifDemo
+    Friend WithEvents ColorProgressBarDemo1 As ColorProgressBarDemo
 End Class
