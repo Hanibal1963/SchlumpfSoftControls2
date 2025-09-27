@@ -254,6 +254,12 @@ End If
 | Virtuelle Laufwerke (ISO-Mount) | Werden i. d. R. als Volume erkannt |
 | Zugriff verweigert | Größen/Labels evtl. nicht lesbar |
 
+> **Hinweis**
+>
+> Bei den Tests, das ISO-datei beim mounten nicht immer als laufwerk erkannt wird. 
+>
+> Dies scheint von der Windows-Version und dem verwendeten Tool abzuhängen.
+
 ---
 
 <a name="10-performance-hinweise"></a>
