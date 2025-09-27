@@ -22,27 +22,39 @@ Weitere Infos unter:
 
 ## Inhaltsverzeichnis
 
-1. Überblick
-2. Features
-3. Schnellstart
-4. Installation & Einbindung
-5. Eigenschaften
-6. Ereignisse
-7. Enumerationen
-8. Funktionsweise der Animation
-9. Zeichen-/Größenlogik (`SizeMode` + Zoom)
-10. Beispiele (Code)
-11. Performance-Hinweise
-12. Ressourcen / Standardbild
-13. Fehlerbehandlung & Sonderfälle
-14. Typische Anwendungsfälle
-15. FAQ
-16. Changelog (Template)
-17. Geplante Erweiterungen (Ideen)
-18. Lizenz / Copyright
-
+1. [Überblick](#überblick)
+2. [Features](#features)
+3. [Schnellstart](#schnellstart)
+4. [Installation & Einbindung](#installation--einbindung)
+5. [Eigenschaften](#eigenschaften)
+   - [Interne / ausgeblendete geerbte Eigenschaften](#interne--ausgeblendete-geerbte-eigenschaften)
+   - [Validierung](#validierung)
+6. [Ereignisse](#ereignisse)
+7. [Enumerationen](#enumerationen)
+    - [`SizeMode`](#sizemode)
+8. [Funktionsweise der Animation](#funktionsweise-der-animation)
+9. [Zeichen-/Größenlogik (`SizeMode` + Zoom)](#zeichengrößenlogik-sizemode--zoom)
+10. [Beispiele (Code)](#beispiele-code)
+    - [A: Standardanzeige (statisches GIF oder animiertes ohne Autoplay)](#a-standardanzeige-statisches-gif-oder-animiertes-ohne-autoplay)
+    - [B: Vollständiges Füllen des Controls](#b-vollständiges-füllen-des-controls)
+    - [C: Benutzerdefinierte Geschwindigkeit (langsamer)](#c-benutzerdefinierte-geschwindigkeit-langsamer)
+    - [D: Dynamischer Bildwechsel zur Laufzeit](#d-dynamischer-bildwechsel-zur-laufzeit)
+    - [E: Reaktion auf nicht animierbare Bilder](#e-reaktion-auf-nicht-animierbare-bilder)
+    - [F: Manuelles Starten und Stoppen der Animation](#f-manuelles-starten-und-stoppen-der-animation)
+11. [Performance-Hinweise](#performance-hinweise)
+12. [Ressourcen / Standardbild](#ressourcen--standardbild)
+13. [Fehlerbehandlung & Sonderfälle](#fehlerbehandlung--sonderfälle)
+14. [Typische Anwendungsfälle](#typische-anwendungsfälle)
+15. [FAQ](#faq)
+16. [Geplante Erweiterungen (Ideen)](#geplante-erweiterungen-ideen)
+17. [Anhang: Interne Methoden (Kurzreferenz)](#anhang-interne-methoden-kurzreferenz)
+18. [Öffentliche Steuerungsmethoden (Details)](#öffentliche-steuerungsmethoden-details)
+    - [`StartAnimation()`](#startanimation)
+    - [`StopAnimation()`](#stopanimation)
+19. [Weitere Literatur](#weitere-literatur)
 ---
 
+<a name="überblick"></a>
 ## 1. Überblick
 
 `AniGif` ist ein benutzerdefiniertes WinForms-Control zur Anzeige und optionalen Steuerung animierter GIFs. Es unterstützt:
@@ -56,6 +68,7 @@ Das Control ist für .NET Framework 4.7.2 (aus dem Projekt abgeleitet) konzipier
 
 ---
 
+<a name="features"></a>
 ## 2. Features
 
 - Einfache Integration in vorhandene WinForms-Projekte
@@ -68,6 +81,7 @@ Das Control ist für .NET Framework 4.7.2 (aus dem Projekt abgeleitet) konzipier
 
 ---
 
+<a name="schnellstart"></a>
 ## 3. Schnellstart
 
 ```vbnet
@@ -86,6 +100,7 @@ Me.Controls.Add(ani)
 
 ---
 
+<a name="installation--einbindung"></a>
 ## 4. Installation & Einbindung
 
 1. Projekt `AniGifControl` kompilieren.
@@ -97,6 +112,7 @@ Optional: Wenn das Control in ein VSIX eingebettet wird, wird die Bereitstellung
 
 ---
 
+<a name="eigenschaften"></a>
 ## 5. Eigenschaften
 
 | Eigenschaft | Typ | Standard | Beschreibung |
@@ -108,10 +124,12 @@ Optional: Wenn das Control in ein VSIX eingebettet wird, wird die Bereitstellung
 | `FramesPerSecond` | `Decimal` | `10` | Wird nur bei `CustomDisplaySpeed=True` genutzt (1–50) |
 | `ZoomFactor` | `Decimal` | `50` | Nur wirksam bei `GifSizeMode=Zoom` (1–100 %) |
 
+<a name="interne--geerbte-eigenschaften"></a>
 ### Interne / ausgeblendete geerbte Eigenschaften
 
 Mehrere Standard-Eigenschaften (`Text`, `BackgroundImage`, `Font`, etc.) sind absichtlich über `[Browsable(False)]` versteckt, da sie für den Anwendungsfall nicht sinnvoll oder irreführend wären.
 
+<a name="validierung"></a>
 ### Validierung
 
 - `FramesPerSecond` wird intern auf 1..50 begrenzt
@@ -120,6 +138,7 @@ Mehrere Standard-Eigenschaften (`Text`, `BackgroundImage`, `Font`, etc.) sind ab
 
 ---
 
+<a name="ereignisse"></a>
 ## 6. Ereignisse
 
 | Ereignis | Sichtbarkeit | Beschreibung |
@@ -131,8 +150,10 @@ Mehrere Standard-Eigenschaften (`Text`, `BackgroundImage`, `Font`, etc.) sind ab
 
 ---
 
+<a name="enumerationen"></a>
 ## 7. Enumerationen
 
+<a name="sizemode"></a>
 ### `SizeMode`
 
 | Wert | Beschreibung |
@@ -144,6 +165,7 @@ Mehrere Standard-Eigenschaften (`Text`, `BackgroundImage`, `Font`, etc.) sind ab
 
 ---
 
+<a name="funktionsweise-der-animation"></a>
 ## 8. Funktionsweise der Animation
 
 Es existieren zwei Animationspfade:
@@ -160,6 +182,7 @@ Nicht animierbare Bilder erzeugen das Ereignis `NoAnimation` (und `_MaxFrame` wi
 
 ---
 
+<a name="zeichengrößenlogik-sizemode--zoom"></a>
 ## 9. Zeichen-/Größenlogik
 
 Die Anzeigegröße wird in `GetRectStartSize` berechnet, Startpunkt in `GetRectStartPoint`.
@@ -172,8 +195,10 @@ Kriterien:
 
 ---
 
+<a name="beispiele-code"></a>
 ## 10. Beispiele (Code)
 
+<a name="a-standardanzeige-statisches-gif-oder-animiertes-ohne-autoplay"></a>
 ### A: Standardanzeige (statisches GIF oder animiertes ohne Autoplay)
 
 ```vbnet
@@ -185,6 +210,7 @@ ani.Gif = New Bitmap("logo.gif")
 Me.Controls.Add(ani)
 ```
 
+<a name="b-vollständiges-füllen-des-controls"></a>
 ### B: Vollständiges Füllen des Controls
 
 ```vbnet
@@ -197,6 +223,7 @@ aniFill.Gif = New Bitmap("spinner.gif")
 Me.Controls.Add(aniFill)
 ```
 
+<a name="c-benutzerdefinierte-geschwindigkeit-langsamer"></a>
 ### C: Benutzerdefinierte Geschwindigkeit (langsamer)
 
 ```vbnet
@@ -209,6 +236,7 @@ aniSlow.Gif = New Bitmap("anim.gif")
 Me.Controls.Add(aniSlow)
 ```
 
+<a name="d-dynamischer-bildwechsel-zur-laufzeit"></a>
 ### D: Dynamischer Bildwechsel zur Laufzeit
 
 ```vbnet
@@ -227,6 +255,7 @@ Private Sub ButtonLoadNewGif_Click(...) Handles ButtonLoadNewGif.Click
 End Sub
 ```
 
+<a name="e-reaktion-auf-nicht-animierbare-bilder"></a>
 ### E: Reaktion auf nicht animierbare Bilder
 
 ```vbnet
@@ -235,6 +264,7 @@ AddHandler AniGif1.NoAnimation, Sub(s, e)
 End Sub
 ```
 
+<a name="f-manuelles-starten-und-stoppen-der-animation"></a>
 ### F: Manuelles Starten und Stoppen der Animation
 
 ```vbnet
@@ -253,6 +283,7 @@ aniManual.StopAnimation()
 
 ---
 
+<a name="performance-hinweise"></a>
 ## 11. Performance-Hinweise
 
 - Große GIFs oder hohe FPS-Werte erhöhen CPU-Last
@@ -262,6 +293,7 @@ aniManual.StopAnimation()
 
 ---
 
+<a name="ressourcen--standardbild"></a>
 ## 12. Ressourcen / Standardbild
 
 Beim Initialisieren wird `_Gif = My.Resources.Standard` gesetzt. Dieses dient als Fallback:
@@ -272,6 +304,7 @@ Empfehlung: Eigenes neutrales Platzhalter-GIF ersetzen, falls Branding gewünsch
 
 ---
 
+<a name="fehlerbehandlung--sonderfälle"></a>
 ## 13. Fehlerbehandlung & Sonderfälle
 
 | Fall | Verhalten |
@@ -284,6 +317,7 @@ Empfehlung: Eigenes neutrales Platzhalter-GIF ersetzen, falls Branding gewünsch
 
 ---
 
+<a name="typische-anwendungsfälle"></a>
 ## 14. Typische Anwendungsfälle
 
 - Lade-/Busy-Indikatoren
@@ -293,6 +327,7 @@ Empfehlung: Eigenes neutrales Platzhalter-GIF ersetzen, falls Branding gewünsch
 
 ---
 
+<a name="faq"></a>
 ## 15. FAQ
 **F: Warum bewegt sich das GIF im Designer nicht?**  
 A: Im Designmodus wird bewusst nicht animiert, um Ressourcen zu schonen.
@@ -311,7 +346,8 @@ A: Speicher- und CPU-Verbrauch steigen. Vorverkleinern empfohlen.
 
 ---
 
-## 17. Geplante Erweiterungen (Ideen)
+<a name="geplante-erweiterungen-ideen"></a>
+## 16. Geplante Erweiterungen (Ideen)
 
 - Unterstützung für Schleifenbegrenzung
 - Ereignis `FrameChanged`
@@ -320,7 +356,8 @@ A: Speicher- und CPU-Verbrauch steigen. Vorverkleinern empfohlen.
 
 ---
 
-## Anhang: Interne Methoden (Kurzreferenz)
+<a name="anhang-interne-methoden-kurzreferenz"></a>
+## 17. Anhang: Interne Methoden (Kurzreferenz)
 
 | Methode | Zweck |
 |---------|-------|
@@ -338,14 +375,17 @@ A: Speicher- und CPU-Verbrauch steigen. Vorverkleinern empfohlen.
 
 ---
 
-## Öffentliche Steuerungsmethoden (Details)
+<a name="öffentliche-steuerungsmethoden-details"></a>
+## 18. Öffentliche Steuerungsmethoden (Details)
 
+<a name="startanimation"></a>
 ### `StartAnimation()`
 
 Startet die Animation, falls `AutoPlay=False`. Intern wird:
 - `_Autoplay` auf `True` gesetzt
 - `InitLayout()` aufgerufen (registriert Animation bei animierbaren GIFs)
 
+<a name="stopanimation"></a>
 ### `StopAnimation()`
 
 Stoppt eine laufende Animation. Intern wird:
@@ -357,7 +397,8 @@ Einsatzszenario: Wenn man GIFs erst nach einer Benutzeraktion (Button, Hover, Si
 
 ---
 
-## Weitere Literatur
+<a name="weitere-literatur"></a>
+## 19. Weitere Literatur
 
 -  [Erstellen eines Windows Forms-Toolbox-Steuerelements](https://docs.microsoft.com/de-de/visualstudio/extensibility/creating-a-windows-forms-toolbox-control?view=vs-2022)
 -  [Infos zur ControlStyles Enumeration](https://learn.microsoft.com/de-de/dotnet/api/system.windows.forms.controlstyles?redirectedfrom=MSDN&view=netframework-4.7.2)
