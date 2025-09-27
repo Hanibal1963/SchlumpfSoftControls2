@@ -30,7 +30,8 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 >  **Hinweis:**
 > 
->  Die Dokumentation wurde mit GitHub Copilot erstellt und kann Fehler enthalten.
+>  Die Dokumentation wurde mit GitHub Copilot erstellt und manuell überarbeitet.
+> Es können trotzdem Fehler enthalten sein.
 
 ---
 
