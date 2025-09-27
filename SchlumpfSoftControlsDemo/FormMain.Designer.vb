@@ -48,12 +48,14 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPageAniGif.SuspendLayout()
         Me.TabPageColorProgressBar.SuspendLayout()
+        Me.TabPageDriveWatcher.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -130,6 +132,7 @@ Partial Class FormMain
         '
         'TabPageDriveWatcher
         '
+        Me.TabPageDriveWatcher.Controls.Add(Me.DriveWatcherDemo1)
         Me.TabPageDriveWatcher.Location = New System.Drawing.Point(4, 22)
         Me.TabPageDriveWatcher.Name = "TabPageDriveWatcher"
         Me.TabPageDriveWatcher.Size = New System.Drawing.Size(591, 357)
@@ -281,6 +284,13 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
+        'DriveWatcherDemo1
+        '
+        Me.DriveWatcherDemo1.Location = New System.Drawing.Point(17, 13)
+        Me.DriveWatcherDemo1.Name = "DriveWatcherDemo1"
+        Me.DriveWatcherDemo1.Size = New System.Drawing.Size(481, 271)
+        Me.DriveWatcherDemo1.TabIndex = 0
+        '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -304,6 +314,7 @@ Partial Class FormMain
         Me.TabControl.ResumeLayout(False)
         Me.TabPageAniGif.ResumeLayout(False)
         Me.TabPageColorProgressBar.ResumeLayout(False)
+        Me.TabPageDriveWatcher.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -336,4 +347,5 @@ Partial Class FormMain
     Private WithEvents ToolStripMenuItemWizardTest As ToolStripMenuItem
     Friend WithEvents AniGifDemo1 As AniGifDemo
     Friend WithEvents ColorProgressBarDemo1 As ColorProgressBarDemo
+    Friend WithEvents DriveWatcherDemo1 As DriveWatcherDemo
 End Class

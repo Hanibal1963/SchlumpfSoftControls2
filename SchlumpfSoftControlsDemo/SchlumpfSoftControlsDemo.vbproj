@@ -85,6 +85,12 @@
     <Compile Include="ColorProgressBarDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="DriveWatcherDemo.Designer.vb">
+      <DependentUpon>DriveWatcherDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DriveWatcherDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorProgressBarDemo.resx">
       <DependentUpon>ColorProgressBarDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DriveWatcherDemo.resx">
+      <DependentUpon>DriveWatcherDemo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
