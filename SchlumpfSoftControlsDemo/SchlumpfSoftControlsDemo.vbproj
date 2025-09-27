@@ -126,6 +126,12 @@
     <Compile Include="NotifyFormDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="SevenSegmentDemo.Designer.vb">
+      <DependentUpon>SevenSegmentDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SevenSegmentDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AniGifDemo.resx">
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NotifyFormDemo.resx">
       <DependentUpon>NotifyFormDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SevenSegmentDemo.resx">
+      <DependentUpon>SevenSegmentDemo.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

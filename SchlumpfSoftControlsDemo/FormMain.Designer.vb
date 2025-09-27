@@ -31,6 +31,7 @@ Partial Class FormMain
         Me.TabPageDriveWatcher = New System.Windows.Forms.TabPage()
         Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
+        Me.ExplorerTreeViewDemo1 = New SchlumpfSoftControlsDemo.ExplorerTreeViewDemo()
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
         Me.NotifyFormDemo1 = New SchlumpfSoftControlsDemo.NotifyFormDemo()
         Me.TabPageSevenSegment = New System.Windows.Forms.TabPage()
@@ -50,7 +51,7 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExplorerTreeViewDemo1 = New SchlumpfSoftControlsDemo.ExplorerTreeViewDemo()
+        Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -60,6 +61,7 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.SuspendLayout()
         Me.TabPageExplorerTreeView.SuspendLayout()
         Me.TabPageNotifyForm.SuspendLayout()
+        Me.TabPageSevenSegment.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -105,7 +107,7 @@ Partial Class FormMain
         Me.TabPageAniGif.Location = New System.Drawing.Point(4, 22)
         Me.TabPageAniGif.Name = "TabPageAniGif"
         Me.TabPageAniGif.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageAniGif.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageAniGif.Size = New System.Drawing.Size(679, 463)
         Me.TabPageAniGif.TabIndex = 0
         Me.TabPageAniGif.Text = "AniGif"
         Me.TabPageAniGif.UseVisualStyleBackColor = True
@@ -122,7 +124,7 @@ Partial Class FormMain
         Me.TabPageColorProgressBar.Controls.Add(Me.ColorProgressBarDemo1)
         Me.TabPageColorProgressBar.Location = New System.Drawing.Point(4, 22)
         Me.TabPageColorProgressBar.Name = "TabPageColorProgressBar"
-        Me.TabPageColorProgressBar.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageColorProgressBar.Size = New System.Drawing.Size(679, 463)
         Me.TabPageColorProgressBar.TabIndex = 1
         Me.TabPageColorProgressBar.Text = "ColorProgressBar"
         Me.TabPageColorProgressBar.UseVisualStyleBackColor = True
@@ -139,7 +141,7 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.Controls.Add(Me.DriveWatcherDemo1)
         Me.TabPageDriveWatcher.Location = New System.Drawing.Point(4, 22)
         Me.TabPageDriveWatcher.Name = "TabPageDriveWatcher"
-        Me.TabPageDriveWatcher.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageDriveWatcher.Size = New System.Drawing.Size(679, 463)
         Me.TabPageDriveWatcher.TabIndex = 2
         Me.TabPageDriveWatcher.Text = "DriveWatcher"
         Me.TabPageDriveWatcher.UseVisualStyleBackColor = True
@@ -161,13 +163,21 @@ Partial Class FormMain
         Me.TabPageExplorerTreeView.Text = "ExplorerTreeView"
         Me.TabPageExplorerTreeView.UseVisualStyleBackColor = True
         '
+        'ExplorerTreeViewDemo1
+        '
+        Me.ExplorerTreeViewDemo1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.ExplorerTreeViewDemo1.Location = New System.Drawing.Point(0, 0)
+        Me.ExplorerTreeViewDemo1.Name = "ExplorerTreeViewDemo1"
+        Me.ExplorerTreeViewDemo1.Size = New System.Drawing.Size(679, 463)
+        Me.ExplorerTreeViewDemo1.TabIndex = 0
+        '
         'TabPageNotifyForm
         '
         Me.TabPageNotifyForm.Controls.Add(Me.NotifyFormDemo1)
         Me.TabPageNotifyForm.Location = New System.Drawing.Point(4, 22)
         Me.TabPageNotifyForm.Name = "TabPageNotifyForm"
         Me.TabPageNotifyForm.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageNotifyForm.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageNotifyForm.Size = New System.Drawing.Size(679, 463)
         Me.TabPageNotifyForm.TabIndex = 4
         Me.TabPageNotifyForm.Text = "NotifyForm"
         Me.TabPageNotifyForm.UseVisualStyleBackColor = True
@@ -181,10 +191,11 @@ Partial Class FormMain
         '
         'TabPageSevenSegment
         '
+        Me.TabPageSevenSegment.Controls.Add(Me.SevenSegmentDemo1)
         Me.TabPageSevenSegment.Location = New System.Drawing.Point(4, 22)
         Me.TabPageSevenSegment.Name = "TabPageSevenSegment"
         Me.TabPageSevenSegment.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageSevenSegment.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageSevenSegment.Size = New System.Drawing.Size(679, 463)
         Me.TabPageSevenSegment.TabIndex = 5
         Me.TabPageSevenSegment.Text = "SevenSegment"
         Me.TabPageSevenSegment.UseVisualStyleBackColor = True
@@ -194,7 +205,7 @@ Partial Class FormMain
         Me.TabPageShape.Location = New System.Drawing.Point(4, 22)
         Me.TabPageShape.Name = "TabPageShape"
         Me.TabPageShape.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageShape.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageShape.Size = New System.Drawing.Size(679, 463)
         Me.TabPageShape.TabIndex = 6
         Me.TabPageShape.Text = "Shape"
         Me.TabPageShape.UseVisualStyleBackColor = True
@@ -204,7 +215,7 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.Location = New System.Drawing.Point(4, 22)
         Me.TabPageTransparentLabel.Name = "TabPageTransparentLabel"
         Me.TabPageTransparentLabel.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageTransparentLabel.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageTransparentLabel.Size = New System.Drawing.Size(679, 463)
         Me.TabPageTransparentLabel.TabIndex = 7
         Me.TabPageTransparentLabel.Text = "TransparentLabel"
         Me.TabPageTransparentLabel.UseVisualStyleBackColor = True
@@ -214,7 +225,7 @@ Partial Class FormMain
         Me.TabPageWizard.Location = New System.Drawing.Point(4, 22)
         Me.TabPageWizard.Name = "TabPageWizard"
         Me.TabPageWizard.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageWizard.Size = New System.Drawing.Size(591, 357)
+        Me.TabPageWizard.Size = New System.Drawing.Size(679, 463)
         Me.TabPageWizard.TabIndex = 8
         Me.TabPageWizard.Text = "Wizard"
         Me.TabPageWizard.UseVisualStyleBackColor = True
@@ -304,13 +315,12 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
-        'ExplorerTreeViewDemo1
+        'SevenSegmentDemo1
         '
-        Me.ExplorerTreeViewDemo1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ExplorerTreeViewDemo1.Location = New System.Drawing.Point(0, 0)
-        Me.ExplorerTreeViewDemo1.Name = "ExplorerTreeViewDemo1"
-        Me.ExplorerTreeViewDemo1.Size = New System.Drawing.Size(679, 463)
-        Me.ExplorerTreeViewDemo1.TabIndex = 0
+        Me.SevenSegmentDemo1.Location = New System.Drawing.Point(22, 15)
+        Me.SevenSegmentDemo1.Name = "SevenSegmentDemo1"
+        Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
+        Me.SevenSegmentDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -338,6 +348,7 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.ResumeLayout(False)
         Me.TabPageExplorerTreeView.ResumeLayout(False)
         Me.TabPageNotifyForm.ResumeLayout(False)
+        Me.TabPageSevenSegment.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -373,4 +384,5 @@ Partial Class FormMain
     Friend WithEvents DriveWatcherDemo1 As DriveWatcherDemo
     Friend WithEvents NotifyFormDemo1 As NotifyFormDemo
     Friend WithEvents ExplorerTreeViewDemo1 As ExplorerTreeViewDemo
+    Friend WithEvents SevenSegmentDemo1 As SevenSegmentDemo
 End Class
