@@ -29,6 +29,7 @@ Partial Class FormMain
         Me.TabPageColorProgressBar = New System.Windows.Forms.TabPage()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.TabPageDriveWatcher = New System.Windows.Forms.TabPage()
+        Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
         Me.TabPageSevenSegment = New System.Windows.Forms.TabPage()
@@ -48,7 +49,7 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
+        Me.NotifyFormDemo1 = New SchlumpfSoftControlsDemo.NotifyFormDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -56,6 +57,7 @@ Partial Class FormMain
         Me.TabPageAniGif.SuspendLayout()
         Me.TabPageColorProgressBar.SuspendLayout()
         Me.TabPageDriveWatcher.SuspendLayout()
+        Me.TabPageNotifyForm.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -140,6 +142,13 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.Text = "DriveWatcher"
         Me.TabPageDriveWatcher.UseVisualStyleBackColor = True
         '
+        'DriveWatcherDemo1
+        '
+        Me.DriveWatcherDemo1.Location = New System.Drawing.Point(17, 13)
+        Me.DriveWatcherDemo1.Name = "DriveWatcherDemo1"
+        Me.DriveWatcherDemo1.Size = New System.Drawing.Size(481, 271)
+        Me.DriveWatcherDemo1.TabIndex = 0
+        '
         'TabPageExplorerTreeView
         '
         Me.TabPageExplorerTreeView.Location = New System.Drawing.Point(4, 22)
@@ -151,6 +160,7 @@ Partial Class FormMain
         '
         'TabPageNotifyForm
         '
+        Me.TabPageNotifyForm.Controls.Add(Me.NotifyFormDemo1)
         Me.TabPageNotifyForm.Location = New System.Drawing.Point(4, 22)
         Me.TabPageNotifyForm.Name = "TabPageNotifyForm"
         Me.TabPageNotifyForm.Padding = New System.Windows.Forms.Padding(3)
@@ -284,12 +294,12 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
-        'DriveWatcherDemo1
+        'NotifyFormDemo1
         '
-        Me.DriveWatcherDemo1.Location = New System.Drawing.Point(17, 13)
-        Me.DriveWatcherDemo1.Name = "DriveWatcherDemo1"
-        Me.DriveWatcherDemo1.Size = New System.Drawing.Size(481, 271)
-        Me.DriveWatcherDemo1.TabIndex = 0
+        Me.NotifyFormDemo1.Location = New System.Drawing.Point(8, 6)
+        Me.NotifyFormDemo1.Name = "NotifyFormDemo1"
+        Me.NotifyFormDemo1.Size = New System.Drawing.Size(395, 260)
+        Me.NotifyFormDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -315,6 +325,7 @@ Partial Class FormMain
         Me.TabPageAniGif.ResumeLayout(False)
         Me.TabPageColorProgressBar.ResumeLayout(False)
         Me.TabPageDriveWatcher.ResumeLayout(False)
+        Me.TabPageNotifyForm.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -348,4 +359,5 @@ Partial Class FormMain
     Friend WithEvents AniGifDemo1 As AniGifDemo
     Friend WithEvents ColorProgressBarDemo1 As ColorProgressBarDemo
     Friend WithEvents DriveWatcherDemo1 As DriveWatcherDemo
+    Friend WithEvents NotifyFormDemo1 As NotifyFormDemo
 End Class
