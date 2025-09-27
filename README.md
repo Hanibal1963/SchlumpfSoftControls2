@@ -35,6 +35,10 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ---
 
+## Versionsverlauf
+
+
+
 ## geplante Änderungen und Erweiterungen
 
 * Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
@@ -44,3 +48,4 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * Neues Control zum Auswählen einer Uhrzeit hinzufügen.
 * Neues Control zur Dateisuche.
 * Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
+
