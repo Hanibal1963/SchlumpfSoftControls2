@@ -5,18 +5,49 @@
 Dieses Steuerelement wurde von mir in Anlehnung an den [Wizard](https://marketplace.visualstudio.com/items?itemName=vs-publisher-106990.RuWizard) von 
 [Klaus Rutkowski](https://marketplace.visualstudio.com/publishers/vs-publisher-106990) entwickelt.
 
-Sinn dieses Projekts ist für mich der Lerneffekt sowie eventuelle Anpassungen
-vornehmen zu können.
+Sinn dieses Projekts ist für mich der Lerneffekt sowie eventuelle Anpassungen vornehmen zu können.
 
 ---
 
-## Übersicht
+## Inhaltsverzeichnis
+
+1. [Übersicht](#overview)
+2. [Hauptklassen & Dateien](#Hauptklassen--Dateien)
+3. [Architektur & Funktionsweise](#architecture-overview)
+      - [Wizard (UserControl)](#architecture)
+      - [WizardPage](#page-navigation)
+      - [Spezialisierte Seiten](#pagestyles)
+      - [PagesCollection](#pagescollection)
+      - [Events](#events)
+      - [Before / AfterSwitchPagesEventArgs](#eventargs)
+ 4. [Öffentliche Eigenschaften (Auszug)](#properties)
+ 5. [Typische Verwendung](#usage)
+       - [Control platzieren](#getting-started)
+       - [Seiten hinzufügen (zur Designzeit oder Laufzeit)](#adding-pages)
+       - [Validierung vor Seitenwechsel](#event-handling)
+       - [Abschlusslogik](#finish-logic)
+       - [Dynamischer Sprung (Wizard verzweigen)](#dynamic-jump)
+       - [Custom Pages](#custom-pages)
+ 6. [Steuerung per Code](#code-control)
+ 7. [Layout / Rendering Hinweise](#layout)
+ 8. [Erweiterbarkeit](#extensibility)
+ 9. [Best Practices](#best-practices)
+ 10. [Fehlersuche](#troubleshooting)
+ 11. [Ressourcen](#resources)
+
+---
+
+<a name="overview"></a>
+## 1. Übersicht
 
 `WizardControl` stellt ein wiederverwendbares Windows‑Forms Steuerelement bereit, mit dem mehrseitige Assistenten ("Wizards") komfortabel aufgebaut werden können. Es kapselt die Navigation (Zurück / Weiter / Abbrechen / Hilfe bzw. Beenden) sowie das Rendering unterschiedlicher Seitentypen (Welcome, Standard, Finish, Custom) inklusive Header-/Welcome‑Bildern und konfigurierbaren Schriftarten.
 
 Das Control eignet sich für Installations‑, Konfigurations‑ oder Schritt‑für‑Schritt Dialoge, bei denen Benutzer sequenziell durch logische Abschnitte geführt werden.
 
-## Hauptklassen & Dateien
+---
+
+<a name="Hauptklassen--Dateien"></a>
+## 2. Hauptklassen & Dateien
 
 | Datei | Typ | Zweck |
 |-------|-----|------|
@@ -31,9 +62,13 @@ Das Control eignet sich für Installations‑, Konfigurations‑ oder Schritt‑
 | `AfterSwitchPagesEventArgs.vb` | `AfterSwitchPagesEventArgs` | EventArgs nach Seitenwechsel |
 | `BeforeSwitchPagesEventArgs.vb` | `BeforeSwitchPagesEventArgs` | EventArgs vor Seitenwechsel (mit `Cancel`) |
 
-## Architektur & Funktionsweise
+---
 
-### Wizard (UserControl)
+<a name="architecture-overview"></a>
+## 3. Architektur & Funktionsweise
+
+<a name="architecture"></a>
+### 3.1. Wizard (UserControl)
 
 Der `Wizard` hält:
 - Eine `PagesCollection` (Eigenschaft `Pages`) mit den enthaltenen `WizardPage` Instanzen
@@ -52,7 +87,8 @@ Die Beschriftung & Funktion des Abbrechen-Buttons ändert sich kontextabhängig:
 - Auf letzter `Custom` Seite: Text = "Weiter" (spezieller Abschlussfall)
 - Sonst: Text = "Abbruch", `DialogResult = Cancel`
 
-### WizardPage
+<a name="page-navigation"></a>
+### 3.2. WizardPage
 
 Basisklasse für Seiten mit Eigenschaften:
 - `Style` (`PageStyle`) – steuert das Rendering
@@ -64,17 +100,20 @@ Das Rendering (Override `OnPaint`) unterscheidet:
 - `Welcome` / `Finish`: Linkes Bild (`ImageWelcome`) als vertikale Fläche, rechts Titel groß & Beschreibung
 - `Custom`: Kein eigenes Layout – Benutzer bestimmt Inhalt vollständig selbst (Kind‑Controls)
 
-### Spezialisierte Seiten
+<a name="pagestyles"></a>
+### 3.3. Spezialisierte Seiten
 
 `PageWelcome`, `PageStandard`, `PageFinish`, `PageCustom` setzen lediglich Default `PageStyle` fest und verhindern unbeabsichtigte Änderung durch Override.
 
-### PagesCollection
+<a name="pagescollection"></a>
+### 3.4. PagesCollection
 
 Ableitung von `CollectionBase` mit Logik:
 - Automatisches Setzen der aktiven Seite beim Einfügen (`OnInsertComplete`)
 - Korrekte Neujustierung des `SelectedIndex` beim Entfernen (`OnRemoveComplete`)
 
-### Events
+<a name="events"></a>
+### 3.5. Events
 
 | Event | Zweck |
 |-------|------|
@@ -84,7 +123,8 @@ Ableitung von `CollectionBase` mit Logik:
 | `Finish(sender, EventArgs)` | Assistent ist abgeschlossen (Finish oder letzter Schritt) |
 | `Help(sender, EventArgs)` | Hilfeschaltfläche wurde angeklickt |
 
-### Before / AfterSwitchPagesEventArgs
+<a name="eventargs"></a>
+### 3.6. Before / AfterSwitchPagesEventArgs
 
 `BeforeSwitchPagesEventArgs` erbt von `AfterSwitchPagesEventArgs` und ergänzt:
 - `Cancel` (Boolean)
@@ -92,7 +132,10 @@ Ableitung von `CollectionBase` mit Logik:
 
 Damit kann während `BeforeSwitchPages` sowohl abgebrochen als auch umgeleitet werden (z.B. Sprunglogik).
 
-## Öffentliche Eigenschaften (Auszug)
+---
+
+<a name="properties"></a>
+## 4. Öffentliche Eigenschaften (Auszug)
 
 - `Pages` (Auflistung)
 - `SelectedPage` (aktuelle Seite)
@@ -101,13 +144,18 @@ Damit kann während `BeforeSwitchPages` sowohl abgebrochen als auch umgeleitet w
 - `VisibleHelp` (Sichtbarkeit der Hilfeschaltfläche)
 - Laufzeitsteuerung (nicht browsable): `NextEnabled`, `BackEnabled`, `NextText`, `BackText`, `CancelText`, `HelpText`
 
-## Typische Verwendung
+---
 
-### 1. Control platzieren
+<a name="usage"></a>
+## 5. Typische Verwendung
+
+<a name="getting-started"></a>
+### 5.1. Control platzieren
 
 Binden Sie `Wizard` in ein Formular ein (Dock = Fill).
 
-### 2. Seiten hinzufügen (zur Designzeit oder Laufzeit)
+<a name="adding-pages"></a>
+### 5.2. Seiten hinzufügen (zur Designzeit oder Laufzeit)
 
 Beispiel zur Laufzeit:
 
@@ -131,7 +179,8 @@ Dim pFinish As New WizardControl.PageFinish() With {
 wiz.Pages.AddRange({pWelcome, pStd, pFinish})
 ```
 
-### 3. Validierung vor Seitenwechsel
+<a name="event-handling"></a>
+### 5.3. Validierung vor Seitenwechsel
 
 ```vb
 AddHandler wiz.BeforeSwitchPages, Sub(s, e)
@@ -144,7 +193,8 @@ AddHandler wiz.BeforeSwitchPages, Sub(s, e)
 End Sub
 ```
 
-### 4. Abschlusslogik
+<a name="finish-logic"></a>
+### 5.4. Abschlusslogik
 
 ```vb
 AddHandler wiz.Finish, Sub(s, e)
@@ -153,7 +203,8 @@ AddHandler wiz.Finish, Sub(s, e)
 End Sub
 ```
 
-### 5. Dynamischer Sprung (Wizard verzweigen)
+<a name="dynamic-jump"></a>
+### 5.6. Dynamischer Sprung (Wizard verzweigen)
 
 ```vb
 AddHandler wiz.BeforeSwitchPages, Sub(s, e)
@@ -166,11 +217,15 @@ AddHandler wiz.BeforeSwitchPages, Sub(s, e)
 End Sub
 ```
 
-## Custom Pages
+<a name="custom-pages"></a>
+### 5.7. Custom Pages
 
 Für vollständig eigene Layouts entweder `PageCustom` verwenden und Controls hineinlegen oder von `WizardPage` erben und `OnPaint` überschreiben.
 
-## Steuerung per Code
+---
+
+<a name="code-control"></a>
+## 6. Steuerung per Code
 
 | Methode / Aktion | Wirkung |
 |------------------|---------|
@@ -179,29 +234,43 @@ Für vollständig eigene Layouts entweder `PageCustom` verwenden und Controls hi
 | Setzen `wizard.SelectedPage = page` | Springt direkt zu einer Seite |
 | Setzen `wizard.SelectedIndex = n` (Friend) | Interner Indexwechsel |
 
-## Layout / Rendering Hinweise
+---
+
+<a name="layout"></a>
+## 7. Layout / Rendering Hinweise
 
 - Höhe der unteren Buttonleiste ist fix (48px reservierter Bereich)
 - Seiteninhalt erhält Fläche: `Width x (Height - 48)`
 - Fokussteuerung versucht erstes fokussierbares Control nach Seitenwechsel zu aktivieren
 
-## Erweiterbarkeit
+---
+
+<a name="extensibility"></a>
+## 8. Erweiterbarkeit
 
 Mögliche Erweiterungen:
+
 - Fortschrittsanzeige / Breadcrumb
 - Themable Rendering (Farben, Ränder konfigurierbar machen)
 - Serielle Speicherung / Wiederaufnahme eines Assistenten
 - Unterstützung für asynchrone Validierung (Task-basierte Events)
 - Lokalisierungs-Resource für Standardtexte (Abbruch, Weiter, Zurück, Beenden, Hilfe)
+- Funktion zum verhindern des automatischen schließens des übegeordneten Fensters.
 
-## Best Practices
+---
+
+<a name="best-practices"></a>
+## 9. Best Practices
 
 - Validierung ausschließlich im `BeforeSwitchPages` Event durchführen
 - UI-spezifische Seitenelemente als Child-Controls in jeweilige Seite legen (nicht direkt in `Wizard`)
 - Lange Operationen (z.B. Abschlussarbeit) asynchron starten und UI sperren
 - `Cancel` Event verwenden, um Benutzer vor Datenverlust zu warnen
 
-## Fehlersuche
+---
+
+<a name="troubleshooting"></a>
+## 10. Fehlersuche
 
 | Symptom | Ursache | Lösung |
 |---------|---------|-------|
@@ -210,6 +279,9 @@ Mögliche Erweiterungen:
 | Seitenlayout überdeckt Buttons | Eigene Controls auf `WizardPage` platzieren, nicht auf `Wizard` | Verschieben |
 | Abbrechen-Button zeigt "Beenden" | Aktuelle Seite ist `Finish` oder letzte `Custom` Seite | Erwartetes Verhalten |
 
-## Ressourcen
+---
+
+<a name="resources"></a>
+## 11. Ressourcen
 
 Standardmäßig werden interne Ressourcen (`My.Resources.WizardHeaderImage`, `My.Resources.WizardWelcomeImage`) verwendet – anpassbar durch Setzen der entsprechenden Eigenschaften.
