@@ -132,6 +132,12 @@
     <Compile Include="SevenSegmentDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ShapeDemo.Designer.vb">
+      <DependentUpon>ShapeDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ShapeDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AniGifDemo.resx">
@@ -160,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SevenSegmentDemo.resx">
       <DependentUpon>SevenSegmentDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShapeDemo.resx">
+      <DependentUpon>ShapeDemo.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +280,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Anim119.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Papa Schlumpf 08.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
