@@ -37,6 +37,7 @@ Partial Class FormMain
         Me.TabPageShape = New System.Windows.Forms.TabPage()
         Me.ShapeDemo1 = New SchlumpfSoftControlsDemo.ShapeDemo()
         Me.TabPageTransparentLabel = New System.Windows.Forms.TabPage()
+        Me.TransparentLabelDemo1 = New SchlumpfSoftControlsDemo.TransparentLabelDemo()
         Me.TabPageWizard = New System.Windows.Forms.TabPage()
         Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
         Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
@@ -53,15 +54,18 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
-        Me.TransparentLabelDemo1 = New SchlumpfSoftControlsDemo.TransparentLabelDemo()
+        Me.ColorProgressBarDemo2 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
+        Me.SevenSegmentDemo2 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
         Me.TabControl.SuspendLayout()
         Me.TabPageAniGif.SuspendLayout()
+        Me.TabPageColorProgressBar.SuspendLayout()
         Me.TabPageDriveWatcher.SuspendLayout()
         Me.TabPageExplorerTreeView.SuspendLayout()
         Me.TabPageNotifyForm.SuspendLayout()
+        Me.TabPageSevenSegment.SuspendLayout()
         Me.TabPageShape.SuspendLayout()
         Me.TabPageTransparentLabel.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
@@ -123,6 +127,7 @@ Partial Class FormMain
         '
         'TabPageColorProgressBar
         '
+        Me.TabPageColorProgressBar.Controls.Add(Me.ColorProgressBarDemo2)
         Me.TabPageColorProgressBar.Location = New System.Drawing.Point(4, 22)
         Me.TabPageColorProgressBar.Name = "TabPageColorProgressBar"
         Me.TabPageColorProgressBar.Size = New System.Drawing.Size(679, 463)
@@ -185,6 +190,7 @@ Partial Class FormMain
         '
         'TabPageSevenSegment
         '
+        Me.TabPageSevenSegment.Controls.Add(Me.SevenSegmentDemo2)
         Me.TabPageSevenSegment.Location = New System.Drawing.Point(4, 22)
         Me.TabPageSevenSegment.Name = "TabPageSevenSegment"
         Me.TabPageSevenSegment.Padding = New System.Windows.Forms.Padding(3)
@@ -221,6 +227,13 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.TabIndex = 7
         Me.TabPageTransparentLabel.Text = "TransparentLabel"
         Me.TabPageTransparentLabel.UseVisualStyleBackColor = True
+        '
+        'TransparentLabelDemo1
+        '
+        Me.TransparentLabelDemo1.Location = New System.Drawing.Point(19, 25)
+        Me.TransparentLabelDemo1.Name = "TransparentLabelDemo1"
+        Me.TransparentLabelDemo1.Size = New System.Drawing.Size(380, 214)
+        Me.TransparentLabelDemo1.TabIndex = 0
         '
         'TabPageWizard
         '
@@ -331,12 +344,19 @@ Partial Class FormMain
         Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
         Me.SevenSegmentDemo1.TabIndex = 0
         '
-        'TransparentLabelDemo1
+        'ColorProgressBarDemo2
         '
-        Me.TransparentLabelDemo1.Location = New System.Drawing.Point(19, 25)
-        Me.TransparentLabelDemo1.Name = "TransparentLabelDemo1"
-        Me.TransparentLabelDemo1.Size = New System.Drawing.Size(380, 214)
-        Me.TransparentLabelDemo1.TabIndex = 0
+        Me.ColorProgressBarDemo2.Location = New System.Drawing.Point(17, 20)
+        Me.ColorProgressBarDemo2.Name = "ColorProgressBarDemo2"
+        Me.ColorProgressBarDemo2.Size = New System.Drawing.Size(351, 174)
+        Me.ColorProgressBarDemo2.TabIndex = 0
+        '
+        'SevenSegmentDemo2
+        '
+        Me.SevenSegmentDemo2.Location = New System.Drawing.Point(18, 20)
+        Me.SevenSegmentDemo2.Name = "SevenSegmentDemo2"
+        Me.SevenSegmentDemo2.Size = New System.Drawing.Size(318, 248)
+        Me.SevenSegmentDemo2.TabIndex = 0
         '
         'FormMain
         '
@@ -360,9 +380,11 @@ Partial Class FormMain
         Me.ToolStripContainer.PerformLayout()
         Me.TabControl.ResumeLayout(False)
         Me.TabPageAniGif.ResumeLayout(False)
+        Me.TabPageColorProgressBar.ResumeLayout(False)
         Me.TabPageDriveWatcher.ResumeLayout(False)
         Me.TabPageExplorerTreeView.ResumeLayout(False)
         Me.TabPageNotifyForm.ResumeLayout(False)
+        Me.TabPageSevenSegment.ResumeLayout(False)
         Me.TabPageShape.ResumeLayout(False)
         Me.TabPageTransparentLabel.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
@@ -403,4 +425,6 @@ Partial Class FormMain
     Friend WithEvents SevenSegmentDemo1 As SevenSegmentDemo
     Friend WithEvents ShapeDemo1 As ShapeDemo
     Friend WithEvents TransparentLabelDemo1 As TransparentLabelDemo
+    Friend WithEvents ColorProgressBarDemo2 As ColorProgressBarDemo
+    Friend WithEvents SevenSegmentDemo2 As SevenSegmentDemo
 End Class
