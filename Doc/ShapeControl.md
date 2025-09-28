@@ -8,26 +8,36 @@ Steuerelement zum Darstellen einfacher Formen (Linien, Rechtecke, Ellipsen) für 
 - [Funktionsumfang](#funktionsumfang)
 - [Unterstützte Formen](#unterstützte-formen)
 - [Enums](#enums)
+    - [ShapeModes](#shapemodes)
+    - [DiagonalLineModes](#diagonallinemodes)
 - [Eigenschaften](#eigenschaften)
 - [Schnellstart](#schnellstart)
   - [Verwendung im Designer](#verwendung-im-designer)
   - [Verwendung im Code](#verwendung-im-code)
 - [Beispiele](#beispiele)
+    - [Dünne Trennlinie](#dünne-trennlinie)
+    - [Diagonale Linie als dekoratives Element](#diagonale-linie-als-dekoratives-element)
+    - [Rechteck als Rahmen](#rechteck-als-rahmen)
+    - [Gefüllte Ellipse als Statusindikator](#gefüllte-ellipse-als-statusindikator)
 - [Darstellungsdetails](#darstellungsdetails)
 - [Transparenz / Zeichenlogik](#transparenz--zeichenlogik)
 - [Performance-Hinweise](#performance-hinweise)
 - [Bekannte Einschränkungen](#bekannte-einschränkungen)
 - [Erweiterbarkeit](#erweiterbarkeit)
 - [Fehlersuche / Troubleshooting](#fehlersuche--troubleshooting)
-- [Changelog](#changelog)
-- [Lizenz](#lizenz)
+- [weitere Literatur](#weitere-literatur)
 
 ---
-## Überblick
+
+<a name="überblick"></a>
+## 1. Überblick
 
 `Shape` ist ein leichtgewichtiges WinForms-Control zur Darstellung einfacher Vektorformen ohne Abhängigkeit zu GDI+ High-Level Wrappern oder externen Bibliotheken. Es eignet sich für UI-Trennlinien, einfache Markierungen, Status-Indikatoren oder visuelle Gruppierungen.
 
-## Funktionsumfang
+---
+
+<a name="funktionsumfang"></a>
+## 2. Funktionsumfang
 
 - Horizontale, vertikale und diagonale Linien (2 Richtungen)
 - Rechtecke und Ellipsen (leer und gefüllt)
@@ -36,7 +46,10 @@ Steuerelement zum Darstellen einfacher Formen (Linien, Rechtecke, Ellipsen) für 
 - Toolbox-Integration (Kategorie: "SchlumpfSoft Controls")
 - Designer-Unterstützung (Properties erscheinen in Kategorie "Appearance")
 
-## Unterstützte Formen
+---
+
+<a name="unterstützte-formen"></a>
+## 3. Unterstützte Formen
 
 Der Modus wird über `ShapeModus` gesteuert:
 
@@ -50,20 +63,29 @@ Der Modus wird über `ShapeModus` gesteuert:
 | `Ellipse` | Ellipse / Kreis (nur Rahmen) |
 | `FilledEllipse` | Gefüllte Ellipse / gefüllter Kreis |
 
-## Enums
+---
 
-### ShapeModes
+<a name="enums"></a>
+## 4. Enums
+
+
+<a name="shapemodes"></a>
+### 4.1. ShapeModes
 
 Steuert die Grundform (siehe Tabelle oben).
 
-### DiagonalLineModes
+<a name="diagonallinemodes"></a>
+### 4.2. DiagonalLineModes
 
 | Wert | Richtung |
 |------|----------|
 | `TopLeftToBottomRight` | Von links oben nach rechts unten |
 | `BottomLeftToTopRight` | Von links unten nach rechts oben |
 
-## Eigenschaften
+---
+
+<a name="eigenschaften"></a>
+## 5. Eigenschaften
 
 | Eigenschaft | Typ | Beschreibung | Standard |
 |-------------|-----|--------------|----------|
@@ -73,19 +95,27 @@ Steuert die Grundform (siehe Tabelle oben).
 | `FillColor` | `Color` | Füllfarbe (nur gefüllte Formen) | `Gray` |
 | `DiagonalLineModus` | `DiagonalLineModes` | Richtung für diagonale Linien | `TopLeftToBottomRight` |
 
-### Ausgeblendete geerbte Eigenschaften
+---
+
+<a name="ausgeblendete-geerbte-eigenschaften"></a>
+### 6. Ausgeblendete geerbte Eigenschaften
 
 Zur Vereinfachung der Verwendung und weil sie für die Darstellung nicht benötigt werden, sind u.a. folgende geerbte Eigenschaften im Designer ausgeblendet: `BackColor`, `BackgroundImage`, `BackgroundImageLayout`, `Font`, `ForeColor`, `RightToLeft`, `Text`.
 
-## Schnellstart
+---
 
-### Verwendung im Designer
+<a name="schnellstart"></a>
+## 7. Schnellstart
+
+<a name="verwendung-im-designer"></a>
+### 7.1. Verwendung im Designer
 
 1. Projekt bauen, damit das Control in der Toolbox erscheint (Kategorie: "SchlumpfSoft Controls").
 2. `Shape` auf ein Formular ziehen.
 3. In den Eigenschaften z.B. `ShapeModus = HorizontalLine` und `LineColor = DarkGray` setzen.
 
-### Verwendung im Code
+<a name="verwendung-im-code"></a>
+### 7.2. Verwendung im Code
 
 ```vbnet
 Dim s As New ShapeControl.Shape()
@@ -100,9 +130,13 @@ End With
 Me.Controls.Add(s)
 ```
 
-## Beispiele
+---
 
-### Dünne Trennlinie
+<a name="beispiele"></a>
+## 8. Beispiele
+
+<a name="beispiele"></a>
+### 8.1. Dünne Trennlinie
 
 ```vbnet
 Dim separator As New ShapeControl.Shape() With {
@@ -115,7 +149,8 @@ Dim separator As New ShapeControl.Shape() With {
 Me.Controls.Add(separator)
 ```
 
-### Diagonale Linie als dekoratives Element
+<a name="beispiele"></a>
+### 8.2. Diagonale Linie als dekoratives Element
 
 ```vbnet
 Dim diag As New ShapeControl.Shape() With {
@@ -128,7 +163,8 @@ Dim diag As New ShapeControl.Shape() With {
 Me.Controls.Add(diag)
 ```
 
-### Rechteck als Rahmen
+<a name="beispiele"></a>
+### 8.3. Rechteck als Rahmen
 
 ```vbnet
 Dim frame As New ShapeControl.Shape() With {
@@ -140,7 +176,8 @@ Dim frame As New ShapeControl.Shape() With {
 Me.Controls.Add(frame)
 ```
 
-### Gefüllte Ellipse als Statusindikator
+<a name="beispiele"></a>
+### 8.4. Gefüllte Ellipse als Statusindikator
 
 ```vbnet
 Dim indicator As New ShapeControl.Shape() With {
@@ -153,13 +190,19 @@ Dim indicator As New ShapeControl.Shape() With {
 Me.Controls.Add(indicator)
 ```
 
-## Darstellungsdetails
+---
+
+<a name="darstellungsdetails"></a>
+## 9. Darstellungsdetails
 
 - Die tatsächliche Zeichenlogik befindet sich in `OnPaint`.
 - Es wird direkt ein `Graphics`-Objekt über `CreateGraphics()` erzeugt (Hinweis: Für künftige Erweiterungen wäre die Nutzung des bereitgestellten `e.Graphics` in `OnPaint` vorzuziehen, um Flickern zu reduzieren und Repaints konsistenter zu halten).
 - Linien- und Rahmenbreiten werden so versetzt gezeichnet, dass Konturen vollständig innerhalb des Controls liegen (`_LineWidth / 2` Offset).
 
-## Transparenz / Zeichenlogik
+---
+
+<a name="transparenz--zeichenlogik"></a>
+## 10. Transparenz / Zeichenlogik
 
 Das Control setzt im überschriebenen `CreateParams` das Extended Window Style Flag `WS_EX_TRANSPARENT` (`&H20`). Dadurch:
 - Zeichnet Windows zuerst die darunterliegenden Controls.
@@ -168,7 +211,10 @@ Das Control setzt im überschriebenen `CreateParams` das Extended Window Style Fl
 
 Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen nicht, aber für einfache Überlagerungen genügt es meist.
 
-## Performance-Hinweise
+---
+
+<a name="performance-hinweise"></a>
+## 11. Performance-Hinweise
 - `ControlStyles.OptimizedDoubleBuffer` ist deaktiviert (`False`). Bei starkem Redraw (Resize/Animation) kann Flickern auftreten.
 - Für großflächige oder häufig animierte Szenarien kann eine Anpassung sinnvoll sein:
   ```vbnet
@@ -178,7 +224,10 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
   ```
 - Mehrfaches Erzeugen von `Pen` / `Brush` Objekten in `OnPaint` könnte bei sehr vielen Instanzen optimiert werden (Objekt-Caching). Für normale UI-Nutzung unkritisch.
 
-## Bekannte Einschränkungen
+---
+
+<a name="bekannte-einschränkungen"></a>
+## 12. Bekannte Einschränkungen
 
 | Bereich | Beschreibung |
 |--------|--------------|
@@ -188,7 +237,10 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
 | Fokus | Kein Fokusverhalten / keine Interaktion vorgesehen |
 | Text | Keine Textdarstellung (absichtlich ausgeblendet) |
 
-## Erweiterbarkeit
+---
+
+<a name="erweiterbarkeit"></a>
+## 13. Erweiterbarkeit
 
 Mögliche Erweiterungen:
 - Anti-Aliasing aktivierbar (`g.SmoothingMode = SmoothingMode.AntiAlias`).
@@ -198,7 +250,10 @@ Mögliche Erweiterungen:
 - Eigener Renderer / Strategy Pattern für Formen.
 - Caching von `Pen`/`Brush` über PropertyChanged-Ereignisse.
 
-## Fehlersuche / Troubleshooting
+---
+
+<a name="fehlersuche--troubleshooting"></a>
+## 14. Fehlersuche / Troubleshooting
 
 | Problem | Ursache | Lösung |
 |---------|---------|--------|
@@ -206,7 +261,10 @@ Mögliche Erweiterungen:
 | Form flackert | Kein DoubleBuffering | Optionale Styles aktivieren (s. Performance) |
 | Transparenz funktioniert nicht wie erwartet | Erwartung echter Alpha-Transparenz | GDI+ Repaint oder Parent-Repaint-Trigger nötig / anderes Konzept (z.B. Layered Window) |
 
-## weitere Literatur
+---
+
+<a name="weitere-literatur"></a>
+## 15. weitere Literatur
 
 - [Erstellen eines Windows Forms-Toolbox-Steuerelements](https://docs.microsoft.com/de-de/visualstudio/extensibility/creating-a-windows-forms-toolbox-control?view=vs-2022)
 - [Infos zur ControlStyles Enumeration](https://learn.microsoft.com/de-de/dotnet/api/system.windows.forms.controlstyles?redirectedfrom=MSDN&view=netframework-4.7.2)
