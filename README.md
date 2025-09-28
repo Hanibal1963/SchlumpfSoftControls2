@@ -37,7 +37,23 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 2.2025.0928.0 (28.09.2025)**
+- Dokumentationen überarbeitet und erweitert
+- Demoanwendung überarbeitet und erweitert
 
+**Version 2.2025.0907.0 (07.09.2025)**
+- Umstukturierung der einzelnen Controls in eigene Projekte abgeschlossen
+
+**Version 1.2025.0814.0 (14.08.2025)**
+- Codeoptimierungen im ExplorerTreeViewControl
+
+**Version 1.2025.0811.0 (11.08.2025)**
+- ExplorerTreeView hinzugefügt
+
+**Version 1.2025.0802.0 (02.08.2025)**
+- Erstes Release dieser Controlsammlung (noch ohne IniFileControl)
+  
+---
 
 ## geplante Änderungen und Erweiterungen
 

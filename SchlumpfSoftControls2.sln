@@ -5,10 +5,12 @@ VisualStudioVersion = 17.14.36127.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{829B9490-4CCA-40BC-4DD4-7D38DB01FE48}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE.txt = LICENSE.txt
 		Links.md = Links.md
 		README.md = README.md
+		SchlumpfSoftControls2.sln.vsdoc = SchlumpfSoftControls2.sln.vsdoc
 		VS Marketplace Vorlage.md = VS Marketplace Vorlage.md
 	EndProjectSection
 EndProject
