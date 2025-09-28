@@ -144,6 +144,12 @@
     <Compile Include="TransparentLabelDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="WizardDemo.Designer.vb">
+      <DependentUpon>WizardDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WizardDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AniGifDemo.resx">
@@ -178,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TransparentLabelDemo.resx">
       <DependentUpon>TransparentLabelDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardDemo.resx">
+      <DependentUpon>WizardDemo.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,7 @@ Partial Class FormMain
         Me.TabPageAniGif = New System.Windows.Forms.TabPage()
         Me.AniGifDemo1 = New SchlumpfSoftControlsDemo.AniGifDemo()
         Me.TabPageColorProgressBar = New System.Windows.Forms.TabPage()
+        Me.ColorProgressBarDemo2 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.TabPageDriveWatcher = New System.Windows.Forms.TabPage()
         Me.DriveWatcherDemo1 = New SchlumpfSoftControlsDemo.DriveWatcherDemo()
         Me.TabPageExplorerTreeView = New System.Windows.Forms.TabPage()
@@ -34,6 +35,7 @@ Partial Class FormMain
         Me.TabPageNotifyForm = New System.Windows.Forms.TabPage()
         Me.NotifyFormDemo1 = New SchlumpfSoftControlsDemo.NotifyFormDemo()
         Me.TabPageSevenSegment = New System.Windows.Forms.TabPage()
+        Me.SevenSegmentDemo2 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
         Me.TabPageShape = New System.Windows.Forms.TabPage()
         Me.ShapeDemo1 = New SchlumpfSoftControlsDemo.ShapeDemo()
         Me.TabPageTransparentLabel = New System.Windows.Forms.TabPage()
@@ -54,8 +56,7 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
-        Me.ColorProgressBarDemo2 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
-        Me.SevenSegmentDemo2 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
+        Me.WizardDemo1 = New SchlumpfSoftControlsDemo.WizardDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -68,6 +69,7 @@ Partial Class FormMain
         Me.TabPageSevenSegment.SuspendLayout()
         Me.TabPageShape.SuspendLayout()
         Me.TabPageTransparentLabel.SuspendLayout()
+        Me.TabPageWizard.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -135,6 +137,13 @@ Partial Class FormMain
         Me.TabPageColorProgressBar.Text = "ColorProgressBar"
         Me.TabPageColorProgressBar.UseVisualStyleBackColor = True
         '
+        'ColorProgressBarDemo2
+        '
+        Me.ColorProgressBarDemo2.Location = New System.Drawing.Point(17, 20)
+        Me.ColorProgressBarDemo2.Name = "ColorProgressBarDemo2"
+        Me.ColorProgressBarDemo2.Size = New System.Drawing.Size(351, 174)
+        Me.ColorProgressBarDemo2.TabIndex = 0
+        '
         'TabPageDriveWatcher
         '
         Me.TabPageDriveWatcher.Controls.Add(Me.DriveWatcherDemo1)
@@ -199,6 +208,13 @@ Partial Class FormMain
         Me.TabPageSevenSegment.Text = "SevenSegment"
         Me.TabPageSevenSegment.UseVisualStyleBackColor = True
         '
+        'SevenSegmentDemo2
+        '
+        Me.SevenSegmentDemo2.Location = New System.Drawing.Point(18, 20)
+        Me.SevenSegmentDemo2.Name = "SevenSegmentDemo2"
+        Me.SevenSegmentDemo2.Size = New System.Drawing.Size(318, 248)
+        Me.SevenSegmentDemo2.TabIndex = 0
+        '
         'TabPageShape
         '
         Me.TabPageShape.Controls.Add(Me.ShapeDemo1)
@@ -237,6 +253,7 @@ Partial Class FormMain
         '
         'TabPageWizard
         '
+        Me.TabPageWizard.Controls.Add(Me.WizardDemo1)
         Me.TabPageWizard.Location = New System.Drawing.Point(4, 22)
         Me.TabPageWizard.Name = "TabPageWizard"
         Me.TabPageWizard.Padding = New System.Windows.Forms.Padding(3)
@@ -344,19 +361,12 @@ Partial Class FormMain
         Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
         Me.SevenSegmentDemo1.TabIndex = 0
         '
-        'ColorProgressBarDemo2
+        'WizardDemo1
         '
-        Me.ColorProgressBarDemo2.Location = New System.Drawing.Point(17, 20)
-        Me.ColorProgressBarDemo2.Name = "ColorProgressBarDemo2"
-        Me.ColorProgressBarDemo2.Size = New System.Drawing.Size(351, 174)
-        Me.ColorProgressBarDemo2.TabIndex = 0
-        '
-        'SevenSegmentDemo2
-        '
-        Me.SevenSegmentDemo2.Location = New System.Drawing.Point(18, 20)
-        Me.SevenSegmentDemo2.Name = "SevenSegmentDemo2"
-        Me.SevenSegmentDemo2.Size = New System.Drawing.Size(318, 248)
-        Me.SevenSegmentDemo2.TabIndex = 0
+        Me.WizardDemo1.Location = New System.Drawing.Point(8, 16)
+        Me.WizardDemo1.Name = "WizardDemo1"
+        Me.WizardDemo1.Size = New System.Drawing.Size(574, 332)
+        Me.WizardDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -387,6 +397,7 @@ Partial Class FormMain
         Me.TabPageSevenSegment.ResumeLayout(False)
         Me.TabPageShape.ResumeLayout(False)
         Me.TabPageTransparentLabel.ResumeLayout(False)
+        Me.TabPageWizard.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -427,4 +438,5 @@ Partial Class FormMain
     Friend WithEvents TransparentLabelDemo1 As TransparentLabelDemo
     Friend WithEvents ColorProgressBarDemo2 As ColorProgressBarDemo
     Friend WithEvents SevenSegmentDemo2 As SevenSegmentDemo
+    Friend WithEvents WizardDemo1 As WizardDemo
 End Class
