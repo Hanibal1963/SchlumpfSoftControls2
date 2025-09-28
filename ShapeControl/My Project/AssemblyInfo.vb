@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' Sie können alle Werte angeben oder Standardwerte für die Build- und Revisionsnummern verwenden,
 ' indem Sie "*" wie unten gezeigt eingeben:
 
-<Assembly: AssemblyVersion("2.2025.0907.0")>
-<Assembly: AssemblyFileVersion("2.2025.0907.0")>
+<Assembly: AssemblyVersion("2.2025.0928.0")>
+<Assembly: AssemblyFileVersion("2.2025.0928.0")>

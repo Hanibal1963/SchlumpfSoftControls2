@@ -22,7 +22,9 @@ Namespace ShapeControl
     <Description("Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.")>
     <ToolboxItem(True)>
     <ToolboxBitmap(GetType(ShapeControl.Shape), "Shape.bmp")>
-    Public Class Shape : Inherits Control
+    Public Class Shape
+
+        Inherits Control
 
 #Region "interne Eigenschftsvariablen"
 
@@ -35,6 +37,10 @@ Namespace ShapeControl
 
 #End Region
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ShapeControl.Shape"/>. 
+        ''' </summary>
+        ''' <remarks></remarks>
         Public Sub New()
             'Dieser Aufruf ist für den Designer erforderlich.
             InitializeComponent()
@@ -110,8 +116,8 @@ Namespace ShapeControl
         End Property
 
         ''' <summary>
-        ''' Legt fest ob eine diagonale Linie von links oben nach rechts unten oder umgekehrt<br/>
-        ''' verläuft oder gibt dieses zurück.
+        ''' Legt fest ob eine diagonale Linie von links oben nach rechts unten oder
+        ''' umgekehrt verläuft oder gibt dieses zurück.
         ''' </summary>
         <Browsable(True)>
         <Category("Appearance")>
@@ -130,8 +136,12 @@ Namespace ShapeControl
 
 #Region "überschriebene Eigenschften"
 
-        ' Legt spezielle Parameter für das ShapeControl fest
-        ' https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form
+        ''' <summary>
+        ''' Legt spezielle Parameter für das ShapeControl fest
+        ''' </summary>
+        ''' <remarks>
+        ''' https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form
+        ''' </remarks>
         Protected Overrides ReadOnly Property CreateParams() As CreateParams
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
@@ -146,6 +156,9 @@ Namespace ShapeControl
 
 #Region "ausgeblendete Eigenschaften"
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackColor As Color
@@ -157,6 +170,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage As Image
@@ -168,6 +184,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout As ImageLayout
@@ -179,6 +198,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Font As Font
@@ -190,6 +212,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property ForeColor As Color
@@ -201,6 +226,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property RightToLeft As RightToLeft
@@ -212,6 +240,9 @@ Namespace ShapeControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant
+        ''' </summary>
         <Browsable(False)>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public Overrides Property Text As String
@@ -225,54 +256,50 @@ Namespace ShapeControl
 
 #End Region
 
-        ' zeichnet das ShapeControl neu
+        ''' <summary>
+        ''' zeichnet das ShapeControl neu
+        ''' </summary>
+        ''' <param name="e">Ein <see cref="System.Windows.Forms.PaintEventArgs"/>, das die
+        ''' Ereignisdaten enthält.
+        ''' </param>
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
             MyBase.OnPaint(e)
             Dim g As Graphics = CreateGraphics()
             Select Case _ShapeModus
-                Case ShapeModes.HorizontalLine
-                    'horizontale Linie zeichnen (mittig im Rahmen des Controls)
+                Case ShapeModes.HorizontalLine  ' horizontale Linie zeichnen (mittig im Rahmen des Controls)
                     g.DrawLine(New Pen(_LineColor, _LineWidth), 0, CInt(Height / 2), Width, CInt(Height / 2))
-                Case ShapeModes.VerticalLine
-                    'vertikale Linie zeichnen (mittig im Rahmen des Controls)
+                Case ShapeModes.VerticalLine ' vertikale Linie zeichnen (mittig im Rahmen des Controls)
                     g.DrawLine(New Pen(_LineColor, _LineWidth), CInt(Width / 2), 0, CInt(Width / 2), Height)
-                Case ShapeModes.DiagonalLine
-                    'diagonale Linie zeichnen
-                    Select Case _DiagonalLineModus
-
+                Case ShapeModes.DiagonalLine ' diagonale Linie zeichnen
+                    Select Case _DiagonalLineModus ' von links unten nach rechts oben
                         Case DiagonalLineModes.BottomLeftToTopRight
-                            'von links unten nach rechts oben
                             g.DrawLine(New Pen(_LineColor, _LineWidth), 0, Height, Width, 0)
-                        Case DiagonalLineModes.TopLeftToBottomRight
-                            'von links oben nach rechts unten
+                        Case DiagonalLineModes.TopLeftToBottomRight   ' von links oben nach rechts unten
                             g.DrawLine(New Pen(_LineColor, _LineWidth), 0, 0, Width, Height)
                     End Select
-                Case ShapeModes.Rectangle
-                    'einfaches Rechteck zeichnen
-                    g.DrawRectangle(
-                        New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
-                Case ShapeModes.FilledRectangle
-                    'einfaches Rechteck zeichnen
-                    g.DrawRectangle(
-                        New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
-                    'Rechteck ausfüllen
+                Case ShapeModes.Rectangle ' einfaches Rechteck zeichnen
+                    g.DrawRectangle(New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
+                Case ShapeModes.FilledRectangle  ' einfaches Rechteck zeichnen und ausfüllen
+                    g.DrawRectangle(New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
                     g.FillRectangle(New SolidBrush(_FillColor), _LineWidth, _LineWidth, Width - (2 * _LineWidth), Height - (2 * _LineWidth))
-                Case ShapeModes.Ellipse
-                    'einfache Ellipse zeichnen
-                    g.DrawEllipse(
-                        New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
-                Case ShapeModes.FilledEllipse
-                    'einfache Ellipe zeichnen
-                    g.DrawEllipse(
-                        New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
-                    'Ellipse ausfüllen
+                Case ShapeModes.Ellipse ' einfache Ellipse zeichnen
+                    g.DrawEllipse(New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
+                Case ShapeModes.FilledEllipse ' einfache Ellipe zeichnen und ausfüllen
+                    g.DrawEllipse(New Pen(_LineColor, _LineWidth), _LineWidth / 2, _LineWidth / 2, Width - _LineWidth, Height - _LineWidth)
                     g.FillEllipse(New SolidBrush(_FillColor), _LineWidth, _LineWidth, Width - (2 * _LineWidth), Height - (2 * _LineWidth))
             End Select
         End Sub
 
-        ' Das Steuerelement überschreibt den Löschvorgang zum Bereinigen der Komponentenliste.
+        ''' <summary>
+        ''' Gibt die vom <see cref="SchlumpfSoft.Controls.ShapeControl.Shape"/> verwendeten
+        ''' nicht verwalteten Ressourcen frei und gibt optional die verwalteten Ressourcen
+        ''' frei.
+        ''' </summary>
+        ''' <param name="disposing"><para>Wenn auf <see langword="true"/> gesetzt, dann
+        ''' werden verwaltete und nicht verwaltete Ressourcen freigegeben</para>
+        ''' <para>andernfalls nur nicht verwaltete Ressourcen.</para></param>
         <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Protected Overrides Sub Dispose(disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
                     components.Dispose()
@@ -282,7 +309,9 @@ Namespace ShapeControl
             End Try
         End Sub
 
-        ' Initialisiert die Standardwerte für das ShapeControl
+        ''' <summary>
+        ''' Initialisiert die Standardwerte für das ShapeControl
+        ''' </summary>
         Private Sub InitializeVariables()
             _ShapeModus = ShapeModes.HorizontalLine 'Horizontale Linie
             _DiagonalLineModus = DiagonalLineModes.TopLeftToBottomRight 'diagonale Linie von links oben nach rechts unten
@@ -291,15 +320,23 @@ Namespace ShapeControl
             _FillColor = Color.Gray 'Füllfarbe für Ellipse und Rechteck
         End Sub
 
-        ' Initialisiert die Styles für das ShapeControl
+        ''' <summary>
+        ''' Initialisiert die Styles für das ShapeControl
+        ''' </summary>
         Private Sub InitializeStyles()
             SetStyle(ControlStyles.Opaque, True)
             SetStyle(ControlStyles.OptimizedDoubleBuffer, False)
         End Sub
 
-        ' Hinweis: Die folgende Prozedur ist für den Komponenten-Designer erforderlich.
-        ' Sie kann mit dem Komponenten-Designer geändert werden.
-        ' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <summary>
+        ''' <para>Die folgende Prozedur ist für den Komponenten-Designer
+        ''' erforderlich.</para>
+        ''' <para>Sie kann mit dem Komponenten-Designer geändert werden.</para>
+        ''' </summary>
+        ''' <remarks>
+        ''' <para>Hinweis:</para>
+        ''' <para>Das Bearbeiten mit dem Code-Editor ist nicht möglich.</para>
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             SuspendLayout()
