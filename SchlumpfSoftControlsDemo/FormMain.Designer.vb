@@ -42,6 +42,7 @@ Partial Class FormMain
         Me.TransparentLabelDemo1 = New SchlumpfSoftControlsDemo.TransparentLabelDemo()
         Me.TabPageWizard = New System.Windows.Forms.TabPage()
         Me.WizardDemo1 = New SchlumpfSoftControlsDemo.WizardDemo()
+        Me.TabPageIniFile = New System.Windows.Forms.TabPage()
         Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
         Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemBeenden = New System.Windows.Forms.ToolStripMenuItem()
@@ -55,10 +56,10 @@ Partial Class FormMain
         Me.ToolStripMenuItemShapeTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemIniFileTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
-        Me.TabPageIniFile = New System.Windows.Forms.TabPage()
-        Me.ToolStripMenuItemIniFileTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.IniFileDemo1 = New SchlumpfSoftControlsDemo.IniFileDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -72,6 +73,7 @@ Partial Class FormMain
         Me.TabPageShape.SuspendLayout()
         Me.TabPageTransparentLabel.SuspendLayout()
         Me.TabPageWizard.SuspendLayout()
+        Me.TabPageIniFile.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -135,7 +137,7 @@ Partial Class FormMain
         Me.TabPageColorProgressBar.Controls.Add(Me.ColorProgressBarDemo2)
         Me.TabPageColorProgressBar.Location = New System.Drawing.Point(4, 22)
         Me.TabPageColorProgressBar.Name = "TabPageColorProgressBar"
-        Me.TabPageColorProgressBar.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageColorProgressBar.Size = New System.Drawing.Size(822, 535)
         Me.TabPageColorProgressBar.TabIndex = 1
         Me.TabPageColorProgressBar.Text = "ColorProgressBar"
         Me.TabPageColorProgressBar.UseVisualStyleBackColor = True
@@ -152,7 +154,7 @@ Partial Class FormMain
         Me.TabPageDriveWatcher.Controls.Add(Me.DriveWatcherDemo1)
         Me.TabPageDriveWatcher.Location = New System.Drawing.Point(4, 22)
         Me.TabPageDriveWatcher.Name = "TabPageDriveWatcher"
-        Me.TabPageDriveWatcher.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageDriveWatcher.Size = New System.Drawing.Size(822, 535)
         Me.TabPageDriveWatcher.TabIndex = 2
         Me.TabPageDriveWatcher.Text = "DriveWatcher"
         Me.TabPageDriveWatcher.UseVisualStyleBackColor = True
@@ -169,7 +171,7 @@ Partial Class FormMain
         Me.TabPageExplorerTreeView.Controls.Add(Me.ExplorerTreeViewDemo1)
         Me.TabPageExplorerTreeView.Location = New System.Drawing.Point(4, 22)
         Me.TabPageExplorerTreeView.Name = "TabPageExplorerTreeView"
-        Me.TabPageExplorerTreeView.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageExplorerTreeView.Size = New System.Drawing.Size(822, 535)
         Me.TabPageExplorerTreeView.TabIndex = 3
         Me.TabPageExplorerTreeView.Text = "ExplorerTreeView"
         Me.TabPageExplorerTreeView.UseVisualStyleBackColor = True
@@ -179,7 +181,7 @@ Partial Class FormMain
         Me.ExplorerTreeViewDemo1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ExplorerTreeViewDemo1.Location = New System.Drawing.Point(0, 0)
         Me.ExplorerTreeViewDemo1.Name = "ExplorerTreeViewDemo1"
-        Me.ExplorerTreeViewDemo1.Size = New System.Drawing.Size(679, 463)
+        Me.ExplorerTreeViewDemo1.Size = New System.Drawing.Size(822, 535)
         Me.ExplorerTreeViewDemo1.TabIndex = 0
         '
         'TabPageNotifyForm
@@ -188,7 +190,7 @@ Partial Class FormMain
         Me.TabPageNotifyForm.Location = New System.Drawing.Point(4, 22)
         Me.TabPageNotifyForm.Name = "TabPageNotifyForm"
         Me.TabPageNotifyForm.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageNotifyForm.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageNotifyForm.Size = New System.Drawing.Size(822, 535)
         Me.TabPageNotifyForm.TabIndex = 4
         Me.TabPageNotifyForm.Text = "NotifyForm"
         Me.TabPageNotifyForm.UseVisualStyleBackColor = True
@@ -206,7 +208,7 @@ Partial Class FormMain
         Me.TabPageSevenSegment.Location = New System.Drawing.Point(4, 22)
         Me.TabPageSevenSegment.Name = "TabPageSevenSegment"
         Me.TabPageSevenSegment.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageSevenSegment.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageSevenSegment.Size = New System.Drawing.Size(822, 535)
         Me.TabPageSevenSegment.TabIndex = 5
         Me.TabPageSevenSegment.Text = "SevenSegment"
         Me.TabPageSevenSegment.UseVisualStyleBackColor = True
@@ -224,7 +226,7 @@ Partial Class FormMain
         Me.TabPageShape.Location = New System.Drawing.Point(4, 22)
         Me.TabPageShape.Name = "TabPageShape"
         Me.TabPageShape.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageShape.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageShape.Size = New System.Drawing.Size(822, 535)
         Me.TabPageShape.TabIndex = 6
         Me.TabPageShape.Text = "Shape"
         Me.TabPageShape.UseVisualStyleBackColor = True
@@ -242,7 +244,7 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.Location = New System.Drawing.Point(4, 22)
         Me.TabPageTransparentLabel.Name = "TabPageTransparentLabel"
         Me.TabPageTransparentLabel.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageTransparentLabel.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageTransparentLabel.Size = New System.Drawing.Size(822, 535)
         Me.TabPageTransparentLabel.TabIndex = 7
         Me.TabPageTransparentLabel.Text = "TransparentLabel"
         Me.TabPageTransparentLabel.UseVisualStyleBackColor = True
@@ -251,7 +253,7 @@ Partial Class FormMain
         '
         Me.TransparentLabelDemo1.Location = New System.Drawing.Point(19, 25)
         Me.TransparentLabelDemo1.Name = "TransparentLabelDemo1"
-        Me.TransparentLabelDemo1.Size = New System.Drawing.Size(380, 214)
+        Me.TransparentLabelDemo1.Size = New System.Drawing.Size(349, 214)
         Me.TransparentLabelDemo1.TabIndex = 0
         '
         'TabPageWizard
@@ -269,8 +271,19 @@ Partial Class FormMain
         '
         Me.WizardDemo1.Location = New System.Drawing.Point(8, 16)
         Me.WizardDemo1.Name = "WizardDemo1"
-        Me.WizardDemo1.Size = New System.Drawing.Size(574, 332)
+        Me.WizardDemo1.Size = New System.Drawing.Size(570, 300)
         Me.WizardDemo1.TabIndex = 0
+        '
+        'TabPageIniFile
+        '
+        Me.TabPageIniFile.Controls.Add(Me.IniFileDemo1)
+        Me.TabPageIniFile.Location = New System.Drawing.Point(4, 22)
+        Me.TabPageIniFile.Name = "TabPageIniFile"
+        Me.TabPageIniFile.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageIniFile.Size = New System.Drawing.Size(822, 535)
+        Me.TabPageIniFile.TabIndex = 9
+        Me.TabPageIniFile.Text = "IniFile"
+        Me.TabPageIniFile.UseVisualStyleBackColor = True
         '
         'MenuStripMain
         '
@@ -357,6 +370,12 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemWizardTest.Text = "Wizard Test"
         '
+        'ToolStripMenuItemIniFileTest
+        '
+        Me.ToolStripMenuItemIniFileTest.Name = "ToolStripMenuItemIniFileTest"
+        Me.ToolStripMenuItemIniFileTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemIniFileTest.Text = "IniFile"
+        '
         'ColorProgressBarDemo1
         '
         Me.ColorProgressBarDemo1.Location = New System.Drawing.Point(8, 15)
@@ -371,21 +390,13 @@ Partial Class FormMain
         Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
         Me.SevenSegmentDemo1.TabIndex = 0
         '
-        'TabPageIniFile
+        'IniFileDemo1
         '
-        Me.TabPageIniFile.Location = New System.Drawing.Point(4, 22)
-        Me.TabPageIniFile.Name = "TabPageIniFile"
-        Me.TabPageIniFile.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageIniFile.Size = New System.Drawing.Size(822, 535)
-        Me.TabPageIniFile.TabIndex = 9
-        Me.TabPageIniFile.Text = "IniFile"
-        Me.TabPageIniFile.UseVisualStyleBackColor = True
-        '
-        'ToolStripMenuItemIniFileTest
-        '
-        Me.ToolStripMenuItemIniFileTest.Name = "ToolStripMenuItemIniFileTest"
-        Me.ToolStripMenuItemIniFileTest.Size = New System.Drawing.Size(188, 22)
-        Me.ToolStripMenuItemIniFileTest.Text = "IniFile"
+        Me.IniFileDemo1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.IniFileDemo1.Location = New System.Drawing.Point(3, 3)
+        Me.IniFileDemo1.Name = "IniFileDemo1"
+        Me.IniFileDemo1.Size = New System.Drawing.Size(816, 529)
+        Me.IniFileDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -417,6 +428,7 @@ Partial Class FormMain
         Me.TabPageShape.ResumeLayout(False)
         Me.TabPageTransparentLabel.ResumeLayout(False)
         Me.TabPageWizard.ResumeLayout(False)
+        Me.TabPageIniFile.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -460,4 +472,5 @@ Partial Class FormMain
     Friend WithEvents WizardDemo1 As WizardDemo
     Private WithEvents TabPageIniFile As TabPage
     Private WithEvents ToolStripMenuItemIniFileTest As ToolStripMenuItem
+    Friend WithEvents IniFileDemo1 As IniFileDemo
 End Class
