@@ -58,6 +58,14 @@ Namespace IniFileControl
 
 #End Region
 
+        Public Sub New()
+            ' Dieser Aufruf ist für den Designer erforderlich.
+            Me.InitializeComponent()
+            ' Nach dem InitializeComponent-Aufruf: den anfänglichen GroupBox-Titel in die Eigenschaft spiegeln.
+            ' Dadurch bleibt der Property-Zustand kohärent zum UI-Initialzustand.
+            Me._TitelText = Me.GroupBox.Text
+        End Sub
+
 #Region "Definition der öffentlichen Ereignisse"
 
         ''' <summary>
@@ -107,14 +115,6 @@ Namespace IniFileControl
         Private Event ListItemsChanged()
 
 #End Region
-
-        Public Sub New()
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.InitializeComponent()
-            ' Nach dem InitializeComponent-Aufruf: den anfänglichen GroupBox-Titel in die Eigenschaft spiegeln.
-            ' Dadurch bleibt der Property-Zustand kohärent zum UI-Initialzustand.
-            Me._TitelText = Me.GroupBox.Text
-        End Sub
 
 #Region "Definition der neuen Eigenschaften"
 
@@ -201,30 +201,20 @@ Namespace IniFileControl
 #Region "Ereignisse der internen Buttons"
 
         ''' <summary>
-        ''' Klick auf "Hinzufügen": zeigt den Dialog und löst bei Bestätigung `ItemAdd` aus.
+        ''' Reagiert auf Klicks der drei Buttons.
+        ''' Leitet die Aktion an die entsprechenden internen Methoden weiter.
         ''' </summary>
-        Private Sub ButtonAdd_Click(sender As Object, e As EventArgs) Handles ButtonAdd.Click
-            Me.AddNewItem()  ' Eintrag hinzufügen
-        End Sub
-
-        ''' <summary>
-        ''' Klick auf "Umbenennen": zeigt den Dialog und löst bei Bestätigung `ItemRename` aus.
-        ''' </summary>
-        ''' <param name="sender">Auslösender Button.</param>
-        ''' <param name="e">Ereignisargumente.</param>
-        Private Sub ButtonRename_Click(sender As Object, e As EventArgs) Handles ButtonRename.Click
-            Me.RenameItem() ' Eintrag umbenennen
-        End Sub
-
-        ''' <summary>
-        ''' Klick auf "Löschen": zeigt den Dialog und löst bei Bestätigung `ItemRemove` aus.
-        ''' Hinweis: Der aktuelle Handler ist an `TableLayoutPanel2.Click` gebunden.
-        ''' Prüfen, ob das beabsichtigt ist oder ob `ButtonDelete.Click` gemeint war.
-        ''' </summary>
-        ''' <param name="sender">Auslösender Control.</param>
-        ''' <param name="e">Ereignisargumente.</param>
-        Private Sub ButtonDelete_Click(sender As Object, e As EventArgs) Handles TableLayoutPanel2.Click
-            Me.DeleteItem() ' Eintrag löschen
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub Button_Click(sender As Object, e As EventArgs) Handles ButtonAdd.Click, ButtonRename.Click, ButtonDelete.Click
+            Select Case True
+                Case sender Is Me.ButtonAdd
+                    Me.AddNewItem()  ' Klick auf "Hinzufügen": zeigt den Dialog und löst bei Bestätigung `ItemAdd` aus.
+                Case sender Is Me.ButtonRename
+                    Me.RenameItem() ' Klick auf "Umbenennen": zeigt den Dialog und löst bei Bestätigung `ItemRename` aus.
+                Case sender Is Me.ButtonDelete
+                    Me.DeleteItem() ' Klick auf "Löschen": zeigt den Dialog und löst bei Bestätigung `ItemRemove` aus.
+            End Select
         End Sub
 
 #End Region
