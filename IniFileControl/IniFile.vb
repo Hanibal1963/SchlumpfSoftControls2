@@ -57,23 +57,23 @@ Namespace IniFileControl
 #Region "Definition der Variablen"
 
         ' Name der Datei (nur der Dateiname, ohne Pfad)
-        Private _FileName As String
+        Private _FileName As String = $"neue Datei.ini"
         ' Verzeichnis, in dem die INI-Datei liegt (ohne Dateiname)
-        Private _FilePath As String
+        Private _FilePath As String = String.Empty
         ' Aktueller Dateiinhalt als Zeilenpuffer (so, wie er gespeichert/geladen wird)
-        Private _FileContent() As String
+        Private _FileContent() As String = {$""}
         ' Prefixzeichen für Kommentarzeilen (typisch ';', alternativ denkbar '#')
-        Private _CommentPrefix As Char
+        Private _CommentPrefix As Char = ";"c
         ' Wenn True, werden Änderungen an den internen Strukturen automatisch auf die Datei geschrieben
         Private _AutoSave As Boolean = False
         ' Kommentarzeilen am Anfang der Datei (ohne Prefixzeichen)
-        Private _FileComment As List(Of String)
+        Private _FileComment As New List(Of String)
         ' Abschnitte mit Einträgen: Abschnittsname -> (Eintragsname -> Wert)
-        Private _Sections As Dictionary(Of String, Dictionary(Of String, String))
+        Private _Sections As New Dictionary(Of String, Dictionary(Of String, String))
         ' Abschnittskommentare: Abschnittsname -> Liste der Kommentarzeilen (ohne Prefix)
-        Private _SectionsComments As Dictionary(Of String, List(Of String))
+        Private _SectionsComments As New Dictionary(Of String, List(Of String))
         ' Name des Abschnitts, der beim Parsen gerade verarbeitet wird (Parserzustand)
-        Private _CurrentSectionName As String
+        Private _CurrentSectionName As String = $""
         ' Status, ob der aktuelle Zustand auf Datenträger gespeichert ist
         Private _FileSaved As Boolean = False
 
@@ -200,51 +200,63 @@ Namespace IniFileControl
 
 #End Region
 
-        Public Sub New()
-            ' Initialzustand definieren
-            Me._FileName = $"neue Datei.ini"
-            Me._FilePath = String.Empty
-            Me._FileContent = {$""} ' Ein leerer Zeilenpuffer
-            Me._CommentPrefix = ";"c ' Standardkommentarprefix
-            Me._FileComment = New List(Of String)
-            Me._Sections = New Dictionary(Of String, Dictionary(Of String, String))
-            Me._SectionsComments = New Dictionary(Of String, List(Of String))
-            Me._CurrentSectionName = $""
-            Me._FileSaved = True ' Anfangszustand als "gespeichert" markieren
-        End Sub
+        'Public Sub New()
+        '    ' Initialzustand definieren
+        '    ' Me._FileName = $"neue Datei.ini"
+        '    'Me._FilePath = String.Empty
+        '    'Me._FileContent = {$""} ' Ein leerer Zeilenpuffer
+        '    'Me._CommentPrefix = ";"c ' Standardkommentarprefix
+        '    'Me._FileComment = New List(Of String)
+        '    'Me._Sections = New Dictionary(Of String, Dictionary(Of String, String))
+        '    'Me._SectionsComments = New Dictionary(Of String, List(Of String))
+        '    'Me._CurrentSectionName = $""
+        '    ' Me._FileSaved = True ' Anfangszustand als "gespeichert" markieren
+        'End Sub
 
 #Region "öffentliche Funktionen"
+
+        ''' <summary>
+        ''' Erzeugt eine neue Datei mit Beispielinhalt und Standard-Kommentarprefix
+        ''' </summary>
+        ''' <remarks>
+        ''' Diese Methode ruft <seealso cref="CreateNewFile(Char)"/> mit  "Nothing" auf.
+        ''' </remarks>
+        Public Sub CreateNewFile()
+            Me.CreateNewFile(Nothing)
+        End Sub
 
         ''' <summary>
         ''' Erzeugt eine neue Datei mit Beispielinhalt
         ''' </summary>
         ''' <param name="CommentPrefix">
-        ''' Prefixzeichen für Kommentare.
+        ''' Prefixzeichen für Kommentare oder "Nothing".
         ''' </param>
         ''' <remarks>
         ''' Wenn kein Prefixzeichen angegeben wird, wird Standardmäßig das Semikolon verwendet.
         ''' Diese Methode erstellt eine Beispielstruktur mit den Abschnitten [Allgemein], [Datenbank], [Logging].
         ''' </remarks>
         Public Sub CreateNewFile(CommentPrefix As Char)
-            Me._CommentPrefix = If(CommentPrefix = CChar(""), ";"c, CommentPrefix) ' Prefixzeichen für Kommentare festlegen (Standard wenn nicht festgelegt)
+            ' wenn Prefixzeichen nicht angegeben wurde -> Standardwert verwenden
+            If CommentPrefix = Nothing Then
+                Me.CommentPrefix = ";"c
+            Else
+                ' ansonsten angegebenes Prefix übernehmen
+                Me.CommentPrefix = CommentPrefix
+            End If
             ' Dateiinhalt erzeugen (Beispielinhalt)
             Dim content As String =
                 $"{Me._CommentPrefix} INI - Datei Beispiel {vbCrLf}" &
-                $"{Me._CommentPrefix} Diese Datei wurde von " &
-                $"{My.Application.Info.AssemblyName} erzeugt{vbCrLf}" &
-                $"{vbCrLf}" &
+                $"{Me._CommentPrefix} Diese Datei wurde von {My.Application.Info.AssemblyName} erzeugt{vbCrLf}{vbCrLf}" &
                 $"[Allgemein]{vbCrLf}" &
                 $"{Me._CommentPrefix} Anwendungsname und Version{vbCrLf}" &
                 $"AppName = MeineApp{vbCrLf}" &
-                $"Version = 1.0.0{vbCrLf}" &
-                $"{vbCrLf}" &
+                $"Version = 1.0.0{vbCrLf}{vbCrLf}" &
                 $"[Datenbank]{vbCrLf}" &
                 $"{Me._CommentPrefix} Einstellungen zur Datenbank{vbCrLf}" &
                 $"Server = localhost{vbCrLf}" &
                 $"Port = 3306{vbCrLf}" &
                 $"Benutzername = admin{vbCrLf}" &
-                $"Passwort = geheim{vbCrLf}" &
-                $"{vbCrLf}" &
+                $"Passwort = geheim{vbCrLf}{vbCrLf}" &
                 $"[Logging]{vbCrLf}" &
                 $"{Me._CommentPrefix} Einstellungen zum Logging{vbCrLf}" &
                 $"LogLevel = Debug{vbCrLf}" &
