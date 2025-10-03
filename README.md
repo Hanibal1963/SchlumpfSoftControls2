@@ -33,11 +33,23 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 >  Die Dokumentation wurde mit GitHub Copilot erstellt und manuell überarbeitet.
 > Es können trotzdem Fehler enthalten sein.
 
+  ---
+
+  ## geplante Änderungen und Erweiterungen
+
+* Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
+* Hinzufügen des ursprünglichen IniFile Controls.
+* Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
+* Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
+* Neues Control zum Auswählen einer Uhrzeit hinzufügen.
+* Neues Control zur Dateisuche.
+* Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
+
 ---
 
 ## Versionsverlauf
 
-**Version 2.2025.0928.0 (28.09.2025)**
+**Version 3.2025.0928.0 (28.09.2025)**
 - Dokumentationen überarbeitet und erweitert
 - Demoanwendung überarbeitet und erweitert
 
@@ -53,15 +65,3 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 **Version 1.2025.0802.0 (02.08.2025)**
 - Erstes Release dieser Controlsammlung (noch ohne IniFileControl)
   
----
-
-## geplante Änderungen und Erweiterungen
-
-* Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
-* Hinzufügen des ursprünglichen IniFile Controls.
-* Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
-* Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
-* Neues Control zum Auswählen einer Uhrzeit hinzufügen.
-* Neues Control zur Dateisuche.
-* Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
-
