@@ -11,7 +11,7 @@
         <Tags>Controls, Animation, ProgressBar, Shape, SevenSegment, Drive, Label, Explorer, Wizard,Transparent, Notify, Form,TreeView,</Tags>
     </Metadata>
     <Installation>
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, )">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
         <InstallationTarget Version="[17.0,)" Id="Microsoft.VisualStudio.Pro">
