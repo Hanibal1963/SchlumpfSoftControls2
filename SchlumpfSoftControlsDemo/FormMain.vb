@@ -15,7 +15,9 @@ Public Class FormMain
 
     Private Sub ToolStripMenuItem_Click(sender As Object, e As EventArgs) _
         Handles ToolStripMenuItemBeenden.Click, ToolStripMenuItemAniGifTest.Click, ToolStripMenuItemColorProgressBarTest.Click,
-        ToolStripMenuItemDriveWatcherTest.Click, ToolStripMenuItemExplorerTreeViewTest.Click, ToolStripMenuItemNotifyFormTest.Click, ToolStripMenuItemSevenSegmentTest.Click, ToolStripMenuItemShapeTest.Click, ToolStripMenuItemTransparentLabelTest.Click, ToolStripMenuItemWizardTest.Click
+        ToolStripMenuItemDriveWatcherTest.Click, ToolStripMenuItemExplorerTreeViewTest.Click, ToolStripMenuItemNotifyFormTest.Click,
+        ToolStripMenuItemSevenSegmentTest.Click, ToolStripMenuItemShapeTest.Click, ToolStripMenuItemTransparentLabelTest.Click,
+        ToolStripMenuItemWizardTest.Click, ToolStripMenuItemIniFileTest.Click
 
         Select Case True
             Case sender Is ToolStripMenuItemBeenden
@@ -38,6 +40,8 @@ Public Class FormMain
                 Me.TabControl.SelectedTab = Me.TabPageTransparentLabel
             Case sender Is ToolStripMenuItemWizardTest
                 Me.TabControl.SelectedTab = Me.TabPageWizard
+            Case sender Is ToolStripMenuItemIniFileTest
+                Me.TabControl.SelectedTab = Me.TabPageIniFile
         End Select
 
     End Sub

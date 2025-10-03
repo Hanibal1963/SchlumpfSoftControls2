@@ -41,6 +41,7 @@ Partial Class FormMain
         Me.TabPageTransparentLabel = New System.Windows.Forms.TabPage()
         Me.TransparentLabelDemo1 = New SchlumpfSoftControlsDemo.TransparentLabelDemo()
         Me.TabPageWizard = New System.Windows.Forms.TabPage()
+        Me.WizardDemo1 = New SchlumpfSoftControlsDemo.WizardDemo()
         Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
         Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemBeenden = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,7 +57,8 @@ Partial Class FormMain
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
-        Me.WizardDemo1 = New SchlumpfSoftControlsDemo.WizardDemo()
+        Me.TabPageIniFile = New System.Windows.Forms.TabPage()
+        Me.ToolStripMenuItemIniFileTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -79,11 +81,11 @@ Partial Class FormMain
         'ToolStripContainer.ContentPanel
         '
         Me.ToolStripContainer.ContentPanel.Controls.Add(Me.TabControl)
-        Me.ToolStripContainer.ContentPanel.Size = New System.Drawing.Size(687, 489)
+        Me.ToolStripContainer.ContentPanel.Size = New System.Drawing.Size(830, 561)
         Me.ToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ToolStripContainer.Location = New System.Drawing.Point(0, 0)
         Me.ToolStripContainer.Name = "ToolStripContainer"
-        Me.ToolStripContainer.Size = New System.Drawing.Size(687, 513)
+        Me.ToolStripContainer.Size = New System.Drawing.Size(830, 585)
         Me.ToolStripContainer.TabIndex = 0
         Me.ToolStripContainer.Text = "ToolStripContainer1"
         '
@@ -102,11 +104,12 @@ Partial Class FormMain
         Me.TabControl.Controls.Add(Me.TabPageShape)
         Me.TabControl.Controls.Add(Me.TabPageTransparentLabel)
         Me.TabControl.Controls.Add(Me.TabPageWizard)
+        Me.TabControl.Controls.Add(Me.TabPageIniFile)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
         Me.TabControl.SelectedIndex = 0
-        Me.TabControl.Size = New System.Drawing.Size(687, 489)
+        Me.TabControl.Size = New System.Drawing.Size(830, 561)
         Me.TabControl.TabIndex = 0
         '
         'TabPageAniGif
@@ -115,7 +118,7 @@ Partial Class FormMain
         Me.TabPageAniGif.Location = New System.Drawing.Point(4, 22)
         Me.TabPageAniGif.Name = "TabPageAniGif"
         Me.TabPageAniGif.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageAniGif.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageAniGif.Size = New System.Drawing.Size(822, 535)
         Me.TabPageAniGif.TabIndex = 0
         Me.TabPageAniGif.Text = "AniGif"
         Me.TabPageAniGif.UseVisualStyleBackColor = True
@@ -257,10 +260,17 @@ Partial Class FormMain
         Me.TabPageWizard.Location = New System.Drawing.Point(4, 22)
         Me.TabPageWizard.Name = "TabPageWizard"
         Me.TabPageWizard.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPageWizard.Size = New System.Drawing.Size(679, 463)
+        Me.TabPageWizard.Size = New System.Drawing.Size(822, 535)
         Me.TabPageWizard.TabIndex = 8
         Me.TabPageWizard.Text = "Wizard"
         Me.TabPageWizard.UseVisualStyleBackColor = True
+        '
+        'WizardDemo1
+        '
+        Me.WizardDemo1.Location = New System.Drawing.Point(8, 16)
+        Me.WizardDemo1.Name = "WizardDemo1"
+        Me.WizardDemo1.Size = New System.Drawing.Size(574, 332)
+        Me.WizardDemo1.TabIndex = 0
         '
         'MenuStripMain
         '
@@ -269,7 +279,7 @@ Partial Class FormMain
         Me.MenuStripMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemDatei, Me.ToolStripMenuItemAnsicht})
         Me.MenuStripMain.Location = New System.Drawing.Point(0, 0)
         Me.MenuStripMain.Name = "MenuStripMain"
-        Me.MenuStripMain.Size = New System.Drawing.Size(687, 24)
+        Me.MenuStripMain.Size = New System.Drawing.Size(830, 24)
         Me.MenuStripMain.TabIndex = 0
         Me.MenuStripMain.Text = "MenuStripMain"
         '
@@ -288,7 +298,7 @@ Partial Class FormMain
         '
         'ToolStripMenuItemAnsicht
         '
-        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest})
+        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest, Me.ToolStripMenuItemIniFileTest})
         Me.ToolStripMenuItemAnsicht.Name = "ToolStripMenuItemAnsicht"
         Me.ToolStripMenuItemAnsicht.Size = New System.Drawing.Size(59, 20)
         Me.ToolStripMenuItemAnsicht.Text = "Ansicht"
@@ -361,18 +371,27 @@ Partial Class FormMain
         Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
         Me.SevenSegmentDemo1.TabIndex = 0
         '
-        'WizardDemo1
+        'TabPageIniFile
         '
-        Me.WizardDemo1.Location = New System.Drawing.Point(8, 16)
-        Me.WizardDemo1.Name = "WizardDemo1"
-        Me.WizardDemo1.Size = New System.Drawing.Size(574, 332)
-        Me.WizardDemo1.TabIndex = 0
+        Me.TabPageIniFile.Location = New System.Drawing.Point(4, 22)
+        Me.TabPageIniFile.Name = "TabPageIniFile"
+        Me.TabPageIniFile.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageIniFile.Size = New System.Drawing.Size(822, 535)
+        Me.TabPageIniFile.TabIndex = 9
+        Me.TabPageIniFile.Text = "IniFile"
+        Me.TabPageIniFile.UseVisualStyleBackColor = True
+        '
+        'ToolStripMenuItemIniFileTest
+        '
+        Me.ToolStripMenuItemIniFileTest.Name = "ToolStripMenuItemIniFileTest"
+        Me.ToolStripMenuItemIniFileTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemIniFileTest.Text = "IniFile"
         '
         'FormMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(687, 513)
+        Me.ClientSize = New System.Drawing.Size(830, 585)
         Me.Controls.Add(Me.ToolStripContainer)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -439,4 +458,6 @@ Partial Class FormMain
     Friend WithEvents ColorProgressBarDemo2 As ColorProgressBarDemo
     Friend WithEvents SevenSegmentDemo2 As SevenSegmentDemo
     Friend WithEvents WizardDemo1 As WizardDemo
+    Private WithEvents TabPageIniFile As TabPage
+    Private WithEvents ToolStripMenuItemIniFileTest As ToolStripMenuItem
 End Class

@@ -104,6 +104,12 @@
       <DependentUpon>FormMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="IniFileDemo.Designer.vb">
+      <DependentUpon>IniFileDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IniFileDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -167,6 +173,9 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="IniFileDemo.resx">
+      <DependentUpon>IniFileDemo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -217,6 +226,10 @@
     <ProjectReference Include="..\ExplorerTreeViewControl\ExplorerTreeViewControl.vbproj">
       <Project>{801c2639-9bb1-44fe-899a-1a688378f5dc}</Project>
       <Name>ExplorerTreeViewControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IniFileControl\IniFileControl.vbproj">
+      <Project>{fb6f2b12-4169-4f5b-a4ff-3e6defc40d90}</Project>
+      <Name>IniFileControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\NotifyFormControl\NotifyFormControl.vbproj">
       <Project>{229f0d45-6f1b-4705-a176-57d897504a34}</Project>

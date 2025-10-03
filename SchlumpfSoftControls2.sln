@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{6F7BC048-0A7
 		Doc\WizardControl.md = Doc\WizardControl.md
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "IniFileControl", "IniFileControl\IniFileControl.vbproj", "{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -204,6 +206,18 @@ Global
 		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|arm64.Build.0 = Release|Any CPU
 		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|x86.ActiveCfg = Release|Any CPU
 		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|x86.Build.0 = Release|Any CPU
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|arm64.ActiveCfg = Debug|arm64
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|arm64.Build.0 = Debug|arm64
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|x86.ActiveCfg = Debug|x86
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Debug|x86.Build.0 = Debug|x86
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|arm64.ActiveCfg = Release|arm64
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|arm64.Build.0 = Release|arm64
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|x86.ActiveCfg = Release|x86
+		{FB6F2B12-4169-4F5B-A4FF-3E6DEFC40D90}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
