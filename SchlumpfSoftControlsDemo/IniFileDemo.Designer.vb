@@ -30,6 +30,7 @@ Partial Class IniFileDemo
         Me.EntryListEdit = New SchlumpfSoft.Controls.IniFileControl.ListEdit()
         Me.EntryValueEdit = New SchlumpfSoft.Controls.IniFileControl.EntryValueEdit()
         Me.Panel = New System.Windows.Forms.Panel()
+        Me.CheckBoxAutoSave = New System.Windows.Forms.CheckBox()
         Me.Panel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -103,6 +104,7 @@ Partial Class IniFileDemo
         'Panel
         '
         Me.Panel.AutoScroll = True
+        Me.Panel.Controls.Add(Me.CheckBoxAutoSave)
         Me.Panel.Controls.Add(Me.ContentView)
         Me.Panel.Controls.Add(Me.EntryValueEdit)
         Me.Panel.Controls.Add(Me.FileCommentEdit)
@@ -115,6 +117,17 @@ Partial Class IniFileDemo
         Me.Panel.Size = New System.Drawing.Size(938, 432)
         Me.Panel.TabIndex = 6
         '
+        'CheckBoxAutoSave
+        '
+        Me.CheckBoxAutoSave.AutoSize = True
+        Me.CheckBoxAutoSave.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CheckBoxAutoSave.Location = New System.Drawing.Point(3, 330)
+        Me.CheckBoxAutoSave.Name = "CheckBoxAutoSave"
+        Me.CheckBoxAutoSave.Size = New System.Drawing.Size(135, 17)
+        Me.CheckBoxAutoSave.TabIndex = 6
+        Me.CheckBoxAutoSave.Text = "automatisch speichern:"
+        Me.CheckBoxAutoSave.UseVisualStyleBackColor = True
+        '
         'IniFileDemo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -123,6 +136,7 @@ Partial Class IniFileDemo
         Me.Name = "IniFileDemo"
         Me.Size = New System.Drawing.Size(938, 432)
         Me.Panel.ResumeLayout(False)
+        Me.Panel.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -135,4 +149,5 @@ Partial Class IniFileDemo
     Private WithEvents EntryListEdit As SchlumpfSoft.Controls.IniFileControl.ListEdit
     Private WithEvents EntryValueEdit As SchlumpfSoft.Controls.IniFileControl.EntryValueEdit
     Private WithEvents Panel As Panel
+    Private WithEvents CheckBoxAutoSave As CheckBox
 End Class

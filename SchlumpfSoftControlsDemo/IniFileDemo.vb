@@ -12,10 +12,13 @@ Public Class IniFileDemo
         If IO.File.Exists(IO.Path.Combine(Me.IniFile.FilePath, Me.IniFile.FileName)) Then
             Me.IniFile.LoadFile(IO.Path.Combine(Me.IniFile.FilePath, Me.IniFile.FileName))
         Else
-            Me.IniFile.CreateNewFile(" "c)
+            Me.IniFile.CreateNewFile()
             Me.IniFile.SaveFile(IO.Path.Combine(Me.IniFile.FilePath, Me.IniFile.FileName))
         End If
     End Sub
+
+
+#Region "Ereignisse für IniFile"
 
     Private Sub IniFile_EntryNameExist(sender As Object, e As EventArgs) Handles IniFile.EntryNameExist
         Dim unused = MsgBox($"Der angegebene Eintrag existiert bereits.{vbCrLf}Wähle einen anderen Name.", MsgBoxStyle.Critical And MsgBoxStyle.ApplicationModal, $"Fehler!")
@@ -25,7 +28,6 @@ Public Class IniFileDemo
         ' Dateiinhalt anzeigen
         Me.ContentView.Lines = Me.IniFile.GetFileContent
         ' Dateikommentar anzeigen
-        Me.FileCommentEdit.SectionName = $""
         Me.FileCommentEdit.Comment = Me.IniFile.GetFileComment
         ' Abschnittsliste anzeigen
         Me.SectionsListEdit.ListItems = Me.IniFile.GetSectionNames
@@ -35,10 +37,9 @@ Public Class IniFileDemo
         Dim unused = MsgBox($"Der eingegebene Abschnittsname existiert bereits.{vbCrLf}Wähle einen anderen Name.", MsgBoxStyle.Critical And MsgBoxStyle.ApplicationModal, $"Fehler!")
     End Sub
 
-    Private Sub FileCommentEdit_CommentChanged(sender As Object, e As CommentEditEventArgs) Handles FileCommentEdit.CommentChanged
-        ' Dateikommentar speichern
-        Me.IniFile.SetFileComment(e.Comment)
-    End Sub
+#End Region
+
+#Region "Ereignisse für SectionsListEdit"
 
     Private Sub SectionsListEdit_ItemAdd(sender As Object, e As ListEditEventArgs) Handles SectionsListEdit.ItemAdd
         ' Abschnitt hinzufügen
@@ -55,10 +56,27 @@ Public Class IniFileDemo
         Me.IniFile.RenameSection(e.SelectedItem, e.NewItemName)
     End Sub
 
-    Private Sub SectionCommentEdit_CommentChanged(sender As Object, e As CommentEditEventArgs) Handles SectionCommentEdit.CommentChanged
-        ' Abschnittskommentar ändern
-        Me.IniFile.SetSectionComment(e.Section, e.Comment)
+    Private Sub SectionsListEdit_SelectedItemChanged(sender As Object, e As ListEditEventArgs) Handles SectionsListEdit.SelectedItemChanged
+        ' Wenn Null oder nur Leerzeichen -> Werte der abhängigen Controls löschen ansonsten neue Werte laden
+        If String.IsNullOrEmpty(e.SelectedItem) Then
+            ' Werte für SectionCommentEdit löschen
+            Me.SectionCommentEdit.SectionName = $""
+            Me.SectionCommentEdit.Comment = {$""}
+            ' Werte für EntryListEdit löschen
+            Me.EntryListEdit.ListItems = {$""}
+        Else
+            ' Werte für den Abschnitt in SectionCommentEdit laden
+            Me.SectionCommentEdit.SectionName = e.SelectedItem
+            Me.SectionCommentEdit.Comment = Me.IniFile.GetSectionComment(e.SelectedItem)
+            ' Werte für den Abschnitt in EntryListEdit laden
+            Me.EntryListEdit.ListItems = Me.IniFile.GetEntryNames(e.SelectedItem)
+            Me.EntryListEdit.SelectedSection = e.SelectedItem
+        End If
     End Sub
+
+#End Region
+
+#Region "Ereignisse für EntryListEdit"
 
     Private Sub EntryListEdit_ItemAdd(sender As Object, e As ListEditEventArgs) Handles EntryListEdit.ItemAdd
         ' Eintrag hinzufügen
@@ -84,9 +102,25 @@ Public Class IniFileDemo
         End With
     End Sub
 
+#End Region
+
+    Private Sub FileCommentEdit_CommentChanged(sender As Object, e As CommentEditEventArgs) Handles FileCommentEdit.CommentChanged
+        ' Dateikommentar speichern
+        Me.IniFile.SetFileComment(e.Comment)
+    End Sub
+
+    Private Sub SectionCommentEdit_CommentChanged(sender As Object, e As CommentEditEventArgs) Handles SectionCommentEdit.CommentChanged
+        ' Abschnittskommentar ändern
+        Me.IniFile.SetSectionComment(e.Section, e.Comment)
+    End Sub
+
     Private Sub EntryValueEdit_ValueChanged(sender As Object, e As EntryValueEditEventArgs) Handles EntryValueEdit.ValueChanged
         ' Eintragwert ändern
         Me.IniFile.SetEntryValue(e.SelectedSection, e.SelectedEntry, e.NewValue)
+    End Sub
+
+    Private Sub CheckBoxAutoSave_CheckStateChanged(sender As Object, e As EventArgs) Handles CheckBoxAutoSave.CheckStateChanged
+        Me.IniFile.AutoSave = Me.CheckBoxAutoSave.Checked
     End Sub
 
 End Class
