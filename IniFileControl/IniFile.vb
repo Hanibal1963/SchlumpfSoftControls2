@@ -1,6 +1,32 @@
 ﻿' *************************************************************************************************
 ' IniFile.vb
 ' Copyright (c) 2025 by Andreas Sauer 
+' 
+' Übersicht:
+' - Dieses Steuerelement verwaltet klassische INI-Dateien.
+' - Struktur einer INI-Datei:
+'     - Dateikommentar (am Anfang, vor dem ersten Abschnitt; jede Zeile beginnt mit dem Prefix, z. B. ";")
+'     - Abschnitte in eckigen Klammern, z. B. [Allgemein]
+'     - Optionaler Abschnittskommentar (Zeilen unterhalb des Abschnitts, beginnend mit dem Prefix)
+'     - Einträge in der Form: Schlüssel = Wert
+'
+' - Interne Darstellung:
+'     - _FileComment: Liste der Dateikommentarzeilen (ohne Prefixzeichen, nur Text)
+'     - _Sections: Dictionary von Abschnittsname -> Dictionary von Eintragsname -> Wert
+'     - _SectionsComments: Dictionary von Abschnittsname -> Liste von Kommentarzeilen (ohne Prefix)
+'
+' - Speichern/Neuaufbau:
+'     - CreateFileContent() baut _FileContent (String-Array) aus den obigen Strukturen.
+'     - SaveFile() schreibt _FileContent auf Datenträger.
+'
+' - Parsing:
+'     - ParseFileContent() füllt die internen Strukturen aus _FileContent.
+'     - Kommentarprefix (Default ';') wird beim Einlesen entfernt und beim Erzeugen wieder vorangestellt.
+'
+' Hinweise:
+' - Thread-Sicherheit: Diese Klasse ist nicht thread-sicher. Synchronisation bei parallelem Zugriff ist Aufgabe des Aufrufers.
+' - Fehlerbehandlung: Viele Methoden erwarten vorhandene Abschnitte/Einträge. Nicht gefundene Schlüssel führen ggf. zu KeyNotFound-Ausnahmen.
+' - Gleichheitsprüfung bei Strings: In VB.NET sollte "=" für Stringvergleiche verwendet werden. "Is" prüft Referenzgleichheit und ist für Strings unüblich.
 ' *************************************************************************************************
 
 Imports System
@@ -12,10 +38,10 @@ Imports SchlumpfSoft.Controls.Attribute
 
 Namespace IniFileControl
 
-    ' weitere Infos:
-    ' <Browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
-    ' <Category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
-    ' <Description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
+    ' weitere infos:
+    ' <browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
+    ' <category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
+    ' <description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
 
     '''' <summary>
     '''' Steuerelement zum Verwalten von INI - Dateien
@@ -30,15 +56,25 @@ Namespace IniFileControl
 
 #Region "Definition der Variablen"
 
+        ' Name der Datei (nur der Dateiname, ohne Pfad)
         Private _FileName As String
+        ' Verzeichnis, in dem die INI-Datei liegt (ohne Dateiname)
         Private _FilePath As String
+        ' Aktueller Dateiinhalt als Zeilenpuffer (so, wie er gespeichert/geladen wird)
         Private _FileContent() As String
+        ' Prefixzeichen für Kommentarzeilen (typisch ';', alternativ denkbar '#')
         Private _CommentPrefix As Char
+        ' Wenn True, werden Änderungen an den internen Strukturen automatisch auf die Datei geschrieben
         Private _AutoSave As Boolean = False
+        ' Kommentarzeilen am Anfang der Datei (ohne Prefixzeichen)
         Private _FileComment As List(Of String)
+        ' Abschnitte mit Einträgen: Abschnittsname -> (Eintragsname -> Wert)
         Private _Sections As Dictionary(Of String, Dictionary(Of String, String))
+        ' Abschnittskommentare: Abschnittsname -> Liste der Kommentarzeilen (ohne Prefix)
         Private _SectionsComments As Dictionary(Of String, List(Of String))
+        ' Name des Abschnitts, der beim Parsen gerade verarbeitet wird (Parserzustand)
         Private _CurrentSectionName As String
+        ' Status, ob der aktuelle Zustand auf Datenträger gespeichert ist
         Private _FileSaved As Boolean = False
 
 #End Region
@@ -48,6 +84,10 @@ Namespace IniFileControl
         ''' <summary>
         ''' Wird ausgelöst wenn sich der Dateiinhalt geändert hat.
         ''' </summary>
+        ''' <remarks>
+        ''' Dieses Ereignis wird nach jeder Änderung an der internen Struktur
+        ''' (Add/Rename/Delete/Set) ausgelöst, unabhängig davon, ob AutoSave aktiv ist.
+        ''' </remarks>
         <Description("Wird ausgelöst wenn sich der Dateiinhalt geändert hat.")>
         Public Event FileContentChanged(sender As Object, e As EventArgs)
 
@@ -72,6 +112,10 @@ Namespace IniFileControl
         ''' <summary>
         ''' Zeigt an ob die Datei gespeichert wurde
         ''' </summary>
+        ''' <remarks>
+        ''' True bedeutet, dass der aktuelle Zustand auf Datenträger geschrieben wurde
+        ''' (entweder durch expliziten Aufruf von SaveFile oder automatisch, wenn AutoSave=True).
+        ''' </remarks>
         <Browsable(False)>
         Public ReadOnly Property FileSaved As Boolean
             Get
@@ -82,6 +126,11 @@ Namespace IniFileControl
         '''' <summary>
         '''' Gibt das Prefixzeichen für Kommentare zurück oder legt dieses fest.
         '''' </summary>
+        ''' <remarks>
+        ''' Wird beim Erzeugen/Analysieren der Datei verwendet. Änderungen wirken sich
+        ''' auf die Ausgabe in CreateFileContent aus. Beim Parsen wird das jeweils
+        ''' aktuell gesetzte Prefix zur Erkennung von Kommentarzeilen herangezogen.
+        ''' </remarks>
         <Browsable(True)>
         <Category("Design")>
         <Description("Gibt das Prefixzeichen für Kommentare zurück oder legt dieses fest.")>
@@ -97,6 +146,9 @@ Namespace IniFileControl
         ''' <summary>
         ''' Gibt den aktuellen Dateiname zurück oder legt diesen fest
         ''' </summary>
+        ''' <remarks>
+        ''' Der Name wird beim Speichern/Laden mit dem Pfad kombiniert.
+        ''' </remarks>
         <Browsable(True)>
         <Category("Design")>
         <Description("Gibt den aktuellen Dateiname zurück oder legt diesen fest")>
@@ -112,6 +164,9 @@ Namespace IniFileControl
         ''' <summary>
         ''' Gibt den Pfad zur INI-Datei zurück oder legt diesen fest.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Speichern/Laden wird der Pfad mit dem Dateinamen kombiniert.
+        ''' </remarks>
         <Browsable(True)>
         <Category("Design")>
         <Description("Gibt den Pfad zur INI-Datei zurück oder legt diesen fest.")>
@@ -129,6 +184,7 @@ Namespace IniFileControl
         ''' </summary>
         ''' <remarks>
         ''' True legt fest das Änderungen automatisch gespeichert werden.
+        ''' Bei False bleibt der Status unsaved, bis SaveFile explizit aufgerufen wird.
         ''' </remarks>
         <Browsable(True)>
         <Category("Design")>
@@ -145,15 +201,16 @@ Namespace IniFileControl
 #End Region
 
         Public Sub New()
+            ' Initialzustand definieren
             Me._FileName = $"neue Datei.ini"
             Me._FilePath = String.Empty
-            Me._FileContent = {$""}
-            Me._CommentPrefix = ";"c
+            Me._FileContent = {$""} ' Ein leerer Zeilenpuffer
+            Me._CommentPrefix = ";"c ' Standardkommentarprefix
             Me._FileComment = New List(Of String)
             Me._Sections = New Dictionary(Of String, Dictionary(Of String, String))
             Me._SectionsComments = New Dictionary(Of String, List(Of String))
             Me._CurrentSectionName = $""
-            Me._FileSaved = True
+            Me._FileSaved = True ' Anfangszustand als "gespeichert" markieren
         End Sub
 
 #Region "öffentliche Funktionen"
@@ -166,10 +223,11 @@ Namespace IniFileControl
         ''' </param>
         ''' <remarks>
         ''' Wenn kein Prefixzeichen angegeben wird, wird Standardmäßig das Semikolon verwendet.
+        ''' Diese Methode erstellt eine Beispielstruktur mit den Abschnitten [Allgemein], [Datenbank], [Logging].
         ''' </remarks>
         Public Sub CreateNewFile(CommentPrefix As Char)
             Me._CommentPrefix = If(CommentPrefix = CChar(""), ";"c, CommentPrefix) ' Prefixzeichen für Kommentare festlegen (Standard wenn nicht festgelegt)
-            ' Dateiinhalt erzeugen
+            ' Dateiinhalt erzeugen (Beispielinhalt)
             Dim content As String =
                 $"{Me._CommentPrefix} INI - Datei Beispiel {vbCrLf}" &
                 $"{Me._CommentPrefix} Diese Datei wurde von " &
@@ -191,10 +249,11 @@ Namespace IniFileControl
                 $"{Me._CommentPrefix} Einstellungen zum Logging{vbCrLf}" &
                 $"LogLevel = Debug{vbCrLf}" &
                 $"LogDatei = logs / app.log{vbCrLf}"
+            ' Rohinhalt in Zeilenpuffer übertragen
             Me._FileContent = content.Split(CChar(vbCrLf))
-            Me.ParseFileContent() ' Dateiinhalt analysieren
-            Me._FileSaved = False ' Datei als ungespeichert markieren
-            RaiseEvent FileContentChanged(Me, EventArgs.Empty) ' Ereignis auslösen
+            Me.ParseFileContent() ' Dateiinhalt analysieren und interne Strukturen aufbauen
+            Me._FileSaved = False ' Datei als ungespeichert markieren, da im Speicher verändert
+            RaiseEvent FileContentChanged(Me, EventArgs.Empty) ' Änderungen signalisieren
         End Sub
 
         ''' <summary>
@@ -203,6 +262,9 @@ Namespace IniFileControl
         ''' <param name="FilePathAndName">
         ''' Name und Pfad der Datei die geladen werden soll.
         ''' </param>
+        ''' <remarks>
+        ''' Diese Überladung setzt Pfad und Dateiname und ruft anschließend LoadFile() ohne Parameter auf.
+        ''' </remarks>
         Public Sub LoadFile(FilePathAndName As String)
 
             'Parameter überprüfen
@@ -219,6 +281,10 @@ Namespace IniFileControl
         ''' <summary>
         ''' Lädt die Datei die in <see cref="FilePath"/> angegeben wurde.
         ''' </summary>
+        ''' <remarks>
+        ''' Liest alle Zeilen, parst sie in die internen Strukturen, markiert den Zustand als gespeichert
+        ''' und löst das FileContentChanged-Ereignis aus.
+        ''' </remarks>
         Public Sub LoadFile()
 
             ' Datei laden mit Fehlerbehandlung
@@ -246,6 +312,9 @@ Namespace IniFileControl
         ''' <param name="FilePathAndName">
         ''' Name und Pfad der Datei die gespeichert werden soll.
         ''' </param>
+        ''' <remarks>
+        ''' Setzt Pfad und Dateiname und ruft SaveFile() ohne Parameter auf.
+        ''' </remarks>
         Public Sub SaveFile(FilePathAndName As String)
 
             'Parameter überprüfen
@@ -262,6 +331,9 @@ Namespace IniFileControl
         ''' <summary>
         ''' Gibt den Dateiinhalt zurück
         ''' </summary>
+        ''' <remarks>
+        ''' Dies ist der aktuelle, generierte Rohinhalt (Zeilen), so wie er gespeichert werden würde.
+        ''' </remarks>
         Public Function GetFileContent() As String()
 
             Return Me._FileContent
@@ -271,6 +343,10 @@ Namespace IniFileControl
         ''' <summary>
         ''' Gibt den Dateikommentar zurück
         ''' </summary>
+        ''' <remarks>
+        ''' Die Kommentarzeilen werden ohne Prefixzeichen zurückgegeben.
+        ''' Beim Erzeugen des Datei-Inhalts wird das Prefix automatisch vorangestellt.
+        ''' </remarks>
         Public Function GetFileComment() As String()
 
             Return Me._FileComment.ToArray
@@ -283,13 +359,17 @@ Namespace IniFileControl
         ''' <param name="CommentLines">
         ''' Die Zeilen des Dateikommentars.
         ''' </param>
+        ''' <remarks>
+        ''' Die übergebenen Zeilen sollten keine Prefixzeichen enthalten.
+        ''' Nach dem Setzen wird der Dateiinhalt neu aufgebaut (und ggf. gespeichert, wenn AutoSave=True).
+        ''' </remarks>
         Public Sub SetFileComment(CommentLines() As String)
 
             ' alten Dateikommentar löschen
             Me._FileComment.Clear()
             ' neuen Dateikommentar übenehmen
             Me._FileComment.AddRange(CommentLines)
-            ' Änderungen übernehmen
+            ' Änderungen übernehmen (rekonstruiert _FileContent und speichert ggf.)
             Me.ChangeFileContent()
 
         End Sub
@@ -342,6 +422,9 @@ Namespace IniFileControl
         ''' <param name="Name">
         ''' Name des neuen Abschnitts
         ''' </param>
+        ''' <remarks>
+        ''' Löst SectionNameExist aus und bricht ab, wenn der Abschnitt bereits existiert.
+        ''' </remarks>
         Public Sub AddSection(Name As String)
 
             ' Prüfen ob der Name vorhanden ist
@@ -367,6 +450,10 @@ Namespace IniFileControl
         ''' <param name="Name">
         ''' Name des Eintrags.
         ''' </param>
+        ''' <remarks>
+        ''' Der Abschnitt muss existieren, andernfalls kommt es zu einer Ausnahme.
+        ''' Bei Namenskonflikt wird EntryNameExist ausgelöst und abgebrochen.
+        ''' </remarks>
         Public Sub AddEntry(Section As String, Name As String)
 
             ' Prüfen ob der Name vorhanden ist
@@ -392,6 +479,10 @@ Namespace IniFileControl
         ''' <param name="NewName">
         ''' neuer name des Abschnitts
         ''' </param>
+        ''' <remarks>
+        ''' Es werden sowohl der Abschnitt (Werte) als auch sein Kommentar umgehängt.
+        ''' Bei Namenskonflikt wird SectionNameExist ausgelöst.
+        ''' </remarks>
         Public Sub RenameSection(OldName As String, NewName As String)
 
             ' Ist der neue Name bereits vorhanden?
@@ -419,6 +510,9 @@ Namespace IniFileControl
         ''' <param name="NewName">
         ''' Neuer Name des Eintrags.
         ''' </param>
+        ''' <remarks>
+        ''' Der Abschnitt muss existieren. Bei Namenskonflikt wird EntryNameExist ausgelöst.
+        ''' </remarks>
         Public Sub RenameEntry(Section As String, Oldname As String, NewName As String)
 
             ' Ist der neue Name bereits vorhanden? 
@@ -441,6 +535,9 @@ Namespace IniFileControl
         ''' <param name="Name">
         ''' Name des Abschnittes
         ''' </param>
+        ''' <remarks>
+        ''' Entfernt auch den dazugehörigen Abschnittskommentar.
+        ''' </remarks>
         Public Sub DeleteSection(Name As String)
 
             ' Abschnitt aus den Listen für Abschnitte und Abschnittskommentare entfernen
@@ -503,6 +600,10 @@ Namespace IniFileControl
         ''' <returns>
         ''' Wert des Eintrags.
         ''' </returns>
+        ''' <remarks>
+        ''' Erwartet, dass Abschnitt und Eintrag existieren. Andernfalls kann eine Ausnahme geworfen werden.
+        ''' Bei leerem Abschnitts- und Eintragsnamen wird ein leerer String zurückgegeben.
+        ''' </remarks>
         Public Function GetEntryValue(Section As String, Entry As String) As String
 
             ' wenn Abschnitt und Eintrag existieren -> Wert zurückgeben ansonsten Null
@@ -524,6 +625,9 @@ Namespace IniFileControl
         ''' <param name="CommentLines">
         ''' Kommentarzeilen
         ''' </param>
+        ''' <remarks>
+        ''' Die übergebenen Zeilen sollten ohne Prefixzeichen sein.
+        ''' </remarks>
         Public Sub SetSectionComment(Name As String, CommentLines() As String)
 
             ' geänderten Abschnittskommentar übernehmen
@@ -546,6 +650,9 @@ Namespace IniFileControl
         ''' <param name="Value">
         ''' Der geänderte Wert.
         ''' </param>
+        ''' <remarks>
+        ''' Der Abschnitt und der Eintrag müssen existieren.
+        ''' </remarks>
         Public Sub SetEntryValue(Section As String, Entry As String, Value As String)
 
             ' geänderten Wert übenehmen
@@ -562,6 +669,11 @@ Namespace IniFileControl
         ''' <summary>
         ''' Übenimmt die Ändeungen uns speichert die Datei
         ''' </summary>
+        ''' <remarks>
+        ''' - Baut den Rohinhalt neu auf.
+        ''' - Speichert automatisch, wenn AutoSave=True, sonst markiert als nicht gespeichert.
+        ''' - Löst anschließend FileContentChanged aus.
+        ''' </remarks>
         Private Sub ChangeFileContent()
             Me.CreateFileContent()  ' Dateiinhalt neu erzeugen 
             If Me._AutoSave Then ' wenn automatisch speichern aktiv
@@ -575,6 +687,9 @@ Namespace IniFileControl
         ''' <summary>
         ''' Speichert die in <see cref="FilePath"/> angegebene Datei.
         ''' </summary>
+        ''' <remarks>
+        ''' Schreibt _FileContent zeilenweise auf Datenträger. IO-Ausnahmen werden nicht abgefangen.
+        ''' </remarks>
         Private Sub SaveFile()
             Dim filepathandname As String = Path.Combine(Me._FilePath, Me._FileName)
             IO.File.WriteAllLines(filepathandname, Me._FileContent) ' Dateiinhalt auf Datenträger schreiben
@@ -587,6 +702,9 @@ Namespace IniFileControl
         ''' <param name="Name">
         ''' Name des neuen Abschnitts
         ''' </param>
+        ''' <remarks>
+        ''' Interne Hilfsfunktion ohne Ereignisauslösung oder Persistierung.
+        ''' </remarks>
         Private Sub AddNewSection(Name As String)
             Me._Sections.Add(Name, New Dictionary(Of String, String)) ' Name-Wert-Paar hinzufügen
             Me._SectionsComments.Add(Name, New List(Of String)) ' Name-Kommentar-Paar hinzufügen
@@ -601,6 +719,9 @@ Namespace IniFileControl
         ''' <param name="Name">
         ''' Name des neuen Eintrags.
         ''' </param>
+        ''' <remarks>
+        ''' Interne Hilfsfunktion ohne Ereignisauslösung oder Persistierung.
+        ''' </remarks>
         Private Sub AddNewEntry(Section As String, Name As String)
             Me._Sections.Item(Section).Add(Name, $"")
         End Sub
@@ -614,6 +735,9 @@ Namespace IniFileControl
         ''' <param name="newName">
         ''' neuer Name
         ''' </param>
+        ''' <remarks>
+        ''' Verschiebt den vorhandenen Kommentar auf den neuen Abschnittsnamen.
+        ''' </remarks>
         Private Sub RenameSectionComment(OldName As String, newName As String)
             ' alten Kommentar speichern, Abschnitt entfernen und
             ' neuen Abschnitt mit altem Kommentar erstellen
@@ -631,6 +755,9 @@ Namespace IniFileControl
         ''' <param name="NewName">
         ''' neuer Name
         ''' </param>
+        ''' <remarks>
+        ''' Verschiebt alle Einträge (Name->Wert) vom alten auf den neuen Abschnittsnamen.
+        ''' </remarks>
         Private Sub RenameSectionValue(OldName As String, NewName As String)
             ' alten Wert speichern, Abschnitt entfernen und
             ' neuen Abschnitt mit altem Wert erstellen
@@ -651,6 +778,9 @@ Namespace IniFileControl
         ''' <param name="NewName">
         ''' Neuer Eintragsname.
         ''' </param>
+        ''' <remarks>
+        ''' Übernimmt den bisherigen Wert unter dem neuen Namen.
+        ''' </remarks>
         Private Sub RenameEntryvalue(Section As String, OldName As String, NewName As String)
             ' alten Wert speichern, Eintrag entfernen und
             ' neuen Eintrag mit altem Wert erstellen
@@ -662,6 +792,11 @@ Namespace IniFileControl
         ''' <summary>
         ''' Erzeugt den Dateiinhalt
         ''' </summary>
+        ''' <remarks>
+        ''' Baut die _FileContent-Zeilen in folgender Reihenfolge:
+        ''' - Dateikommentar (mit Prefix), Leerzeile,
+        ''' - je Abschnitt: [Name], Abschnittskommentare (mit Prefix), Einträge "Key = Value", Leerzeile.
+        ''' </remarks>
         Private Sub CreateFileContent()
             Dim filecontent As New List(Of String) ' Zeilenliste
             For Each line As String In Me._FileComment ' Dateikommentarzeilen anfügen
@@ -686,6 +821,11 @@ Namespace IniFileControl
         ''' <summary>
         ''' analysiert den Dateiinhalt
         ''' </summary>
+        ''' <remarks>
+        ''' Setzt die internen Strukturen anhand der in _FileContent enthaltenen Zeilen neu auf.
+        ''' - Entfernt führende/trailing Whitespaces pro Zeile.
+        ''' - Erkennt Dateikommentare (vor erstem Abschnitt), Abschnittsnamen, Abschnittskommentare und Einträge.
+        ''' </remarks>
         Private Sub ParseFileContent()
             Me.InitParseVariables() ' Variablen initialisieren
             Me._CurrentSectionName = $"" ' aktueller Abschnittsname
@@ -701,6 +841,14 @@ Namespace IniFileControl
         ''' <param name="LineContent">
         ''' Zeileninhalt
         ''' </param>
+        ''' <remarks>
+        ''' Reihenfolge der Prüfungen ist wichtig:
+        ''' - Dateikommentar (nur vor erstem Abschnitt)
+        ''' - Abschnittsname in [Klammern]
+        ''' - Abschnittskommentar (mit Prefix) innerhalb eines Abschnitts
+        ''' - Eintragszeile (Key=Value) innerhalb eines Abschnitts
+        ''' Hinweis: In VB.NET sollten Strings mit "=" verglichen werden, nicht mit "Is".
+        ''' </remarks>
         Private Sub LineAnalyse(LineContent As String)
             If Me._CurrentSectionName Is $"" And LineContent.StartsWith(Me._CommentPrefix) Then
                 ' noch kein Abschnitt gefunden und Zeile startet mit Prefix -> Dateikommentar hinzufügen
@@ -723,6 +871,9 @@ Namespace IniFileControl
         ''' <param name="LineContent">
         ''' Zeileninhalt
         ''' </param>
+        ''' <remarks>
+        ''' Erwartet das Format "Name = Wert". Teile links/rechts von '=' werden getrimmt.
+        ''' </remarks>
         Private Sub AddEntryLine(LineContent As String)
             ' Eintagszeile in Name und Wert trennen
             Dim name As String = LineContent.Split("="c)(0).Trim
@@ -736,6 +887,9 @@ Namespace IniFileControl
         ''' <param name="LineContent">
         ''' Zeileninhalt
         ''' </param>
+        ''' <remarks>
+        ''' Entfernt das Prefixzeichen und trimmt den verbleibenden Text.
+        ''' </remarks>
         Private Sub AddSectionCommentLine(LineContent As String)
             Dim line As String = LineContent.Substring(1, LineContent.Length - 1).Trim ' Prefix und eventuelle Leerzeichen am Anfang und Ende entfernen
             Me._SectionsComments.Item(Me._CurrentSectionName).Add(line) ' Kommentarzeile hinzufügen
@@ -747,6 +901,9 @@ Namespace IniFileControl
         ''' <param name="LineContent">
         ''' Zeileninhalt
         ''' </param>
+        ''' <remarks>
+        ''' Entfernt die umschließenden eckigen Klammern und erstellt die Strukturen für den neuen Abschnitt.
+        ''' </remarks>
         Private Sub AddSectionNameLine(LineContent As String)
             Dim line = LineContent.Substring(1, LineContent.Length - 2).Trim ' Klammern und eventuelle Leerzeichen am Anfang und Ende entfernen
             Me._CurrentSectionName = line ' Abschnittsname merken
@@ -761,6 +918,9 @@ Namespace IniFileControl
         ''' <param name="LineContent">
         ''' Zeileninhalt
         ''' </param>
+        ''' <remarks>
+        ''' Entfernt das Prefixzeichen und trimmt den verbleibenden Text. Gilt nur vor dem ersten Abschnitt.
+        ''' </remarks>
         Private Sub AddFileCommentLine(LineContent As String)
             Dim line = LineContent.Substring(1, LineContent.Length - 1).Trim ' Prefix und eventuelle Leerzeichen am Anfang und Ende entfernen
             Me._FileComment.Add(line) ' Zeile in den Dateikommentar übernehmen
@@ -769,12 +929,16 @@ Namespace IniFileControl
         ''' <summary>
         ''' Initialisiert die Variablen für den Parser
         ''' </summary>
+        ''' <remarks>
+        ''' Setzt die Strukturen auf leere Sammlungen zurück. Vor dem erneuten Aufbau via Parse.
+        ''' </remarks>
         Private Sub InitParseVariables()
             Me._FileComment = New List(Of String)
             Me._Sections = New Dictionary(Of String, Dictionary(Of String, String))
             Me._SectionsComments = New Dictionary(Of String, List(Of String))
         End Sub
 
+        ' Platzhalter für Designer-Unterstützung (keine Implementierung notwendig)
         Private Sub InitializeComponent()
         End Sub
 
