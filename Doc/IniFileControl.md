@@ -80,6 +80,7 @@ Benutzername=admin
 Passwort=geheim
 ```
 
+<a name="kommentare"></a>
 ### 1.3. Kommentare
 
    - Kommentare beginnen mit einem Semikolon <font color="red">;</font> oder einem Hashtag <font color="red">#</font>.
@@ -119,16 +120,20 @@ LogDatei=logs/app.log
 
 :memo: **Kommentare:** 
 
-> &rarr; Die ersten beiden Zeilen sind Kommentare, die ignoriert werden.
+> &rarr; Die erste Zeile ist ein Kommentar, der ignoriert wird.
 
 :memo: **Abschnitt "Allgemein":**
 
+>   &rarr;	Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
+>
 >   &rarr;	**AppName=MeineApp**: Definiert den Namen der Anwendung.
 >
 >   &rarr;	**Version=1.0.0**: Gibt die Version der Anwendung an.
 
 :memo: **Abschnitt "Datenbank":**
 
+>   &rarr;	Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
+>
 >   &rarr;	**Server=localhost**: Gibt den Datenbankserver an.
 >
 >   &rarr;	**Port=3306**: Gibt den Port an, auf dem die Datenbank läuft.
@@ -338,22 +343,18 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 <a name="verwendung"></a>
 ## 8. Verwendung (vereinfachtes Beispiel)
 
-```csharp
-// IniFile laden
-iniFile = new IniFile();
-iniFile.LoadFile("konfiguration.ini");
+```vbnet
+' IniFile laden
+iniFile = New IniFile
+iniFile.LoadFile("konfiguration.ini")
+Dim sektionen() As String = iniFile.GetSectionNames
+Dim wert As String = iniFile.GetEntryValue("Datenbank", "Benutzername")
 
-// Sektionen auslesen
-string[] sektionen = iniFile.GetSectionNames();
+' Kommentar einer Sektion setzen
+iniFile.SetSectionComment("Logging", "Einstellungen für das Logging")
 
-// Wert eines Eintrags auslesen
-string wert = iniFile.GetEntryValue("Datenbank", "Benutzername");
-
-// Kommentar einer Sektion setzen
-iniFile.SetSectionComment("Logging", "Einstellungen für das Logging");
-
-// Datei speichern
-iniFile.SaveFile();
+' Datei speichern
+iniFile.SaveFile
 ```
 
 ---
@@ -373,13 +374,14 @@ iniFile.SaveFile();
 **Spezifische Validierungen:**
 
 `IniFile`:
-    - Verbieten leerer oder nur aus Leerzeichen bestehenden Namen für Sektionen und Einträge.
-    - Verhindern von Duplikaten: Keine zwei Sektionen oder Einträge mit demselben Namen.
+
+   - Verbieten leerer oder nur aus Leerzeichen bestehenden Namen für Sektionen und Einträge.
+   - Verhindern von Duplikaten: Keine zwei Sektionen oder Einträge mit demselben Namen.
 
 **Steuerelemente:**
 
-    - `EntryValueEdit`: Nur gültige, nicht-leere Werte erlauben.
-    - `CommentEdit`: Umgang mit mehrzeiligen Kommentaren prüfen (z. B. durch `Join()` beim Setzen).
+   - `EntryValueEdit`: Nur gültige, nicht-leere Werte erlauben.
+   - `CommentEdit`: Umgang mit mehrzeiligen Kommentaren prüfen (z. B. durch `Join()` beim Setzen).
 
 **Fehlerberichte:**
 
@@ -400,14 +402,15 @@ iniFile.SaveFile();
 
   - Vermeiden unnötiger `Load`/`Save`-Operationen.
   - Beispiel:
-    ```csharp
+  
+    ```vbnet
     lock (iniFile)
-    {
-        iniFile.LoadFile("konfiguration.ini");
-        // Änderungen vornehmen
-        iniFile.SaveFile();
-    }
+    iniFile
+    iniFile.LoadFile("konfiguration.ini")
+    ' Änderungen vornehmen
+    iniFile.SaveFile   
     ```
+
   - Aufwand für Synchronisierung meist vernachlässigbar gegen I/O-Operationen.
 
 ---
@@ -485,7 +488,7 @@ iniFile.SaveFile();
 <a name="beispiel-zusammenspiel"></a>
 ## 14. Beispiel: Zusammenspiel mehrerer Controls (Ausschnitt)
 
-```vb.net
+```vbnet
 ' UI initial binden
 ListSections.ListItems = _ini.GetSectionNames()
 ContentView1.Lines = _ini.GetFileContent()
@@ -493,7 +496,7 @@ ContentView1.Lines = _ini.GetFileContent()
 ' Events
 AddHandler _ini.FileContentChanged,
     Sub()
-        ContentView1.Lines = _ini.GetFileContent()
+        ContentView1.Lines = _ini.GetFileContent() 
     End Sub
 End Sub
 ```
