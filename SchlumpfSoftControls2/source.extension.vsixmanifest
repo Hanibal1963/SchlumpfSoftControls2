@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="3.2025.0928.0" Language="de-DE" Publisher="Andreas Sauer" />
+        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="3.2025.1004.0" Language="de-DE" Publisher="Andreas Sauer" />
         <DisplayName>SchlumpfSoftControls2</DisplayName>
         <Description xml:space="preserve">Eine Sammlung verschiedener Steuerelemente.</Description>
         <MoreInfo>https://github.com/Hanibal1963/SchlumpfSoftControls2</MoreInfo>
         <License>LICENSE.rtf</License>
         <ReleaseNotes>ReleaseNotes.rtf</ReleaseNotes>
         <Icon>Icon.png</Icon>
-        <Tags>Controls, Animation, ProgressBar, Shape, SevenSegment, Drive, Label, Explorer, Wizard,Transparent, Notify, Form,TreeView,</Tags>
+        <Tags>Controls, Animation, ProgressBar, Shape, SevenSegment, Drive, Label, Explorer, Wizard,Transparent, Notify, Form,TreeView,INI,Datei,File</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,)">
@@ -37,5 +37,6 @@
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="WizardControl" Path="|WizardControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="DriveWatcherControl" Path="|DriveWatcherControl;PkgdefProjectOutputGroup|" />
         <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="ExplorerTreeViewControl" Path="|ExplorerTreeViewControl;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.ToolboxControl" d:Source="Project" d:ProjectName="IniFileControl" Path="|IniFileControl;PkgdefProjectOutputGroup|" />
     </Assets>
 </PackageManifest>
