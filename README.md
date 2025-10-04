@@ -27,6 +27,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * [SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.](Doc/SevenSegmentControl.md) 
 * [ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.](Doc/ColorProgressBarControl.md)
 * [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](Doc/ExplorerTreeViewControl.md)
+* [IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.](Doc/IniFileControl.md)
 
 >  **Hinweis:**
 > 
@@ -38,7 +39,6 @@ Zurzeit sind folgende Steuerelemente vorhanden:
   ## geplante Änderungen und Erweiterungen
 
 * Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
-* Hinzufügen des ursprünglichen IniFile Controls.
 * Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
 * Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
 * Neues Control zum Auswählen einer Uhrzeit hinzufügen.
@@ -48,6 +48,11 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 ---
 
 ## Versionsverlauf
+
+**Version 3.2025.1004.0 (04.10.2025)**
+- ursprüngliches Projekt IniFileControl in dieses Projekt übernommen
+- Dokumentation für IniFileControl hinzugefügt
+- Demoanwendung um IniFileControl erweitert
 
 **Version 3.2025.0928.0 (28.09.2025)**
 - Dokumentationen überarbeitet und erweitert
