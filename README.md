@@ -49,6 +49,9 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1004.1 (04.10.2025)**
+- Korrektur eines Fehlers der verhinderte das die Symbole in der IDE richtig angezeigt werden.
+
 **Version 3.2025.1004.0 (04.10.2025)**
 - ursprüngliches Projekt IniFileControl in dieses Projekt übernommen
 - Dokumentation für IniFileControl hinzugefügt
