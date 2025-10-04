@@ -131,7 +131,7 @@
     <EmbeddedResource Include="Resources\DriveRemovable.png" />
     <EmbeddedResource Include="Resources\DriveSystem.png" />
     <EmbeddedResource Include="Resources\DriveUnknown.png" />
-    <EmbeddedResource Include="Resources\ExplorerTreeView.bmp" />
+    <EmbeddedResource Include="Resources\ExplorerTreeViewControl.ExplorerTreeView.bmp" />
     <EmbeddedResource Include="Resources\Folder.png" />
     <EmbeddedResource Include="Resources\FolderDesktop.png" />
     <EmbeddedResource Include="Resources\FolderDocuments.png" />

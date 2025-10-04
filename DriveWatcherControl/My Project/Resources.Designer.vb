@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property DriveWatcher() As System.Drawing.Bitmap
+        Friend ReadOnly Property DriveWatcherControl_DriveWatcher() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("DriveWatcher", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("DriveWatcherControl_DriveWatcher", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

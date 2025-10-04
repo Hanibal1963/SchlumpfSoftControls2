@@ -103,6 +103,11 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ListEditEventArgs.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RenameItemDialog.Designer.vb">
       <DependentUpon>RenameItemDialog.vb</DependentUpon>
     </Compile>
@@ -111,11 +116,6 @@
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="IniFileControlPackage.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -171,19 +171,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\IniFile.bmp" />
+    <EmbeddedResource Include="Resources\IniFileControl.IniFile.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\CommentEdit.bmp" />
+    <EmbeddedResource Include="Resources\IniFileControl.CommentEdit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ContentView.bmp" />
+    <EmbeddedResource Include="Resources\IniFileControl.ContentView.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EntryValueEdit.bmp" />
+    <EmbeddedResource Include="Resources\IniFileControl.EntryValueEdit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ListEdit.bmp" />
+    <EmbeddedResource Include="Resources\IniFileControl.ListEdit.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />

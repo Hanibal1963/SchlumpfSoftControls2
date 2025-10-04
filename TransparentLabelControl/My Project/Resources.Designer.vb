@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property TransparentLabel() As System.Drawing.Bitmap
+        Friend ReadOnly Property TransparentLabelControl_TransparentLabel() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("TransparentLabel", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TransparentLabelControl_TransparentLabel", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

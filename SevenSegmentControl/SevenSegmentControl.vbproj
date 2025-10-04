@@ -115,8 +115,8 @@
     <None Include="MultiDigit.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MultiDigit.bmp" />
-    <EmbeddedResource Include="Resources\SingleDigit.bmp" />
+    <EmbeddedResource Include="Resources\SevenSegmentControl.MultiDigit.bmp" />
+    <EmbeddedResource Include="Resources\SevenSegmentControl.SingleDigit.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />

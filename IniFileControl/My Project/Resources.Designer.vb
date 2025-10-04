@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property CommentEdit() As System.Drawing.Bitmap
+        Friend ReadOnly Property IniFileControl_CommentEdit() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("CommentEdit", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("IniFileControl_CommentEdit", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -73,9 +73,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property ContentView() As System.Drawing.Bitmap
+        Friend ReadOnly Property IniFileControl_ContentView() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("ContentView", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("IniFileControl_ContentView", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -83,9 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property EntryValueEdit() As System.Drawing.Bitmap
+        Friend ReadOnly Property IniFileControl_EntryValueEdit() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("EntryValueEdit", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("IniFileControl_EntryValueEdit", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -93,9 +93,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property IniFile() As System.Drawing.Bitmap
+        Friend ReadOnly Property IniFileControl_IniFile() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("IniFile", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("IniFileControl_IniFile", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -103,9 +103,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property ListEdit() As System.Drawing.Bitmap
+        Friend ReadOnly Property IniFileControl_ListEdit() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("ListEdit", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("IniFileControl_ListEdit", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

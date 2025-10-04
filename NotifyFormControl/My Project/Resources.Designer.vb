@@ -83,9 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property NotifyForm() As System.Drawing.Bitmap
+        Friend ReadOnly Property NotifyFormControl_NotifyForm() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("NotifyForm", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("NotifyFormControl_NotifyForm", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

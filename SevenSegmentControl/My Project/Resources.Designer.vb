@@ -63,9 +63,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property MultiDigit() As System.Drawing.Bitmap
+        Friend ReadOnly Property SevenSegmentControl_MultiDigit() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("MultiDigit", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("SevenSegmentControl_MultiDigit", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -73,9 +73,9 @@ Namespace My.Resources
         '''<summary>
         '''  Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property SingleDigit() As System.Drawing.Bitmap
+        Friend ReadOnly Property SevenSegmentControl_SingleDigit() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("SingleDigit", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("SevenSegmentControl_SingleDigit", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

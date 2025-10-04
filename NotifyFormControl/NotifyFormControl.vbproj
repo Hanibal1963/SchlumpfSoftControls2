@@ -103,7 +103,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\CriticalError.png" />
     <EmbeddedResource Include="Resources\Information.png" />
-    <EmbeddedResource Include="Resources\NotifyForm.bmp" />
+    <EmbeddedResource Include="Resources\NotifyFormControl.NotifyForm.bmp" />
     <EmbeddedResource Include="Resources\Question.png" />
     <EmbeddedResource Include="Resources\Warning.png" />
   </ItemGroup>
