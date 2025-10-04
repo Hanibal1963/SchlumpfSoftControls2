@@ -80,6 +80,7 @@ Benutzername=admin
 Passwort=geheim
 ```
 
+<a name="kommentare"></a>
 ### 1.3. Kommentare
 
    - Kommentare beginnen mit einem Semikolon <font color="red">;</font> oder einem Hashtag <font color="red">#</font>.
@@ -338,22 +339,16 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 <a name="verwendung"></a>
 ## 8. Verwendung (vereinfachtes Beispiel)
 
-```csharp
-// IniFile laden
-iniFile = new IniFile();
-iniFile.LoadFile("konfiguration.ini");
-
-// Sektionen auslesen
-string[] sektionen = iniFile.GetSectionNames();
-
-// Wert eines Eintrags auslesen
-string wert = iniFile.GetEntryValue("Datenbank", "Benutzername");
-
-// Kommentar einer Sektion setzen
-iniFile.SetSectionComment("Logging", "Einstellungen für das Logging");
-
-// Datei speichern
-iniFile.SaveFile();
+```vbnet
+' IniFile laden
+iniFile = New IniFile
+iniFile.LoadFile("konfiguration.ini")
+Dim sektionen() As String = iniFile.GetSectionNames
+Dim wert As String = iniFile.GetEntryValue("Datenbank", "Benutzername")
+' Kommentar einer Sektion setzen
+iniFile.SetSectionComment("Logging", "Einstellungen für das Logging")
+' Datei speichern
+iniFile.SaveFile
 ```
 
 ---
@@ -400,13 +395,11 @@ iniFile.SaveFile();
 
   - Vermeiden unnötiger `Load`/`Save`-Operationen.
   - Beispiel:
-    ```csharp
-    lock (iniFile)
-    {
-        iniFile.LoadFile("konfiguration.ini");
-        // Änderungen vornehmen
-        iniFile.SaveFile();
-    }
+    ```vbnet
+iniFile
+{iniFile.LoadFile("konfiguration.ini")
+' Änderungen vornehmen
+iniFile.SaveFile
     ```
   - Aufwand für Synchronisierung meist vernachlässigbar gegen I/O-Operationen.
 
