@@ -44,6 +44,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * Neues Control zum Auswählen einer Uhrzeit hinzufügen.
 * Neues Control zur Dateisuche.
 * Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
+* Neues Control zum Anzeigen und Bearbeiten von  RTF - Text.
 
 ---
 
