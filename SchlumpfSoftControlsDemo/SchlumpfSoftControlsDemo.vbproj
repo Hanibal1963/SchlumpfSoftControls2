@@ -97,6 +97,12 @@
     <Compile Include="ExplorerTreeViewDemo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ExtendedRTFDemo.Designer.vb">
+      <DependentUpon>ExtendedRTFDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedRTFDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="FormMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     <EmbeddedResource Include="ExplorerTreeViewDemo.resx">
       <DependentUpon>ExplorerTreeViewDemo.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ExtendedRTFDemo.resx">
+      <DependentUpon>ExtendedRTFDemo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
@@ -226,6 +235,10 @@
     <ProjectReference Include="..\ExplorerTreeViewControl\ExplorerTreeViewControl.vbproj">
       <Project>{801c2639-9bb1-44fe-899a-1a688378f5dc}</Project>
       <Name>ExplorerTreeViewControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExtendedRTFControl\ExtendedRTFControl.vbproj">
+      <Project>{bf014da6-cd26-43e8-96c6-767679ce78b5}</Project>
+      <Name>ExtendedRTFControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\IniFileControl\IniFileControl.vbproj">
       <Project>{fb6f2b12-4169-4f5b-a4ff-3e6defc40d90}</Project>
@@ -314,6 +327,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Papa Schlumpf 08.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Backcolor.png" />
+    <Content Include="Resources\Bold.png" />
+    <Content Include="Resources\Delformat.png" />
+    <Content Include="Resources\Fontdown.png" />
+    <Content Include="Resources\Fontformat.png" />
+    <Content Include="Resources\Fontup.png" />
+    <Content Include="Resources\Forecolor.png" />
+    <Content Include="Resources\Italic.png" />
+    <Content Include="Resources\LeftIndentDown.png" />
+    <Content Include="Resources\LeftIndentUp.png" />
+    <Content Include="Resources\Setdown.png" />
+    <Content Include="Resources\Setup.png" />
+    <Content Include="Resources\Strikeout.png" />
+    <Content Include="Resources\Textcenter.png" />
+    <Content Include="Resources\Textleft.png" />
+    <Content Include="Resources\Textright.png" />
+    <Content Include="Resources\Togglebullets.png" />
+    <Content Include="Resources\Underline.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -17,7 +17,7 @@ Public Class FormMain
         Handles ToolStripMenuItemBeenden.Click, ToolStripMenuItemAniGifTest.Click, ToolStripMenuItemColorProgressBarTest.Click,
         ToolStripMenuItemDriveWatcherTest.Click, ToolStripMenuItemExplorerTreeViewTest.Click, ToolStripMenuItemNotifyFormTest.Click,
         ToolStripMenuItemSevenSegmentTest.Click, ToolStripMenuItemShapeTest.Click, ToolStripMenuItemTransparentLabelTest.Click,
-        ToolStripMenuItemWizardTest.Click, ToolStripMenuItemIniFileTest.Click
+        ToolStripMenuItemWizardTest.Click, ToolStripMenuItemIniFileTest.Click, ToolStripMenuItemExtendedRTFTest.Click
 
         Select Case True
             Case sender Is ToolStripMenuItemBeenden
@@ -42,6 +42,8 @@ Public Class FormMain
                 Me.TabControl.SelectedTab = Me.TabPageWizard
             Case sender Is ToolStripMenuItemIniFileTest
                 Me.TabControl.SelectedTab = Me.TabPageIniFile
+            Case sender Is ToolStripMenuItemExtendedRTFTest
+                Me.TabControl.SelectedTab = Me.TabPageExtRTF
         End Select
 
     End Sub

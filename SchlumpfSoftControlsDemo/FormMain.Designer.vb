@@ -43,6 +43,8 @@ Partial Class FormMain
         Me.TabPageWizard = New System.Windows.Forms.TabPage()
         Me.WizardDemo1 = New SchlumpfSoftControlsDemo.WizardDemo()
         Me.TabPageIniFile = New System.Windows.Forms.TabPage()
+        Me.IniFileDemo1 = New SchlumpfSoftControlsDemo.IniFileDemo()
+        Me.TabPageExtRTF = New System.Windows.Forms.TabPage()
         Me.MenuStripMain = New System.Windows.Forms.MenuStrip()
         Me.ToolStripMenuItemDatei = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemBeenden = New System.Windows.Forms.ToolStripMenuItem()
@@ -57,9 +59,10 @@ Partial Class FormMain
         Me.ToolStripMenuItemTransparentLabelTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemWizardTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemIniFileTest = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItemExtendedRTFTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorProgressBarDemo1 = New SchlumpfSoftControlsDemo.ColorProgressBarDemo()
         Me.SevenSegmentDemo1 = New SchlumpfSoftControlsDemo.SevenSegmentDemo()
-        Me.IniFileDemo1 = New SchlumpfSoftControlsDemo.IniFileDemo()
+        Me.ExtendedRTFDemo1 = New SchlumpfSoftControlsDemo.ExtendedRTFDemo()
         Me.ToolStripContainer.ContentPanel.SuspendLayout()
         Me.ToolStripContainer.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer.SuspendLayout()
@@ -74,6 +77,7 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.SuspendLayout()
         Me.TabPageWizard.SuspendLayout()
         Me.TabPageIniFile.SuspendLayout()
+        Me.TabPageExtRTF.SuspendLayout()
         Me.MenuStripMain.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -107,6 +111,7 @@ Partial Class FormMain
         Me.TabControl.Controls.Add(Me.TabPageTransparentLabel)
         Me.TabControl.Controls.Add(Me.TabPageWizard)
         Me.TabControl.Controls.Add(Me.TabPageIniFile)
+        Me.TabControl.Controls.Add(Me.TabPageExtRTF)
         Me.TabControl.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl.Location = New System.Drawing.Point(0, 0)
         Me.TabControl.Name = "TabControl"
@@ -285,6 +290,25 @@ Partial Class FormMain
         Me.TabPageIniFile.Text = "IniFile"
         Me.TabPageIniFile.UseVisualStyleBackColor = True
         '
+        'IniFileDemo1
+        '
+        Me.IniFileDemo1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.IniFileDemo1.Location = New System.Drawing.Point(3, 3)
+        Me.IniFileDemo1.Name = "IniFileDemo1"
+        Me.IniFileDemo1.Size = New System.Drawing.Size(816, 529)
+        Me.IniFileDemo1.TabIndex = 0
+        '
+        'TabPageExtRTF
+        '
+        Me.TabPageExtRTF.Controls.Add(Me.ExtendedRTFDemo1)
+        Me.TabPageExtRTF.Location = New System.Drawing.Point(4, 22)
+        Me.TabPageExtRTF.Name = "TabPageExtRTF"
+        Me.TabPageExtRTF.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageExtRTF.Size = New System.Drawing.Size(822, 535)
+        Me.TabPageExtRTF.TabIndex = 10
+        Me.TabPageExtRTF.Text = "ExtendedRTF"
+        Me.TabPageExtRTF.UseVisualStyleBackColor = True
+        '
         'MenuStripMain
         '
         Me.MenuStripMain.Dock = System.Windows.Forms.DockStyle.None
@@ -311,7 +335,7 @@ Partial Class FormMain
         '
         'ToolStripMenuItemAnsicht
         '
-        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest, Me.ToolStripMenuItemIniFileTest})
+        Me.ToolStripMenuItemAnsicht.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItemAniGifTest, Me.ToolStripMenuItemColorProgressBarTest, Me.ToolStripMenuItemDriveWatcherTest, Me.ToolStripMenuItemExplorerTreeViewTest, Me.ToolStripMenuItemNotifyFormTest, Me.ToolStripMenuItemSevenSegmentTest, Me.ToolStripMenuItemShapeTest, Me.ToolStripMenuItemTransparentLabelTest, Me.ToolStripMenuItemWizardTest, Me.ToolStripMenuItemIniFileTest, Me.ToolStripMenuItemExtendedRTFTest})
         Me.ToolStripMenuItemAnsicht.Name = "ToolStripMenuItemAnsicht"
         Me.ToolStripMenuItemAnsicht.Size = New System.Drawing.Size(59, 20)
         Me.ToolStripMenuItemAnsicht.Text = "Ansicht"
@@ -376,6 +400,12 @@ Partial Class FormMain
         Me.ToolStripMenuItemIniFileTest.Size = New System.Drawing.Size(188, 22)
         Me.ToolStripMenuItemIniFileTest.Text = "IniFile"
         '
+        'ToolStripMenuItemExtendedRTFTest
+        '
+        Me.ToolStripMenuItemExtendedRTFTest.Name = "ToolStripMenuItemExtendedRTFTest"
+        Me.ToolStripMenuItemExtendedRTFTest.Size = New System.Drawing.Size(188, 22)
+        Me.ToolStripMenuItemExtendedRTFTest.Text = "ExtendedRTF Test"
+        '
         'ColorProgressBarDemo1
         '
         Me.ColorProgressBarDemo1.Location = New System.Drawing.Point(8, 15)
@@ -390,13 +420,12 @@ Partial Class FormMain
         Me.SevenSegmentDemo1.Size = New System.Drawing.Size(320, 245)
         Me.SevenSegmentDemo1.TabIndex = 0
         '
-        'IniFileDemo1
+        'ExtendedRTFDemo1
         '
-        Me.IniFileDemo1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.IniFileDemo1.Location = New System.Drawing.Point(3, 3)
-        Me.IniFileDemo1.Name = "IniFileDemo1"
-        Me.IniFileDemo1.Size = New System.Drawing.Size(816, 529)
-        Me.IniFileDemo1.TabIndex = 0
+        Me.ExtendedRTFDemo1.Location = New System.Drawing.Point(8, 16)
+        Me.ExtendedRTFDemo1.Name = "ExtendedRTFDemo1"
+        Me.ExtendedRTFDemo1.Size = New System.Drawing.Size(806, 500)
+        Me.ExtendedRTFDemo1.TabIndex = 0
         '
         'FormMain
         '
@@ -429,6 +458,7 @@ Partial Class FormMain
         Me.TabPageTransparentLabel.ResumeLayout(False)
         Me.TabPageWizard.ResumeLayout(False)
         Me.TabPageIniFile.ResumeLayout(False)
+        Me.TabPageExtRTF.ResumeLayout(False)
         Me.MenuStripMain.ResumeLayout(False)
         Me.MenuStripMain.PerformLayout()
         Me.ResumeLayout(False)
@@ -473,4 +503,7 @@ Partial Class FormMain
     Private WithEvents TabPageIniFile As TabPage
     Private WithEvents ToolStripMenuItemIniFileTest As ToolStripMenuItem
     Friend WithEvents IniFileDemo1 As IniFileDemo
+    Private WithEvents TabPageExtRTF As TabPage
+    Private WithEvents ToolStripMenuItemExtendedRTFTest As ToolStripMenuItem
+    Friend WithEvents ExtendedRTFDemo1 As ExtendedRTFDemo
 End Class
