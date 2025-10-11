@@ -3,6 +3,7 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+'Imports System.ComponentModel.
 Imports SchlumpfSoft.Controls.Attribute
 
 Namespace ExtendedRTFControl
@@ -139,6 +140,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Einheitliche Schriftgröße der Auswahl oder Größe am Caret. Mischzustand => Nothing.
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionFontSize As System.Nullable(Of Single)
             Get
                 If SelectionLength = 0 Then
@@ -161,6 +163,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Einheitlicher Bold-Zustand der Auswahl oder Zustand am Caret. Mischzustand => Nothing.
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionBold As System.Nullable(Of Boolean)
             Get
                 If SelectionLength = 0 Then
@@ -179,6 +182,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Kursiv-Zustand (Italic) oder Mischzustand (Nothing).
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionItalic As System.Nullable(Of Boolean)
             Get
                 If SelectionLength = 0 Then
@@ -197,6 +201,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Unterstreichung oder Mischzustand (Nothing).
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionUnderline As System.Nullable(Of Boolean)
             Get
                 If SelectionLength = 0 Then
@@ -215,6 +220,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Durchstreichung oder Mischzustand (Nothing).
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionStrikeout As System.Nullable(Of Boolean)
             Get
                 If SelectionLength = 0 Then
@@ -236,6 +242,7 @@ Namespace ExtendedRTFControl
         ''' <remarks>
         ''' Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.
         ''' </remarks>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionForeColor As System.Drawing.Color
             Get
                 Return MyBase.SelectionColor
@@ -248,6 +255,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Aktuelle Hintergrund-/Highlightfarbe. Meldet keinen Mischzustand (immer konkreter Wert).
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Overloads Property SelectionBackColor As System.Drawing.Color
             Get
                 Return MyBase.SelectionBackColor
@@ -260,6 +268,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Einheitlicher linker Absatz-Einzug (Pixel) oder Mischzustand (Nothing).
         ''' </summary>
+        <System.ComponentModel.Browsable(False)>
         Public Property SelectionLeftIndent As System.Nullable(Of Integer)
             Get
                 Return If(SelectionLength = 0, MyBase.SelectionIndent, GetUniformParagraphValue(Function() MyBase.SelectionIndent))
