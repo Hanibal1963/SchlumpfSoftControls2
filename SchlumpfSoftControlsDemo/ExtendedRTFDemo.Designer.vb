@@ -79,8 +79,8 @@ Partial Class ExtendedRTFDemo
         Me.RTFTB.SelectionUnderline = False
         Me.RTFTB.Size = New System.Drawing.Size(481, 260)
         Me.RTFTB.TabIndex = 0
-        Me.RTFTB.Text = "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Bei" &
-    "spiettext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispiettext"
+        Me.RTFTB.Text = "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltte" &
+    "xt" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext"
         '
         'ToolStrip1
         '
