@@ -50,6 +50,9 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1011.0 (11.10.2025)**
+- ExtendedRTFControl hinzugefügt.
+
 **Version 3.2025.1004.1 (04.10.2025)**
 - Korrektur eines Fehlers der verhinderte das die Symbole in der IDE richtig angezeigt werden.
 
