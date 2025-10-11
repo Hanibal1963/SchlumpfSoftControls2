@@ -1,4 +1,9 @@
-﻿Public Class ExtendedRTFDemo
+﻿' *************************************************************************************************
+' ExtendedRTFDemo.vb
+' Copyright (c) 2025 by Andreas Sauer 
+' *************************************************************************************************
+
+Public Class ExtendedRTFDemo
 
     ' Zentraler Event-Handler für alle Format-Schaltflächen und Menüeinträge.
     ' Über "sender" wird ermittelt, welche Aktion auf die aktuelle Auswahl im RTFTB angewendet werden soll.
@@ -9,7 +14,9 @@
         ToolStripButtonItalic.Click, ToolStripButtonForeColor.Click, ToolStripButtonFontSizeUp.Click, ToolStripButtonFontSizeDown.Click,
         ToolStripButtonFontFormat.Click, ToolStripButtonDelFormat.Click, ToolStripButtonBold.Click, ToolStripButtonBackColor.Click
 
+        ' Welche Schaltfläche wurde geklickt?
         Select Case True
+
             Case sender Is Me.ToolStripButtonBold
                 ' markierten Text fett oder nicht fett
                 RTFTB.ToggleBold()
@@ -144,63 +151,58 @@
     Private Sub SetAlignmentCheckedState()
         Select Case RTFTB.SelectionAlignment
             Case HorizontalAlignment.Left
-                Me.ToolStripButtonTextLeft.Checked = True
-                Me.ToolStripButtonTextCenter.Checked = False
-                Me.ToolStripButtonTextRight.Checked = False
+                SetLeftAlignmentCheckedState()
             Case HorizontalAlignment.Center
-                Me.ToolStripButtonTextLeft.Checked = False
-                Me.ToolStripButtonTextCenter.Checked = True
-                Me.ToolStripButtonTextRight.Checked = False
+                SetCenterAlignmentCheckedState()
             Case HorizontalAlignment.Right
-                Me.ToolStripButtonTextLeft.Checked = False
-                Me.ToolStripButtonTextCenter.Checked = False
-                Me.ToolStripButtonTextRight.Checked = True
+                SetRightAlignmentCheckedState()
         End Select
+    End Sub
+
+    ' Synchronisiert den Checked-Status für rechtsbündige Textausrichtung (Right).
+    Private Sub SetRightAlignmentCheckedState()
+        Me.ToolStripButtonTextLeft.Checked = False
+        Me.ToolStripButtonTextCenter.Checked = False
+        Me.ToolStripButtonTextRight.Checked = True
+    End Sub
+
+    ' Synchronisiert den Checked-Status für zentrierte Textausrichtung (Center).
+    Private Sub SetCenterAlignmentCheckedState()
+        Me.ToolStripButtonTextLeft.Checked = False
+        Me.ToolStripButtonTextCenter.Checked = True
+        Me.ToolStripButtonTextRight.Checked = False
+    End Sub
+
+    ' Synchronisiert den Checked-Status für linksbündige Textausrichtung (Left).
+    Private Sub SetLeftAlignmentCheckedState()
+        Me.ToolStripButtonTextLeft.Checked = True
+        Me.ToolStripButtonTextCenter.Checked = False
+        Me.ToolStripButtonTextRight.Checked = False
     End Sub
 
     ' Synchronisiert den Checked-Status  für Aufzählungszeichen (Bullet).
     Private Sub SetBulletCheckedState()
-        If RTFTB.SelectionBullet Then
-            Me.ToolStripButtonToggleBullets.Checked = True
-        Else
-            Me.ToolStripButtonToggleBullets.Checked = False
-        End If
+        Me.ToolStripButtonToggleBullets.Checked = RTFTB.SelectionBullet
     End Sub
 
     ' Synchronisiert den Checked-Status für Durchstreichung (Strikeout).
     Private Sub SetStrikeoutCheckedState()
-        If RTFTB.SelectionStrikeout Then
-            Me.ToolStripButtonStrikeout.Checked = True
-        Else
-            Me.ToolStripButtonStrikeout.Checked = False
-        End If
+        Me.ToolStripButtonStrikeout.Checked = CBool(RTFTB.SelectionStrikeout)
     End Sub
 
     ' Synchronisiert den Checked-Status für Unterstreichung (Underline).
     Private Sub SetUnderlineCheckedState()
-        If RTFTB.SelectionUnderline Then
-            Me.ToolStripButtonUnderline.Checked = True
-        Else
-            Me.ToolStripButtonUnderline.Checked = False
-        End If
+        Me.ToolStripButtonUnderline.Checked = CBool(RTFTB.SelectionUnderline)
     End Sub
 
     ' Synchronisiert den Checked-Status für Kursivschrift (Italic).
     Private Sub SetItalicCheckedState()
-        If RTFTB.SelectionItalic Then
-            Me.ToolStripButtonItalic.Checked = True
-        Else
-            Me.ToolStripButtonItalic.Checked = False
-        End If
+        Me.ToolStripButtonItalic.Checked = CBool(RTFTB.SelectionItalic)
     End Sub
 
     ' Synchronisiert den Checked-Status für Fettschrift (Bold).
     Private Sub SetBoldCheckedState()
-        If RTFTB.SelectionBold Then
-            Me.ToolStripButtonBold.Checked = True
-        Else
-            Me.ToolStripButtonBold.Checked = False
-        End If
+        Me.ToolStripButtonBold.Checked = CBool(RTFTB.SelectionBold)
     End Sub
 
 End Class

@@ -3,7 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-'Imports System.ComponentModel.
 Imports SchlumpfSoft.Controls.Attribute
 
 Namespace ExtendedRTFControl
