@@ -129,6 +129,13 @@ Namespace ExtendedRTFControl
             SelectionStrikeout = Not SelectionStrikeout.GetValueOrDefault(False)
         End Sub
 
+        ''' <summary>
+        ''' Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Funktioniert nur auf Absatzebene (SelectionLength=0 -> aktueller Absatz).
+        ''' </remarks
+        ''' </summary>
         Public Sub ToggleBullet()
             SelectionBullet = Not SelectionBullet
         End Sub
@@ -138,8 +145,12 @@ Namespace ExtendedRTFControl
 #Region "Eigenschaften (Format)"
 
         ''' <summary>
-        ''' Einheitliche Schriftgröße der Auswahl oder Größe am Caret. Mischzustand => Nothing.
+        ''' Setzt die Schriftgröße der Auswahl oder Größe am Caret oder gibt diese
+        ''' zurück.
         ''' </summary>
+        ''' <remarks>
+        ''' Ein Mischzustand ergibt Nothing.
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionFontSize As System.Nullable(Of Single)
             Get
@@ -161,8 +172,11 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Einheitlicher Bold-Zustand der Auswahl oder Zustand am Caret. Mischzustand => Nothing.
+        ''' Setzt den Bold-Zustand der Auswahl oder am Caret oder gibt diesen zurück.
         ''' </summary>
+        ''' <remarks>
+        ''' Ein Mischzustand ergibt Nothing.
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionBold As System.Nullable(Of Boolean)
             Get
@@ -180,8 +194,11 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Kursiv-Zustand (Italic) oder Mischzustand (Nothing).
+        ''' Setzt den Kursiv-Zustand der Auswahl oder am Caret  oder gibt diesen zurück.
         ''' </summary>
+        ''' <remarks>
+        ''' Ein Mischzustand ergibt Nothing.
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionItalic As System.Nullable(Of Boolean)
             Get
@@ -199,7 +216,10 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Unterstreichung oder Mischzustand (Nothing).
+        ''' Setzt die Unterstreichung der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' </summary>
+        ''' <remarks>
+        ''' Ein Mischzustand ergibt Nothing.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionUnderline As System.Nullable(Of Boolean)
@@ -218,7 +238,10 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Durchstreichung oder Mischzustand (Nothing).
+        ''' Setzt die Durchstreichung der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' </summary>
+        ''' <remarks>
+        ''' Ein Mischzustand ergibt Nothing.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionStrikeout As System.Nullable(Of Boolean)
@@ -237,10 +260,12 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Aktuelle Vordergrundfarbe (Textfarbe). Meldet keinen Mischzustand (immer konkreter Wert).
+        ''' Setzt die aktuelle Vordergrundfarbe (Textfarbe) der Auswahl oder am Caret oder gibt diese zurück.
         ''' </summary>
         ''' <remarks>
-        ''' Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.
+        ''' <para>Meldet keinen Mischzustand (immer konkreter Wert). </para>
+        ''' <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu
+        ''' den Stil-Flags nötig.</para>
         ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionForeColor As System.Drawing.Color
@@ -253,8 +278,13 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Aktuelle Hintergrund-/Highlightfarbe. Meldet keinen Mischzustand (immer konkreter Wert).
+        ''' Setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl oder am Caret oder gibt diese zurück.
         ''' </summary>
+        ''' <remarks>
+        ''' <para>Meldet keinen Mischzustand (immer konkreter Wert).</para>
+        ''' <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu
+        ''' den Stil-Flags nötig.</para>
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Overloads Property SelectionBackColor As System.Drawing.Color
             Get
@@ -266,8 +296,13 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Einheitlicher linker Absatz-Einzug (Pixel) oder Mischzustand (Nothing).
+        ''' Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurück.
         ''' </summary>
+        ''' <remarks>
+        ''' <para>Ein Mischzustand ergibt Nothing.</para>
+        ''' <para>Der Einzug wird immer für den gesamten Absatz gesetzt (SelectionLength wird
+        ''' intern ignoriert).</para>
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionLeftIndent As System.Nullable(Of Integer)
             Get
