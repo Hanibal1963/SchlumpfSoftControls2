@@ -18,7 +18,7 @@ Namespace ExtendedRTFControl
     ''' dargestellt – soweit implementiert (z.B. Stil-Flags, Schriftgröße, Einzug).</para>
     ''' <para>Vorder-/Hintergrundfarbe melden aktuell keinen Mischzustand (immer konkreter Wert).</para>
     ''' </remarks>
-    <ProvideToolboxControlAttribute("SchlumpfSoft.Controls.ExtendedRTF", False)>
+    <ProvideToolboxControlAttribute("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(ExtendedRTFControl.ExtendedRTF), "ExtendedRTF.bmp")>

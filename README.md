@@ -50,6 +50,9 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1011.1 (11.10.2025)**
+- Es wurde ein Fehler beseitigt der das ExtendedRTFControl in der IDE in einer falschen Kategorie angezeigt hat.
+
 **Version 3.2025.1011.0 (11.10.2025)**
 - ExtendedRTFControl hinzugefügt.
 
