@@ -26,23 +26,6 @@ Namespace ExtendedRTFControl
 
         Inherits System.Windows.Forms.RichTextBox
 
-#Region "Konstanten und Felder"
-
-        ' Win32-Konstante zum De-/Aktivieren des Redraws eines Fenster-Handles.
-        Private Const WM_SETREDRAW As Integer = &HB
-
-        ' Mindest-Schriftgröße (kann bei Bedarf angepasst werden).
-        Private Const MIN_FONT_SIZE As Single = 8.0F
-
-        ' Zähler für geschachtelte Update-Blöcke (Redraw-Unterdrückung).
-        Private _updateNesting As Integer = 0
-
-        ' Flag zur Unterdrückung von "OnSelectionChanged", wenn intern
-        ' temporär per-Zeichen-Selektionen durchgeführt werden (Mischzustandsanalyse).
-        Private _suppressSelectionEvents As Boolean = False
-
-#End Region
-
 #Region "Konstruktor"
 
         ''' <summary>
@@ -413,7 +396,9 @@ Namespace ExtendedRTFControl
         Private Sub SetSelectionFontSize(newSize As Single)
             If newSize <= 0 Then Throw New System.ArgumentOutOfRangeException(NameOf(newSize))
             ApplyFontTransformation(
-                Function(f) New System.Drawing.Font(f.FontFamily, newSize, f.Style, f.Unit, f.GdiCharSet, f.GdiVerticalFont))
+                Function(f)
+                    Return New System.Drawing.Font(f.FontFamily, newSize, f.Style, f.Unit, f.GdiCharSet, f.GdiVerticalFont)
+                End Function)
         End Sub
 
         ''' <summary>

@@ -76,12 +76,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApiDefinitions.vb" />
+    <Compile Include="ConstantDefinitions.vb" />
     <Compile Include="ExtendedRTF.Designer.vb">
       <DependentUpon>ExtendedRTF.vb</DependentUpon>
     </Compile>
     <Compile Include="ExtendedRTF.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FieldDefinitions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="ExtendedRTFControlPackage.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
