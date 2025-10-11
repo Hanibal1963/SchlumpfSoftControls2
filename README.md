@@ -28,7 +28,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * [ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.](Doc/ColorProgressBarControl.md)
 * [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](Doc/ExplorerTreeViewControl.md)
 * [IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.](Doc/IniFileControl.md)
-* **NEU:** ExtendedRTF Control - Ein Control zum Anzeigen und Bearbeiten von RTF - Text.
+* **NEU:** [ExtendedRTF Control - Ein Control zum Anzeigen und Bearbeiten von RTF - Text.](Doc/ExtendedRTFControl.md)
 
 >  **Hinweis:**
 > 
