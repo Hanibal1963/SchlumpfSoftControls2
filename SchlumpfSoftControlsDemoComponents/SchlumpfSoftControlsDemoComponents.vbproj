@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SchlumpfSoftControlsDemoComponents</RootNamespace>
+    <AssemblyName>SchlumpfSoftControlsDemoComponents</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControlsDemoComponents.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControlsDemoComponents.xml</DocumentationFile>
+    <DefineConstants>_MYFORMS=True</DefineConstants>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SchlumpfSoftControls2, Version=3.2025.1012.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SchlumpfSoftControls2\obj\Debug\SchlumpfSoftControls2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AniGifDemo.Designer.vb">
+      <DependentUpon>AniGifDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AniGifDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorProgressBarDemo.Designer.vb">
+      <DependentUpon>ColorProgressBarDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorProgressBarDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DriveWatcherDemo.Designer.vb">
+      <DependentUpon>DriveWatcherDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DriveWatcherDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExplorerTreeViewDemo.Designer.vb">
+      <DependentUpon>ExplorerTreeViewDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorerTreeViewDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtendedRTFDemo.Designer.vb">
+      <DependentUpon>ExtendedRTFDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedRTFDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FilesearchDemo.Designer.vb">
+      <DependentUpon>FilesearchDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FilesearchDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IniFileDemo.Designer.vb">
+      <DependentUpon>IniFileDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IniFileDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="NotifyFormDemo.Designer.vb">
+      <DependentUpon>NotifyFormDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyFormDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SevenSegmentDemo.Designer.vb">
+      <DependentUpon>SevenSegmentDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SevenSegmentDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ShapeDemo.Designer.vb">
+      <DependentUpon>ShapeDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ShapeDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TransparentLabelDemo.Designer.vb">
+      <DependentUpon>TransparentLabelDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TransparentLabelDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WizardDemo.Designer.vb">
+      <DependentUpon>WizardDemo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WizardDemo.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AniGifDemo.resx">
+      <DependentUpon>AniGifDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorProgressBarDemo.resx">
+      <DependentUpon>ColorProgressBarDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DriveWatcherDemo.resx">
+      <DependentUpon>DriveWatcherDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExplorerTreeViewDemo.resx">
+      <DependentUpon>ExplorerTreeViewDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtendedRTFDemo.resx">
+      <DependentUpon>ExtendedRTFDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileSearchDemo.resx">
+      <DependentUpon>FilesearchDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IniFileDemo.resx">
+      <DependentUpon>IniFileDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotifyFormDemo.resx">
+      <DependentUpon>NotifyFormDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SevenSegmentDemo.resx">
+      <DependentUpon>SevenSegmentDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShapeDemo.resx">
+      <DependentUpon>ShapeDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransparentLabelDemo.resx">
+      <DependentUpon>TransparentLabelDemo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardDemo.resx">
+      <DependentUpon>WizardDemo.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim100.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim101.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim102.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim103.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim104.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim105.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim106.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim107.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim108.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim109.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim110.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim111.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim112.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim113.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim114.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim115.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim116.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim117.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim118.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Anim119.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Backcolor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delformat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fontdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fontformat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fontup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forecolor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Italic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftIndentDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftIndentUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Papa Schlumpf 08.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Setdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Setup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Strikeout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Textcenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Textleft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Textright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Togglebullets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Underline.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
