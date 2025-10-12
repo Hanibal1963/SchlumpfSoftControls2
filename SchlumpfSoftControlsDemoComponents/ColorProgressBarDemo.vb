@@ -1,4 +1,17 @@
-﻿Public Class ColorProgressBarDemo
+﻿
+Public Class ColorProgressBarDemo
+
+    Public Sub New()
+        ' Dieser Aufruf ist für den Designer erforderlich.
+        InitializeComponent()
+        ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
+        Me.NumericUpDownProgressValue.Value = 0
+        Me.NumericUpDownProgressValue.Minimum = 0
+        Me.NumericUpDownProgressValue.Maximum = 100
+        Me.NumericUpDownProgressValue.Increment = 10
+        Me.ColorProgressBar1.Value = 0
+        Me.ColorProgressBar1.ProgressMaximumValue = 100
+    End Sub
 
     Private Sub CheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxShowGliss.CheckedChanged, CheckBoxShowBorder.CheckedChanged
         Select Case True

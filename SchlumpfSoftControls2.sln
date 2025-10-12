@@ -37,11 +37,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemoCom
 		{83F010A0-D057-4EB4-B44E-443D19D425DF} = {83F010A0-D057-4EB4-B44E-443D19D425DF}
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemo", "D:\Dokumente\Visual Studio 2022\Projekte\SchlumpfSoft\SchlumpfSoftControls2\SchlumpfSoftControlsDemo\SchlumpfSoftControlsDemo.vbproj", "{49BCC191-3D02-4E35-A477-1CA81F1889AF}"
-	ProjectSection(ProjectDependencies) = postProject
-		{AE03F411-4760-4ADB-B8B3-243CAD92EB5C} = {AE03F411-4760-4ADB-B8B3-243CAD92EB5C}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,18 +71,6 @@ Global
 		{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}.Release|arm64.Build.0 = Release|Any CPU
 		{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}.Release|x86.ActiveCfg = Release|Any CPU
 		{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}.Release|x86.Build.0 = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|arm64.Build.0 = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Debug|x86.Build.0 = Debug|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|arm64.ActiveCfg = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|arm64.Build.0 = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|x86.ActiveCfg = Release|Any CPU
-		{49BCC191-3D02-4E35-A477-1CA81F1889AF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
