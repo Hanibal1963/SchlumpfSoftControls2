@@ -1,4 +1,9 @@
-﻿Imports System
+﻿' *************************************************************************************************
+' ProvideToolboxControlAttribute.vb
+' Copyright (c) 2025 by Andreas Sauer 
+' *************************************************************************************************
+
+Imports System
 Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.Linq
@@ -6,14 +11,20 @@ Imports System.Text
 Imports Microsoft.VisualStudio.Shell
 
 ''' <summary>
-''' This attribute adds a ToolboxControlsInstaller key for the assembly to install toolbox controls from the assembly
+''' Dieses Attribut fügt für die Assembly einen ToolboxControlsInstaller-Schlüssel
+''' hinzu, um Steuerelemente aus der Assembly in die Toolbox zu installieren.
 ''' </summary>
 ''' <remarks>
-''' For example
-'''     [$(Rootkey)\ToolboxControlsInstaller\$FullAssemblyName$]
-'''         "Codebase"="$path$"
-'''         "WpfControls"="1"
+''' <para></para>
+''' <para></para>
 ''' </remarks>
+''' <example>
+''' Beispiel:<br/>
+''' <code><![CDATA[[$(Rootkey)\ToolboxControlsInstaller\$FullAssemblyName$] 
+''' "Codebase"="$path$" 
+''' "WPFControls"="1"]]></code>
+''' <para></para>
+''' </example>
 <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
 <System.Runtime.InteropServices.ComVisibleAttribute(False)>
 Public NotInheritable Class ProvideToolboxControlAttribute
@@ -25,11 +36,14 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     Private _name As String
 
     ''' <summary>
-    ''' Creates a new ProvideToolboxControl attribute to register the assembly for toolbox controls installer
+    ''' Erstellt ein neues ProvideToolboxControl-Attribut, um die Assembly für den
+    ''' Toolbox Controls Installer zu registrieren.
     ''' </summary>
-    ''' <param name="isWpfControls"></param>
-    Public Sub New(ByVal name As String, ByVal isWpfControls As Boolean)
-        If (name Is Nothing) Then
+    ''' <param name="name">Anzeigename der Steuerelementgruppe.</param>
+    ''' <param name="isWpfControls">True, wenn es sich um WPF-Steuerelemente handelt;
+    ''' andernfalls False.</param>
+    Public Sub New(name As String, isWpfControls As Boolean)
+        If name Is Nothing Then
             Throw New ArgumentException("name")
         End If
 
@@ -38,60 +52,61 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     End Sub
 
     ''' <summary>
-    ''' Gets whether the toolbox controls are for WPF.
+    ''' Gibt an, ob die Toolbox-Steuerelemente für WPF sind.
     ''' </summary>
     Private Property IsWpfControls As Boolean
         Get
             Return Me._isWpfControls
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             Me._isWpfControls = value
         End Set
     End Property
 
     ''' <summary>
-    ''' Gets the name for the controls
+    ''' Ruft den Namen für die Steuerelemente ab bzw. legt ihn fest.
     ''' </summary>
     Private Property Name As String
         Get
             Return Me._name
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             Me._name = value
         End Set
     End Property
 
     ''' <summary>
-    ''' Called to register this attribute with the given context.  The context
-    ''' contains the location where the registration information should be placed.
-    ''' It also contains other information such as the type being registered and path information.
+    ''' <para>Registriert dieses Attribut mit dem angegebenen Kontext.</para>
+    ''' <para>Der Kontext enthält den Speicherort, an dem die
+    ''' Registrierungsinformationen abgelegt werden sollen.</para>
+    ''' <para>Er enthält außerdem Informationen wie den zu registrierenden Typ und
+    ''' Pfadinformationen.</para>
     ''' </summary>
-    ''' <param name="context">Given context to register in</param>
-    Public Overrides Sub Register(ByVal context As RegistrationAttribute.RegistrationContext)
-        If (context Is Nothing) Then
+    ''' <param name="context">Der Kontext, in dem registriert werden soll.</param>
+    Public Overrides Sub Register(context As RegistrationAttribute.RegistrationContext)
+        If context Is Nothing Then
             Throw New ArgumentNullException("context")
         End If
-
-        Using key As Key = context.CreateKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}", _
-                                                         ToolboxControlsInstallerPath, _
-                                                         context.ComponentType.Assembly.FullName))
+        Using key As Key = context.CreateKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
             key.SetValue(String.Empty, Me.Name)
             key.SetValue("Codebase", context.CodeBase)
-            If (Me.IsWpfControls) Then
+            If Me.IsWpfControls Then
                 key.SetValue("WPFControls", "1")
             End If
         End Using
     End Sub
 
     ''' <summary>
-    ''' Called to unregister this attribute with the given context.
+    ''' Hebt die Registrierung dieses Attributs mit dem angegebenen Kontext auf.
     ''' </summary>
-    ''' <param name="context">A registration context provided by an external registration tool. The context can be used to remove registry keys, log registration activity, and obtain information about the component being registered.</param>
-    Public Overrides Sub Unregister(ByVal context As RegistrationAttribute.RegistrationContext)
-        If (context IsNot Nothing) Then
-            context.RemoveKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}",
-                                                         ToolboxControlsInstallerPath,
-                                                         context.ComponentType.Assembly.FullName))
+    ''' <param name="context"><para>Ein von einem externen Registrierungstool
+    ''' bereitgestellter Registrierungskontext.</para>
+    ''' <para>Der Kontext kann verwendet werden, um Registrierungsschlüssel zu
+    ''' entfernen, die Registrierungsaktivität zu protokollieren und Informationen über
+    ''' die zu registrierende Komponente abzurufen.</para></param>
+    Public Overrides Sub Unregister(context As RegistrationAttribute.RegistrationContext)
+        If context IsNot Nothing Then
+            context.RemoveKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
         End If
     End Sub
 End Class
