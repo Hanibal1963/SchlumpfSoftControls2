@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Eigene Ausschlüsse
+/SchlumpfSoftControls2.vsix
+/VS Marketplace Vorlage.md
+/Links.md
