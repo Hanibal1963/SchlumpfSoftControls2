@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Werte der Assemblyattribute überprüfen
 
 <Assembly: AssemblyTitle("SchlumpfSoftControlsDemoComponents")>
-<Assembly: AssemblyDescription("Komponenten für Demoprogramm")>
+<Assembly: AssemblyDescription("Komponenten für Demotrationszwecke")>
 <Assembly: AssemblyCompany("Andreas Sauer")>
 <Assembly: AssemblyProduct("SchlumpfSoftControlsDemoComponents")>
 <Assembly: AssemblyCopyright("Copyright © Andreas Sauer 2025")>

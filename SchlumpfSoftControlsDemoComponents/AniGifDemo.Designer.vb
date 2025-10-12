@@ -79,7 +79,7 @@ Partial Class AniGifDemo
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
         Me.TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel.Size = New System.Drawing.Size(562, 261)
+        Me.TableLayoutPanel.Size = New System.Drawing.Size(590, 257)
         Me.TableLayoutPanel.TabIndex = 1
         '
         'AniGif
@@ -195,7 +195,7 @@ Partial Class AniGifDemo
         Me.ComboBoxAnsicht.Items.AddRange(New Object() {"Normal", "Zentriert", "Zoom", "Fill"})
         Me.ComboBoxAnsicht.Location = New System.Drawing.Point(449, 3)
         Me.ComboBoxAnsicht.Name = "ComboBoxAnsicht"
-        Me.ComboBoxAnsicht.Size = New System.Drawing.Size(110, 21)
+        Me.ComboBoxAnsicht.Size = New System.Drawing.Size(138, 21)
         Me.ComboBoxAnsicht.TabIndex = 10
         '
         'ButtonBack
@@ -223,7 +223,7 @@ Partial Class AniGifDemo
         Me.TableLayoutPanel.SetColumnSpan(Me.LabelAni, 3)
         Me.LabelAni.Location = New System.Drawing.Point(3, 192)
         Me.LabelAni.Name = "LabelAni"
-        Me.LabelAni.Size = New System.Drawing.Size(556, 19)
+        Me.LabelAni.Size = New System.Drawing.Size(584, 19)
         Me.LabelAni.TabIndex = 11
         Me.LabelAni.Text = "Standardanimation"
         '
@@ -251,7 +251,7 @@ Partial Class AniGifDemo
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel)
         Me.Name = "AniGifDemo"
-        Me.Size = New System.Drawing.Size(562, 261)
+        Me.Size = New System.Drawing.Size(590, 257)
         Me.TableLayoutPanel.ResumeLayout(False)
         Me.TableLayoutPanel.PerformLayout()
         CType(Me.NumericUpDownFramesPerSecound, System.ComponentModel.ISupportInitialize).EndInit()
