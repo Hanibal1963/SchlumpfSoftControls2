@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 		LICENSE.txt = LICENSE.txt
 		Links.md = Links.md
 		README.md = README.md
+		SchlumpfSoftControls2.sln.vsdoc = SchlumpfSoftControls2.sln.vsdoc
 		SchlumpfSoftControls2.vsix = SchlumpfSoftControls2.vsix
 		VS Marketplace Vorlage.md = VS Marketplace Vorlage.md
 	EndProjectSection
