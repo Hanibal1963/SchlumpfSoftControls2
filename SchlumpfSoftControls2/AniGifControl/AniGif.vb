@@ -8,9 +8,8 @@
 Imports System
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.Windows.Forms
-'Imports SchlumpfSoft.Controls.Attribute
 Imports System.Drawing.Drawing2D ' Für bessere Interpolationsqualität bei Skalierung
+Imports System.Windows.Forms
 
 #End Region
 

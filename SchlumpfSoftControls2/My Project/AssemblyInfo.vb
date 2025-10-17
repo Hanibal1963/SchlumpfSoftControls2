@@ -1,11 +1,16 @@
-﻿Imports System.Reflection
+﻿' *************************************************************************************************
+' AssemblyInfo.vb
+' Copyright (c) 2025 by Andreas Sauer 
+' *************************************************************************************************
+
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic
 
-' General Information about an assembly is controlled through the following 
-' set of attributes. Change these attribute values to modify the information
-' associated with an assembly.
+' Allgemeine Informationen zu einer Assembly werden durch den folgenden Satz
+' von Attributen bestimmt. Ändern Sie diese Attributwerte, um die einer
+' Assembly zugeordneten Informationen zu modifizieren.
 <Assembly: AssemblyTitle("SchlumpfSoftControls2")>
 <Assembly: AssemblyDescription("Eine Sammlung verschiedener Controls.")>
 <Assembly: AssemblyConfiguration("")>
@@ -15,20 +20,21 @@ Imports Microsoft.VisualBasic
 <Assembly: AssemblyTrademark("privat")>
 <Assembly: AssemblyCulture("")>
 
-' Setting ComVisible to false makes the types in this assembly not visible 
-' to COM components.  If you need to access a type in this assembly from 
-' COM, set the ComVisible attribute to true on that type.
+' Wenn ComVisible auf False gesetzt ist, sind die Typen in dieser Assembly
+' für COM-Komponenten nicht sichtbar. Wenn auf einen Typ in dieser Assembly
+' von COM aus zugegriffen werden muss, setzen Sie für diesen Typ das Attribut
+' ComVisible auf True.
 <Assembly: ComVisible(False)>
 
-' Version information for an assembly consists of the following four values:
+' Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 '
-'      Major Version
-'      Minor Version 
-'      Build Number
+'      Hauptversion
+'      Nebenversion 
+'      Buildnummer
 '      Revision
 '
-' You can specify all the values or you can default the Build and Revision Numbers 
-' by using the '*' as shown below:
+' Sie können alle Werte angeben oder die Build- und Revisionsnummern
+' durch Verwendung von '*' wie unten gezeigt automatisch generieren lassen:
 ' [assembly: AssemblyVersion("1.0.*")]
 <Assembly: AssemblyVersion("3.2025.1012.0")>
 <Assembly: AssemblyFileVersion("3.2025.1012.0")>

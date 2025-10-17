@@ -13,9 +13,8 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Linq
 Imports System.Windows.Forms
-'Imports SchlumpfSoft.Controls.Attribute
-Imports SchlumpfSoft.Controls.DriveWatcherControl
 Imports Microsoft.VisualBasic
+Imports SchlumpfSoft.Controls.DriveWatcherControl
 
 #End Region
 
