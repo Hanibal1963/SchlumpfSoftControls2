@@ -16,17 +16,17 @@
             End Try
         End Sub
 
-        'Erforderlich für den Windows Form-Designer
+        'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
 
-        'HINWEIS: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Sie kann mit dem Windows Form-Designer geändert werden.  
-        'Ändern Sie sie nicht mit dem Code-Editor.
+        'NOTE: The following procedure is required by the Windows Form Designer
+        'It can be modified using the Windows Form Designer.  
+        'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             '
-            'Toolbox-Steuerelement
+            'ToolboxControl
             '
             Me.Name = "ExtendedRTF"
             Me.ResumeLayout(False)
