@@ -112,9 +112,6 @@ Namespace FileSearchControl
         ''' <remarks>
         ''' <para>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige zuerst
         ''' abgebrochen. </para>
-        ''' <para>Rückgabewerte oder Ausnahmen können aufgrund von <c>Async Sub</c> nicht direkt awaited / gefangen werden.</para>
-        ''' <para>Die Methode ist bewusst "Fire u. Forget". Für robustere Fehlerbehandlung wäre
-        ''' <c>Async Function ... As Task</c> empfehlenswert.</para>
         ''' </remarks>
         Public Async Function StartSearchAsync() As System.Threading.Tasks.Task
 
@@ -215,7 +212,6 @@ Namespace FileSearchControl
                 RaiseEvent ErrorOccurred(Me, ex)
             End Try
 
-            ' Ende der Methode: Keine Rückgabe (Async Sub). Ausnahmen sind abgefangen.
         End Function
 
         ''' <summary>
