@@ -1,4 +1,5 @@
-﻿Namespace IniFileControl
+﻿
+Namespace IniFileControl
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class EntryValueEdit
