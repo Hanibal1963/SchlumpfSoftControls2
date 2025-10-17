@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{6F7BC048-0A7
 		Doc\DriveWatcherControl.md = Doc\DriveWatcherControl.md
 		Doc\ExplorerTreeViewControl.md = Doc\ExplorerTreeViewControl.md
 		Doc\ExtendedRTFControl.md = Doc\ExtendedRTFControl.md
+		Doc\FileSearchControl.md = Doc\FileSearchControl.md
 		Doc\IniFileControl.md = Doc\IniFileControl.md
 		Doc\NotifyFormControl.md = Doc\NotifyFormControl.md
 		Doc\SevenSegmentControl.md = Doc\SevenSegmentControl.md

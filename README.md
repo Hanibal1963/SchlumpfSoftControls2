@@ -29,7 +29,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 * [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](Doc/ExplorerTreeViewControl.md)
 * [IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.](Doc/IniFileControl.md)
 * **NEU:** [ExtendedRTF Control - Ein Control zum Anzeigen und Bearbeiten von RTF - Text.](Doc/ExtendedRTFControl.md)
-* **NEU:** FileSearch Control - Ein Control zum Suchen von Dateien und Ordnern.
+* **NEU:** [FileSearch Control - Ein Control zum Suchen von Dateien und Ordnern.](Doc/FileSearchControl.md)
 
 > :warning: **Hinweis:**
 > 
