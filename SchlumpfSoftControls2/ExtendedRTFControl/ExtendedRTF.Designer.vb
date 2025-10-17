@@ -1,4 +1,9 @@
-﻿Namespace ExtendedRTFControl
+﻿' *************************************************************************************************
+' ExtendedRTF.Designer.vb
+' Copyright (c) 2025 by Andreas Sauer 
+' *************************************************************************************************
+
+Namespace ExtendedRTFControl
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class ExtendedRTF
@@ -11,6 +16,11 @@
                 If disposing AndAlso components IsNot Nothing Then
                     components.Dispose()
                 End If
+                ' Falls Entwickler vergessen hat EndUpdate mehrfach aufzurufen.
+                While _updateNesting > 0
+                    _updateNesting = 1
+                    EndUpdate()
+                End While
             Finally
                 MyBase.Dispose(disposing)
             End Try

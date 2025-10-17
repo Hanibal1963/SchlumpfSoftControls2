@@ -537,24 +537,6 @@ Namespace ExtendedRTFControl
 
 #End Region
 
-#Region "Aufräumen"
-
-        ''' <summary>
-        ''' Stellt sicher, dass bei Entsorgung Redraw-Unterdrückung vollständig aufgehoben ist.
-        ''' </summary>
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            If disposing Then
-                ' Falls Entwickler vergessen hat EndUpdate mehrfach aufzurufen.
-                While _updateNesting > 0
-                    _updateNesting = 1
-                    EndUpdate()
-                End While
-            End If
-            MyBase.Dispose(disposing)
-        End Sub
-
-#End Region
-
     End Class
 
 End Namespace
