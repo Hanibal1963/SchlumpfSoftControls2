@@ -112,8 +112,8 @@ Wichtig: Pro-Datei-Fehler werden nicht individuell behandelt. Tritt während der 
 ## 5. Leistungsaspekte
 
 - Es wird bewusst doppelt enumeriert:
-  1) `Count()` ermittelt die Gesamtanzahl
-  2) Zweite Enumeration verarbeitet die Dateien
+  -  `Count()` ermittelt die Gesamtanzahl
+  -  Zweite Enumeration verarbeitet die Dateien
 - Bei sehr großen Verzeichnisbäumen kann das Performance kosten.
 - Alternativen (nicht implementiert, mögliche Erweiterungen):
   - Einmaliges Materialisieren: `ToList()` (Speicher vs. Zeit)
