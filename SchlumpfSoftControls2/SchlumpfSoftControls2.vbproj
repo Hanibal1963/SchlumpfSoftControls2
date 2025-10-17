@@ -65,6 +65,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <EmbeddedResource Include="FileSearchControl\FileSearch.resx">
+      <DependentUpon>FileSearch.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Information.png" />
     <EmbeddedResource Include="Resources\FolderVideos.png" />
     <EmbeddedResource Include="Resources\FolderPictures.png" />
@@ -106,6 +109,28 @@
     <EmbeddedResource Include="Resources\IniFileControl.EntryValueEdit.bmp" />
     <EmbeddedResource Include="Resources\IniFileControl.ContentView.bmp" />
     <EmbeddedResource Include="Resources\IniFileControl.CommentEdit.bmp" />
+    <EmbeddedResource Include="TransparentLabelControl\TransparentLabel.resx">
+      <DependentUpon>TransparentLabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\PageCustom.resx">
+      <DependentUpon>PageCustom.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\PageFinish.resx">
+      <DependentUpon>PageFinish.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\PageStandard.resx">
+      <DependentUpon>PageStandard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\PageWelcome.resx">
+      <DependentUpon>PageWelcome.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\Wizard.resx">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WizardControl\WizardPage.resx">
+      <DependentUpon>WizardPage.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
