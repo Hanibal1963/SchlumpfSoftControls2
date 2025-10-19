@@ -84,8 +84,72 @@ Namespace AniGifControl
         End Property
 
         ''' <summary>
-        ''' Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.
+        ''' Gibt den Anzeigemodus (Skalierung/Ausrichtung) der GIF-Grafik zurück oder legt
+        ''' ihn fest.
         ''' </summary>
+        ''' <remarks>
+        ''' <b>Verhalten je Modus:</b> <para>- <see cref="SizeMode.Normal"/>: Das Bild wird
+        ''' unverändert an Position (0,0) gezeichnet. Ist das Bild größer als das Control,
+        ''' wird es abgeschnitten.</para>
+        ''' <para>- <see cref="SizeMode.CenterImage"/>: Das Bild wird unverändert zentriert
+        ''' gezeichnet. Es kann abgeschnitten werden, wenn es größer als das Control
+        ''' ist.</para>
+        ''' <para>- <see cref="SizeMode.Zoom"/>: Das Bild wird proportional skaliert und
+        ''' zentriert. Die Skalierung richtet sich nach <see cref="ZoomFactor"/> (1–100%).
+        ''' Die Berechnung orientiert sich an der Controlgröße, das Seitenverhältnis bleibt
+        ''' erhalten.</para>
+        ''' <para>- <see cref="SizeMode.Fill"/>: Das Bild wird proportional so skaliert,
+        ''' dass das Control vollständig gefüllt wird. Dadurch kann das Bild an einer Seite
+        ''' zugeschnitten werden; es wird zentriert gezeichnet.</para>
+        ''' <b> Rendering:</b> <para>Für <see cref="SizeMode.Zoom"/> und <see
+        ''' cref="SizeMode.Fill"/> werden hochwertige Interpolations- und
+        ''' Glättungseinstellungen (HighQualityBicubic, HighQuality) verwendet, um die
+        ''' Bildqualität bei der Skalierung zu verbessern.</para>
+        '''  Ablauf/Seiteneffekte: <para>Beim Setzen dieser Eigenschaft wird das Control
+        ''' über <see cref="System.Windows.Forms.Control.Invalidate"/> neu gezeichnet. Die
+        ''' Bilddaten werden nicht verändert; nur die Darstellung ändert sich. Es wird kein
+        ''' eigener Ereignis-Callback ausgelöst.</para>
+        ''' <b> Hinweise:</b> <para>- Der Standardwert wird in <c>InitializeValues</c> gesetzt.</para>
+        ''' <para>- <see cref="ZoomFactor"/> wirkt ausschließlich, wenn der Modus <see
+        ''' cref="SizeMode.Zoom"/> aktiv ist.</para>
+        ''' <para>- Die Eigenschaft ist im Designer sichtbar (Kategorie "Behavior").</para>
+        ''' </remarks>
+        ''' <value>
+        ''' Einer der <see cref="SizeMode"/>-Werte: <list type="bullet">
+        '''  <item>
+        '''   <description><see cref="SizeMode.Normal"/>: Bild in Originalgröße, oben
+        ''' links.</description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="SizeMode.CenterImage"/>: Bild in Originalgröße,
+        ''' zentriert.</description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="SizeMode.Zoom"/>: Proportionale Skalierung nach <see
+        ''' cref="ZoomFactor"/>, zentriert.</description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="SizeMode.Fill"/>: Proportionale Skalierung, Control
+        ''' wird vollständig gefüllt (ggf. Zuschnitt), zentriert.</description>
+        '''  </item>
+        ''' </list>
+        '''  Standardwert ist <see cref="SizeMode.Normal"/>.
+        ''' </value>
+        ''' <example>
+        ''' Beispiel: <code language="vb"><![CDATA[
+        '''  ' Bild proportional zoomen und auf 75% skalieren
+        '''  AniGif1.GifSizeMode = SizeMode.Zoom
+        '''  AniGif1.ZoomFactor = 75D
+        '''  
+        '''  ' Bild zentriert in Originalgröße anzeigen
+        '''  AniGif1.GifSizeMode = SizeMode.CenterImage
+        '''  
+        '''  ' Bild das Control ausfüllen lassen (möglicher Zuschnitt)
+        '''  AniGif1.GifSizeMode = SizeMode.Fill
+        '''  ]]></code>
+        ''' </example>
+        ''' <seealso cref="ZoomFactor"/>
+        ''' <seealso cref="Gif"/>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.")>

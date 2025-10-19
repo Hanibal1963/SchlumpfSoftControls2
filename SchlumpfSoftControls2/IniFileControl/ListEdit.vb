@@ -7,31 +7,59 @@ Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
-'Imports SchlumpfSoft.Controls.Attribute
 
 Namespace IniFileControl
 
-    '''' <summary>
-    '''' Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags-Liste einer INI-Datei.
-    '''' </summary>
+    ''' <summary>
+    ''' Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags-Liste
+    ''' einer INI-Datei.
+    ''' </summary>
     ''' <remarks>
-    '''' Darstellung:
-    '''' - Eine `GroupBox` mit Titel (Eigenschaft `TitelText`).
-    '''' - Eine `ListBox` mit Einträgen (Eigenschaft `ListItems`).
-    '''' - Drei Buttons: Hinzufügen, Umbenennen, Löschen.
-    ''''
-    '''' Interaktion:
-    '''' - Auswahländerung in der ListBox löst `SelectedItemChanged` aus.
-    '''' - Button-Klicks lösen semantische Ereignisse aus (`ItemAdd`, `ItemRename`, `ItemRemove`), die vom Host verarbeitet werden.
-    ''''
-    '''' Zustandsführung:
-    '''' - `_SelectedSection`: Der aktuell betroffene INI-Abschnitt (vom Host gesetzt).
-    '''' - `_SelectedItem`: Der aktuell gewählte Eintrag der `ListBox`.
-    '''' - `_Items`: Datenquelle für die `ListBox`.
-    ''''
-    '''' Design-Time:
-    '''' - Mit Toolbox-Attributen versehen, damit es in der VS-Toolbox erscheint.
-    '''' </remarks>
+    ''' <para><b>Darstellung:</b> </para>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Eine `GroupBox` mit Titel (Eigenschaft `TitelText`).
+    ''' </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Eine `ListBox` mit Einträgen (Eigenschaft `ListItems`).
+    ''' </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Drei Buttons: Hinzufügen, Umbenennen, Löschen. Interaktion:
+    ''' </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Auswahländerung in der ListBox löst `SelectedItemChanged` aus.
+    ''' </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Button-Klicks lösen semantische Ereignisse aus (`ItemAdd`,
+    ''' `ItemRename`, `ItemRemove`), die vom Host verarbeitet werden. </description>
+    '''  </item>
+    ''' </list>
+    ''' <para><b>Zustandsführung:</b> </para>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>`_SelectedSection`: Der aktuell betroffene INI-Abschnitt (vom
+    ''' Host gesetzt). </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>`_SelectedItem`: Der aktuell gewählte Eintrag der `ListBox`.
+    ''' </description>
+    '''  </item>
+    '''  <item>
+    '''   <description>`_Items`: Datenquelle für die `ListBox`.</description>
+    '''  </item>
+    ''' </list>
+    ''' <para><b>Design-Time:</b> </para>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Mit Toolbox-Attributen versehen, damit es in der VS-Toolbox
+    ''' erscheint.</description>
+    '''  </item>
+    ''' </list>
+    ''' </remarks>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <Description("Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags- Liste einer INI - Datei.")>
     <ToolboxItem(True)>

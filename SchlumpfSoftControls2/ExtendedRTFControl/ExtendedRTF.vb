@@ -7,12 +7,12 @@
 Namespace ExtendedRTFControl
 
     ''' <summary>
-    ''' Erweiterte <see cref="RichTextBox"/> mit bequemen Formatierungs- und Abfrage-Hilfen
+    ''' Erweiterte <see cref="System.Windows.Forms.RichTextBox"/> mit bequemen Formatierungs- und Abfrage-Hilfen
     ''' (Schriftgröße, Stil-Flags, Farben, Einzüge, Ausrichtung) sowie Batch-Update (Redraw-Suppression).
     ''' </summary>
     ''' <remarks>
-    ''' <para>Redraw-Suppression (verringerte Flackereffekte) über verschachteltes <see cref="BeginUpdate"/> /
-    ''' <see cref="EndUpdate"/> mittels <c>WM_SETREDRAW</c>.</para>
+    ''' <para>Redraw-Suppression (verringerte Flackereffekte) über verschachteltes <see cref="System.Windows.Forms.RichTextBox.BeginUpdate"/> /
+    ''' <see cref="System.Windows.Forms.RichTextBox.EndUpdate"/> mittels <c>WM_SETREDRAW</c>.</para>
     ''' <para>Mischzustände (uneinheitliche Formatierung in einer Auswahl) werden als <c>Nothing</c> (Nullable)
     ''' dargestellt – soweit implementiert (z.B. Stil-Flags, Schriftgröße, Einzug).</para>
     ''' <para>Vorder-/Hintergrundfarbe melden aktuell keinen Mischzustand (immer konkreter Wert).</para>
@@ -116,7 +116,6 @@ Namespace ExtendedRTFControl
         ''' <remarks>
         ''' Funktioniert nur auf Absatzebene (SelectionLength=0 -> aktueller Absatz).
         ''' </remarks
-        ''' </summary>
         Public Sub ToggleBullet()
             SelectionBullet = Not SelectionBullet
         End Sub
