@@ -3,41 +3,22 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System
-Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Windows.Forms
-'Imports SchlumpfSoft.Controls.Attribute
-
 Namespace ColorProgressBarControl
 
     ''' <summary>
     ''' Control zum Anzeigen eines farbigen Fortschrittbalkens.
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("Control zum Anzeigen eines farbigen Fortschrittbalkens.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(ColorProgressBarControl.ColorProgressBar), "ColorProgressBar.bmp")>
+    <System.ComponentModel.Description("Control zum Anzeigen eines farbigen Fortschrittbalkens.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(ColorProgressBarControl.ColorProgressBar), "ColorProgressBar.bmp")>
     Public Class ColorProgressBar
 
-        Inherits UserControl
-
-#Region "Interne Eigenschaftsvariablen"
-
-        Private _ProgressUnit As Integer = 20 ' Der Betrag in Pixeln, um den der Fortschrittsbalken erhöht wird.
-        Private _ProgressValue As Integer = 1 ' Die Menge des ausgefüllten Maximalwerts.
-        Private _MaxValue As Integer = 10 ' Der Maximalwert des Fortschrittsbalkens.
-        Private _ShowBorder As Boolean = True ' Legt fest, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist
-        Private _IsGlossy As Boolean = True ' Legt fest, ob der Glanz auf der Fortschrittsleiste angezeigt wird.
-        Private _BarColor As Color = Color.Blue ' Die Farbe des Fortschrittsbalkens
-        Private _EmptyColor As Color = Color.LightGray ' Die Farbe des leeren Fortschrittsbalkens.
-        Private _BorderColor As Color = Color.Black ' Die Farbe des Rahmens.
-
-#End Region
+        Inherits System.Windows.Forms.UserControl
 
 #Region "Ereignisdefinitionen für öffentliche Ereignisse"
 
-        Public Shadows Event Click(sender As Object, e As EventArgs)
+        Public Shadows Event Click(sender As Object, e As System.EventArgs)
 
 #End Region
 
@@ -46,10 +27,10 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.")>
-        <DefaultValue(1)>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.")>
+        <System.ComponentModel.DefaultValue(1)>
         Public Property Value() As Integer
             Get
                 Return _ProgressValue
@@ -64,10 +45,10 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.")>
-        <DefaultValue(10)>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.")>
+        <System.ComponentModel.DefaultValue(10)>
         Public Property ProgressMaximumValue() As Integer
             Get
                 Return _MaxValue
@@ -81,14 +62,14 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.")>
-        Public Property BarColor As Color
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.")>
+        Public Property BarColor As System.Drawing.Color
             Get
                 Return _BarColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 _BarColor = value
                 Me.ProgressFull.BackColor = _BarColor
             End Set
@@ -98,14 +79,14 @@ Namespace ColorProgressBarControl
         ''' Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.
         ''' </summary>
         ''' <returns></returns>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.")>
-        Public Property EmptyColor As Color
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.")>
+        Public Property EmptyColor As System.Drawing.Color
             Get
                 Return _EmptyColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 _EmptyColor = value
                 ProgressEmpty.BackColor = _EmptyColor
             End Set
@@ -114,14 +95,14 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt die Farbe des Rahmens zurück oder legt diese fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt die Farbe des Rahmens zurück oder legt diese fest.")>
-        Public Property BorderColor As Color
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt die Farbe des Rahmens zurück oder legt diese fest.")>
+        Public Property BorderColor As System.Drawing.Color
             Get
                 Return _BorderColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 _BorderColor = value
                 BackColor = _BorderColor
             End Set
@@ -130,10 +111,10 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.")>
-        <DefaultValue(True)>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.")>
+        <System.ComponentModel.DefaultValue(True)>
         Public Property ShowBorder As Boolean
             Get
                 Return _ShowBorder
@@ -147,10 +128,10 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.")>
-        <DefaultValue(True)>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.")>
+        <System.ComponentModel.DefaultValue(True)>
         Public Property IsGlossy As Boolean
             Get
                 Return _IsGlossy
@@ -168,13 +149,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackColor As Color
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackColor As System.Drawing.Color
             Get
                 Return MyBase.BackColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.BackColor = value
             End Set
         End Property
@@ -182,13 +163,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImage As Image
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage As System.Drawing.Image
             Get
                 Return MyBase.BackgroundImage
             End Get
-            Set(value As Image)
+            Set(value As System.Drawing.Image)
                 MyBase.BackgroundImage = value
             End Set
         End Property
@@ -196,13 +177,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImageLayout As ImageLayout
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout As System.Windows.Forms.ImageLayout
             Get
                 Return MyBase.BackgroundImageLayout
             End Get
-            Set(value As ImageLayout)
+            Set(value As System.Windows.Forms.ImageLayout)
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
@@ -210,13 +191,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Shadows Property BorderStyle As BorderStyle
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Shadows Property BorderStyle As System.Windows.Forms.BorderStyle
             Get
                 Return MyBase.BorderStyle
             End Get
-            Set(value As BorderStyle)
+            Set(value As System.Windows.Forms.BorderStyle)
                 MyBase.BorderStyle = value
             End Set
         End Property
@@ -224,13 +205,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property ForeColor As Color
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property ForeColor As System.Drawing.Color
             Get
                 Return MyBase.ForeColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.ForeColor = value
             End Set
         End Property
@@ -238,13 +219,13 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overloads Property Padding As Padding
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overloads Property Padding As System.Windows.Forms.Padding
             Get
                 Return MyBase.Padding
             End Get
-            Set(value As Padding)
+            Set(value As System.Windows.Forms.Padding)
                 MyBase.Padding = value
             End Set
         End Property
@@ -256,8 +237,8 @@ Namespace ColorProgressBarControl
             Me.InitializeComponent()
             'Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
             ' Standardwerte setzen
-            GlossLeft.BackColor = Color.FromArgb(100, 255, 255, 255)
-            GlossRight.BackColor = Color.FromArgb(100, 255, 255, 255)
+            GlossLeft.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
+            GlossRight.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
             BackColor = _BorderColor
             ProgressEmpty.BackColor = _EmptyColor
             ProgressFull.BackColor = _BarColor
@@ -270,7 +251,7 @@ Namespace ColorProgressBarControl
                 'Jedes Glanzfeld ausblenden
                 GlossLeft.Height = CInt(Height / 3)
                 GlossRight.Height = GlossLeft.Height
-            Catch MyException As Exception
+            Catch MyException As System.Exception
                 'Einen Fehler zurückgeben und beenden
                 Return False
                 Exit Function
@@ -296,8 +277,8 @@ Namespace ColorProgressBarControl
                     ProgressFull.Width = If(_ShowBorder, Width - 2, Width)
                 End If
                 'Ränder je nach Globalwerten ausblenden oder anzeigen
-                Padding = If(_ShowBorder, New Padding(1), New Padding(0))
-            Catch MyException As Exception
+                Padding = If(_ShowBorder, New System.Windows.Forms.Padding(1), New System.Windows.Forms.Padding(0))
+            Catch MyException As System.Exception
                 'Einen Fehler zurückgeben und beenden
                 Return False
                 Exit Function
@@ -309,18 +290,18 @@ Namespace ColorProgressBarControl
 
 #Region "Interne Ereignisbehandlungen"
 
-        Private Sub ColorProgressBar_PaddingChanged(sender As Object, e As EventArgs) Handles Me.PaddingChanged
-            Padding = If(_ShowBorder, New Padding(1), New Padding(0))
+        Private Sub ColorProgressBar_PaddingChanged(sender As Object, e As System.EventArgs) Handles Me.PaddingChanged
+            Padding = If(_ShowBorder, New System.Windows.Forms.Padding(1), New System.Windows.Forms.Padding(0))
         End Sub
 
-        Private Sub ColorProgressBar_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Private Sub ColorProgressBar_Resize(sender As Object, e As System.EventArgs) Handles Me.Resize
             If Value <= _MaxValue Then
                 Dim unused = UpdateProgress()
                 Dim unused1 = UpdateGloss()
             End If
         End Sub
 
-        Private Sub Panel_Click(sender As Object, e As EventArgs) Handles GlossLeft.Click, ProgressFull.Click, ProgressEmpty.Click, GlossRight.Click
+        Private Sub Panel_Click(sender As Object, e As System.EventArgs) Handles GlossLeft.Click, ProgressFull.Click, ProgressEmpty.Click, GlossRight.Click
             RaiseEvent Click(Me, e)
         End Sub
 
