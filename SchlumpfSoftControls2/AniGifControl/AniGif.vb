@@ -3,59 +3,35 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-#Region "Importe"
-
-Imports System
-Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Drawing.Drawing2D ' Für bessere Interpolationsqualität bei Skalierung
-Imports System.Windows.Forms
-
-#End Region
-
 Namespace AniGifControl
 
     ''' <summary>
     ''' Control zum anzeigen von animierten Grafiken.
     ''' </summary>
     <ProvideToolboxControlAttribute("SchlumpfSoft Controls", False)>
-    <Description("Control zum Anzeigen von animierten Grafiken.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGifControl.AniGif.bmp")>
+    <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGifControl.AniGif.bmp")>
     Public Class AniGif
 
-        Inherits UserControl
+        Inherits System.Windows.Forms.UserControl
 
-        Implements IDisposable
+        Implements System.IDisposable
 
-        Private WithEvents Timer As Timer
-        Private components As IContainer
+        Private WithEvents Timer As System.Windows.Forms.Timer
+        Private components As System.ComponentModel.IContainer
         Private disposedValue As Boolean
-
-#Region "Interne Eigenschaftsvariablen"
-
-        Private _Gif As Bitmap ' Das aktuell geladene GIF-Bild
-        Private _GifSizeMode As SizeMode ' Gibt an, wie das GIF im Steuerelement skaliert/angezeigt wird (z.B. gestreckt, zentriert)
-        Private _CustomDisplaySpeed As Boolean ' Bestimmt, ob eine benutzerdefinierte Anzeigegeschwindigkeit verwendet wird
-        Private _FramesPerSecond As Decimal ' Bildwiederholrate (Frames pro Sekunde) für die Animation
-        Private _Dimension As Imaging.FrameDimension ' Die Dimension (z.B. Zeit) der animierten Frames im GIF
-        Private _Frame As Integer ' Der aktuelle Frame-Index, der angezeigt wird
-        Private _MaxFrame As Integer ' Die maximale Anzahl der Frames im GIF
-        Private _Autoplay As Boolean ' Gibt an, ob die Animation automatisch abgespielt wird
-        Private _ZoomFactor As Decimal ' Zoomfaktor für die Anzeige des GIFs
-        Private ReadOnly _AnimationHandler As EventHandler = AddressOf OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
-
-#End Region
+        Private ReadOnly _AnimationHandler As System.EventHandler = AddressOf OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
 
 #Region "Ereignisdefinitionen"
 
         ''' <summary>
         ''' Wird ausgelöst wenn die Grafik nicht animiert werden kann.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Wird ausgelöst wenn die Grafik nicht animiert werden kann.")>
-        Public Event NoAnimation(sender As Object, e As EventArgs)
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn die Grafik nicht animiert werden kann.")>
+        Public Event NoAnimation(sender As Object, e As System.EventArgs)
 
         ''' <summary>
         ''' Wird ausgelöst wenn sich das Bild geändert hat.
@@ -79,9 +55,9 @@ Namespace AniGifControl
         ''' <summary>
         ''' Legt fest ob die Animation sofort nach dem laden gestartet wird.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Legt fest ob die Animation sofort nach dem laden gestartet wird.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Legt fest ob die Animation sofort nach dem laden gestartet wird.")>
         Public Property AutoPlay() As Boolean
             Get
                 Return _Autoplay
@@ -95,14 +71,14 @@ Namespace AniGifControl
         ''' <summary>
         ''' Gibt die animierte Gif-Grafik zurück oder legt diese fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt die animierte Gif-Grafik zurück oder legt diese fest.")>
-        Public Property Gif() As Bitmap
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt die animierte Gif-Grafik zurück oder legt diese fest.")>
+        Public Property Gif() As System.Drawing.Bitmap
             Get
                 Return _Gif
             End Get
-            Set(value As Bitmap)
+            Set(value As System.Drawing.Bitmap)
                 SetGifImage(value)
             End Set
         End Property
@@ -110,9 +86,9 @@ Namespace AniGifControl
         ''' <summary>
         ''' Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.")>
         Public Property GifSizeMode() As SizeMode
             Get
                 Return _GifSizeMode
@@ -126,9 +102,9 @@ Namespace AniGifControl
         ''' Legt fest ob die benutzerdefinierte Anzeigegeschwindigkeit oder <br/> 
         ''' die in der Datei festgelegte Geschwindigkeit benutzt wird.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Legt fest ob die benutzerdefinierte Anzeigegeschwindigkeit oder die in der Datei festgelegte Geschwindigkeit benutzt wird.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Legt fest ob die benutzerdefinierte Anzeigegeschwindigkeit oder die in der Datei festgelegte Geschwindigkeit benutzt wird.")>
         Public Property CustomDisplaySpeed As Boolean
             Get
                 Return _CustomDisplaySpeed
@@ -144,9 +120,9 @@ Namespace AniGifControl
         ''' <remarks>
         ''' Bewirkt nur eine Änderung wenn <seealso cref="CustomDisplaySpeed"/> auf True festgelegt ist.
         ''' </remarks>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Legt die benutzerdefinierte Anzeigegeschwindigkeit in Bildern/Sekunde fest wenn CustomDisplaySpeed auf True festgelegt ist.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Legt die benutzerdefinierte Anzeigegeschwindigkeit in Bildern/Sekunde fest wenn CustomDisplaySpeed auf True festgelegt ist.")>
         Public Property FramesPerSecond As Decimal
             Get
                 Return _FramesPerSecond
@@ -163,9 +139,9 @@ Namespace AniGifControl
         ''' <remarks>
         ''' Bewirkt nur eine Änderung wenn <seealso cref="GifSizeMode"/> auf <seealso cref="SizeMode.Zoom"/> festgelegt ist.
         ''' </remarks>
-        <Browsable(True)>
-        <Category("Behavior")>
-        <Description("Legt den Zoomfaktor fest wenn GifSizeMode auf Zoom festgelegt ist.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Legt den Zoomfaktor fest wenn GifSizeMode auf Zoom festgelegt ist.")>
         Public Property ZoomFactor As Decimal
             Get
                 Return _ZoomFactor
@@ -179,35 +155,35 @@ Namespace AniGifControl
 
 #Region "ausgeblendete Eigenschaften"
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property MaximumSize As Size
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property MaximumSize As System.Drawing.Size
             Get
                 Return MyBase.MaximumSize
             End Get
-            Set(value As Size)
+            Set(value As System.Drawing.Size)
                 MyBase.MaximumSize = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property MinimumSize As Size
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property MinimumSize As System.Drawing.Size
             Get
                 Return MyBase.MinimumSize
             End Get
-            Set(value As Size)
+            Set(value As System.Drawing.Size)
                 MyBase.MinimumSize = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overloads Property Padding As Padding
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overloads Property Padding As System.Windows.Forms.Padding
             Get
                 Return MyBase.Padding
             End Get
-            Set(value As Padding)
+            Set(value As System.Windows.Forms.Padding)
                 MyBase.Padding = value
             End Set
         End Property
@@ -215,13 +191,13 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property RightToLeft() As RightToLeft
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property RightToLeft() As System.Windows.Forms.RightToLeft
             Get
                 Return MyBase.RightToLeft
             End Get
-            Set(value As RightToLeft)
+            Set(value As System.Windows.Forms.RightToLeft)
                 MyBase.RightToLeft = value
             End Set
         End Property
@@ -229,8 +205,8 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Text() As String
             Get
                 Return MyBase.Text
@@ -243,8 +219,8 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property AllowDrop() As Boolean
             Get
                 Return MyBase.AllowDrop
@@ -257,13 +233,13 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property AutoScrollOffset As Point
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property AutoScrollOffset As System.Drawing.Point
             Get
                 Return MyBase.AutoScrollOffset
             End Get
-            Set(value As Point)
+            Set(value As System.Drawing.Point)
                 MyBase.AutoScrollOffset = value
             End Set
         End Property
@@ -271,8 +247,8 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property AutoSize As Boolean
             Get
                 Return MyBase.AutoSize
@@ -285,13 +261,13 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImage() As Image
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage() As System.Drawing.Image
             Get
                 Return MyBase.BackgroundImage
             End Get
-            Set(value As Image)
+            Set(value As System.Drawing.Image)
                 MyBase.BackgroundImage = value
             End Set
         End Property
@@ -299,46 +275,46 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImageLayout() As ImageLayout
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout() As System.Windows.Forms.ImageLayout
             Get
                 Return MyBase.BackgroundImageLayout
             End Get
-            Set(value As ImageLayout)
+            Set(value As System.Windows.Forms.ImageLayout)
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property ContextMenuStrip() As ContextMenuStrip
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property ContextMenuStrip() As System.Windows.Forms.ContextMenuStrip
             Get
                 Return MyBase.ContextMenuStrip
             End Get
-            Set(value As ContextMenuStrip)
+            Set(value As System.Windows.Forms.ContextMenuStrip)
                 MyBase.ContextMenuStrip = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property Dock() As DockStyle
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property Dock() As System.Windows.Forms.DockStyle
             Get
                 Return MyBase.Dock
             End Get
-            Set(value As DockStyle)
+            Set(value As System.Windows.Forms.DockStyle)
                 MyBase.Dock = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property Font() As Font
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property Font() As System.Drawing.Font
             Get
                 Return MyBase.Font
             End Get
-            Set(value As Font)
+            Set(value As System.Drawing.Font)
                 MyBase.Font = value
             End Set
         End Property
@@ -346,19 +322,23 @@ Namespace AniGifControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property ForeColor() As Color
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property ForeColor() As System.Drawing.Color
             Get
                 Return MyBase.ForeColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.ForeColor = value
             End Set
         End Property
 
 #End Region
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see
+        ''' cref="SchlumpfSoft.Controls.AniGifControl.AniGif"/>.
+        ''' </summary>
         Public Sub New()
             InitializeComponent()
             InitializeValues() 'Standardwerte laden
@@ -368,7 +348,7 @@ Namespace AniGifControl
         ''' Initialisiert die Komponenten des Steuerelements.
         ''' </summary>
         ''' <remarks>
-        ''' Designer-generierter Code, erweitert um Dokumentationskommentar.
+        ''' Designer-generierter Code.
         ''' </remarks>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
@@ -396,11 +376,11 @@ Namespace AniGifControl
             MyBase.InitLayout()
             ' Alte Animation stoppen um Mehrfach-Registrierungen zu vermeiden
             If _Gif IsNot Nothing Then
-                ImageAnimator.StopAnimate(_Gif, _animationHandler)
+                System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
             End If
             ' Nur animieren wenn AutoPlay aktiv ist
-            If Not DesignMode AndAlso _Autoplay AndAlso _Gif IsNot Nothing AndAlso ImageAnimator.CanAnimate(_Gif) Then
-                ImageAnimator.Animate(_Gif, _animationHandler)
+            If Not DesignMode AndAlso _Autoplay AndAlso _Gif IsNot Nothing AndAlso System.Drawing.ImageAnimator.CanAnimate(_Gif) Then
+                System.Drawing.ImageAnimator.Animate(_Gif, _AnimationHandler)
             End If
         End Sub
 
@@ -411,24 +391,24 @@ Namespace AniGifControl
         ''' <remarks>
         ''' Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.
         ''' </remarks>
-        Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
             MyBase.OnPaint(e)
             If _Gif Is Nothing Then Return ' Null-Schutz
 
-            Dim g As Graphics = e.Graphics ' Variable für Zeichenfläche
-            Dim rectstartsize As Size = GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100) ' Größe der Zeichenfläche berechnen
-            Dim rectstartpoint As Point = GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
+            Dim g As System.Drawing.Graphics = e.Graphics ' Variable für Zeichenfläche
+            Dim rectstartsize As System.Drawing.Size = GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100) ' Größe der Zeichenfläche berechnen
+            Dim rectstartpoint As System.Drawing.Point = GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
 
             ' Qualitätsverbesserung nur bei Skalierung
             If _GifSizeMode = SizeMode.Zoom OrElse _GifSizeMode = SizeMode.Fill Then
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality
-                g.SmoothingMode = SmoothingMode.HighQuality
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
             End If
 
-            g.DrawImage(_Gif, New Rectangle(rectstartpoint, rectstartsize)) ' Zeichenfläche festlegen und Bild zeichnen
+            g.DrawImage(_Gif, New System.Drawing.Rectangle(rectstartpoint, rectstartsize)) ' Zeichenfläche festlegen und Bild zeichnen
             If Not DesignMode And _Autoplay And Not _CustomDisplaySpeed Then ' Bild animieren wenn AutoPlay aktiv und Benutzerdefinierte Geschwindigkeit deaktiviert
-                ImageAnimator.UpdateFrames() ' im Bild gespeicherte Geschwindigkeit verwenden
+                System.Drawing.ImageAnimator.UpdateFrames() ' im Bild gespeicherte Geschwindigkeit verwenden
             End If
         End Sub
 
@@ -441,7 +421,7 @@ Namespace AniGifControl
                 If disposing Then
                     ' Animation stoppen bevor Bild entsorgt wird
                     If _Gif IsNot Nothing Then
-                        ImageAnimator.StopAnimate(_Gif, _animationHandler)
+                        System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
                     End If
                     components?.Dispose()
                     Timer?.Dispose()
@@ -455,9 +435,9 @@ Namespace AniGifControl
         ''' <summary>
         ''' IDisposable Support
         ''' </summary>
-        Public Overloads Sub Dispose() Implements IDisposable.Dispose
+        Public Overloads Sub Dispose() Implements System.IDisposable.Dispose
             Dispose(True)
-            GC.SuppressFinalize(Me)
+            System.GC.SuppressFinalize(Me)
         End Sub
 
 #Region "interne Ereignisbehandlungen"
@@ -466,12 +446,12 @@ Namespace AniGifControl
         ''' Reagiert auf den Wechsel des GIF-Bildes und initialisiert Animationsparameter.
         ''' </summary>
         Private Sub AniGif_GifChange() Handles Me.GifChanged
-            If ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
+            If System.Drawing.ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
                 Timer.Stop() 'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
                 _MaxFrame = 0
-                RaiseEvent NoAnimation(Me, EventArgs.Empty) ' Ereignis auslösen
+                RaiseEvent NoAnimation(Me, System.EventArgs.Empty) ' Ereignis auslösen
             Else 'Werte für Benutzerdefinierte Geschwindigkeit speichern
-                _Dimension = New Imaging.FrameDimension(_Gif.FrameDimensionsList(0))
+                _Dimension = New System.Drawing.Imaging.FrameDimension(_Gif.FrameDimensionsList(0))
                 _MaxFrame = _Gif.GetFrameCount(_Dimension) - 1
                 _Frame = 0
                 If _CustomDisplaySpeed Then
@@ -515,7 +495,7 @@ Namespace AniGifControl
         ''' </summary>
         ''' <param name="o">Auslösendes Objekt.</param>
         ''' <param name="e">Ereignisdaten.</param>
-        Private Sub OnNextFrame(o As Object, e As EventArgs)
+        Private Sub OnNextFrame(o As Object, e As System.EventArgs)
             If AutoPlay AndAlso Not DesignMode Then
                 Invalidate() 'neu zeichnen
             End If
@@ -526,7 +506,7 @@ Namespace AniGifControl
         ''' </summary>
         ''' <param name="sender">Timer.</param>
         ''' <param name="e">Ereignisdaten.</param>
-        Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles Timer.Tick
+        Private Sub Timer_Tick(sender As Object, e As System.EventArgs) Handles Timer.Tick
             'Bild animieren wenn AutoPlay und Benutzerdefinierte Geschwindigkeit aktiv
             If Not DesignMode AndAlso AutoPlay Then
                 If _MaxFrame = 0 Then Exit Sub ' wenn Frames = 0 ist das Bild nicht animiert -> Ende
@@ -557,10 +537,10 @@ Namespace AniGifControl
         ''' Setzt eine neue Animation.
         ''' </summary>
         ''' <param name="value">Neues GIF-Bitmap oder Nothing für Standard.</param>
-        Private Sub SetGifImage(value As Bitmap)
+        Private Sub SetGifImage(value As System.Drawing.Bitmap)
             ' Vorherige Animation stoppen bevor Bild entsorgt wird
             If _Gif IsNot Nothing Then
-                ImageAnimator.StopAnimate(_Gif, _animationHandler)
+                System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
                 _Gif.Dispose() ' Vorhandenes Bild freigeben
             End If
             _Gif = If(value, My.Resources.Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
@@ -629,37 +609,37 @@ Namespace AniGifControl
         ''' <param name="Gif">Aktuelles GIF.</param>
         ''' <param name="Zoom">Zoomfaktor (0-1) bei Zoom-Modus.</param>
         ''' <returns>Berechnete Größe.</returns>
-        Private Function GetRectStartSize(Mode As SizeMode, Control As AniGif, Gif As Bitmap, Zoom As Decimal) As Size
-            If Gif Is Nothing Then Return Size.Empty ' Null-Schutz
+        Private Function GetRectStartSize(Mode As SizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, Zoom As Decimal) As System.Drawing.Size
+            If Gif Is Nothing Then Return System.Drawing.Size.Empty ' Null-Schutz
             Select Case Mode
                 Case SizeMode.Normal
                     ' Bild wird in Originalgröße angezeigt (keine Skalierung)
-                    Return New Size(Gif.Size.Width, Gif.Size.Height)
+                    Return New System.Drawing.Size(Gif.Size.Width, Gif.Size.Height)
                 Case SizeMode.CenterImage
                     ' Bild wird ebenfalls in Originalgröße angezeigt (zentriert, aber Größe bleibt gleich)
-                    Return New Size(Gif.Size.Width, Gif.Size.Height)
+                    Return New System.Drawing.Size(Gif.Size.Width, Gif.Size.Height)
                 Case SizeMode.Zoom
                     ' Bild wird proportional zum Zoomfaktor skaliert
                     If Gif.Size.Width < Gif.Size.Height Then
-                        Return New Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width) * Zoom), CInt(Control.Height * Zoom))
+                        Return New System.Drawing.Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width) * Zoom), CInt(Control.Height * Zoom))
                     Else
                         ' Bild ist breiter als hoch
                         ' Breite des Controls als Basis, Höhe proportional berechnen und mit Zoom multiplizieren
-                        Return New Size(CInt(Control.Width * Zoom), CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width) * Zoom))
+                        Return New System.Drawing.Size(CInt(Control.Width * Zoom), CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width) * Zoom))
                     End If
                 Case SizeMode.Fill
                     ' Bild wird so skaliert, dass es das Control vollständig ausfüllt (Seitenverhältnis bleibt erhalten)
                     If Gif.Size.Width < Gif.Size.Height Then
                         ' Bild ist höher als breit
                         ' Höhe des Controls als Basis, Breite proportional berechnen
-                        Return New Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width)), Control.Height)
+                        Return New System.Drawing.Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width)), Control.Height)
                     Else
                         ' Bild ist breiter als hoch
                         ' Breite des Controls als Basis, Höhe proportional berechnen
-                        Return New Size(Control.Width, CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width)))
+                        Return New System.Drawing.Size(Control.Width, CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width)))
                     End If
                 Case Else
-                    Return New Size(Gif.Size.Width, Gif.Size.Height)
+                    Return New System.Drawing.Size(Gif.Size.Width, Gif.Size.Height)
             End Select
         End Function
 
@@ -671,28 +651,28 @@ Namespace AniGifControl
         ''' <param name="Gif">Aktuelles GIF.</param>
         ''' <param name="RectStartSize">Berechnete Zielgröße.</param>
         ''' <returns>Zeichenursprung.</returns>
-        Private Function GetRectStartPoint(Mode As SizeMode, Control As AniGif, Gif As Bitmap, RectStartSize As Size) As Point
+        Private Function GetRectStartPoint(Mode As SizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, RectStartSize As System.Drawing.Size) As System.Drawing.Point
             ' Bestimmt den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes
             Select Case Mode
                 Case SizeMode.Normal
                     ' Bild wird in Originalgröße oben links gezeichnet
-                    Return New Point(0, 0)
+                    Return New System.Drawing.Point(0, 0)
                 Case SizeMode.CenterImage
                     ' Bild wird in Originalgröße zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und Bild-Höhe
-                    Return New Point(CInt((Control.Width - Gif.Size.Width) / 2), CInt((Control.Height - Gif.Size.Height) / 2))
+                    Return New System.Drawing.Point(CInt((Control.Width - Gif.Size.Width) / 2), CInt((Control.Height - Gif.Size.Height) / 2))
                 Case SizeMode.Zoom
                     ' Bild wird skaliert (gezoomt) und zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und skalierter Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und skalierter Bild-Höhe
-                    Return New Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
+                    Return New System.Drawing.Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
                 Case SizeMode.Fill
                     ' Bild wird so skaliert, dass es das Control ausfüllt und zentriert gezeichnet
                     ' X- und Y-Position wie bei Zoom
-                    Return New Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
+                    Return New System.Drawing.Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
                 Case Else
-                    Return New Point(0, 0) ' Fallback
+                    Return New System.Drawing.Point(0, 0) ' Fallback
             End Select
         End Function
 
@@ -714,7 +694,7 @@ Namespace AniGifControl
         Public Sub StopAnimation()
             If _Autoplay Then
                 _Autoplay = False
-                If _Gif IsNot Nothing Then ImageAnimator.StopAnimate(_Gif, _animationHandler)
+                If _Gif IsNot Nothing Then System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
                 Timer.Stop()
             End If
         End Sub
