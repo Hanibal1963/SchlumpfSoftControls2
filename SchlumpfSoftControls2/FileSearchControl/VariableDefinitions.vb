@@ -1,5 +1,5 @@
 ﻿' *************************************************************************************************
-' FieldDefinitiond.vb
+' VariableDefinitions.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
@@ -8,7 +8,7 @@ Namespace FileSearchControl
     ''' <summary>
     ''' Definiert die Variablen
     ''' </summary>
-    Module FieldDefinitions
+    Module VariableDefinitions
 
         ' Token-Quelle zur Signalisierung eines Abbruchs an den laufenden Such-Task.
         ' Wird bei jedem Start neu erstellt und ersetzt die vorherige Instanz.

@@ -1,5 +1,5 @@
 ﻿' *************************************************************************************************
-' FieldDefinitions.vb
+' VariableDefinitions.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
@@ -9,7 +9,7 @@ Namespace ExtendedRTFControl
     ''' Definition der Variablen
     ''' </summary>
     ''' <remarks></remarks>
-    Module FieldDefinitions
+    Module VariableDefinitions
 
         ''' <summary>
         ''' Zähler für geschachtelte Update-Blöcke.

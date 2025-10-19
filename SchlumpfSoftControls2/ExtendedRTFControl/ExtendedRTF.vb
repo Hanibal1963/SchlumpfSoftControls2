@@ -3,7 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-
 Namespace ExtendedRTFControl
 
     ''' <summary>

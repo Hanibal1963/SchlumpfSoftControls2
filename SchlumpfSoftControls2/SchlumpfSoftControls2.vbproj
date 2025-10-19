@@ -192,8 +192,8 @@
     <Compile Include="ExtendedRTFControl\ExtendedRTF.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ExtendedRTFControl\FieldDefinitions.vb" />
-    <Compile Include="FileSearchControl\FieldDefinitions.vb" />
+    <Compile Include="ExtendedRTFControl\VariableDefinitions.vb" />
+    <Compile Include="FileSearchControl\VariableDefinitions.vb" />
     <Compile Include="FileSearchControl\FileSearch.Designer.vb">
       <DependentUpon>FileSearch.vb</DependentUpon>
     </Compile>
