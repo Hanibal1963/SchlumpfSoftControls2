@@ -19,11 +19,37 @@ Wird ausgelöst wenn die Grafik nicht animiert werden kann.</summary>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.AutoPlay">
       <summary>
-Legt fest ob die Animation sofort nach dem laden gestartet wird.</summary>
+Steuert, ob die GIF‑Animation automatisch gestartet wird, sobald ein Bild vorhanden ist.</summary>
+      <remarks>
+<b>Verhalten:</b> <list type="bullet"><item><description>Beim Setzen auf <c>True</c> wird in <see cref="InitLayout" /> eine ggf. laufende Animation zuerst sicher beendet und anschließend – falls ein animierbares GIF in <see cref="Gif" /> vorliegt und kein Designmodus aktiv ist – die Animation über <see cref="System.Drawing.ImageAnimator.Animate(System.Drawing.Image,System.EventHandler)" /> neu registriert.</description></item><item><description>Beim Setzen auf <c>False</c> wird in <see cref="InitLayout" /> keine Neu‑Registrierung vorgenommen; bereits registrierte Animationen werden zuvor gestoppt. Für ein explizites Beenden inkl. Timer empfiehlt sich <see cref="StopAnimation" />.</description></item><item><description>Im Designmodus (<c>DesignMode = True</c>) wird nie animiert.</description></item></list> <b> Interaktion mit anderen Eigenschaften:</b> <list type="bullet"><item><description><see cref="CustomDisplaySpeed" /> = <c>False</c>: Die Bildgeschwindigkeit wird aus dem GIF übernommen. Das Frame‑Fortschalten erfolgt in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)" /> via <see cref="System.Drawing.ImageAnimator.UpdateFrames()" /> nur, wenn <c>AutoPlay = True</c>.</description></item><item><description><see cref="CustomDisplaySpeed" /> = <c>True</c>: Der interne <c>Timer</c> steuert die Frames. Läuft der Timer, bewirkt er nur dann eine sichtbare Fortschaltung (Invalidate) im <see cref="Timer_Tick(System.Object,System.EventArgs)" />, wenn <c>AutoPlay = True</c>. Ist <c>AutoPlay = False</c>, bleibt der Timer wirkungslos, kann aber noch aktiv sein. Nutzen Sie bei Bedarf <see cref="StopAnimation" /> um den Timer zu stoppen.</description></item></list> <b> Lebenszyklus:</b> <list type="bullet"><item><description><see cref="StartAnimation" /> setzt diese Eigenschaft auf <c>True</c> und ruft <see cref="InitLayout" /> auf.</description></item><item><description><see cref="StopAnimation" /> setzt auf <c>False</c>, stoppt den <c>Timer</c> und beendet die Registrierung beim <see cref="System.Drawing.ImageAnimator" />.</description></item></list> <b> Hinweise:</b> <list type="bullet"><item><description>Standardwert ist <c>False</c> (siehe <see cref="InitializeValues" />).</description></item><item><description>Das Setzen dieser Eigenschaft löst kein eigenes Ereignis aus.</description></item></list></remarks>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.Gif">
+Gif</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.CustomDisplaySpeed">
+CustomDisplaySpeed</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
+FramesPerSecond</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StartAnimation">
+StartAnimation</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
+StopAnimation</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
+InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.Gif">
       <summary>
-Gibt die animierte Gif-Grafik zurück oder legt diese fest.</summary>
+Gibt die animierte GIF‑Grafik zurück oder legt diese fest.</summary>
+      <remarks>
+<b>Verhalten beim Setzen:</b> <list type="bullet"><item><description>Wird <c>Nothing</c> übergeben, wird das Standard‑GIF aus <c>My.Resources.Standard</c> verwendet.</description></item><item><description>Vor dem Wechsel wird eine ggf. laufende Animation für das bisherige Bild über <see cref="System.Drawing.ImageAnimator.StopAnimate(System.Drawing.Image,System.EventHandler)" /> beendet und das alte <see cref="System.Drawing.Bitmap" /> entsorgt (<c>Dispose()</c>).</description></item><item><description>Nach dem Setzen wird intern das Ereignis <c>GifChanged</c> ausgelöst. Dadurch werden Frame‑Dimension, Frame‑Anzahl und (falls <see cref="CustomDisplaySpeed" /> = <c>True</c>) der Timer initialisiert; anschließend erfolgt <see cref="System.Windows.Forms.Control.Invalidate" /> und ein Aufruf von <see cref="InitLayout" />, der die Animation bei <see cref="AutoPlay" /> = <c>True</c> neu registriert.</description></item><item><description>Ist das Bild nicht animierbar und <see cref="AutoPlay" /> = <c>True</c>, wird das Ereignis <see cref="NoAnimation" /> ausgelöst.</description></item></list> <b>Lebenszyklus &amp; Besitzrechte (Ownership):</b> <list type="bullet"><item><description>Das Control übernimmt die Eigentümerschaft des gesetzten <see cref="System.Drawing.Bitmap" /> und ruft dessen <c>Dispose()</c> beim nächsten Setzen oder beim Entsorgen des Controls auf. Das übergebene Objekt darf außerhalb des Controls nicht weiterverwendet oder entsorgt werden. Verwenden Sie bei Bedarf eine Kopie (<c>bitmap.Clone()</c>).</description></item></list> <b>Interaktion mit anderen Eigenschaften:</b> <list type="bullet"><item><description><see cref="AutoPlay" />: Steuert, ob die Animation nach dem Setzen automatisch startet. Im Designmodus wird nie animiert.</description></item><item><description><see cref="CustomDisplaySpeed" /> / <see cref="FramesPerSecond" />: Bei aktivierter benutzerdefinierter Geschwindigkeit steuert der interne <c>Timer</c> den Frame‑Fortschritt. Andernfalls wird die im GIF hinterlegte Bildfolge über <see cref="System.Drawing.ImageAnimator.UpdateFrames()" /> in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)" /> verwendet.</description></item><item><description><see cref="GifSizeMode" /> / <see cref="ZoomFactor" />: Beeinflussen ausschließlich die Darstellung, nicht die Bilddaten.</description></item></list> <b>Threading:</b> Das Setzen sollte auf dem UI‑Thread erfolgen.</remarks>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.AutoPlay">
+AutoPlay</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.CustomDisplaySpeed">
+CustomDisplaySpeed</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
+FramesPerSecond</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.GifSizeMode">
+GifSizeMode</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.ZoomFactor">
+ZoomFactor</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.GifSizeMode">
       <summary>
@@ -37,25 +63,53 @@ Gif</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.CustomDisplaySpeed">
       <summary>
-Legt fest ob die benutzerdefinierte Anzeigegeschwindigkeit oder <br />die in der Datei festgelegte Geschwindigkeit benutzt wird.</summary>
+Legt fest, ob die benutzerdefinierte Anzeigegeschwindigkeit (Timer/FPS) oder <br />die im GIF hinterlegte Bildfolge (ImageAnimator) verwendet wird.</summary>
+      <remarks>
+<b>Verhalten beim Setzen:</b> <list type="bullet"><item><description><c>True</c>: Die Animation wird über den internen <see cref="System.Windows.Forms.Timer" /> mit der in <see cref="FramesPerSecond" /> konfigurierten Frequenz gesteuert. Pro Tick wird das nächste Frame per <see cref="System.Drawing.Bitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension,Integer)" /> ausgewählt und das Control über <see cref="System.Windows.Forms.Control.Invalidate" /> neu gezeichnet.</description></item><item><description><c>False</c>: Die im GIF gespeicherten Verzögerungen werden verwendet. Das Umschalten der Frames erfolgt in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)" /> über <see cref="System.Drawing.ImageAnimator.UpdateFrames()" /> (nur bei <see cref="AutoPlay" /> = <c>True</c>).</description></item><item><description>Beim Aktivieren (<c>True</c>) wird das Timer-Intervall sofort auf <c>1000 / FramesPerSecond</c> gesetzt und der Timer gestartet; beim Deaktivieren (<c>False</c>) wird der Timer gestoppt.</description></item></list> <b>Interaktion mit anderen Eigenschaften/Ereignissen:</b> <list type="bullet"><item><description><see cref="AutoPlay" />: Eine sichtbare Animation erfolgt nur bei <c>AutoPlay = True</c>. Ist <c>AutoPlay = False</c>, kann der Timer zwar laufen, hat aber keine sichtbare Wirkung (keine Frame-Fortschaltung). Nutzen Sie bei Bedarf <see cref="StopAnimation" /> um Timer und Animator zu beenden.</description></item><item><description><see cref="FramesPerSecond" />: Wirkt nur, wenn <c>CustomDisplaySpeed = True</c>. Der Wert wird intern auf den Bereich 1–50 begrenzt. Änderungen aktualisieren das Timer-Intervall unmittelbar.</description></item><item><description><see cref="Gif" />: Beim Bildwechsel werden Frame-Dimension und -Anzahl neu ermittelt. Ist das Bild nicht animierbar und <c>AutoPlay = True</c>, wird <see cref="NoAnimation" /> ausgelöst und der Timer gestoppt.</description></item></list> <b>Lebenszyklus/Design:</b> <list type="bullet"><item><description>Standardwert ist <c>False</c> (siehe <see cref="InitializeValues" />).</description></item><item><description><see cref="StartAnimation" /> ändert diese Eigenschaft nicht; sie steuert lediglich <see cref="AutoPlay" />. Die Auswahl der Geschwindigkeitsquelle erfolgt ausschließlich über <c>CustomDisplaySpeed</c>.</description></item><item><description>Im Designmodus wird nie animiert.</description></item></list> <b>Hinweise zur internen Umsetzung:</b> <list type="bullet"><item><description>Bei <c>CustomDisplaySpeed = True</c> übernimmt der Timer die Frame-Steuerung. Vom <see cref="System.Drawing.ImageAnimator" /> ausgelöste Ereignisse können zusätzliche <c>Invalidate</c>-Aufrufe bewirken, die Bildfolge bestimmt jedoch der Timer.</description></item></list></remarks>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.AutoPlay">
+AutoPlay</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
+FramesPerSecond</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.Gif">
+Gif</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StartAnimation">
+StartAnimation</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
+StopAnimation</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
+InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
       <summary>
-Legt die benutzerdefinierte Anzeigegeschwindigkeit in Bildern/Sekunde fest.</summary>
+Legt die benutzerdefinierte Anzeigegeschwindigkeit in Bildern pro Sekunde (FPS) fest.</summary>
       <remarks>
-Bewirkt nur eine Änderung wenn <seealso cref="CustomDisplaySpeed" /> auf True festgelegt ist.</remarks>
+<b>Geltungsbereich:</b> <list type="bullet"><item><description>Wirksam nur, wenn <see cref="CustomDisplaySpeed" /> = <c>True</c> ist. Andernfalls wird die im GIF hinterlegte Bildfolge über <see cref="System.Drawing.ImageAnimator.UpdateFrames()" /> verwendet.</description></item></list> <b>Wertebereich und Validierung:</b> <list type="bullet"><item><description>Zulässiger Bereich ist <c>1</c> bis <c>50</c> FPS. Werte außerhalb dieses Bereichs werden in <see cref="CheckFramesPerSecondValue(Decimal)" /> automatisch begrenzt.</description></item><item><description>Dezimalwerte sind erlaubt. Das resultierende Timer-Intervall wird als <c>CInt(1000 / FramesPerSecond)</c> in Millisekunden berechnet und auf ganze Millisekunden gerundet.</description></item></list> <b>Laufzeitverhalten:</b> <list type="bullet"><item><description>Beim Setzen wird <see cref="FramesPerSecondChanged" /> ausgelöst. Der zugehörige Handler aktualisiert das Intervall des internen <see cref="System.Windows.Forms.Timer" /> sofort: Läuft der Timer, wird er kurz gestoppt, neu konfiguriert und wieder gestartet; andernfalls wird nur das Intervall gesetzt.</description></item><item><description>Eine sichtbare Animation erfolgt nur, wenn <see cref="AutoPlay" /> = <c>True</c> ist und ggf. ein animierbares GIF vorliegt (<see cref="System.Drawing.ImageAnimator.CanAnimate(System.Drawing.Image)" />).</description></item></list> <b>Interaktion mit anderen Eigenschaften/Ereignissen:</b> <list type="bullet"><item><description><see cref="CustomDisplaySpeed" />: Muss <c>True</c> sein, damit der Timer die Frames steuert.</description></item><item><description><see cref="AutoPlay" />: Steuert, ob die Fortschaltung sichtbar ist. Bei <c>False</c> kann der Timer laufen, es erfolgt jedoch keine Fortschaltung.</description></item><item><description><see cref="GifChanged" />: Initialisiert Frame-Dimension/-Anzahl. Ist kein animierbares GIF vorhanden und <see cref="AutoPlay" /> = <c>True</c>, wird <see cref="NoAnimation" /> ausgelöst und der Timer gestoppt.</description></item></list> <b>Design/Standardwerte:</b> <list type="bullet"><item><description>Standardwert ist <c>10</c> FPS (siehe <see cref="InitializeValues" />).</description></item><item><description>Im Designmodus (<c>DesignMode = True</c>) wird nicht animiert.</description></item></list> <b>Threading:</b> Auf dem UI-Thread setzen.</remarks>
       <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.CustomDisplaySpeed">
 CustomDisplaySpeed</seealso>
+      <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.AutoPlay">
+AutoPlay</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StartAnimation">
+StartAnimation</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
+StopAnimation</seealso>
+      <seealso cref="CheckFramesPerSecondValue(Decimal)">
+CheckFramesPerSecondValue</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.ZoomFactor">
       <summary>
-Legt den Zoomfaktor fest.</summary>
+Legt den Zoomfaktor in Prozent fest, mit dem das GIF skaliert wird.</summary>
       <remarks>
-Bewirkt nur eine Änderung wenn <seealso cref="GifSizeMode" /> auf <seealso cref="SizeMode.Zoom" /> festgelegt ist.</remarks>
+<b>Geltungsbereich:</b> <list type="bullet"><item><description>Wirksam nur, wenn <see cref="GifSizeMode" /> auf <see cref="SizeMode.Zoom" /> steht. In den Modi <see cref="SizeMode.Normal" />, <see cref="SizeMode.CenterImage" /> und <see cref="SizeMode.Fill" /> hat der Wert keine Auswirkung auf die Darstellung.</description></item></list> <b>Wertebereich und Validierung:</b> <list type="bullet"><item><description>Zulässiger Bereich: <c>1</c> bis <c>100</c> (%). Abweichungen werden in <see cref="CheckZoomFactorValue(Decimal)" /> automatisch begrenzt.</description></item><item><description>Dezimalwerte sind erlaubt (z. B. <c>62.5</c>). Intern wird in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)" /> der Faktor als Dezimalwert zwischen <c>0</c> und <c>1</c> verwendet (<c>_ZoomFactor / 100</c>) und an <see cref="GetRectStartSize(SizeMode, AniGif, System.Drawing.Bitmap, Decimal)" /> übergeben.</description></item></list> <b>Laufzeitverhalten:</b> <list type="bullet"><item><description>Beim Setzen wird intern <see cref="SetZoomFactor(Decimal)" /> aufgerufen, der den Wert prüft und <see cref="System.Windows.Forms.Control.Invalidate" /> auslöst. Dadurch wird das Control neu gezeichnet; ein eigenes Ereignis wird nicht ausgelöst.</description></item><item><description>Die Änderung beeinflusst ausschließlich die Darstellung (Größe/Position), nicht die Bilddaten oder die Animation selbst.</description></item></list> <b>Rendering-Qualität:</b> <list type="bullet"><item><description>Im Zoom- bzw. Fill-Modus werden hochwertige Einstellungen gesetzt (<see cref="System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic" />, <see cref="System.Drawing.Drawing2D.SmoothingMode.HighQuality" />, <see cref="System.Drawing.Drawing2D.PixelOffsetMode.HighQuality" />), um die Skalierungsqualität zu verbessern.</description></item></list> <b>Interaktion mit anderen Eigenschaften:</b> <list type="bullet"><item><description><see cref="GifSizeMode" />: Muss auf <see cref="SizeMode.Zoom" /> stehen, damit der Wert sichtbar wird.</description></item><item><description><see cref="AutoPlay" /> / <see cref="CustomDisplaySpeed" /> / <see cref="FramesPerSecond" />: Beeinflussen nur die Animation, nicht die Skalierung. <c>ZoomFactor</c> wirkt unabhängig davon.</description></item></list> <b>Design/Standardwerte:</b> <list type="bullet"><item><description>Standardwert ist <c>50</c> (%), gesetzt in <see cref="InitializeValues" />.</description></item><item><description>Im Designmodus wird nicht animiert; die Skalierung im Zoom-Modus bleibt jedoch sichtbar.</description></item></list> <b>Threading:</b> Auf dem UI-Thread setzen.</remarks>
       <seealso cref="P:SchlumpfSoft.Controls.AniGifControl.AniGif.GifSizeMode">
 GifSizeMode</seealso>
       <seealso cref="F:SchlumpfSoft.Controls.AniGifControl.SizeMode.Zoom">
 SizeMode.Zoom</seealso>
+      <seealso cref="CheckZoomFactorValue(Decimal)">
+CheckZoomFactorValue</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint(System.Windows.Forms.PaintEventArgs)">
+OnPaint</seealso>
+      <seealso cref="GetRectStartSize(SizeMode,AniGif,System.Drawing.Bitmap,Decimal)">
+GetRectStartSize</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.MaximumSize">
     </member>
@@ -139,31 +193,37 @@ Stoppt die Animation und beendet Timer sowie ImageAnimator.</summary>
     </member>
     <member name="T:SchlumpfSoft.Controls.AniGifControl.SizeMode">
       <summary>
-Auflistung der Anzeigemodi</summary>
+Legt fest, wie eine Grafik innerhalb der verfügbaren Client-Fläche eines Controls angezeigt wird.</summary>
+      <remarks>
+Die Anzeigemodi bestimmen Ausrichtung und Skalierung der Grafik in Bezug auf die Größe des Controls. <list type="bullet"><item><description> <see cref="SizeMode.Normal" /><b>:</b> Keine Skalierung; Ausrichtung oben links. </description></item><item><description><see cref="SizeMode.CenterImage" /><b>:</b> Keine Skalierung; zentriert. </description></item><item><description><see cref="SizeMode.Zoom" /><b>:</b> Einheitliche Skalierung, sodass die Grafik vollständig in den verfügbaren Bereich passt (letterboxing/pillarboxing möglich). </description></item><item><description><see cref="SizeMode.Fill" /><b>:</b> Skalierung, sodass der verfügbare Bereich vollständig gefüllt wird (Zuschnitt oder Verzerrung abhängig von der Implementierung möglich). </description></item></list></remarks>
+      <seealso cref="System.Drawing.Image">
+Image</seealso>
+      <seealso cref="System.Windows.Forms.Control">
+Control</seealso>
     </member>
     <member name="F:SchlumpfSoft.Controls.AniGifControl.SizeMode.Normal">
       <summary>
-Die Grafik wird in Originalgröße angezeigt (Ausrichtung oben links).</summary>
+Die Grafik wird in Originalgröße angezeigt; Ausrichtung erfolgt oben links.</summary>
       <remarks>
-Wenn die grafik größer als das Control ist, werden nicht anzeigbare Teile abgeschnitten.</remarks>
+<list type="bullet"><item><description>Es findet keine Skalierung statt. </description></item><item><description>Ist die Grafik größer als das Control, werden nicht sichtbare Bereiche an den Rändern abgeschnitten. </description></item><item><description>Ist die Grafik kleiner, bleibt der restliche Bereich des Controls leer.</description></item></list></remarks>
     </member>
     <member name="F:SchlumpfSoft.Controls.AniGifControl.SizeMode.CenterImage">
       <summary>
-Die Grafik wird in Originalgröße angezeigt (zentrierte Ausrichtung).</summary>
+Die Grafik wird in Originalgröße zentriert angezeigt.</summary>
       <remarks>
-Wenn die grafik größer als das Control ist, werden nicht anzeigbare Teile abgeschnitten.</remarks>
+<list type="bullet"><item><description>Es findet keine Skalierung statt. </description></item><item><description>Ist die Grafik größer als das Control, werden an den Rändern nicht anzeigbare Teile abgeschnitten. </description></item><item><description>Ist die Grafik kleiner, entstehen umlaufende Ränder (leere Flächen).</description></item></list></remarks>
     </member>
     <member name="F:SchlumpfSoft.Controls.AniGifControl.SizeMode.Zoom">
       <summary>
-Die Größe der Grafik kann an die Größe des Controls angepasst werden (zentrierte Ausrichtung 1-100%).</summary>
+Die Größe der Grafik wird einheitlich skaliert, sodass sie in den verfügbaren Bereich des Controls passt; zentrierte Ausrichtung (1–100%).</summary>
       <remarks>
-Die Grafik passt immer in das Control.</remarks>
+<list type="bullet"><item><description>Das Seitenverhältnis bleibt erhalten (keine Verzerrung). </description></item><item><description>Die Grafik passt immer vollständig in das Control; ggf. mit Rändern oben/unten oder links/rechts. </description></item><item><description>Eine Vergrößerung über 100% kann je nach Implementierung unterbunden werden.</description></item></list></remarks>
     </member>
     <member name="F:SchlumpfSoft.Controls.AniGifControl.SizeMode.Fill">
       <summary>
-Die Grafik füllt das Control immer vollständig aus (zentrierte Ausrichtung ).</summary>
+Die Grafik wird so skaliert, dass der verfügbare Bereich vollständig gefüllt wird; zentrierte Ausrichtung.</summary>
       <remarks>
-Kleinere Grafiken werden gezoomt und größere verkleinert.</remarks>
+<list type="bullet"><item><description>Kleinere Grafiken werden vergrößert, größere verkleinert. </description></item><item><description>Abhängig von der Implementierung kann entweder das Seitenverhältnis beibehalten werden (dann erfolgt Zuschnitt an gegenüberliegenden Kanten), oder die Grafik wird an das Seitenverhältnis des Controls angepasst (mögliche Verzerrung).</description></item></list></remarks>
     </member>
     <member name="N:SchlumpfSoft.Controls.ColorProgressBarControl">
     </member>
@@ -399,14 +459,6 @@ Der neue ausgewählte Pfad.</param>
     </member>
     <member name="N:SchlumpfSoft.Controls.ExtendedRTFControl">
     </member>
-    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions">
-      <summary>
-Definition der API-Funktionen</summary>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ConstantDefinitions">
-      <summary>
-Definition der Konstanten</summary>
-    </member>
     <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF">
       <summary>
 Erweiterte <see cref="System.Windows.Forms.RichTextBox" /> mit bequemen Formatierungs- und Abfrage-Hilfen (Schriftgröße, Stil-Flags, Farben, Einzüge, Ausrichtung) sowie Batch-Update (Redraw-Suppression).</summary>
@@ -448,6 +500,8 @@ Schaltet Durchstreichung für aktuelle Auswahl bzw. Caret um.</summary>
     <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleBullet">
       <summary>
 Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.</summary>
+      <remarks>
+Funktioniert nur auf Absatzebene (SelectionLength=0 -&gt; aktueller Absatz).</remarks>
     </member>
     <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionFontSize">
       <summary>
@@ -470,10 +524,14 @@ Ein Mischzustand ergibt Nothing.</remarks>
     <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionUnderline">
       <summary>
 Setzt die Unterstreichung der Auswahl oder am Caret oder gibt diesen zurück.</summary>
+      <remarks>
+Ein Mischzustand ergibt Nothing.</remarks>
     </member>
     <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionStrikeout">
       <summary>
 Setzt die Durchstreichung der Auswahl oder am Caret oder gibt diesen zurück.</summary>
+      <remarks>
+Ein Mischzustand ergibt Nothing.</remarks>
     </member>
     <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionForeColor">
       <summary>
@@ -497,19 +555,7 @@ Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurü
       <param name="e">
 </param>
     </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.FieldDefinitions">
-      <summary>
-Definition der Variablen</summary>
-    </member>
     <member name="N:SchlumpfSoft.Controls.FileSearchControl">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FieldDefinitions">
-      <summary>
-Definiert die Variablen</summary>
     </member>
     <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearch">
       <summary>
@@ -559,14 +605,6 @@ Bricht eine eventuell laufende Suche ab.</summary>
       <remarks>
 Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor(System.ComponentModel.IContainer)">
-      <param name="container">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs">
       <summary>
 Stellt Fortschrittsinformationen für den Datei-Suchvorgang bereit und wird beim <c>ProgressChanged</c>-Ereignis der Dateisuche übergeben.</summary>
@@ -605,10 +643,6 @@ Erstellt den Dialog und initialisiert Steuerelemente.</summary>
       <remarks>
 Die Steuerelemente (z. B. <c>ButtonOK</c>, <c>ButtonCancel</c>, <c>TextBox</c>) werden im Designer angelegt. Hier wird u. a. der OK-Button deaktiviert, bis eine gültige Eingabe vorliegt.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.AddItemDialog.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEdit">
       <summary>
 Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars einer INI-Datei.</summary>
@@ -642,10 +676,6 @@ Gibt die Kommentarzeilen zurück oder legt diese fest.</summary>
 Gibt den Namen des INI-Abschnitts zurück oder legt diesen fest, für den der Kommentar angezeigt wird.</summary>
       <remarks>
 Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see cref="CommentChanged" /> übermittelt.</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.CommentEdit.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEditEventArgs">
       <summary>
@@ -695,10 +725,6 @@ Gibt den Dateiinhalt als Array von Zeilen zurück oder legt diesen fest.</summar
       <remarks>
 - Das Setzen löst das interne Event <c>PropLinesChanged</c> aus, welches die UI aktualisiert. - Der Vergleich <c>IsNot</c> prüft hier Referenzungleichheit des Arrays. Wird derselbe Array-Instanzinhalt verändert, ohne das Array-Objekt zu tauschen, wird kein Event ausgelöst.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.ContentView.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.DeleteItemDialog">
       <summary>
 Dialog zur Bestätigung des Löschens eines Elements.</summary>
@@ -738,10 +764,6 @@ Gibt den aktuell ausgewählten Eintrag innerhalb der Sektion zurück oder legt d
     <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.Value">
       <summary>
 Gibt den Eintragswert zurück oder legt diesen fest. Beim Setzen wird die TextBox über das interne Ereignis synchronisiert und der Übernehmen-Button deaktiviert. Hinweis: Das ändert NICHT automatisch die INI-Datei; Persistenz erfolgt über das ValueChanged-Ereignis.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs">
       <summary>
@@ -1053,10 +1075,6 @@ Setzt die Elemente der ListBox oder gibt diese zurück. Hinweis: Der Vergleich n
       <summary>
 Gibt den aktuell ausgewählten Abschnitt zurück oder legt diesen fest. Wird typischerweise vom Host beim Wechsel der INI-Sektion gesetzt, damit Events den Kontext kennen.</summary>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.ListEdit.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs">
       <summary>
 Trägersklasse für Ereignisdaten beim Bearbeiten einer Eintragsliste (z. B. Umbenennen, Hinzufügen, Löschen) innerhalb einer INI-Abschnittsstruktur.</summary>
@@ -1094,12 +1112,6 @@ Zielname bzw. neuer Eintragsname.</summary>
 </param>
     </member>
     <member name="M:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs.GetHashCode">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.IniFileControl.RenameItemDialog">
-    </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.RenameItemDialog.Dispose(System.Boolean)">
-      <param name="disposing">
-</param>
     </member>
     <member name="N:SchlumpfSoft.Controls.NotifyFormControl">
     </member>
@@ -1170,52 +1182,6 @@ Fehlersymbol</summary>
     <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyFormStyle.Exclamation">
       <summary>
 Warnungssymbol</summary>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ProvideToolboxControlAttribute">
-      <summary>
-Dieses Attribut fügt für die Assembly einen ToolboxControlsInstaller-Schlüssel hinzu, um Steuerelemente aus der Assembly in die Toolbox zu installieren.</summary>
-      <remarks>
-<para /> <para /></remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ProvideToolboxControlAttribute.#ctor(System.String,System.Boolean)">
-      <summary>
-Erstellt ein neues ProvideToolboxControl-Attribut, um die Assembly für den Toolbox Controls Installer zu registrieren.</summary>
-      <param name="name">
-Anzeigename der Steuerelementgruppe.</param>
-      <param name="isWpfControls">
-True, wenn es sich um WPF-Steuerelemente handelt; andernfalls False.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ProvideToolboxControlAttribute.Register(Microsoft.VisualStudio.Shell.RegistrationAttribute.RegistrationContext)">
-      <summary>
-<para>Registriert dieses Attribut mit dem angegebenen Kontext.</para> <para>Der Kontext enthält den Speicherort, an dem die Registrierungsinformationen abgelegt werden sollen.</para> <para>Er enthält außerdem Informationen wie den zu registrierenden Typ und Pfadinformationen.</para></summary>
-      <param name="context">
-Der Kontext, in dem registriert werden soll.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ProvideToolboxControlAttribute.Unregister(Microsoft.VisualStudio.Shell.RegistrationAttribute.RegistrationContext)">
-      <summary>
-Hebt die Registrierung dieses Attributs mit dem angegebenen Kontext auf.</summary>
-      <param name="context">
-<para>Ein von einem externen Registrierungstool bereitgestellter Registrierungskontext.</para> <para>Der Kontext kann verwendet werden, um Registrierungsschlüssel zu entfernen, die Registrierungsaktivität zu protokollieren und Informationen über die zu registrierende Komponente abzurufen.</para></param>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.SchlumpfSoftControls2Package">
-      <summary>
-Dies ist die Klasse, die das von dieser Assembly bereitgestellte Paket implementiert.</summary>
-      <remarks>
-<para> Die Mindestanforderung, damit eine Klasse als gültiges Paket für Visual Studio gilt, besteht darin, das IVsPackage-Interface zu implementieren und sich bei der Shell zu registrieren. </para> <para>Dieses Paket verwendet die in der Managed Package Framework (MPF) definierten Hilfsklassen, um dies zu erreichen: </para> <para>Es leitet sich von der Klasse Package ab, die die Implementierung der IVsPackage-Schnittstelle bereitstellt, und verwendet die im Framework definierten Registrierungsattribute, um sich selbst und seine Komponenten bei der Shell zu registrieren. </para> <para>Diese Attribute teilen dem Pkgdef-Erstellungstool mit, welche Daten in die .pkgdef-Datei geschrieben werden sollen. </para> <para> Damit das Paket in VS geladen wird, muss in der .vsixmanifest-Datei mit &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; darauf verwiesen werden. </para></remarks>
-    </member>
-    <member name="F:SchlumpfSoft.Controls.SchlumpfSoftControls2Package.PackageGuidString">
-      <summary>
-Paket-GUID</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.SchlumpfSoftControls2Package.InitializeAsync(System.Threading.CancellationToken,System.IProgress{Microsoft.VisualStudio.Shell.ServiceProgressData})">
-      <summary>
-<para>Initialisierung des Pakets; diese Methode wird unmittelbar nach dem Einbinden (Siting) des Pakets aufgerufen. </para> <para>Hier gehört jeglicher Initialisierungscode hin, der von durch Visual Studio bereitgestellten Diensten abhängt.</para></summary>
-      <returns>
-<para>Eine Aufgabe, die die asynchrone Arbeit der Paketinitialisierung darstellt, oder eine bereits abgeschlossene Aufgabe, falls keine Arbeit anfällt. </para> <para>Geben Sie aus dieser Methode nicht null zurück.</para></returns>
-      <param name="cancellationToken">
-Ein Abbruchtoken zur Überwachung eines Abbruchs der Initialisierung, z. B. beim Herunterfahren von VS.</param>
-      <param name="progress">
-Ein Anbieter für Fortschrittsaktualisierungen.</param>
     </member>
     <member name="N:SchlumpfSoft.Controls.SevenSegmentControl">
     </member>
@@ -1808,8 +1774,6 @@ Definiert eine Seite des Controls</summary>
     <member name="M:SchlumpfSoft.Controls.WizardControl.WizardPage.OnPaint(System.Windows.Forms.PaintEventArgs)">
       <param name="e">
 </param>
-    </member>
-    <member name="N:SchlumpfSoft.Controls">
     </member>
   </members>
 </doc>
