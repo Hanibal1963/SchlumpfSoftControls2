@@ -370,3 +370,5 @@ FodyWeavers.xsd
 *.vsdoc
 */VSdoc
 /SchlumpfSoftControls2/SchlumpfSoftControls2.chm
+/SchlumpfSoftControls2/VSdoc/FINAL_CHM_DOC/SchlumpfSoftControls2.chm
+/SchlumpfSoftControls2/SchlumpfSoftControls2.xml

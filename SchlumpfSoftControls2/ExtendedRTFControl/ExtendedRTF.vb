@@ -115,7 +115,7 @@ Namespace ExtendedRTFControl
         ''' </summary>
         ''' <remarks>
         ''' Funktioniert nur auf Absatzebene (SelectionLength=0 -> aktueller Absatz).
-        ''' </remarks
+        ''' </remarks>
         Public Sub ToggleBullet()
             SelectionBullet = Not SelectionBullet
         End Sub
@@ -200,7 +200,7 @@ Namespace ExtendedRTFControl
         ''' </summary>
         ''' <remarks>
         ''' Ein Mischzustand ergibt Nothing.
-        ''' </summary>
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionUnderline As System.Nullable(Of Boolean)
             Get
@@ -222,7 +222,7 @@ Namespace ExtendedRTFControl
         ''' </summary>
         ''' <remarks>
         ''' Ein Mischzustand ergibt Nothing.
-        ''' </summary>
+        ''' </remarks>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionStrikeout As System.Nullable(Of Boolean)
             Get
