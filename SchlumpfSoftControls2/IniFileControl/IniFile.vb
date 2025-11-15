@@ -1,32 +1,6 @@
 ﻿' *************************************************************************************************
 ' IniFile.vb
 ' Copyright (c) 2025 by Andreas Sauer 
-' 
-' Übersicht:
-' - Dieses Steuerelement verwaltet klassische INI-Dateien.
-' - Struktur einer INI-Datei:
-'     - Dateikommentar (am Anfang, vor dem ersten Abschnitt; jede Zeile beginnt mit dem Prefix, z. B. ";")
-'     - Abschnitte in eckigen Klammern, z. B. [Allgemein]
-'     - Optionaler Abschnittskommentar (Zeilen unterhalb des Abschnitts, beginnend mit dem Prefix)
-'     - Einträge in der Form: Schlüssel = Wert
-'
-' - Interne Darstellung:
-'     - _FileComment: Liste der Dateikommentarzeilen (ohne Prefixzeichen, nur Text)
-'     - _Sections: Dictionary von Abschnittsname -> Dictionary von Eintragsname -> Wert
-'     - _SectionsComments: Dictionary von Abschnittsname -> Liste von Kommentarzeilen (ohne Prefix)
-'
-' - Speichern/Neuaufbau:
-'     - CreateFileContent() baut _FileContent (String-Array) aus den obigen Strukturen.
-'     - SaveFile() schreibt _FileContent auf Datenträger.
-'
-' - Parsing:
-'     - ParseFileContent() füllt die internen Strukturen aus _FileContent.
-'     - Kommentarprefix (Default ';') wird beim Einlesen entfernt und beim Erzeugen wieder vorangestellt.
-'
-' Hinweise:
-' - Thread-Sicherheit: Diese Klasse ist nicht thread-sicher. Synchronisation bei parallelem Zugriff ist Aufgabe des Aufrufers.
-' - Fehlerbehandlung: Viele Methoden erwarten vorhandene Abschnitte/Einträge. Nicht gefundene Schlüssel führen ggf. zu KeyNotFound-Ausnahmen.
-' - Gleichheitsprüfung bei Strings: In VB.NET sollte "=" für Stringvergleiche verwendet werden. "Is" prüft Referenzgleichheit und ist für Strings unüblich.
 ' *************************************************************************************************
 
 Imports System
@@ -39,11 +13,6 @@ Imports Microsoft.VisualBasic
 
 Namespace IniFileControl
 
-    ' weitere infos:
-    ' <browsable> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.browsableattribute?view=netframework-4.7.2
-    ' <category> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.categoryattribute?view=netframework-4.7.2
-    ' <description> - https://learn.microsoft.com/de-de/dotnet/api/system.componentmodel.descriptionattribute?view=netframework-4.7.2
-
     '''' <summary>
     '''' Steuerelement zum Verwalten von INI - Dateien
     '''' </summary>
@@ -51,9 +20,7 @@ Namespace IniFileControl
     <Description("Steuerelement zum Verwalten von INI - Dateien")>
     <ToolboxBitmap(GetType(IniFileControl.IniFile), "IniFile.bmp")>
     <ToolboxItem(True)>
-    Public Class IniFile
-
-        Inherits Component
+    Public Class IniFile : Inherits Component
 
 #Region "Definition der Variablen"
 
@@ -200,19 +167,6 @@ Namespace IniFileControl
         End Property
 
 #End Region
-
-        'Public Sub New()
-        '    ' Initialzustand definieren
-        '    ' Me._FileName = $"neue Datei.ini"
-        '    'Me._FilePath = String.Empty
-        '    'Me._FileContent = {$""} ' Ein leerer Zeilenpuffer
-        '    'Me._CommentPrefix = ";"c ' Standardkommentarprefix
-        '    'Me._FileComment = New List(Of String)
-        '    'Me._Sections = New Dictionary(Of String, Dictionary(Of String, String))
-        '    'Me._SectionsComments = New Dictionary(Of String, List(Of String))
-        '    'Me._CurrentSectionName = $""
-        '    ' Me._FileSaved = True ' Anfangszustand als "gespeichert" markieren
-        'End Sub
 
 #Region "öffentliche Funktionen"
 

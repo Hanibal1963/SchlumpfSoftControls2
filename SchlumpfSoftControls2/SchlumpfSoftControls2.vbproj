@@ -187,50 +187,27 @@
     </Compile>
     <Compile Include="FileSearchControl\FileSearchEventArgs.vb" />
     <Compile Include="FileSearchControl\SimpleProgress.vb" />
-    <Compile Include="IniFileControl\AddItemDialog.Designer.vb">
-      <DependentUpon>AddItemDialog.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\AddItemDialog.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\CommentEdit.Designer.vb">
-      <DependentUpon>CommentEdit.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\CommentEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IniFileControl\CommentEditEventArgs.vb" />
-    <Compile Include="IniFileControl\ContentView.Designer.vb">
-      <DependentUpon>ContentView.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\ContentView.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\DeleteItemDialog.Designer.vb">
-      <DependentUpon>DeleteItemDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\DeleteItemDialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IniFileControl\EntryValueEdit.Designer.vb">
-      <DependentUpon>EntryValueEdit.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\EntryValueEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IniFileControl\EntryValueEditEventArgs.vb" />
     <Compile Include="IniFileControl\IniFile.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IniFileControl\ListEdit.Designer.vb">
-      <DependentUpon>ListEdit.vb</DependentUpon>
-    </Compile>
+    <Compile Include="IniFileControl\IniFileEventArgsDefinitions.vb" />
     <Compile Include="IniFileControl\ListEdit.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\ListEditEventArgs.vb" />
-    <Compile Include="IniFileControl\RenameItemDialog.Designer.vb">
-      <DependentUpon>RenameItemDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\RenameItemDialog.vb">
       <SubType>Form</SubType>
@@ -297,6 +274,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.AnalyzerUtilities">
+      <Version>3.3.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
