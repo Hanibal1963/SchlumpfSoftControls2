@@ -12,16 +12,18 @@ Namespace AniGifControl
     <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(AniGifControl.AniGif), "AniGifControl.AniGif.bmp")>
-    Public Class AniGif
-
-        Inherits System.Windows.Forms.UserControl
+    Public Class AniGif : Inherits System.Windows.Forms.UserControl
 
         Implements System.IDisposable
+
+#Region "Variablendefinitionen"
 
         Private WithEvents Timer As System.Windows.Forms.Timer
         Private components As System.ComponentModel.IContainer
         Private disposedValue As Boolean
-        Private ReadOnly _AnimationHandler As System.EventHandler = AddressOf OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
+        Private ReadOnly _AnimationHandler As System.EventHandler = AddressOf Me.OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
+
+#End Region
 
 #Region "Ereignisdefinitionen"
 
@@ -127,7 +129,7 @@ Namespace AniGifControl
             End Get
             Set(value As Boolean)
                 _Autoplay = value
-                InitLayout()
+                Me.InitLayout()
             End Set
         End Property
 
@@ -202,7 +204,7 @@ Namespace AniGifControl
                 Return _Gif
             End Get
             Set(value As System.Drawing.Bitmap)
-                SetGifImage(value)
+                Me.SetGifImage(value)
             End Set
         End Property
 
@@ -281,7 +283,7 @@ Namespace AniGifControl
                 Return _GifSizeMode
             End Get
             Set(value As SizeMode)
-                SetGifSizeMode(value)
+                Me.SetGifSizeMode(value)
             End Set
         End Property
 
@@ -364,7 +366,7 @@ Namespace AniGifControl
                 Return _CustomDisplaySpeed
             End Get
             Set(value As Boolean)
-                SetCustomDisplaySpeed(value)
+                Me.SetCustomDisplaySpeed(value)
             End Set
         End Property
 
@@ -450,7 +452,7 @@ Namespace AniGifControl
                 Return _FramesPerSecond
             End Get
             Set(value As Decimal)
-                _FramesPerSecond = CheckFramesPerSecondValue(value)
+                _FramesPerSecond = Me.CheckFramesPerSecondValue(value)
                 RaiseEvent FramesPerSecondChanged()
             End Set
         End Property
@@ -540,7 +542,7 @@ Namespace AniGifControl
                 Return _ZoomFactor
             End Get
             Set(value As Decimal)
-                SetZoomFactor(value)
+                Me.SetZoomFactor(value)
             End Set
         End Property
 
@@ -728,21 +730,206 @@ Namespace AniGifControl
 
 #End Region
 
+#Region "öffentliche Methoden"
+
         ''' <summary>
         ''' Initialisiert eine neue Instanz von <see
         ''' cref="SchlumpfSoft.Controls.AniGifControl.AniGif"/>.
         ''' </summary>
         Public Sub New()
-            InitializeComponent()
-            InitializeValues() 'Standardwerte laden
+            Me.InitializeComponent()
+            Me.InitializeValues() 'Standardwerte laden
         End Sub
 
         ''' <summary>
-        ''' Initialisiert die Komponenten des Steuerelements.
+        ''' Startet die Animation (falls noch nicht aktiv).
+        ''' </summary>
+        Public Sub StartAnimation()
+            If Not _Autoplay Then
+                _Autoplay = True
+                Me.InitLayout()
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Stoppt die Animation und beendet Timer sowie ImageAnimator.
+        ''' </summary>
+        Public Sub StopAnimation()
+            If _Autoplay Then
+                _Autoplay = False
+                If _Gif IsNot Nothing Then System.Drawing.ImageAnimator.StopAnimate(_Gif, Me._AnimationHandler)
+                Me.Timer.Stop()
+            End If
+        End Sub
+
+#End Region
+
+#Region "überladene und überschriebene Methoden"
+
+        ''' <summary>
+        ''' Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.
         ''' </summary>
         ''' <remarks>
-        ''' Designer-generierter Code.
+        ''' Stoppt vorher eine bestehende Animation um Mehrfach-Registrierungen zu vermeiden.
         ''' </remarks>
+        Protected Overloads Overrides Sub InitLayout()
+            MyBase.InitLayout()
+            ' Alte Animation stoppen um Mehrfach-Registrierungen zu vermeiden
+            If _Gif IsNot Nothing Then
+                System.Drawing.ImageAnimator.StopAnimate(_Gif, Me._AnimationHandler)
+            End If
+            ' Nur animieren wenn AutoPlay aktiv ist
+            If Not Me.DesignMode AndAlso _Autoplay AndAlso _Gif IsNot Nothing AndAlso System.Drawing.ImageAnimator.CanAnimate(_Gif) Then
+                System.Drawing.ImageAnimator.Animate(_Gif, Me._AnimationHandler)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Zeichnet das aktuelle Frame des GIFs unter Berücksichtigung der Skalierung.
+        ''' </summary>
+        ''' <param name="e">Zeicheninformationen.</param>
+        ''' <remarks>
+        ''' Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.
+        ''' </remarks>
+        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+            MyBase.OnPaint(e)
+            If _Gif Is Nothing Then Return ' Null-Schutz
+
+            Dim g As System.Drawing.Graphics = e.Graphics ' Variable für Zeichenfläche
+            Dim rectstartsize As System.Drawing.Size = Me.GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100) ' Größe der Zeichenfläche berechnen
+            Dim rectstartpoint As System.Drawing.Point = Me.GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
+
+            ' Qualitätsverbesserung nur bei Skalierung
+            If _GifSizeMode = SizeMode.Zoom OrElse _GifSizeMode = SizeMode.Fill Then
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
+            End If
+
+            g.DrawImage(_Gif, New System.Drawing.Rectangle(rectstartpoint, rectstartsize)) ' Zeichenfläche festlegen und Bild zeichnen
+            If Not Me.DesignMode And _Autoplay And Not _CustomDisplaySpeed Then ' Bild animieren wenn AutoPlay aktiv und Benutzerdefinierte Geschwindigkeit deaktiviert
+                System.Drawing.ImageAnimator.UpdateFrames() ' im Bild gespeicherte Geschwindigkeit verwenden
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Gibt Ressourcen frei und stoppt ggf. laufende Animationen.
+        ''' </summary>
+        ''' <param name="disposing">True um verwaltete Ressourcen freizugeben.</param>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' Animation stoppen bevor Bild entsorgt wird
+                    If _Gif IsNot Nothing Then
+                        System.Drawing.ImageAnimator.StopAnimate(_Gif, Me._AnimationHandler)
+                    End If
+                    Me.components?.Dispose()
+                    Me.Timer?.Dispose()
+                    _Gif?.Dispose()
+                End If
+                Me.disposedValue = True
+            End If
+            MyBase.Dispose(disposing)
+        End Sub
+
+        ''' <summary>
+        ''' IDisposable Support
+        ''' </summary>
+        Public Overloads Sub Dispose() Implements System.IDisposable.Dispose
+            Me.Dispose(True)
+            System.GC.SuppressFinalize(Me)
+        End Sub
+
+#End Region
+
+#Region "interne Ereignisbehandlungen"
+
+        ''' <summary>
+        ''' Reagiert auf den Wechsel des GIF-Bildes und initialisiert Animationsparameter.
+        ''' </summary>
+        Private Sub AniGif_GifChange() Handles Me.GifChanged
+            If System.Drawing.ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
+                Me.Timer.Stop() 'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
+                _MaxFrame = 0
+                RaiseEvent NoAnimation(Me, System.EventArgs.Empty) ' Ereignis auslösen
+            Else 'Werte für Benutzerdefinierte Geschwindigkeit speichern
+                _Dimension = New System.Drawing.Imaging.FrameDimension(_Gif.FrameDimensionsList(0))
+                _MaxFrame = _Gif.GetFrameCount(_Dimension) - 1
+                _Frame = 0
+                If _CustomDisplaySpeed Then
+                    Me.Timer.Interval = CInt(1000 / _FramesPerSecond) ' Intervall sofort setzen
+                    Me.Timer.Start() ' Timer starten
+                End If
+            End If
+            Me.Invalidate() ' neu zeichnen
+            Me.InitLayout() ' Animation starten
+        End Sub
+
+        ''' <summary>
+        ''' Aktiviert oder deaktiviert die benutzerdefinierte Animationsgeschwindigkeit.
+        ''' </summary>
+        Private Sub AniGif_CustomDisplaySpeedChanged() Handles Me.CustomDisplaySpeedChanged
+            ' Intervall direkt setzen und Timer entsprechend Zustand starten/stoppen
+            If _CustomDisplaySpeed Then
+                Me.Timer.Interval = CInt(1000 / _FramesPerSecond)
+                Me.Timer.Start()
+            Else
+                Me.Timer.Stop()
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Reagiert auf Änderung der Frames-pro-Sekunde Einstellung.
+        ''' </summary>
+        Private Sub AniGif_FramesPerSecondChanged() Handles Me.FramesPerSecondChanged
+            If _FramesPerSecond < 1D Then _FramesPerSecond = 1D ' Sicherheitsprüfung
+            If Me.Timer.Enabled Then
+                Me.Timer.Stop() ' Timer stoppen um die Intervalle zu aktualisieren
+                Me.Timer.Interval = CInt(1000 / _FramesPerSecond)
+                Me.Timer.Start() ' Timer neu starten
+            Else
+                Me.Timer.Interval = CInt(1000 / _FramesPerSecond) ' Nur das Intervall aktualisieren wenn der Timer nicht läuft
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Wird vom ImageAnimator bei jedem anstehenden Frame aufgerufen.
+        ''' </summary>
+        ''' <param name="o">Auslösendes Objekt.</param>
+        ''' <param name="e">Ereignisdaten.</param>
+        Private Sub OnNextFrame(o As Object, e As System.EventArgs)
+            If Me.AutoPlay AndAlso Not Me.DesignMode Then
+                Me.Invalidate() 'neu zeichnen
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Timer-Tick zur manuellen Frame-Steuerung bei benutzerdefinierter Geschwindigkeit.
+        ''' </summary>
+        ''' <param name="sender">Timer.</param>
+        ''' <param name="e">Ereignisdaten.</param>
+        Private Sub Timer_Tick(sender As Object, e As System.EventArgs) Handles Timer.Tick
+            'Bild animieren wenn AutoPlay und Benutzerdefinierte Geschwindigkeit aktiv
+            If Not Me.DesignMode AndAlso Me.AutoPlay Then
+                If _MaxFrame = 0 Then Exit Sub ' wenn Frames = 0 ist das Bild nicht animiert -> Ende
+                If _Frame > _MaxFrame Then _Frame = 0 ' Bildzähler zurücksetzen wenn maximale Anzahl überschritten
+                Dim unused = _Gif.SelectActiveFrame(_Dimension, _Frame) ' nächstes Bild auswählen
+                _Frame += 1 ' Bildzähler weiterschalten
+                Me.Invalidate() ' neu zeichnen
+            End If
+        End Sub
+
+#End Region
+
+#Region "Interne Methoden"
+
+        ''' <summary>
+        ''' <para>Initialisiert die Komponenten des Steuerelements.</para>
+        ''' <para><b>Achtung!</b></para>
+        ''' <para>Designer-generierter Code. Dieser Code kann nicht editiert werden da dies
+        ''' zu Fehlern führen kann.</para>
+        ''' <para>Eine Bearbeitung is im Designer möglich.</para>
+        ''' </summary>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Me.Timer = New System.Windows.Forms.Timer(Me.components)
@@ -760,162 +947,7 @@ Namespace AniGifControl
         End Sub
 
         ''' <summary>
-        ''' Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.
-        ''' </summary>
-        ''' <remarks>
-        ''' Stoppt vorher eine bestehende Animation um Mehrfach-Registrierungen zu vermeiden.
-        ''' </remarks>
-        Protected Overloads Overrides Sub InitLayout()
-            MyBase.InitLayout()
-            ' Alte Animation stoppen um Mehrfach-Registrierungen zu vermeiden
-            If _Gif IsNot Nothing Then
-                System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
-            End If
-            ' Nur animieren wenn AutoPlay aktiv ist
-            If Not DesignMode AndAlso _Autoplay AndAlso _Gif IsNot Nothing AndAlso System.Drawing.ImageAnimator.CanAnimate(_Gif) Then
-                System.Drawing.ImageAnimator.Animate(_Gif, _AnimationHandler)
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Zeichnet das aktuelle Frame des GIFs unter Berücksichtigung der Skalierung.
-        ''' </summary>
-        ''' <param name="e">Zeicheninformationen.</param>
-        ''' <remarks>
-        ''' Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.
-        ''' </remarks>
-        Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
-            MyBase.OnPaint(e)
-            If _Gif Is Nothing Then Return ' Null-Schutz
-
-            Dim g As System.Drawing.Graphics = e.Graphics ' Variable für Zeichenfläche
-            Dim rectstartsize As System.Drawing.Size = GetRectStartSize(_GifSizeMode, Me, _Gif, _ZoomFactor / 100) ' Größe der Zeichenfläche berechnen
-            Dim rectstartpoint As System.Drawing.Point = GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
-
-            ' Qualitätsverbesserung nur bei Skalierung
-            If _GifSizeMode = SizeMode.Zoom OrElse _GifSizeMode = SizeMode.Fill Then
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
-                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
-            End If
-
-            g.DrawImage(_Gif, New System.Drawing.Rectangle(rectstartpoint, rectstartsize)) ' Zeichenfläche festlegen und Bild zeichnen
-            If Not DesignMode And _Autoplay And Not _CustomDisplaySpeed Then ' Bild animieren wenn AutoPlay aktiv und Benutzerdefinierte Geschwindigkeit deaktiviert
-                System.Drawing.ImageAnimator.UpdateFrames() ' im Bild gespeicherte Geschwindigkeit verwenden
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Gibt Ressourcen frei und stoppt ggf. laufende Animationen.
-        ''' </summary>
-        ''' <param name="disposing">True um verwaltete Ressourcen freizugeben.</param>
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            If Not disposedValue Then
-                If disposing Then
-                    ' Animation stoppen bevor Bild entsorgt wird
-                    If _Gif IsNot Nothing Then
-                        System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
-                    End If
-                    components?.Dispose()
-                    Timer?.Dispose()
-                    _Gif?.Dispose()
-                End If
-                disposedValue = True
-            End If
-            MyBase.Dispose(disposing)
-        End Sub
-
-        ''' <summary>
-        ''' IDisposable Support
-        ''' </summary>
-        Public Overloads Sub Dispose() Implements System.IDisposable.Dispose
-            Dispose(True)
-            System.GC.SuppressFinalize(Me)
-        End Sub
-
-#Region "interne Ereignisbehandlungen"
-
-        ''' <summary>
-        ''' Reagiert auf den Wechsel des GIF-Bildes und initialisiert Animationsparameter.
-        ''' </summary>
-        Private Sub AniGif_GifChange() Handles Me.GifChanged
-            If System.Drawing.ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
-                Timer.Stop() 'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
-                _MaxFrame = 0
-                RaiseEvent NoAnimation(Me, System.EventArgs.Empty) ' Ereignis auslösen
-            Else 'Werte für Benutzerdefinierte Geschwindigkeit speichern
-                _Dimension = New System.Drawing.Imaging.FrameDimension(_Gif.FrameDimensionsList(0))
-                _MaxFrame = _Gif.GetFrameCount(_Dimension) - 1
-                _Frame = 0
-                If _CustomDisplaySpeed Then
-                    Timer.Interval = CInt(1000 / _FramesPerSecond) ' Intervall sofort setzen
-                    Timer.Start() ' Timer starten
-                End If
-            End If
-            Invalidate() ' neu zeichnen
-            InitLayout() ' Animation starten
-        End Sub
-
-        ''' <summary>
-        ''' Aktiviert oder deaktiviert die benutzerdefinierte Animationsgeschwindigkeit.
-        ''' </summary>
-        Private Sub AniGif_CustomDisplaySpeedChanged() Handles Me.CustomDisplaySpeedChanged
-            ' Intervall direkt setzen und Timer entsprechend Zustand starten/stoppen
-            If _CustomDisplaySpeed Then
-                Timer.Interval = CInt(1000 / _FramesPerSecond)
-                Timer.Start()
-            Else
-                Timer.Stop()
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Reagiert auf Änderung der Frames-pro-Sekunde Einstellung.
-        ''' </summary>
-        Private Sub AniGif_FramesPerSecondChanged() Handles Me.FramesPerSecondChanged
-            If _FramesPerSecond < 1D Then _FramesPerSecond = 1D ' Sicherheitsprüfung
-            If Timer.Enabled Then
-                Timer.Stop() ' Timer stoppen um die Intervalle zu aktualisieren
-                Timer.Interval = CInt(1000 / _FramesPerSecond)
-                Timer.Start() ' Timer neu starten
-            Else
-                Timer.Interval = CInt(1000 / _FramesPerSecond) ' Nur das Intervall aktualisieren wenn der Timer nicht läuft
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Wird vom ImageAnimator bei jedem anstehenden Frame aufgerufen.
-        ''' </summary>
-        ''' <param name="o">Auslösendes Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
-        Private Sub OnNextFrame(o As Object, e As System.EventArgs)
-            If AutoPlay AndAlso Not DesignMode Then
-                Invalidate() 'neu zeichnen
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Timer-Tick zur manuellen Frame-Steuerung bei benutzerdefinierter Geschwindigkeit.
-        ''' </summary>
-        ''' <param name="sender">Timer.</param>
-        ''' <param name="e">Ereignisdaten.</param>
-        Private Sub Timer_Tick(sender As Object, e As System.EventArgs) Handles Timer.Tick
-            'Bild animieren wenn AutoPlay und Benutzerdefinierte Geschwindigkeit aktiv
-            If Not DesignMode AndAlso AutoPlay Then
-                If _MaxFrame = 0 Then Exit Sub ' wenn Frames = 0 ist das Bild nicht animiert -> Ende
-                If _Frame > _MaxFrame Then _Frame = 0 ' Bildzähler zurücksetzen wenn maximale Anzahl überschritten
-                Dim unused = _Gif.SelectActiveFrame(_Dimension, _Frame) ' nächstes Bild auswählen
-                _Frame += 1 ' Bildzähler weiterschalten
-                Invalidate() ' neu zeichnen
-            End If
-        End Sub
-
-#End Region
-
-#Region "Interne Hilfsfunktionen"
-
-        ''' <summary>
-        ''' Setzt die Standardwerte für die wichtigsten Variablen der Ani Gif Control.
+        ''' Setzt die Standardwerte für die wichtigsten Variablen der AniGif Control.
         ''' </summary>
         Private Sub InitializeValues()
             _Gif = My.Resources.Standard ' Standard-GIF aus den Ressourcen laden
@@ -933,7 +965,7 @@ Namespace AniGifControl
         Private Sub SetGifImage(value As System.Drawing.Bitmap)
             ' Vorherige Animation stoppen bevor Bild entsorgt wird
             If _Gif IsNot Nothing Then
-                System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
+                System.Drawing.ImageAnimator.StopAnimate(_Gif, Me._AnimationHandler)
                 _Gif.Dispose() ' Vorhandenes Bild freigeben
             End If
             _Gif = If(value, My.Resources.Standard) 'Standardanimation verwenden wenn keine Auswahl erfolgte
@@ -946,7 +978,7 @@ Namespace AniGifControl
         ''' <param name="value">Neuer SizeMode.</param>
         Private Sub SetGifSizeMode(value As SizeMode)
             _GifSizeMode = value
-            Invalidate()
+            Me.Invalidate()
         End Sub
 
         ''' <summary>
@@ -963,8 +995,8 @@ Namespace AniGifControl
         ''' </summary>
         ''' <param name="value">Neuer Zoomfaktor (1-100).</param>
         Private Sub SetZoomFactor(value As Decimal)
-            _ZoomFactor = CheckZoomFactorValue(value)
-            Invalidate() 'neu zeichnen
+            _ZoomFactor = Me.CheckZoomFactorValue(value)
+            Me.Invalidate() 'neu zeichnen
         End Sub
 
         ''' <summary>
@@ -988,9 +1020,9 @@ Namespace AniGifControl
         ''' <returns>Gibt den korrigierten Zoomfaktor im Bereich 1 bis 100 zurück.</returns>
         Private Function CheckZoomFactorValue(ZoomFactor As Decimal) As Decimal
             Select Case ZoomFactor
-                Case Is < 1 : Return 1' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
-                Case Is > 100 : Return 100 ' Wenn der Zoomfaktor größer als 100 ist, auf Höchstwert 100 setzen
-                Case Else : Return ZoomFactor ' Ansonsten den übergebenen Wert zurückgeben
+                Case Is < 1 : Return 1 ' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
+                Case Is > 100 : Return 100  ' Wenn der Zoomfaktor größer als 100 ist, auf Höchstwert 100 setzen
+                Case Else : Return ZoomFactor  ' Ansonsten den übergebenen Wert zurückgeben
             End Select
         End Function
 
@@ -1070,27 +1102,6 @@ Namespace AniGifControl
         End Function
 
 #End Region
-
-        ''' <summary>
-        ''' Startet die Animation (falls noch nicht aktiv).
-        ''' </summary>
-        Public Sub StartAnimation()
-            If Not _Autoplay Then
-                _Autoplay = True
-                InitLayout()
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Stoppt die Animation und beendet Timer sowie ImageAnimator.
-        ''' </summary>
-        Public Sub StopAnimation()
-            If _Autoplay Then
-                _Autoplay = False
-                If _Gif IsNot Nothing Then System.Drawing.ImageAnimator.StopAnimate(_Gif, _AnimationHandler)
-                Timer.Stop()
-            End If
-        End Sub
 
     End Class
 
