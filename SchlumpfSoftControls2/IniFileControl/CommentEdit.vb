@@ -3,34 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' Übersicht:
-' Dieses WinForms-Steuerelement dient zum Anzeigen und Bearbeiten von Kommentarzeilen (z. B. Kopf-
-' oder Abschnittskommentare) einer INI-Datei. Der Kommentar wird als String-Array verwaltet, wobei
-' jede Array-Zeile einer Textzeile entspricht.
-'
-' Kernkonzept:
-' - Die öffentliche Eigenschaft `Comment` übernimmt/liefert die Kommentarzeilen.
-' - Änderungen im Textfeld aktivieren den Übernehmen-Button.
-' - Ein Klick auf den Button übernimmt die Textbox-Zeilen in `Comment` und löst das Ereignis
-'   `CommentChanged` aus. Dieses Ereignis übergibt den Abschnittsnamen (`SectionName`) sowie die
-'   Kommentarzeilen an den Abonnenten.
-' - Die Eigenschaft `TitelText` steuert den Text der umgebenden `GroupBox`. Änderungen daran lösen
-'   ein internes Ereignis aus, welches den UI-Text aktualisiert.
-'
-' Design‑Time:
-' Public Members sind mit Attributen für die Anzeige im Eigenschafteneditor versehen
-' (Browsable, Category, Description, Toolbox-Einträge).
-'
-' Hinweis:
-' - `Comment` akzeptiert/liefer ein String()-Array. `Nothing` sollte vermieden werden (der Code
-'   erwartet ein Array). Falls zur Laufzeit `Nothing` möglich ist, sollte der Aufrufer ein leeres
-'   Array statt `Nothing` übergeben.
-' - Die Änderungserkennung bei `Comment` erfolgt über `SequenceEqual`, sodass Reihenfolge und Inhalt
-'   aller Zeilen berücksichtigt werden.
-
-Imports System
-Imports System.ComponentModel
-Imports System.Drawing
 Imports System.Linq
 
 Namespace IniFileControl
@@ -51,25 +23,51 @@ Namespace IniFileControl
     ''' ' End Sub
     ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnitts- Kommentars einer INI - Datei.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(IniFileControl.CommentEdit), "CommentEdit.bmp")>
+    <System.ComponentModel.Description("Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnitts- Kommentars einer INI - Datei.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(IniFileControl.CommentEdit), "CommentEdit.bmp")>
     Public Class CommentEdit : Inherits System.Windows.Forms.UserControl
 
-#Region "Definition der internen Eigenschaftsvariablen"
+#Region "Variablendefinition"
 
-        ' Enthält die einzelnen Kommentarzeilen. Jede Array-Position entspricht einer Textzeile.
+        ''' <summary>
+        ''' Vom Windows Forms Designer verwaltete Komponentenliste.
+        ''' </summary>
+        Private ReadOnly components As System.ComponentModel.IContainer
+
+        ''' <summary>
+        ''' Umschließende Gruppe zur Darstellung des Titels und der enthaltenen Steuerelemente.
+        ''' </summary>
+        Private WithEvents GroupBox As System.Windows.Forms.GroupBox
+
+        ''' <summary>
+        ''' Schaltfläche zum Übernehmen der in der Textbox vorgenommenen Änderungen.
+        ''' </summary>
+        Private WithEvents Button As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' Mehrzeiliges Texteingabefeld zur Bearbeitung der Kommentarzeilen.
+        ''' </summary>
+        Private WithEvents TextBox As System.Windows.Forms.TextBox
+
+        ''' <summary>
+        ''' Layoutcontainer zur Anordnung von Textbox und Schaltfläche.
+        ''' </summary>
+        Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+
+        ''' <summary>
+        ''' Enthält die einzelnen Kommentarzeilen. Jede Array-Position entspricht einer Textzeile.
+        ''' </summary>
         Private _Lines As String() = {""}
 
-        ' Text, der in der GroupBox als Titel angezeigt wird.
+        ''' <summary>
+        ''' Text, der in der GroupBox als Titel angezeigt wird.
+        ''' </summary>
         Private _TitelText As String
-
-        ' Name des INI-Abschnitts, zu dem der Kommentar gehört (kann leer sein für Dateikommentar).
-        Private _SectionName As String
 
 #End Region
 
-#Region "Definition der öffentlichen Ereignisse"
+#Region "öffentlichen Ereignisse"
 
         ''' <summary>
         ''' Wird ausgelöst, wenn sich der Kommentartext geändert hat und per Button übernommen wurde.
@@ -82,36 +80,27 @@ Namespace IniFileControl
         ''' <param name="e">
         ''' <see cref="CommentEditEventArgs"/> mit <c>SectionName</c> (Abschnitt) und <c>CommentLines</c> (Kommentarzeilen).
         ''' </param>
-        <Description("Wird ausgelöst wenn sich der Kommentartext geändert hat.")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn sich der Kommentartext geändert hat.")>
         Public Event CommentChanged(sender As Object, e As CommentEditEventArgs)
 
 #End Region
 
-#Region "Definition der internen Ereignisse"
-
-        ' Internes Ereignis: Signalisiert, dass die Eigenschaft `Comment` (Inhalt der Kommentarzeilen)
-        ' programmatisch geändert wurde. Dient dazu, die UI (Textbox) synchron zu halten.
-        Private Event PropCommentChanged()
-
-        ' Internes Ereignis: Signalisiert, dass sich der Titeltext geändert hat, damit die GroupBox
-        ' ihren Text aktualisieren kann.
-        Private Event TitelTextChanged()
-
-#End Region
+#Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="CommentEdit"/>.
+        ''' Initialisiert eine neue Instanz von <see cref="CommentEdit"/> und setzt die Ausgangswerte.
         ''' </summary>
+        ''' <remarks>
+        ''' Ruft <see cref="InitializeComponent"/> auf, übernimmt den aktuellen GroupBox-Titel in <see cref="TitelText"/>
+        ''' und deaktiviert den Übernehmen-Button, bis eine Änderung erfolgt.
+        ''' </remarks>
         Public Sub New()
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.InitializeComponent()
-
-            ' Initialwerte nach der Designer-Initialisierung:
-            ' - Den aktuellen GroupBox-Titel als Ausgangswert für `TitelText` übernehmen.
-            ' - Den Übernehmen-Button deaktivieren, bis eine Änderung erfolgt.
-            Me._TitelText = Me.GroupBox.Text
-            Me.Button.Enabled = False
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me._TitelText = Me.GroupBox.Text ' Den aktuellen GroupBox-Titel als Ausgangswert für `TitelText` übernehmen.
+            Me.Button.Enabled = False ' Den Übernehmen-Button deaktivieren, bis eine Änderung erfolgt.
         End Sub
+
+#End Region
 
 #Region "Definition der neuen Eigenschaften"
 
@@ -121,16 +110,15 @@ Namespace IniFileControl
         ''' <remarks>
         ''' Das Setzen löst intern <see cref="TitelTextChanged"/> aus, wodurch der UI-Text aktualisiert wird.
         ''' </remarks>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt den Text der Titelzeile zurück oder legt diesen fest.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt den Text der Titelzeile zurück oder legt diesen fest.")>
         Public Property TitelText As String
             Set(value As String)
                 ' Nur reagieren, wenn sich der Wert tatsächlich ändert
                 If Me._TitelText <> value Then
                     Me._TitelText = value
-                    ' UI-Aktualisierung entkoppelt über internes Ereignis
-                    RaiseEvent TitelTextChanged()
+                    Me.GroupBox.Text = Me._TitelText
                 End If
             End Set
             Get
@@ -146,9 +134,9 @@ Namespace IniFileControl
         ''' - Änderungserkennung erfolgt per <see cref="Enumerable.SequenceEqual(Of TSource)"/>.
         ''' - Das Setzen löst intern <see cref="PropCommentChanged"/> aus, wodurch die Textbox synchronisiert wird.
         ''' </remarks>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt den Kommentartext zurück oder legt diesen fest.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt den Kommentartext zurück oder legt diesen fest.")>
         Public Property Comment As String()
             Get
                 Return Me._Lines
@@ -157,8 +145,8 @@ Namespace IniFileControl
                 ' SequenceEqual stellt sicher, dass sowohl Anzahl als auch Inhalt der Zeilen übereinstimmen
                 If Not Me._Lines.SequenceEqual(Value) Then
                     Me._Lines = Value
-                    ' UI aktualisieren (Textbox füllen, Button-Zustand setzen)
-                    RaiseEvent PropCommentChanged()
+                    Me.TextBox.Lines = Me._Lines ' Kommentarzeilen in die Textbox eintragen (ersetzt den gesamten Inhalt)
+                    Me.Button.Enabled = False ' Änderungen wurden übernommen -> Button deaktivieren
                 End If
             End Set
         End Property
@@ -169,36 +157,24 @@ Namespace IniFileControl
         ''' <remarks>
         ''' Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see cref="CommentChanged"/> übermittelt.
         ''' </remarks>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt den Name des Abschnitts zurück oder legt diesen fest für den der Kommentar angezeigt werden soll.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt den Name des Abschnitts zurück oder legt diesen fest für den der Kommentar angezeigt werden soll.")>
         Public Property SectionName As String
-            Get
-                Return Me._SectionName
-            End Get
-            Set
-                Me._SectionName = Value
-            End Set
-        End Property
 
 #End Region
 
-#Region "Definition der internen Ereignisbehandlungen"
+#Region "interne Methoden"
 
         ''' <summary>
         ''' Klick auf den Übernehmen-Button: übernimmt die aktuellen Textbox-Zeilen und meldet die Änderung.
         ''' </summary>
         ''' <param name="sender">Button</param>
         ''' <param name="e">Nicht verwendet</param>
-        Private Sub Button_Click(sender As Object, e As EventArgs) Handles Button.Click
-            ' Geänderten Kommentar aus der Textbox in das interne Array übernehmen
-            Me._Lines = Me.TextBox.Lines
-
-            ' Button deaktivieren, da die Änderungen jetzt übernommen sind
-            Me.Button.Enabled = False
-
-            ' Änderung nach außen signalisieren (inkl. Abschnittsname)
-            RaiseEvent CommentChanged(Me, New CommentEditEventArgs(Me._SectionName, Me._Lines))
+        Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles Button.Click
+            Me._Lines = Me.TextBox.Lines ' Geänderten Kommentar aus der Textbox in das interne Array übernehmen
+            Me.Button.Enabled = False ' Button deaktivieren, da die Änderungen jetzt übernommen sind
+            RaiseEvent CommentChanged(Me, New CommentEditEventArgs(Me.SectionName, Me._Lines)) ' Änderung nach außen signalisieren (inkl. Abschnittsname)
         End Sub
 
         ''' <summary>
@@ -206,53 +182,16 @@ Namespace IniFileControl
         ''' </summary>
         ''' <param name="sender">Textbox</param>
         ''' <param name="e">Nicht verwendet</param>
-        Private Sub TextBox_TextChanged(sender As Object, e As EventArgs) Handles TextBox.TextChanged
-            ' Aktiviert den Button, um die Änderungen explizit übernehmen zu können
-            Me.Button.Enabled = True
+        Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
+            Me.Button.Enabled = True ' Aktiviert den Button, um die Änderungen explizit übernehmen zu können
         End Sub
 
         ''' <summary>
-        ''' Reaktion auf programmatische Änderung von <see cref="Comment"/>:
-        ''' synchronisiert die Textbox mit den aktuellen Kommentarzeilen.
+        ''' Initialisiert und konfiguriert alle vom Designer verwalteten Steuerelemente des Controls.
         ''' </summary>
-        Private Sub IniFileCommentEdit_PropCommentChanged() Handles Me.PropCommentChanged
-            ' Kommentarzeilen in die Textbox eintragen (ersetzt den gesamten Inhalt)
-            Me.TextBox.Lines = Me._Lines
-
-            ' Änderungen wurden übernommen -> Button deaktivieren
-            Me.Button.Enabled = False
-        End Sub
-
-        ''' <summary>
-        ''' Reaktion auf Änderung von <see cref="TitelText"/>:
-        ''' setzt den Text der GroupBox.
-        ''' </summary>
-        Private Sub IniFileCommentEdit_TitelTextChanged() Handles Me.TitelTextChanged
-            Me.GroupBox.Text = Me._TitelText
-        End Sub
-
-#End Region
-
-
-
-        'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
-        End Sub
-
-        'Wird vom Windows Form-Designer benötigt.
-        Private components As System.ComponentModel.IContainer
-
-        'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
-        'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <remarks>
+        ''' Diese Methode wird automatisch vom Konstruktor aufgerufen und sollte nicht manuell geändert werden.
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.GroupBox = New System.Windows.Forms.GroupBox()
@@ -277,15 +216,15 @@ Namespace IniFileControl
             'TableLayoutPanel1
             '
             Me.TableLayoutPanel1.ColumnCount = 1
-            Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Dim unused = Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.TableLayoutPanel1.Controls.Add(Me.TextBox, 0, 0)
             Me.TableLayoutPanel1.Controls.Add(Me.Button, 0, 1)
             Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
             Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
             Me.TableLayoutPanel1.RowCount = 2
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+            Dim unused1 = Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Dim unused2 = Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(159, 78)
             Me.TableLayoutPanel1.TabIndex = 2
             '
@@ -303,7 +242,7 @@ Namespace IniFileControl
             '
             'Button
             '
-            Me.Button.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.Button.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             Me.Button.Location = New System.Drawing.Point(52, 50)
             Me.Button.Name = "Button"
             Me.Button.Size = New System.Drawing.Size(104, 25)
@@ -325,13 +264,26 @@ Namespace IniFileControl
 
         End Sub
 
-        Private WithEvents GroupBox As System.Windows.Forms.GroupBox
-        Private WithEvents Button As System.Windows.Forms.Button
-        Private WithEvents TextBox As System.Windows.Forms.TextBox
-        Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+#End Region
 
+#Region "überschriebene Methoden"
 
+        ''' <summary>
+        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.
+        ''' </summary>
+        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
 
+#End Region
 
     End Class
 
