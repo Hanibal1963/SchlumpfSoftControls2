@@ -1,17 +1,14 @@
 ﻿' *************************************************************************************************
-' DriveAddedEventArgs.vb
+' DriveEventArgDefinitions.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
-
-
-'TODO: In Gemeinsame Datei "EventDefinitions.vb" verschieben
 
 Namespace DriveWatcherControl
 
     ''' <summary>
     ''' Übergibt die Argumente für das hinzugefügte Laufwerk.
     ''' </summary>
-    Public Structure DriveAddedEventArgs
+    Public Class DriveAddedEventArgs
 
         ''' <summary>
         ''' Ruft den Namen eines Laufwerks ab, z.B. C:\.
@@ -53,6 +50,18 @@ Namespace DriveWatcherControl
         ''' </summary>
         Public Property IsReady As Boolean
 
-    End Structure
+    End Class
+
+    ''' <summary>
+    ''' Übergibt das entfernte Laufwerk.
+    ''' </summary>
+    Public Class DriveRemovedEventArgs
+
+        ''' <summary>
+        ''' Ruft den Namen eines Laufwerks ab, z.B. C:\.
+        ''' </summary>
+        Public Property DriveName As String
+
+    End Class
 
 End Namespace

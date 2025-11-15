@@ -41,7 +41,9 @@ Namespace ExtendedRTFControl
         ''' </remarks>
         Private _suppressSelectionEvents As Boolean = False
 
-        'Required by the Windows Form Designer
+        ''' <summary>
+        ''' Container für Komponenten. Wird vom Windows Forms-Designer benötigt.
+        ''' </summary>
         Private ReadOnly components As System.ComponentModel.IContainer
 
 #End Region
@@ -97,6 +99,7 @@ Namespace ExtendedRTFControl
         ''' <summary>
         ''' Setzt die horizontale Ausrichtung der aktuellen Absatz-/Absatzauswahl.
         ''' </summary>
+        ''' <param name="alignment">Die gewünschte horizontale Ausrichtung.</param>
         Public Sub SetSelectionAlignment(alignment As System.Windows.Forms.HorizontalAlignment)
             Me.SelectionAlignment = alignment
         End Sub
@@ -318,9 +321,10 @@ Namespace ExtendedRTFControl
 
 #Region "Interne Methoden"
 
-        'NOTE: The following procedure is required by the Windows Form Designer
-        'It can be modified using the Windows Form Designer.  
-        'Do not modify it using the code editor.
+        ''' <summary>
+        ''' Vom Designer generierte Methode zur Initialisierung der Steuerelement-Komponenten.
+        ''' Änderungen sollten ausschließlich über den Designer erfolgen.
+        ''' </summary>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
@@ -563,7 +567,10 @@ Namespace ExtendedRTFControl
 
 #Region "überschriebene Methoden"
 
-        'UserControl überschreibt Dispose, um die Komponentenliste zu bereinigen.
+        ''' <summary>
+        ''' Gibt verwendete Ressourcen frei und stellt sicher, dass angehaltene Update-Blöcke beendet werden.
+        ''' </summary>
+        ''' <param name="disposing">True, um verwaltete Ressourcen freizugeben; andernfalls False.</param>
         <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try

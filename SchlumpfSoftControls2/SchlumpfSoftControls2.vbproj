@@ -157,8 +157,7 @@
     <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DriveWatcherControl\DriveAddedEventArgs.vb" />
-    <Compile Include="DriveWatcherControl\DriveRemovedEventArgs.vb" />
+    <Compile Include="DriveWatcherControl\DriveEventArgDefinitions.vb" />
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
