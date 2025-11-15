@@ -20,9 +20,27 @@ Namespace ExtendedRTFControl
     <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(ExtendedRTFControl.ExtendedRTF), "ExtendedRTF.bmp")>
-    Public Class ExtendedRTF
+    Public Class ExtendedRTF : Inherits System.Windows.Forms.RichTextBox
 
-        Inherits System.Windows.Forms.RichTextBox
+
+
+        ''' <summary>
+        ''' Zähler für geschachtelte Update-Blöcke.
+        ''' </summary>
+        ''' <remarks>
+        ''' Redraw-Unterdrückung
+        ''' </remarks>
+        Private _updateNesting As Integer = 0
+
+        ''' <summary>
+        ''' Flag zur Unterdrückung von "OnSelectionChanged", wenn intern temporär
+        ''' per-Zeichen-Selektionen durchgeführt werden.
+        ''' </summary>
+        ''' <remarks>
+        ''' Mischzustandsanalyse
+        ''' </remarks>
+        Private _suppressSelectionEvents As Boolean = False
+
 
 #Region "Konstruktor"
 
@@ -534,6 +552,42 @@ Namespace ExtendedRTFControl
         End Sub
 
 #End Region
+
+        'UserControl überschreibt Dispose, um die Komponentenliste zu bereinigen.
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+                ' Falls Entwickler vergessen hat EndUpdate mehrfach aufzurufen.
+                While _updateNesting > 0
+                    _updateNesting = 1
+                    EndUpdate()
+                End While
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+        'Required by the Windows Form Designer
+        Private components As System.ComponentModel.IContainer
+
+        'NOTE: The following procedure is required by the Windows Form Designer
+        'It can be modified using the Windows Form Designer.  
+        'Do not modify it using the code editor.
+        <System.Diagnostics.DebuggerStepThrough()>
+        Private Sub InitializeComponent()
+            Me.SuspendLayout()
+            '
+            'ToolboxControl
+            '
+            Me.Name = "ExtendedRTF"
+            Me.ResumeLayout(False)
+
+        End Sub
+
+
 
     End Class
 
