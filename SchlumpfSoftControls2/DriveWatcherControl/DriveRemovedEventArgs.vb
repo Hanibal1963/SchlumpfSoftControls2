@@ -3,6 +3,8 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+'TODO: In Gemeinsame Datei "EventDefinitions.vb" verschieben
+
 Namespace DriveWatcherControl
 
     ''' <summary>
