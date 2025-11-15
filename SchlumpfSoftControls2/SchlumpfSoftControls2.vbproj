@@ -154,7 +154,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AniGifControl\SizeMode.vb" />
-    <Compile Include="AniGifControl\VariableDefinitions.vb" />
     <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
       <DependentUpon>ColorProgressBar.vb</DependentUpon>
     </Compile>
