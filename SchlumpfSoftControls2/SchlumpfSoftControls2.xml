@@ -291,6 +291,50 @@ Initialisiert eine neue Instanz der <see cref="ColorProgressBar" />-Klasse und s
     </member>
     <member name="N:SchlumpfSoft.Controls.DriveWatcherControl">
     </member>
+    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs">
+      <summary>
+Übergibt die Argumente für das hinzugefügte Laufwerk.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveName">
+      <summary>
+Ruft den Namen eines Laufwerks ab, z.B. C:\.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.VolumeLabel">
+      <summary>
+Ruft die Volumebezeichnung eines Laufwerks ab oder legt diese fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.AvailableFreeSpace">
+      <summary>
+Gibt die Gesamtmenge an verfügbarem freiem Speicherplatz in Bytes an, die auf einem Laufwerk verfügbar ist.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalFreeSpace">
+      <summary>
+Ruft die Gesamtmenge an freiem Speicherplatz in Bytes ab, die auf einem Laufwerk verfügbar ist.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalSize">
+      <summary>
+Ruft die Gesamtgröße des Speicherplatzes in Bytes auf einem Laufwerk ab.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveFormat">
+      <summary>
+Ruft den Namen des Dateisystems ab, z. B. NTFS oder FAT32.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveType">
+      <summary>
+Ruft den Laufwerkstyp ab, wie z. B. CD-ROM, Wechseldatenträger, Netzlaufwerk oder lokales Festplattenlaufwerk.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.IsReady">
+      <summary>
+Ruft einen Wert ab, der angibt, ob ein Laufwerk bereit ist.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs">
+      <summary>
+Übergibt das entfernte Laufwerk.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs.DriveName">
+      <summary>
+Ruft den Namen eines Laufwerks ab, z.B. C:\.</summary>
+    </member>
     <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher">
       <summary>
 Steuerelement um die Laufwerke zu überwachen.</summary>
@@ -406,6 +450,94 @@ Setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl oder am Caret oder gi
 Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurück.</summary>
       <remarks>
 <para>Ein Mischzustand ergibt Nothing.</para> <para>Der Einzug wird immer für den gesamten Absatz gesetzt (SelectionLength wird intern ignoriert).</para></remarks>
+    </member>
+    <member name="N:SchlumpfSoft.Controls.FileSearchControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearch">
+      <summary>
+Führt eine (optionale rekursive) asynchrone Dateisuche anhand eines Suchmusters aus und meldet Ergebnisse sowie Fortschritt über Ereignisse.</summary>
+      <remarks>
+<para>Die Suche läuft in einem ThreadPool-Thread (via <see cref="Task.Run(System.Action)" />). </para> <para>Events werden (über <see cref="SimpleProgress(Of T)" />) typischerweise auf dem Ersteller- Synchronisierungskontext (z. B. UI-Thread) aufgerufen, sofern beim Start vorhanden. </para> <para>Ein erneuter Aufruf von <see cref="StartSearchAsync" /> beendet eine laufende Suche vor Start der neuen. </para> <para>Es erfolgt eine doppelte Enumeration (Zählen + Iterieren), was bei sehr vielen Dateien Performance kosten kann.</para></remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.FileFound">
+      <summary>
+Wird für jede gefundene Datei ausgelöst.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchCompleted">
+      <summary>
+Wird nach Abschluss oder Abbruch der Suche ausgelöst.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ErrorOccurred">
+      <summary>
+Meldet aufgetretene Fehler (z. B. fehlende Zugriffsrechte, ungültiger Pfad).</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ProgressChanged">
+      <summary>
+Meldet aggregierte Fortschrittsinformationen (Anzahl gefunden, Gesamtzahl, Prozent).</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartPath">
+      <summary>
+Startverzeichnis der Suche (Initialwert ist String.Empty).</summary>
+      <remarks>
+Änderungen wirken sich auf nachfolgende Aufrufe von <see cref="StartSearchAsync" /> aus.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchPattern">
+      <summary>
+Suchmuster (z. B. *.txt). (Standardwert ist "*.*").</summary>
+      <remarks>
+Mehrere Muster werden nicht unterstützt; für komplexere Filterung eigenes Matching vornehmen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchInSubfolders">
+      <summary>
+Gibt an, ob die Suche rekursiv in Unterordnern erfolgen soll. (Standardwert ist False).</summary>
+      <remarks>
+Kann Performance und Dauer der Suche stark verlängern bei tiefen Verzeichnisstrukturen.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor">
+      <summary>
+Erstellt eine neue Instanz der <see cref="FileSearch" /> Komponente.</summary>
+      <remarks>
+Verwendet <see cref="InitializeComponent" /> zur Designer-Initialisierung.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor(System.ComponentModel.IContainer)">
+      <summary>
+Erstellt eine neue Instanz und fügt sie optional einem übergebenen Komponenten-Container hinzu.</summary>
+      <remarks>
+Ermöglicht Designtime-Komposition in Windows Forms.</remarks>
+      <param name="container">
+Ein vorhandener <see cref="System.ComponentModel.IContainer" />, dem die Instanz hinzugefügt wird, oder <c>Nothing</c>.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartSearchAsync">
+      <summary>
+Startet eine neue asynchrone Dateisuche gemäß den aktuell gesetzten Parametern.</summary>
+      <remarks>
+<para>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige zuerst kooperativ abgebrochen.</para> <para>Ergebnisse und Fortschritt werden über die Ereignisse <see cref="FileFound" />, <see cref="ProgressChanged" /> und <see cref="SearchCompleted" /> gemeldet.</para> <para>Fehler während der Enumeration lösen <see cref="ErrorOccurred" /> aus und beenden die Suche.</para></remarks>
+      <returns>
+Ein <see cref="System.Threading.Tasks.Task" />, das den Abschluss der Suchoperation repräsentiert.</returns>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StopSearch">
+      <summary>
+Bricht eine eventuell laufende Suche ab.</summary>
+      <remarks>
+Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs">
+      <summary>
+Stellt Fortschrittsinformationen für den Datei-Suchvorgang bereit und wird beim <c>ProgressChanged</c>-Ereignis der Dateisuche übergeben.</summary>
+      <remarks>
+Die Werte werden bei jeder gefundenen Datei aktualisiert. Es wird kein Thread-Sicherheits- garantiert; Konsumenten sollten nur lesend zugreifen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Percent">
+      <summary>
+<para>Prozentualer Fortschritt (0–100). </para> <para>Wird aus <see cref="Found" /> und <see cref="Total" /> berechnet. </para> <para>Ist 0, wenn keine Dateien gezählt wurden oder die Berechnung noch nicht erfolgt ist.</para></summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Found">
+      <summary>
+Anzahl der bislang gefundenen (und gemeldeten) Dateien.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Total">
+      <summary>
+<para>Gesamtanzahl der zu erwartenden Dateien gemäß aktueller Zählung. </para> <para>Kann 0 sein, wenn kein Treffer vorliegt oder die Gesamtmenge nicht ermittelt werden konnte.</para></summary>
     </member>
   </members>
 </doc>
