@@ -29,11 +29,9 @@
     <File Path="SchlumpfSoftControls2/VSdoc/FINAL_CHM_DOC/SchlumpfSoftControls2.chm" />
     <File Path="VS Marketplace Vorlage.md" />
   </Folder>
-  <Project Path="D:/Dokumente/Visual Studio 2022/Projekte/SchlumpfSoft/SchlumpfSoftControls2/SchlumpfSoftControlsDemoComponents/SchlumpfSoftControlsDemoComponents.vbproj">
-    <BuildDependency Project="SchlumpfSoftControls2/SchlumpfSoftControls2.vbproj" />
-  </Project>
   <Project Path="SchlumpfSoftControls2/SchlumpfSoftControls2.vbproj">
     <Platform Solution="*|arm64" Project="arm64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>
+  <Project Path="SchlumpfSoftControlsDemoComponents/SchlumpfSoftControlsDemoComponents.vbproj" />
 </Solution>
