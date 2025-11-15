@@ -1,0 +1,39 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="arm64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Doc/">
+    <File Path="Doc/AniGifControl.md" />
+    <File Path="Doc/ColorProgressBarControl.md" />
+    <File Path="Doc/DriveWatcherControl.md" />
+    <File Path="Doc/ExplorerTreeViewControl.md" />
+    <File Path="Doc/ExtendedRTFControl.md" />
+    <File Path="Doc/FileSearchControl.md" />
+    <File Path="Doc/IniFileControl.md" />
+    <File Path="Doc/NotifyFormControl.md" />
+    <File Path="Doc/SevenSegmentControl.md" />
+    <File Path="Doc/ShapeControl.md" />
+    <File Path="Doc/TransparentLabelControl.md" />
+    <File Path="Doc/WizardControl.md" />
+  </Folder>
+  <Folder Name="/Projektmappenelemente/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="LICENSE.txt" />
+    <File Path="Links.md" />
+    <File Path="README.md" />
+    <File Path="SchlumpfSoftControls2.sln.vsdoc" />
+    <File Path="SchlumpfSoftControls2.vsix" />
+    <File Path="SchlumpfSoftControls2/VSdoc/FINAL_CHM_DOC/SchlumpfSoftControls2.chm" />
+    <File Path="VS Marketplace Vorlage.md" />
+  </Folder>
+  <Project Path="D:/Dokumente/Visual Studio 2022/Projekte/SchlumpfSoft/SchlumpfSoftControls2/SchlumpfSoftControlsDemoComponents/SchlumpfSoftControlsDemoComponents.vbproj">
+    <BuildDependency Project="SchlumpfSoftControls2/SchlumpfSoftControls2.vbproj" />
+  </Project>
+  <Project Path="SchlumpfSoftControls2/SchlumpfSoftControls2.vbproj">
+    <Platform Solution="*|arm64" Project="arm64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+</Solution>
