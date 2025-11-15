@@ -2,6 +2,8 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+' TODO: Code noch überarbeiten
+
 Imports System.ComponentModel
 Imports System.Drawing
 
