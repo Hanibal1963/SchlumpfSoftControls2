@@ -154,13 +154,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AniGifControl\SizeMode.vb" />
-    <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
-      <DependentUpon>ColorProgressBar.vb</DependentUpon>
-    </Compile>
     <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorProgressBarControl\VariableDefinitions.vb" />
     <Compile Include="DriveWatcherControl\DriveAddedEventArgs.vb" />
     <Compile Include="DriveWatcherControl\DriveRemovedEventArgs.vb" />
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
