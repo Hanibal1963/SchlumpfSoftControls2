@@ -3,9 +3,9 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System
-Imports System.ComponentModel
-Imports System.Windows.Forms
+'Imports System.
+'Imports System.ComponentModel.
+'Imports System.Windows.Forms.
 
 Namespace IniFileControl
 
@@ -16,9 +16,37 @@ Namespace IniFileControl
     ''' </summary>
     Public Class AddItemDialog : Inherits System.Windows.Forms.Form
 
-        ' Hält den vom Benutzer bestätigten neuen Wert.
-        ' Initialisiert mit leerer Zeichenfolge. Wird beim Klick auf "OK" aus der TextBox übernommen.
-        Private _NewItemValue As String = $""
+#Region "Variablendefinition"
+
+        ''' <summary>
+        ''' Beschriftung für die Eingabeaufforderung (Name des neuen Elements).
+        ''' </summary>
+        Private WithEvents Label As System.Windows.Forms.Label
+
+        ''' <summary>
+        ''' Texteingabefeld für den neuen Elementnamen.
+        ''' </summary>
+        Private WithEvents TextBox As System.Windows.Forms.TextBox
+
+        ''' <summary>
+        ''' OK-Schaltfläche zum Bestätigen der Eingabe.
+        ''' Aktiviert sich nur bei nicht-leerer Eingabe.
+        ''' </summary>
+        Private WithEvents ButtonOK As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' Abbrechen-Schaltfläche zum Verwerfen der Eingabe und Schließen des Dialogs.
+        ''' </summary>
+        Private WithEvents ButtonCancel As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' Vom Windows Forms Designer verwaltete Komponentenliste.
+        ''' </summary>
+        Private ReadOnly components As System.ComponentModel.IContainer ' Wird vom Windows Form-Designer benötigt.
+
+#End Region
+
+#Region "Eigenschftsdefinitionen"
 
         ''' <summary>
         ''' Gibt den neuen Wert zurück oder legt ihn fest.
@@ -29,97 +57,88 @@ Namespace IniFileControl
         ''' Startwert anzuzeigen.
         ''' </remarks>
         ''' <returns>Der neu eingegebene und über OK bestätigte Text.</returns>
-        <Browsable(True)>
-        Public Property NewItemValue As String
-            Get
-                Return Me._NewItemValue
-            End Get
-            Set
-                Me._NewItemValue = Value
-            End Set
-        End Property
+        <System.ComponentModel.Browsable(True)>
+        Public Property NewItemValue As String = $""
+
+#End Region
+
+#Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Erstellt den Dialog und initialisiert Steuerelemente.
+        ''' Initialisiert eine neue Instanz des Dialogs und setzt den OK-Button auf deaktiviert.
         ''' </summary>
         ''' <remarks>
-        ''' Die Steuerelemente (z. B. <c>ButtonOK</c>, <c>ButtonCancel</c>, <c>TextBox</c>)
-        ''' werden im Designer angelegt. Hier wird u. a. der OK-Button deaktiviert,
-        ''' bis eine gültige Eingabe vorliegt.
+        ''' Ruft <see cref="InitializeComponent"/> auf und deaktiviert anschließend den OK-Button,
+        ''' bis eine gültige Eingabe erfolgt ist.
         ''' </remarks>
         Public Sub New()
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.InitializeComponent()
-
-            ' Nach der Designer-Initialisierung: OK-Button standardmäßig deaktivieren,
-            ' damit nur valide Eingaben bestätigt werden können.
-            Me.ButtonOK.Enabled = False
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me.ButtonOK.Enabled = False ' OK-Button standardmäßig deaktivieren damit nur valide Eingaben bestätigt werden können.
         End Sub
+
+
+#End Region
+
+#Region "interne Methoden"
 
         ''' <summary>
         ''' Gemeinsamer Klick-Handler für OK- und Abbrechen-Button.
-        ''' OK: Wert übernehmen und Dialog mit DialogResult.OK schließen.
-        ''' Abbrechen: Dialog mit DialogResult.Cancel schließen (ohne Übernahme).
+        ''' OK: Wert übernehmen und Dialog mit <see cref="System.Windows.Forms.DialogResult.OK"/> schließen.
+        ''' Abbrechen: Dialog mit <see cref="System.Windows.Forms.DialogResult.Cancel"/> schließen (ohne Übernahme).
         ''' </summary>
         ''' <param name="sender">Auslösendes Steuerelement (OK oder Cancel).</param>
         ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
         Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles ButtonOK.Click, ButtonCancel.Click
-            If sender Is Me.ButtonOK Then ' Welcher Button wurde geklickt?
-                Me.SetNewItemValue()       ' Neuen Wert aus der TextBox in das Feld übernehmen.
-                Me.DialogResult = DialogResult.OK ' Ergebnis auf OK setzen.
-            ElseIf sender Is Me.ButtonCancel Then
-                Me.DialogResult = DialogResult.Cancel ' Ergebnis auf Cancel setzen.
-            End If
+
+            Select Case True
+                Case sender Is Me.ButtonOK
+                    Me.SetNewItemValue()  ' Neuen Wert aus der TextBox in das Feld übernehmen.
+                    Me.DialogResult = System.Windows.Forms.DialogResult.OK ' Ergebnis auf OK setzen.
+
+                Case sender Is Me.ButtonCancel
+                    Me.DialogResult = System.Windows.Forms.DialogResult.Cancel ' Ergebnis auf Cancel setzen.
+
+            End Select
 
             Me.Close() ' Dialog schließen (Rückgabe über DialogResult).
+
         End Sub
 
         ''' <summary>
-        ''' Übernimmt den neuen Wert aus der TextBox in das interne Feld.
+        ''' Übernimmt den neuen Wert aus der TextBox in die Eigenschaft <see cref="NewItemValue"/>.
         ''' </summary>
         ''' <remarks>
         ''' Es erfolgt keine Trimmung oder Validierung – Leerzeichen am Anfang/Ende bleiben bewusst erhalten.
-        ''' Validierung/Erzwingung nicht-leerer Eingabe erfolgt im TextChanged-Handler.
+        ''' Die Validierung erfolgt über <see cref="TextBox_TextChanged"/>.
         ''' </remarks>
         Private Sub SetNewItemValue()
-            Me._NewItemValue = Me.TextBox.Text
+            Me.NewItemValue = Me.TextBox.Text
         End Sub
 
         ''' <summary>
-        ''' Wird aufgerufen, wenn sich der Text im Eingabefeld ändert.
-        ''' Steuert die Aktivierung des OK-Buttons abhängig von der Eingabe.
+        ''' Ereignishandler bei Änderungen des Textes im Eingabefeld.
+        ''' Aktiviert oder deaktiviert den OK-Button abhängig davon, ob eine nicht-leere Eingabe vorliegt.
         ''' </summary>
         ''' <param name="sender">Die TextBox, deren Inhalt sich geändert hat.</param>
         ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
-        Private Sub TextBox_TextChanged(sender As Object, e As EventArgs) Handles TextBox.TextChanged
+        Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
             ' Textbox leer oder nur Leerzeichen?
-            If String.IsNullOrWhiteSpace(CType(sender, TextBox).Text) Then
+            If String.IsNullOrWhiteSpace(CType(sender, System.Windows.Forms.TextBox).Text) Then
                 Me.ButtonOK.Enabled = False ' Button deaktivieren, wenn Eingabe nicht sinnvoll ist.
             Else
                 Me.ButtonOK.Enabled = True  ' Ansonsten Button aktivieren.
             End If
         End Sub
 
-
-
-        'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
-        End Sub
-
-        'Wird vom Windows Form-Designer benötigt.
-        Private components As System.ComponentModel.IContainer
-
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <summary>
+        ''' Initialisiert und konfiguriert alle vom Designer verwalteten Steuerelemente des Dialogs.
+        ''' </summary>
+        ''' <remarks>
+        ''' Diese Methode wird automatisch vom Konstruktor aufgerufen und sollte nicht manuell geändert werden.
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Dim TableLayoutPanel As System.Windows.Forms.TableLayoutPanel
@@ -133,16 +152,16 @@ Namespace IniFileControl
             '
             'TableLayoutPanel
             '
-            TableLayoutPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            TableLayoutPanel.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             TableLayoutPanel.ColumnCount = 2
-            TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused = TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused1 = TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             TableLayoutPanel.Controls.Add(Me.ButtonOK, 0, 0)
             TableLayoutPanel.Controls.Add(Me.ButtonCancel, 1, 0)
             TableLayoutPanel.Location = New System.Drawing.Point(188, 55)
             TableLayoutPanel.Name = "TableLayoutPanel"
             TableLayoutPanel.RowCount = 1
-            TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused2 = TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             TableLayoutPanel.Size = New System.Drawing.Size(146, 29)
             TableLayoutPanel.TabIndex = 0
             '
@@ -211,11 +230,27 @@ Namespace IniFileControl
 
         End Sub
 
-        Private WithEvents Label As System.Windows.Forms.Label
-        Private WithEvents TextBox As System.Windows.Forms.TextBox
-        Private WithEvents ButtonOK As System.Windows.Forms.Button
-        Private WithEvents ButtonCancel As System.Windows.Forms.Button
+#End Region
 
+#Region "überschriebene Methoden"
+
+        'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
+        ''' <summary>
+        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.
+        ''' </summary>
+        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
 
     End Class
 
