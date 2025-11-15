@@ -23,13 +23,7 @@ Namespace IniFileControl
 
         ' Hält den aktuell anzuzeigenden Wert des zu löschenden Elements.
         ' Initialisiert als leere Zeichenfolge.
-        Private _itemvalue As String = $""
-
-        ''' <summary>
-        ''' Wird ausgelöst, sobald sich der Wert von <see cref="ItemValue"/> ändert.
-        ''' Dient dazu, UI-Elemente (hier das Label) synchron zu aktualisieren.
-        ''' </summary>
-        Private Event PropertyItemValueChanged()
+        Private _ItemValue As String = $""
 
         ''' <summary>
         ''' Gibt den Wert des Elements zurück oder legt ihn fest.
@@ -37,12 +31,11 @@ Namespace IniFileControl
         ''' </summary>
         Public Property ItemValue As String
             Get
-                Return Me._itemvalue
+                Return Me._ItemValue
             End Get
             Set
-                Me._itemvalue = Value
-                ' Nach Wertänderung UI aktualisieren.
-                RaiseEvent PropertyItemValueChanged()
+                Me._ItemValue = Value
+                Me.Label.Text = $"Möchten Sie das Element '{Me._ItemValue}' wirklich löschen?"
             End Set
         End Property
 
@@ -60,26 +53,6 @@ Namespace IniFileControl
             End If
             Me.Close() ' Dialog schließen
         End Sub
-
-        ''' <summary>
-        ''' Aktualisiert den Label-Text, sobald sich <see cref="ItemValue"/> ändert.
-        ''' Ersetzt dabei den Platzhalter "{0}" durch den aktuellen Wert.
-        ''' </summary>
-        ''' <remarks>
-        ''' Wichtig:
-        ''' - Der initiale Text des Labels sollte den Platzhalter "{0}" enthalten
-        '''   (z.B. "Möchten Sie '{0}' löschen?").
-        ''' - Nach dem ersten Ersetzen ist der Platzhalter im Label-Text nicht mehr vorhanden.
-        '''   Wenn der Wert mehrfach geändert werden soll, empfiehlt es sich,
-        '''   die ursprüngliche Label-Textvorlage zwischenzuspeichern und jeweils neu zu formatieren.
-        ''' Hinweis:
-        ''' - Das Steuerelement heißt hier "Label". Ein spezifischerer Name (z.B. "LabelPrompt")
-        '''   erhöht die Lesbarkeit, ist aber funktional nicht erforderlich.
-        ''' </remarks>
-        Private Sub IniFileDeleteItemDialog_PropertyItemValueChanged() Handles Me.PropertyItemValueChanged
-            Me.Label.Text = Me.Label.Text.Replace("{0}", Me.ItemValue)
-        End Sub
-
 
 
         'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
@@ -118,7 +91,7 @@ Namespace IniFileControl
             TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             TableLayoutPanel.Controls.Add(Me.ButtonYes, 0, 0)
             TableLayoutPanel.Controls.Add(Me.ButtonNo, 1, 0)
-            TableLayoutPanel.Location = New System.Drawing.Point(152, 32)
+            TableLayoutPanel.Location = New System.Drawing.Point(149, 40)
             TableLayoutPanel.Name = "TableLayoutPanel"
             TableLayoutPanel.RowCount = 1
             TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -143,42 +116,45 @@ Namespace IniFileControl
             Me.ButtonNo.Size = New System.Drawing.Size(67, 23)
             Me.ButtonNo.TabIndex = 1
             Me.ButtonNo.Text = "Nein"
+            AddHandler Me.ButtonNo.Click, AddressOf Me.Button_Click
             '
             'Label
             '
-            Me.Label.AutoSize = True
             Me.Label.Location = New System.Drawing.Point(12, 9)
             Me.Label.Name = "Label"
-            Me.Label.Size = New System.Drawing.Size(230, 13)
+            Me.Label.Size = New System.Drawing.Size(283, 20)
             Me.Label.TabIndex = 1
-            Me.Label.Text = "Wollen Sie das Element ""{0}"" wirklich löschen?"
+            AddHandler Me.Label.Click, AddressOf Me.Button_Click
             '
-            'IniFileDeleteItemDialog
+            'DeleteItemDialog
             '
             Me.AcceptButton = Me.ButtonYes
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.ButtonNo
-            Me.ClientSize = New System.Drawing.Size(301, 73)
+            Me.ClientSize = New System.Drawing.Size(307, 81)
             Me.ControlBox = False
             Me.Controls.Add(Me.Label)
             Me.Controls.Add(TableLayoutPanel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "IniFileDeleteItemDialog"
+            Me.Name = "DeleteItemDialog"
             Me.ShowInTaskbar = False
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
             Me.Text = "Element löschen"
             TableLayoutPanel.ResumeLayout(False)
             Me.ResumeLayout(False)
-            Me.PerformLayout()
 
         End Sub
+
         Private WithEvents ButtonYes As System.Windows.Forms.Button
         Private WithEvents ButtonNo As System.Windows.Forms.Button
         Private WithEvents Label As System.Windows.Forms.Label
 
+        Public Sub New()
+            InitializeComponent()
+        End Sub
 
     End Class
 

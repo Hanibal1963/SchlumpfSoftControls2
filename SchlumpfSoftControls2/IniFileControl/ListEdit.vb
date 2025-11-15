@@ -317,6 +317,11 @@ Namespace IniFileControl
         ''' Die tatsächliche Lösch-Operation erfolgt im Host (Event-Handler).
         ''' </summary>
         Private Sub DeleteItem()
+
+#If DEBUG Then
+            Debug.Print($"zu löschendes Element: {Me._SelectedItem}")
+#End If
+
             Dim deldlg As New DeleteItemDialog With {.ItemValue = Me._SelectedItem} ' Dialog initialisieren
             Dim result As DialogResult = deldlg.ShowDialog(Me) ' Dialog anzeigen und Ergebnis abfragen
             If result = DialogResult.OK Then ' Ergebnis auswerten

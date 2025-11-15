@@ -154,6 +154,7 @@ Namespace IniFileControl
             Me.ButtonOK.Size = New System.Drawing.Size(67, 23)
             Me.ButtonOK.TabIndex = 0
             Me.ButtonOK.Text = "OK"
+            AddHandler Me.ButtonOK.Click, AddressOf Me.Button_Click
             '
             'ButtonCancel
             '
@@ -164,11 +165,12 @@ Namespace IniFileControl
             Me.ButtonCancel.Size = New System.Drawing.Size(67, 23)
             Me.ButtonCancel.TabIndex = 1
             Me.ButtonCancel.Text = "Abbrechen"
+            AddHandler Me.ButtonCancel.Click, AddressOf Me.Button_Click
             '
             'Label
             '
             Me.Label.AutoSize = True
-            Me.Label.Location = New System.Drawing.Point(12, 9)
+            Me.Label.Location = New System.Drawing.Point(15, 9)
             Me.Label.Name = "Label"
             Me.Label.Size = New System.Drawing.Size(232, 13)
             Me.Label.TabIndex = 1
@@ -177,12 +179,13 @@ Namespace IniFileControl
             'TextBox
             '
             Me.TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.TextBox.Location = New System.Drawing.Point(15, 25)
+            Me.TextBox.Location = New System.Drawing.Point(12, 25)
             Me.TextBox.Name = "TextBox"
             Me.TextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both
             Me.TextBox.Size = New System.Drawing.Size(316, 20)
             Me.TextBox.TabIndex = 2
             Me.TextBox.WordWrap = False
+            AddHandler Me.TextBox.TextChanged, AddressOf Me.TextBox_TextChanged
             '
             'AddItemDialog
             '

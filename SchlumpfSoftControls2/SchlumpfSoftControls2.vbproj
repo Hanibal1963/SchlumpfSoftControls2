@@ -318,6 +318,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IniFileControl\DeleteItemDialog.resx">
       <DependentUpon>DeleteItemDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="IniFileControl\EntryValueEdit.resx">
       <DependentUpon>EntryValueEdit.vb</DependentUpon>
