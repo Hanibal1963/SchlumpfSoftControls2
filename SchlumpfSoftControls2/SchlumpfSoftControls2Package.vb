@@ -6,7 +6,7 @@
 Imports System
 Imports System.Runtime.InteropServices
 Imports System.Threading
-Imports Microsoft.VisualBasic
+'Imports Microsoft.VisualBasic
 Imports Microsoft.VisualStudio.Shell
 Imports Task = System.Threading.Tasks.Task
 
