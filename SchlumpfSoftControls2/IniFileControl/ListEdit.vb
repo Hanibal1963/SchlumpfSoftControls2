@@ -3,14 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System
-Imports System.ComponentModel
-Imports System.Diagnostics
-Imports System.Drawing
-Imports System.Windows.Forms
-
 Namespace IniFileControl
 
     ''' <summary>
@@ -64,67 +56,106 @@ Namespace IniFileControl
     ''' </list>
     ''' </remarks>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags- Liste einer INI - Datei.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(IniFileControl.ListEdit), "ListEdit.bmp")>
-    Public Class ListEdit : Inherits UserControl
+    <System.ComponentModel.Description("Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags- Liste einer INI - Datei.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(IniFileControl.ListEdit), "ListEdit.bmp")>
+    Public Class ListEdit : Inherits System.Windows.Forms.UserControl
 
-#Region "Definition der internen Eigenschaftsvariablen"
+#Region "Variablendefinition"
 
-        ' Hält den aktuell in der ListBox gewählten Item-Text.
+        ''' <summary>
+        ''' Schaltfläche zum Löschen des aktuell ausgewählten Eintrags.
+        ''' </summary>
+        Private WithEvents ButtonDelete As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' Schaltfläche zum Umbenennen des aktuell ausgewählten Eintrags.
+        ''' </summary>
+        Private WithEvents ButtonRename As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' Schaltfläche zum Hinzufügen eines neuen Eintrags zur Liste.
+        ''' </summary>
+        Private WithEvents ButtonAdd As System.Windows.Forms.Button
+
+        ''' <summary>
+        ''' ListBox zur Anzeige und Auswahl der Eintragsliste (<see cref="ListItems"/>).
+        ''' </summary>
+        Private WithEvents ListBox As System.Windows.Forms.ListBox
+
+        ''' <summary>
+        ''' Umschließende GroupBox zur Darstellung des Titels (<see cref="TitelText"/>) und der enthaltenen Controls.
+        ''' </summary>
+        Private WithEvents GroupBox As System.Windows.Forms.GroupBox
+
+        ''' <summary>
+        ''' Äußeres Layout-Panel zur vertikalen Anordnung von <see cref="ListBox"/> und unterem Button-Panel.
+        ''' </summary>
+        Private WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
+
+        ''' <summary>
+        ''' Inneres Layout-Panel für die drei Aktions-Schaltflächen (Hinzufügen, Umbenennen, Löschen).
+        ''' </summary>
+        Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+
+        ''' <summary>
+        ''' Vom Windows Forms Designer verwaltete Komponentenliste.
+        ''' </summary>
+        Private ReadOnly components As System.ComponentModel.IContainer
+
+        ''' <summary>
+        ''' Intern gespeicherter Wert des aktuell ausgewählten Listeneintrags (Text des Items).
+        ''' </summary>
         Private _SelectedItem As String = String.Empty
-        ' Hält den aktuell ausgewählten Abschnittsnamen (durch übergeordneten Kontext gesetzt).
+
+        ''' <summary>
+        ''' Intern gespeicherter Abschnittsname, zu dem die Liste der Einträge gehört (vom Host gesetzt).
+        ''' </summary>
         Private _SelectedSection As String = String.Empty
-        ' Interne Datenquelle für die ListBox. Wird als Ganzes gesetzt/ersetzt.
+
+        ''' <summary>
+        ''' Aktueller Datenbestand aller Einträge, die in der <see cref="ListBox"/> angezeigt werden.
+        ''' </summary>
         Private _Items As String() = {""}
-        ' Zwischenspeicher für den Titel (GroupBox.Text).
+
+        ''' <summary>
+        ''' Intern gespeicherter Titeltext (wird in <see cref="GroupBox"/> angezeigt und über <see cref="TitelText"/> exponiert).
+        ''' </summary>
         Private _TitelText As String
 
 #End Region
 
-        Public Sub New()
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.InitializeComponent()
-            ' Nach dem InitializeComponent-Aufruf: den anfänglichen GroupBox-Titel in die Eigenschaft spiegeln.
-            ' Dadurch bleibt der Property-Zustand kohärent zum UI-Initialzustand.
-            Me._TitelText = Me.GroupBox.Text
-        End Sub
-
-#Region "Definition der öffentlichen Ereignisse"
+#Region "Ereignisdefinition"
 
         ''' <summary>
         ''' Wird ausgelöst, wenn über den UI-Button ein neuer Eintrag hinzugefügt werden soll.
         ''' Der Host soll im Handler den Eintrag tatsächlich anlegen und die ListItems ggf. neu setzen.
         ''' </summary>
-        <Description("Wird ausgelöst wenn ein Eintrag hinzugefügt werden soll.")>
-        <Category("ListEdit")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn ein Eintrag hinzugefügt werden soll.")>
+        <System.ComponentModel.Category("ListEdit")>
         Public Event ItemAdd(sender As Object, e As ListEditEventArgs)
 
         ''' <summary>
         ''' Wird ausgelöst, wenn ein Eintrag umbenannt werden soll.
         ''' Alte und neue Werte sind in den EventArgs enthalten.
         ''' </summary>
-        <Description("Wird ausgelöst wenn ein Eintrag umbenannt werden soll.")>
-        <Category("ListEdit")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn ein Eintrag umbenannt werden soll.")>
+        <System.ComponentModel.Category("ListEdit")>
         Public Event ItemRename(sender As Object, e As ListEditEventArgs)
 
         ''' <summary>
         ''' Wird ausgelöst, wenn ein Eintrag gelöscht werden soll.
         ''' </summary>
-        <Description("Wird ausgelöst wenn ein Eintrag gelöscht werden soll.")>
-        <Category("ListEdit")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn ein Eintrag gelöscht werden soll.")>
+        <System.ComponentModel.Category("ListEdit")>
         Public Event ItemRemove(sender As Object, e As ListEditEventArgs)
 
         ''' <summary>
         ''' Wird ausgelöst, wenn sich der gewählte Eintrag geändert hat (Auswahl in der ListBox).
         ''' </summary>
-        <Description("Wird ausgelöst wenn sich der gewählte Eintrag geändert hat.")>
-        <Category("ListEdit")>
+        <System.ComponentModel.Description("Wird ausgelöst wenn sich der gewählte Eintrag geändert hat.")>
+        <System.ComponentModel.Category("ListEdit")>
         Public Event SelectedItemChanged(sender As Object, e As ListEditEventArgs)
-
-#End Region
-
-#Region "Definition der internen Ereignisse"
 
         ''' <summary>
         ''' Internes Ereignis: wird ausgelöst, wenn sich der Titeltext geändert hat.
@@ -140,15 +171,15 @@ Namespace IniFileControl
 
 #End Region
 
-#Region "Definition der neuen Eigenschaften"
+#Region "neue Eigenschaften"
 
         ''' <summary>
         ''' Gibt den Text der Titelzeile zurück oder legt diesen fest.
-        ''' Beim Setzen wird das interne Ereignis `TitelTextChanged` ausgelöst, welches das UI aktualisiert.
+        ''' Beim Setzen wird das interne Ereignis `PropertyTitelTextChanged` ausgelöst, welches das UI aktualisiert.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt den Text der Titelzeile zurück oder legt diesen fest.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt den Text der Titelzeile zurück oder legt diesen fest.")>
         Public Property TitelText As String
             Set(value As String)
                 ' Nur ändern, wenn sich der Wert wirklich unterscheidet, um unnötige UI-Updates zu vermeiden.
@@ -167,9 +198,9 @@ Namespace IniFileControl
         ''' Hinweis: Der Vergleich nutzt Referenzungleichheit (IsNot). Das Array wird als Ganzes ersetzt.
         ''' Das interne Ereignis `ListItemsChanged` triggert anschließend das Befüllen der ListBox.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Data")>
-        <Description("Setzt die Elemente der Listbox oder gibt diese zurück.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Data")>
+        <System.ComponentModel.Description("Setzt die Elemente der Listbox oder gibt diese zurück.")>
         Public Property ListItems() As String()
             Set
                 ' Nur aktualisieren, wenn eine andere Array-Instanz zugewiesen wird.
@@ -187,9 +218,9 @@ Namespace IniFileControl
         ''' Gibt den aktuell ausgewählten Abschnitt zurück oder legt diesen fest.
         ''' Wird typischerweise vom Host beim Wechsel der INI-Sektion gesetzt, damit Events den Kontext kennen.
         ''' </summary>
-        <Browsable(True)>
-        <Category("Appearance")>
-        <Description("Gibt den aktuell ausgewählten Abschnitt zurück oder legt diesen fest.")>
+        <System.ComponentModel.Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt den aktuell ausgewählten Abschnitt zurück oder legt diesen fest.")>
         Public Property SelectedSection As String
             Get
                 Return Me._SelectedSection
@@ -201,192 +232,138 @@ Namespace IniFileControl
 
 #End Region
 
-#Region "Ereignisse der internen ListBox"
+#Region "öffenliche Methoden"
 
         ''' <summary>
-        ''' Reagiert auf eine Auswahländerung in der ListBox.
-        ''' - Aktualisiert den internen Zustand (`_SelectedItem`).
-        ''' - Schaltet die Buttons abhängig von der Auswahl.
-        ''' - Löst `SelectedItemChanged` mit aktuellem Kontext aus.
+        ''' Initialisiert eine neue Instanz des Steuerelements <see cref="ListEdit"/> und übernimmt den initialen Titel.
         ''' </summary>
-        Private Sub ListBox_SelectedIndex_Changed(sender As Object, e As EventArgs) Handles ListBox.SelectedIndexChanged
-            ' Wenn kein Eintrag ausgewählt -> Eigenschaft auf leer, ansonsten auf den gewählten Wert setzen.
+        ''' <remarks>
+        ''' Ruft <see cref="InitializeComponent"/> auf und spiegelt anschließend den in der GroupBox gesetzten Text
+        ''' in die interne Variable für <see cref="TitelText"/>.
+        ''' </remarks>
+        Public Sub New()
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me._TitelText = Me.GroupBox.Text
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
+        ''' <summary>
+        ''' Reagiert auf eine Auswahländerung in der ListBox, aktualisiert internen Zustand und löst <see cref="SelectedItemChanged"/> aus.
+        ''' </summary>
+        ''' <param name="sender">Die ListBox deren Auswahl sich geändert hat.</param>
+        ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
+        Private Sub ListBox_SelectedIndex_Changed(sender As Object, e As System.EventArgs) Handles ListBox.SelectedIndexChanged
             If Me.ListBox.SelectedIndex = -1 Then
                 Me.ClearPropertySelectedItem()
             Else
                 Me.SetPropertySelectedItem()
             End If
-            ' Ausgewählten Kontext propagieren.
             RaiseEvent SelectedItemChanged(Me, New ListEditEventArgs(Me._SelectedSection, Me._SelectedItem, String.Empty))
         End Sub
 
-#End Region
-
-#Region "Ereignisse der internen Buttons"
-
         ''' <summary>
-        ''' Reagiert auf Klicks der drei Buttons.
-        ''' Leitet die Aktion an die entsprechenden internen Methoden weiter.
+        ''' Verteilt Button-Klicks auf die jeweilige Aktion (Hinzufügen, Umbenennen, Löschen).
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub Button_Click(sender As Object, e As EventArgs) Handles ButtonAdd.Click, ButtonRename.Click, ButtonDelete.Click
+        ''' <param name="sender">Der geklickte Button.</param>
+        ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
+        Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles ButtonAdd.Click, ButtonRename.Click, ButtonDelete.Click
             Select Case True
                 Case sender Is Me.ButtonAdd
-                    Me.AddNewItem()  ' Klick auf "Hinzufügen": zeigt den Dialog und löst bei Bestätigung `ItemAdd` aus.
+                    Me.AddNewItem()
                 Case sender Is Me.ButtonRename
-                    Me.RenameItem() ' Klick auf "Umbenennen": zeigt den Dialog und löst bei Bestätigung `ItemRename` aus.
+                    Me.RenameItem()
                 Case sender Is Me.ButtonDelete
-                    Me.DeleteItem() ' Klick auf "Löschen": zeigt den Dialog und löst bei Bestätigung `ItemRemove` aus.
+                    Me.DeleteItem()
             End Select
         End Sub
 
-#End Region
-
-#Region "interne Ereignisbehandlungen"
-
         ''' <summary>
-        ''' Reaktion auf geänderte ListItems:
-        ''' - ListBox wird neu befüllt.
-        ''' - Auswahl und Buttonzustände werden zurückgesetzt.
-        ''' - `SelectedItemChanged` wird mit leerer Auswahl gemeldet.
+        ''' Handler für <c>ListItemsChanged</c>: befüllt die ListBox neu gemäß <see cref="_Items"/>.
         ''' </summary>
         Private Sub IniFileListEdit_ListItemsChanged() Handles Me.ListItemsChanged
-            Me.FillListbox() ' Listbox neu befüllen
+            Me.FillListbox()
         End Sub
 
         ''' <summary>
-        ''' Reaktion auf geänderten Titeltext:
-        ''' - Der GroupBox-Titel wird aktualisiert.
+        ''' Handler für <c>TitelTextChanged</c>: aktualisiert den GroupBox-Titel.
         ''' </summary>
         Private Sub IniFileListEdit_TitelTextChanged() Handles Me.TitelTextChanged
-            Me.GroupBox.Text = Me._TitelText  ' Titeltext setzen
+            Me.GroupBox.Text = Me._TitelText
         End Sub
 
-#End Region
-
-#Region "Definition der internen Funktionen"
-
         ''' <summary>
-        ''' Setzt die Eigenschaft <see cref="_SelectedItem"/> auf den aktuell gewählten Eintrag.
-        ''' Schaltet die Aktionen "Löschen" und "Umbenennen" aktiv.
+        ''' Setzt den internen Wert für den selektierten Eintrag und aktiviert passende Buttons.
         ''' </summary>
         Private Sub SetPropertySelectedItem()
-            Me._SelectedItem = CStr(Me.ListBox.SelectedItem) ' Eigenschaft setzen
-            ' Buttons schalten: Aktionen für selektiertes Item erlauben.
+            Me._SelectedItem = CStr(Me.ListBox.SelectedItem)
             Me.ButtonDelete.Enabled = True
             Me.ButtonRename.Enabled = True
         End Sub
 
         ''' <summary>
-        ''' Setzt die Eigenschaft <see cref="_SelectedItem"/> auf leer.
-        ''' Deaktiviert Aktionen, die eine Auswahl erfordern.
+        ''' Leert den internen Wert für den selektierten Eintrag und deaktiviert nicht anwendbare Buttons.
         ''' </summary>
         Private Sub ClearPropertySelectedItem()
-            Me._SelectedItem = String.Empty ' Eigenschaft leeren
-            ' Buttons schalten: ohne Auswahl keine Lösch-/Umbenenn-Aktion.
+            Me._SelectedItem = String.Empty
             Me.ButtonDelete.Enabled = False
             Me.ButtonRename.Enabled = False
         End Sub
 
         ''' <summary>
-        ''' Befüllt die ListBox basierend auf <see cref="_Items"/>.
-        ''' - Löscht vorhandene Einträge.
-        ''' - Fügt neue Einträge hinzu (falls vorhanden).
-        ''' - Setzt Auswahl und Buttonzustände zurück.
-        ''' - Meldet nach außen, dass aktuell kein Item selektiert ist.
+        ''' Befüllt die ListBox aus <see cref="_Items"/> und setzt Auswahl sowie Buttonzustände zurück.
         ''' </summary>
         Private Sub FillListbox()
-            Me.ListBox.Items.Clear()  ' Listbox leeren
+            Me.ListBox.Items.Clear()
             If Me._Items IsNot Nothing Then
-                Me.ListBox.Items.AddRange(Me._Items)  ' Listbox neu befüllen
+                Me.ListBox.Items.AddRange(Me._Items)
             End If
-            Me.ListBox.SelectedIndex = -1 ' kein Eintrag ausgewählt
-            Me._SelectedItem = $""  ' Eigenschaft setzen (entspricht String.Empty)
-
-            ' Buttons schalten: Hinzufügen ist immer möglich, andere erfordern Auswahl.
+            Me.ListBox.SelectedIndex = -1
+            Me._SelectedItem = ""
             Me.ButtonAdd.Enabled = True
             Me.ButtonDelete.Enabled = False
             Me.ButtonRename.Enabled = False
-
-            ' Nach außen signalisieren, dass es aktuell keinen selektierten Eintrag gibt.
             RaiseEvent SelectedItemChanged(Me, New ListEditEventArgs(String.Empty, Me._SelectedItem, String.Empty))
         End Sub
 
         ''' <summary>
-        ''' Zeigt den Dialog zum Löschen an und wertet das Ergebnis aus.
-        ''' Bei Bestätigung (OK) wird `ItemRemove` mit aktuellem Abschnitt und Item ausgelöst.
-        ''' Die tatsächliche Lösch-Operation erfolgt im Host (Event-Handler).
+        ''' Öffnet den Lösch-Dialog und löst bei Bestätigung <see cref="ItemRemove"/> aus.
         ''' </summary>
         Private Sub DeleteItem()
-
-#If DEBUG Then
-            Debug.Print($"zu löschendes Element: {Me._SelectedItem}")
-#End If
-
-            Dim deldlg As New DeleteItemDialog With {.ItemValue = Me._SelectedItem} ' Dialog initialisieren
-            Dim result As DialogResult = deldlg.ShowDialog(Me) ' Dialog anzeigen und Ergebnis abfragen
-            If result = DialogResult.OK Then ' Ergebnis auswerten
-                ' Wenn Antwort OK -> Event auslösen (Host löscht Eintrag und aktualisiert ListItems).
+            Dim deldlg As New DeleteItemDialog With {.ItemValue = Me._SelectedItem}
+            Dim result As System.Windows.Forms.DialogResult = deldlg.ShowDialog(Me)
+            If result = System.Windows.Forms.DialogResult.OK Then
                 RaiseEvent ItemRemove(Me, New ListEditEventArgs(Me._SelectedSection, Me._SelectedItem, String.Empty))
             End If
         End Sub
 
         ''' <summary>
-        ''' Zeigt den Dialog zum Umbenennen an und wertet das Ergebnis aus.
-        ''' Bei Bestätigung (Yes) wird `ItemRename` mit altem und neuem Wert ausgelöst.
-        ''' Hinweis: Der Dialog verwendet hier `DialogResult.Yes` als Bestätigungswert (nicht OK).
+        ''' Öffnet den Umbenennen-Dialog und löst bei Bestätigung <see cref="ItemRename"/> aus.
         ''' </summary>
         Private Sub RenameItem()
-
-#If DEBUG Then
-            Debug.Print($"altes Element: {Me._SelectedItem}")
-#End If
-
-            Dim renamedlg As New RenameItemDialog With {.OldItemValue = Me._SelectedItem}  ' Dialog initialisieren
-            Dim result As DialogResult = renamedlg.ShowDialog(Me) ' Dialog anzeigen und Ergebnis abfragen
-            If result = DialogResult.Yes Then ' Ergebnis auswerten
-                ' Wenn Antwort Ja -> Event auslösen (Host führt Umbenennen aus und aktualisiert ListItems).
+            Dim renamedlg As New RenameItemDialog With {.OldItemValue = Me._SelectedItem}
+            Dim result As System.Windows.Forms.DialogResult = renamedlg.ShowDialog(Me)
+            If result = System.Windows.Forms.DialogResult.Yes Then
                 RaiseEvent ItemRename(Me, New ListEditEventArgs(Me._SelectedSection, Me._SelectedItem, renamedlg.NewItemValue))
             End If
         End Sub
 
         ''' <summary>
-        ''' Zeigt den Dialog zum Hinzufügen eines neuen Eintrags an und wertet das Ergebnis aus.
-        ''' Bei Bestätigung (OK) wird `ItemAdd` mit dem neuen Wert ausgelöst.
-        ''' Die tatsächliche Hinzufügungs-Operation erfolgt im Host (Event-Handler).
+        ''' Öffnet den Hinzufügen-Dialog und löst bei Bestätigung <see cref="ItemAdd"/> aus.
         ''' </summary>
         Private Sub AddNewItem()
-            Dim newitemdlg As New AddItemDialog ' Dialog initialisieren
-            Dim result As DialogResult = newitemdlg.ShowDialog(Me) ' Dialog anzeigen und Ergebnis abfragen
-            If result = DialogResult.OK Then ' Ergebnis auswerten
-                ' Wenn Antwort OK -> Event auslösen (Host fügt Eintrag hinzu und aktualisiert ListItems).
+            Dim newitemdlg As New AddItemDialog
+            Dim result As System.Windows.Forms.DialogResult = newitemdlg.ShowDialog(Me)
+            If result = System.Windows.Forms.DialogResult.OK Then
                 RaiseEvent ItemAdd(Me, New ListEditEventArgs(Me._SelectedSection, Me._SelectedItem, newitemdlg.NewItemValue))
             End If
         End Sub
 
-#End Region
-
-
-
-        'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
-        End Sub
-
-        'Wird vom Windows Form-Designer benötigt.
-        Private components As System.ComponentModel.IContainer
-
-        'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
-        'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <summary>
+        ''' Initialisiert alle vom Windows Forms Designer erzeugten Steuerelemente.
+        ''' </summary>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.GroupBox = New System.Windows.Forms.GroupBox()
@@ -415,34 +392,34 @@ Namespace IniFileControl
             'TableLayoutPanel1
             '
             Me.TableLayoutPanel1.ColumnCount = 1
-            Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Dim unused = Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 1)
             Me.TableLayoutPanel1.Controls.Add(Me.ListBox, 0, 0)
             Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 16)
             Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
             Me.TableLayoutPanel1.RowCount = 2
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+            Dim unused6 = Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Dim unused5 = Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(321, 75)
             Me.TableLayoutPanel1.TabIndex = 4
             '
             'TableLayoutPanel2
             '
-            Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.TableLayoutPanel2.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             Me.TableLayoutPanel2.AutoSize = True
             Me.TableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.TableLayoutPanel2.ColumnCount = 3
-            Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-            Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
-            Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+            Dim unused4 = Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+            Dim unused3 = Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+            Dim unused2 = Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
             Me.TableLayoutPanel2.Controls.Add(Me.ButtonAdd, 0, 0)
             Me.TableLayoutPanel2.Controls.Add(Me.ButtonRename, 1, 0)
             Me.TableLayoutPanel2.Controls.Add(Me.ButtonDelete, 2, 0)
             Me.TableLayoutPanel2.Location = New System.Drawing.Point(6, 39)
             Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
             Me.TableLayoutPanel2.RowCount = 1
-            Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Dim unused1 = Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.TableLayoutPanel2.Size = New System.Drawing.Size(312, 33)
             Me.TableLayoutPanel2.TabIndex = 5
             '
@@ -499,14 +476,26 @@ Namespace IniFileControl
 
         End Sub
 
-        Private WithEvents ButtonDelete As System.Windows.Forms.Button
-        Private WithEvents ButtonRename As System.Windows.Forms.Button
-        Private WithEvents ButtonAdd As System.Windows.Forms.Button
-        Private WithEvents ListBox As System.Windows.Forms.ListBox
-        Private WithEvents GroupBox As System.Windows.Forms.GroupBox
-        Private WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
-        Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+#End Region
 
+#Region "überschriebene Methoden"
+
+        ''' <summary>
+        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.
+        ''' </summary>
+        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
 
     End Class
 
