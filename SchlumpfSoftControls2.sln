@@ -4,6 +4,8 @@ VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControls2", "SchlumpfSoftControls2\SchlumpfSoftControls2.vbproj", "{83F010A0-D057-4EB4-B44E-443D19D425DF}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemoComponents", "SchlumpfSoftControlsDemoComponents\SchlumpfSoftControlsDemoComponents.vbproj", "{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{6F7BC048-0A70-B1BE-8A35-89890EA57E92}"
 	ProjectSection(SolutionItems) = preProject
 		Doc\AniGifControl.md = Doc\AniGifControl.md
@@ -32,8 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 		SchlumpfSoftControls2.vsix = SchlumpfSoftControls2.vsix
 		VS Marketplace Vorlage.md = VS Marketplace Vorlage.md
 	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SchlumpfSoftControlsDemoComponents", "SchlumpfSoftControlsDemoComponents\SchlumpfSoftControlsDemoComponents.vbproj", "{AE03F411-4760-4ADB-B8B3-243CAD92EB5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +74,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A0A63149-0745-48A6-A7F3-16B35E7AA32A}
+		SolutionGuid = {957F36FF-5D9C-4277-9F49-D4104CD167BA}
 	EndGlobalSection
 EndGlobal
