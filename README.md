@@ -52,6 +52,12 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1116.0 (16.11.2025)**
+- Fehler in internen Dialogen beseitigt
+- Fehler im IniFileControl beseitigt der einen Absturz verursachte wenn
+ein Abschnittskommentar oder Eintragswert hinzugefügt werden soll obwohl kein Abschnitt oder Eintrag ausgewählt war.
+- Interne Codeoptimierungen
+
 **Version 3.2025.1012.0 (12.10.2025)**
 - FileSearchControl hinzugefügt .
 
