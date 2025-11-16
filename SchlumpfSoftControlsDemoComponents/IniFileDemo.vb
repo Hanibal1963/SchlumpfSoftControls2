@@ -1,5 +1,4 @@
-﻿
-Imports SchlumpfSoft.Controls
+﻿Imports SchlumpfSoft.Controls
 Imports SchlumpfSoft.Controls.IniFileControl
 
 Public Class IniFileDemo
@@ -94,11 +93,16 @@ Public Class IniFileDemo
     End Sub
 
     Private Sub EntryListEdit_SelectedItemChanged(sender As Object, e As ListEditEventArgs) Handles EntryListEdit.SelectedItemChanged
-        ' Eintragwert anzeigen
+        ' Eintragwert anzeigen (Guard gegen leere Auswahl / nicht existierende Keys)
         With Me.EntryValueEdit
             .SelectedSection = e.SelectedSection
             .SelectedEntry = e.SelectedItem
-            .Value = Me.IniFile.GetEntryValue(e.SelectedSection, e.SelectedItem)
+            If String.IsNullOrEmpty(e.SelectedSection) OrElse String.IsNullOrEmpty(e.SelectedItem) Then
+                .Value = String.Empty
+            Else
+                Dim val = Me.IniFile.GetEntryValue(e.SelectedSection, e.SelectedItem)
+                .Value = If(val, String.Empty)
+            End If
         End With
     End Sub
 
