@@ -46,9 +46,8 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SchlumpfSoftControls2, Version=3.2025.1012.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SchlumpfSoftControls2\obj\Debug\SchlumpfSoftControls2.dll</HintPath>
+    <Reference Include="SchlumpfSoftControls2">
+      <HintPath>..\SchlumpfSoftControls2\bin\Debug\SchlumpfSoftControls2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

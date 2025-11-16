@@ -36,5 +36,5 @@ Imports Microsoft.VisualBasic
 ' Sie können alle Werte angeben oder die Build- und Revisionsnummern
 ' durch Verwendung von '*' wie unten gezeigt automatisch generieren lassen:
 ' [assembly: AssemblyVersion("1.0.*")]
-<Assembly: AssemblyVersion("3.2025.1012.0")>
-<Assembly: AssemblyFileVersion("3.2025.1012.0")>
+<Assembly: AssemblyVersion("3.2025.1116.0")>
+<Assembly: AssemblyFileVersion("3.2025.1116.0")>
