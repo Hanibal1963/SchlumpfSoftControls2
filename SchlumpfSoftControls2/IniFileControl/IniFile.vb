@@ -599,6 +599,7 @@ Namespace IniFileControl
         ''' Die übergebenen Zeilen sollten ohne Prefixzeichen sein.
         ''' </remarks>
         Public Sub SetSectionComment(Name As String, CommentLines() As String)
+
             ' Fehlerprüfung
             If String.IsNullOrEmpty(Name) Then
                 Dim unused = System.Windows.Forms.MessageBox.Show(
@@ -608,11 +609,14 @@ Namespace IniFileControl
                     System.Windows.Forms.MessageBoxIcon.Error)
                 Exit Sub
             End If
+
             ' geänderten Abschnittskommentar übernehmen
             Me._SectionsComments.Item(Name).Clear()
             Me._SectionsComments.Item(Name).AddRange(CommentLines)
+
             ' Änderungen übernehmen
             Me.ChangeFileContent()
+
         End Sub
 
         ''' <summary>
@@ -631,6 +635,7 @@ Namespace IniFileControl
         ''' Der Abschnitt und der Eintrag müssen existieren.
         ''' </remarks>
         Public Sub SetEntryValue(Section As String, Entry As String, Value As String)
+
             ' Fehlerprüfung
             If String.IsNullOrEmpty(Section) Then
                 Dim unused = System.Windows.Forms.MessageBox.Show(
@@ -640,10 +645,13 @@ Namespace IniFileControl
                     System.Windows.Forms.MessageBoxIcon.Error)
                 Exit Sub
             End If
+
             ' geänderten Wert übenehmen
             Me._Sections.Item(Section).Item(Entry) = Value
+
             ' Änderungen übernehmen
             Me.ChangeFileContent()
+
         End Sub
 
 #End Region
