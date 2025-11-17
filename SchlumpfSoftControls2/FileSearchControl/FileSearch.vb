@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System.Linq
-
 Namespace FileSearchControl
 
     ''' <summary>
@@ -14,14 +12,47 @@ Namespace FileSearchControl
     ''' <para>Die Suche läuft in einem ThreadPool-Thread (via <see cref="Task.Run(System.Action)"/>). </para>
     ''' <para>Events werden (über <see cref="SimpleProgress(Of T)"/>) typischerweise auf
     ''' dem Ersteller- Synchronisierungskontext (z. B. UI-Thread) aufgerufen, sofern beim Start vorhanden. </para>
-    ''' <para>Ein erneuter Aufruf von <see cref="StartSearch"/> beendet eine laufende Suche vor Start der neuen. </para>
+    ''' <para>Ein erneuter Aufruf von <see cref="StartSearchAsync"/> beendet eine laufende Suche vor Start der neuen. </para>
     ''' <para>Es erfolgt eine doppelte Enumeration (Zählen + Iterieren), was bei sehr vielen Dateien Performance kosten kann.</para>
     ''' </remarks>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Führt eine (optionale rekursive) asynchrone Dateisuche anhand eines Suchmusters aus und meldet Ergebnisse sowie Fortschritt über Ereignisse.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(FileSearchControl.FileSearch), "FileSearch.bmp")>
-    Public Class FileSearch
+    Public Class FileSearch : Inherits System.ComponentModel.Component
+
+#Region "Variablendefinition"
+
+        ''' <summary>
+        ''' Komponenten-Container, der vom Designer verwendet wird, um untergeordnete Komponenten zu verwalten.
+        ''' </summary>
+        ''' <remarks>Wird nur zur Laufzeit der Designumgebung benötigt und beim Dispose bereinigt.</remarks>
+        Private components As System.ComponentModel.IContainer
+
+        ''' <summary>
+        ''' Token-Quelle zur Signalisierung eines kooperativen Abbruchs an den laufenden Such-Task.
+        ''' </summary>
+        ''' <remarks>Wird bei jedem Suchstart neu erzeugt und ersetzt eine vorherige Instanz.</remarks>
+        Friend _CancellationSource As System.Threading.CancellationTokenSource
+
+        ''' <summary>
+        ''' Startpfad für die aktuelle Suche (Standard: <c>String.Empty</c>).
+        ''' </summary>
+        Friend _StartPath As String = String.Empty
+
+        ''' <summary>
+        ''' Das aktuell konfigurierte Suchmuster (Standard: <c>*.*</c>).
+        ''' </summary>
+        Friend _SearchPattern As String = $"*.*"
+
+        ''' <summary>
+        ''' Gibt an, ob eine rekursive Suche über alle Unterordner erfolgt (Standard: <c>False</c>).
+        ''' </summary>
+        Friend _SearchInSubfolders As Boolean = False
+
+#End Region
+
+#Region "Öffentliche Ereignisse"
 
         ''' <summary>
         ''' Wird für jede gefundene Datei ausgelöst.
@@ -55,74 +86,101 @@ Namespace FileSearchControl
         <System.ComponentModel.Description("Meldet aggregierte Fortschrittsinformationen (Anzahl gefunden, Gesamtzahl, Prozent).")>
         Public Event ProgressChanged(sender As Object, e As FileSearchEventArgs)
 
+#End Region
+
+#Region "neue Eigenschaften"
+
         ''' <summary>
         ''' Startverzeichnis der Suche (Initialwert ist String.Empty).
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value>Der absolute oder relative Pfad, ab dem die Dateisuche beginnt.</value>
+        ''' <remarks>Änderungen wirken sich auf nachfolgende Aufrufe von <see cref="StartSearchAsync"/> aus.</remarks>
         <System.ComponentModel.Description("Startverzeichnis der Suche (Initialwert ist String.Empty).")>
         <System.ComponentModel.Category("Behavior")>
         Public Property StartPath As String
             Get
-                Return _StartPath
+                Return Me._StartPath
             End Get
             Set(value As String)
-                _StartPath = value
+                Me._StartPath = value
             End Set
         End Property
 
         ''' <summary>
         ''' Suchmuster (z. B. *.txt). (Standardwert ist "*.*").
         ''' </summary>
-        ''' <returns></returns>
-        <System.ComponentModel.Description("Suchmuster (z. B. *.txt). (Standardwert ist "" * .* "")")>
+        ''' <value>Ein Muster mit Platzhaltern gemäß <see cref="System.IO.Directory.EnumerateFiles(String, String, System.IO.SearchOption)"/>.</value>
+        ''' <remarks>Mehrere Muster werden nicht unterstützt; für komplexere Filterung eigenes Matching vornehmen.</remarks>
+        <System.ComponentModel.Description("Suchmuster (z. B. *.txt). Standardwert: *.*")>
         <System.ComponentModel.Category("Behavior")>
         Public Property SearchPattern As String
             Get
-                Return _SearchPattern
+                Return Me._SearchPattern
             End Get
             Set(value As String)
-                _SearchPattern = value
+                Me._SearchPattern = value
             End Set
         End Property
 
         ''' <summary>
         ''' Gibt an, ob die Suche rekursiv in Unterordnern erfolgen soll. (Standardwert ist False).
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value><c>True</c>, wenn auch Unterordner durchsucht werden, sonst <c>False</c>.</value>
+        ''' <remarks>Kann Performance und Dauer der Suche stark verlängern bei tiefen Verzeichnisstrukturen.</remarks>
         <System.ComponentModel.Description("Gibt an, ob die Suche rekursiv in Unterordnern erfolgen soll. (Standardwert ist False).")>
         <System.ComponentModel.Category("Behavior")>
         Public Property SearchInSubfolders As Boolean
             Get
-                Return _SearchInSubfolders
+                Return Me._SearchInSubfolders
             End Get
             Set(value As Boolean)
-                _SearchInSubfolders = value
+                Me._SearchInSubfolders = value
             End Set
         End Property
 
+#End Region
+
+#Region "öffentliche Methoden"
+
+        ''' <summary>
+        ''' Erstellt eine neue Instanz der <see cref="FileSearch"/> Komponente.
+        ''' </summary>
+        ''' <remarks>Verwendet <see cref="InitializeComponent"/> zur Designer-Initialisierung.</remarks>
         Public Sub New()
             MyBase.New()
-            'Dieser Aufruf ist für den Komponenten-Designer erforderlich.
-            Me.InitializeComponent()
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Komponenten-Designer erforderlich.
         End Sub
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz der <see cref="FileSearch"/> Klasse.
+        ''' Erstellt eine neue Instanz und fügt sie optional einem übergebenen Komponenten-Container hinzu.
         ''' </summary>
+        ''' <param name="container">Ein vorhandener <see cref="System.ComponentModel.IContainer"/>, dem die Instanz hinzugefügt wird, oder <c>Nothing</c>.</param>
+        ''' <remarks>Ermöglicht Designtime-Komposition in Windows Forms.</remarks>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Public Sub New(ByVal container As System.ComponentModel.IContainer)
+            MyClass.New()
+            container?.Add(Me) ' Erforderlich für die Unterstützung des Windows.Forms-Klassenkompositions-Designers
+        End Sub
+
+        ''' <summary>
+        ''' Startet eine neue asynchrone Dateisuche gemäß den aktuell gesetzten Parametern.
+        ''' </summary>
+        ''' <returns>Ein <see cref="System.Threading.Tasks.Task"/>, das den Abschluss der Suchoperation repräsentiert.</returns>
         ''' <remarks>
-        ''' <para>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige zuerst
-        ''' abgebrochen. </para>
+        ''' <para>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige zuerst kooperativ abgebrochen.</para>
+        ''' <para>Ergebnisse und Fortschritt werden über die Ereignisse <see cref="FileFound"/>, <see cref="ProgressChanged"/> und <see cref="SearchCompleted"/> gemeldet.</para>
+        ''' <para>Fehler während der Enumeration lösen <see cref="ErrorOccurred"/> aus und beenden die Suche.</para>
         ''' </remarks>
         Public Async Function StartSearchAsync() As System.Threading.Tasks.Task
 
             ' Evtl. laufende Suche abbrechen (kooperativ).
             '  Es wird NICHT auf deren Abschluss gewartet. Dadurch ist ein schneller Neustart möglich,
             '  birgt aber das Risiko, dass kurze Zeit noch Events der alten Suche eintreffen.
-            _CancellationSource?.Cancel()
+            Me._CancellationSource?.Cancel()
 
             ' Neue CancellationTokenSource erzeugen.
-            _CancellationSource = New System.Threading.CancellationTokenSource()
-            Dim token = _CancellationSource.Token
+            Me._CancellationSource = New System.Threading.CancellationTokenSource()
+            Dim token = Me._CancellationSource.Token
 
             ' Progress-Objekt für EINZELNE Dateien.
             ' Jede gefundene Datei führt zu einem sofortigen Event (FileFound).
@@ -146,18 +204,18 @@ Namespace FileSearchControl
                 Await System.Threading.Tasks.Task.Run(Sub()
 
                                                           ' Rekursionsmodus bestimmen.
-                                                          Dim optionen As System.IO.SearchOption = If(SearchInSubfolders, System.IO.SearchOption.AllDirectories, System.IO.SearchOption.TopDirectoryOnly)
+                                                          Dim optionen As System.IO.SearchOption = If(Me.SearchInSubfolders, System.IO.SearchOption.AllDirectories, System.IO.SearchOption.TopDirectoryOnly)
 
                                                           ' Lazy-Enumeration aller passenden Dateien. Achtung:
                                                           '  Directory.EnumerateFiles löst erst beim Durchlaufen der Aufzählung IO-Zugriffe aus.
-                                                          Dim allfiles As System.Collections.Generic.IEnumerable(Of String) = System.IO.Directory.EnumerateFiles(StartPath, SearchPattern, optionen)
+                                                          Dim allfiles As System.Collections.Generic.IEnumerable(Of String) = System.IO.Directory.EnumerateFiles(Me.StartPath, Me.SearchPattern, optionen)
 
                                                           ' Performance-Hinweis: Count() zwingt vollständige Aufzählung VOR der eigentlichen Verarbeitung.
                                                           ' Dadurch wird das gesamte Dateiset zweimal traversiert (hier: für Count und unten für die Schleife).
                                                           ' Alternative Strategien:
                                                           ' - Dateien einmal in eine Liste materialisieren (ToList) und dann Count + Schleife durchführen.
                                                           ' - Fortschritt ohne Total (z. B. with -1) oder mit dynamischer Schätzung ausgeben.
-                                                          Dim total As Integer = allfiles.Count()
+                                                          Dim total As Integer = System.Linq.Enumerable.Count(allfiles)
 
                                                           Dim found As Integer = 0
 
@@ -196,20 +254,17 @@ Namespace FileSearchControl
                 RaiseEvent SearchCompleted(Me, token.IsCancellationRequested)
 
             Catch ex As System.OperationCanceledException
-                ' Falls innerhalb der Task-Pipeline eine echte CancellationException geworfen wurde.
-                RaiseEvent SearchCompleted(Me, True)
+                RaiseEvent SearchCompleted(Me, True) ' Falls innerhalb der Task-Pipeline eine echte CancellationException geworfen wurde.
 
             Catch ex As System.UnauthorizedAccessException
-                ' Zugriffsrechte fehlten (z. B. Systemordner). Suche wird komplett abgebrochen.
-                RaiseEvent ErrorOccurred(Me, ex)
+                RaiseEvent ErrorOccurred(Me, ex) ' Zugriffsrechte fehlten (z. B. Systemordner). Suche wird komplett abgebrochen.
 
             Catch ex As System.IO.DirectoryNotFoundException
-                ' Startpfad oder Teilpfade existieren nicht.
-                RaiseEvent ErrorOccurred(Me, ex)
+                RaiseEvent ErrorOccurred(Me, ex) ' Startpfad oder Teilpfade existieren nicht.
 
             Catch ex As System.Exception
-                ' Generischer Fehlerfall (IO, Pfadlänge, etc.).
-                RaiseEvent ErrorOccurred(Me, ex)
+                RaiseEvent ErrorOccurred(Me, ex) ' Generischer Fehlerfall (IO, Pfadlänge, etc.).
+
             End Try
 
         End Function
@@ -217,12 +272,45 @@ Namespace FileSearchControl
         ''' <summary>
         ''' Bricht eine eventuell laufende Suche ab.
         ''' </summary>
-        ''' <remarks>
-        ''' Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.
-        ''' </remarks>
+        ''' <remarks>Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.</remarks>
         Public Sub StopSearch()
-            _CancellationSource?.Cancel()
+            Me._CancellationSource?.Cancel()
         End Sub
+
+#End Region
+
+#Region "überschriebene Methoden"
+
+        ''' <summary>
+        ''' Gibt die von der Komponente verwendeten Ressourcen frei.
+        ''' </summary>
+        ''' <param name="disposing"><c>True</c>, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls <c>False</c>.</param>
+        ''' <remarks>Ruft die Basisklassenimplementierung auf und bereinigt den Komponenten-Container.</remarks>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso Me.components IsNot Nothing Then
+                    Me.components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
+        ''' <summary>
+        ''' Initialisiert die Komponente für den Designer und legt interne Container-Strukturen an.
+        ''' </summary>
+        ''' <remarks>Wird automatisch von den Konstruktoren aufgerufen.</remarks>
+        <System.Diagnostics.DebuggerStepThrough()>
+        Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container()
+        End Sub
+
+#End Region
 
     End Class
 

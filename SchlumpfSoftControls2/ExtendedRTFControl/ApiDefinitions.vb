@@ -12,6 +12,19 @@ Namespace ExtendedRTFControl
     Module ApiDefinitions
 
         ''' <summary>
+        ''' Win32-Konstante zum De-/Aktivieren des Redraws eines Fenster-Handles.
+        ''' </summary>
+        Friend Const WM_SETREDRAW As Integer = &HB
+
+        ''' <summary>
+        ''' Mindest-Schriftgröße.
+        ''' </summary>
+        ''' <remarks>
+        ''' Kann bei Bedarf angepasst werden.
+        ''' </remarks>
+        Friend Const MIN_FONT_SIZE As Single = 8.0F
+
+        ''' <summary>
         ''' Sendet ein Windows-Message direkt an ein Fenster .
         ''' </summary>
         ''' <param name="hWnd">Das Fensterhandle des Zielfensters.</param>

@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ExtendedRTFDemo
     Inherits System.Windows.Forms.UserControl
 
     'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class ExtendedRTFDemo
     'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
     'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ToolStripContainer1 = New System.Windows.Forms.ToolStripContainer()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
@@ -41,7 +41,6 @@ Partial Class ExtendedRTFDemo
         Me.ToolStripButtonTextCenter = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButtonTextRight = New System.Windows.Forms.ToolStripButton()
         Me.RTFTB = New SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF()
-        Me.ExtendedRTF1 = New SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF()
         Me.ToolStripContainer1.ContentPanel.SuspendLayout()
         Me.ToolStripContainer1.TopToolStripPanel.SuspendLayout()
         Me.ToolStripContainer1.SuspendLayout()
@@ -53,7 +52,6 @@ Partial Class ExtendedRTFDemo
         '
         'ToolStripContainer1.ContentPanel
         '
-        Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.ExtendedRTF1)
         Me.ToolStripContainer1.ContentPanel.Controls.Add(Me.RTFTB)
         Me.ToolStripContainer1.ContentPanel.Size = New System.Drawing.Size(481, 260)
         Me.ToolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -268,23 +266,6 @@ Partial Class ExtendedRTFDemo
         Me.RTFTB.Text = "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltte" &
     "xt" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispielttext"
         '
-        'ExtendedRTF1
-        '
-        Me.ExtendedRTF1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ExtendedRTF1.Location = New System.Drawing.Point(0, 0)
-        Me.ExtendedRTF1.Name = "ExtendedRTF1"
-        Me.ExtendedRTF1.SelectionBold = False
-        Me.ExtendedRTF1.SelectionFontSize = 8.25!
-        Me.ExtendedRTF1.SelectionForeColor = System.Drawing.Color.Black
-        Me.ExtendedRTF1.SelectionItalic = False
-        Me.ExtendedRTF1.SelectionLeftIndent = 0
-        Me.ExtendedRTF1.SelectionStrikeout = False
-        Me.ExtendedRTF1.SelectionUnderline = False
-        Me.ExtendedRTF1.Size = New System.Drawing.Size(481, 260)
-        Me.ExtendedRTF1.TabIndex = 1
-        Me.ExtendedRTF1.Text = "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Beispieltext" & Global.Microsoft.VisualBasic.ChrW(10) & "Bei" &
-    "spieltext"
-        '
         'ExtendedRTFDemo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -322,5 +303,4 @@ Partial Class ExtendedRTFDemo
     Private WithEvents ToolStripButtonTextCenter As ToolStripButton
     Private WithEvents ToolStripButtonTextRight As ToolStripButton
     Private WithEvents RTFTB As SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF
-    Private WithEvents ExtendedRTF1 As SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF
 End Class

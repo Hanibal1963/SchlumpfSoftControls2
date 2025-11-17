@@ -15,15 +15,19 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|arm64'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <OutputPath>bin\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|arm64'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -59,6 +63,7 @@
     <ErrorReport>prompt</ErrorReport>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <DeployExtension>True</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -154,16 +159,10 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="AniGifControl\SizeMode.vb" />
-    <Compile Include="AniGifControl\VariableDefinitions.vb" />
-    <Compile Include="ColorProgressBarControl\ColorProgressBar.Designer.vb">
-      <DependentUpon>ColorProgressBar.vb</DependentUpon>
-    </Compile>
     <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorProgressBarControl\VariableDefinitions.vb" />
-    <Compile Include="DriveWatcherControl\DriveAddedEventArgs.vb" />
-    <Compile Include="DriveWatcherControl\DriveRemovedEventArgs.vb" />
+    <Compile Include="DriveWatcherControl\DriveEventArgDefinitions.vb" />
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -185,67 +184,35 @@
     <Compile Include="ExplorerTreeViewControl\SelectedPathChangedEventArgs.vb" />
     <Compile Include="ExplorerTreeViewControl\SpecialFolderNode.vb" />
     <Compile Include="ExtendedRTFControl\ApiDefinitions.vb" />
-    <Compile Include="ExtendedRTFControl\ConstantDefinitions.vb" />
-    <Compile Include="ExtendedRTFControl\ExtendedRTF.Designer.vb">
-      <DependentUpon>ExtendedRTF.vb</DependentUpon>
-    </Compile>
     <Compile Include="ExtendedRTFControl\ExtendedRTF.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ExtendedRTFControl\VariableDefinitions.vb" />
-    <Compile Include="FileSearchControl\VariableDefinitions.vb" />
-    <Compile Include="FileSearchControl\FileSearch.Designer.vb">
-      <DependentUpon>FileSearch.vb</DependentUpon>
     </Compile>
     <Compile Include="FileSearchControl\FileSearch.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="FileSearchControl\FileSearchEventArgs.vb" />
     <Compile Include="FileSearchControl\SimpleProgress.vb" />
-    <Compile Include="IniFileControl\AddItemDialog.Designer.vb">
-      <DependentUpon>AddItemDialog.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\AddItemDialog.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\CommentEdit.Designer.vb">
-      <DependentUpon>CommentEdit.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\CommentEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IniFileControl\CommentEditEventArgs.vb" />
-    <Compile Include="IniFileControl\ContentView.Designer.vb">
-      <DependentUpon>ContentView.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\ContentView.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\DeleteItemDialog.Designer.vb">
-      <DependentUpon>DeleteItemDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\DeleteItemDialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IniFileControl\EntryValueEdit.Designer.vb">
-      <DependentUpon>EntryValueEdit.vb</DependentUpon>
-    </Compile>
     <Compile Include="IniFileControl\EntryValueEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IniFileControl\EntryValueEditEventArgs.vb" />
     <Compile Include="IniFileControl\IniFile.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IniFileControl\ListEdit.Designer.vb">
-      <DependentUpon>ListEdit.vb</DependentUpon>
-    </Compile>
+    <Compile Include="IniFileControl\IniFileEventArgsDefinitions.vb" />
     <Compile Include="IniFileControl\ListEdit.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="IniFileControl\ListEditEventArgs.vb" />
-    <Compile Include="IniFileControl\RenameItemDialog.Designer.vb">
-      <DependentUpon>RenameItemDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="IniFileControl\RenameItemDialog.vb">
       <SubType>Form</SubType>
@@ -312,6 +279,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.AnalyzerUtilities">
+      <Version>3.3.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -353,6 +323,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IniFileControl\DeleteItemDialog.resx">
       <DependentUpon>DeleteItemDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="IniFileControl\EntryValueEdit.resx">
       <DependentUpon>EntryValueEdit.vb</DependentUpon>
