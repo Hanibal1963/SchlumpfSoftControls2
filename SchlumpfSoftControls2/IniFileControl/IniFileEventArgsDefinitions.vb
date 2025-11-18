@@ -3,7 +3,7 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System
+'Imports System
 
 Namespace IniFileControl
 
@@ -21,7 +21,7 @@ Namespace IniFileControl
     ''' Sie innerhalb des Aufrufers eine neue Arrayinstanz.
     ''' </para>
     ''' </remarks>
-    Public Class CommentEditEventArgs : Inherits EventArgs
+    Public Class CommentEditEventArgs : Inherits System.EventArgs
 
         ''' <summary>
         ''' Speichert den neuen Kommentartext als Array von Zeilen.
