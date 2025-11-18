@@ -9,12 +9,10 @@ Namespace IniFileControl
     ''' Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <System.ComponentModel.Description("Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.")>
-    <System.ComponentModel.ToolboxItem(True)>
-    <System.Drawing.ToolboxBitmap(GetType(IniFileControl.EntryValueEdit), "EntryValueEdit.bmp")> ' Hinweis: Das Bitmap "EntryValueEdit.bmp" muss als eingebettete Ressource vorliegen (BuildAction: Embedded Resource).
+    <Description("Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.")>
+    <ToolboxItem(True)>
+    <ToolboxBitmap(GetType(IniFileControl.EntryValueEdit), "EntryValueEdit.bmp")> ' Hinweis: Das Bitmap "EntryValueEdit.bmp" muss als eingebettete Ressource vorliegen (BuildAction: Embedded Resource).
     Public Class EntryValueEdit : Inherits System.Windows.Forms.UserControl
-
-#Region "Variablendefinition"
 
         ''' <summary>
         ''' Anzeige-/Titeltext der GroupBox.
@@ -308,8 +306,6 @@ Namespace IniFileControl
             Me.ResumeLayout(False)
 
         End Sub
-
-#End Region
 
     End Class
 
