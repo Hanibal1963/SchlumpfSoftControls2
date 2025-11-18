@@ -5,10 +5,6 @@
 
 ' TODO: Code noch überarbeiten
 
-Imports System
-Imports System.ComponentModel
-Imports System.Windows.Forms
-
 Namespace IniFileControl
 
     Friend Class RenameItemDialog : Inherits System.Windows.Forms.Form
@@ -18,6 +14,8 @@ Namespace IniFileControl
         Private WithEvents Label As System.Windows.Forms.Label
         Private WithEvents TextBox As System.Windows.Forms.TextBox
         Private _OldItemValue As String = $"" ' Hält den ursprünglichen (alten) Wert, der im Dialog angezeigt wird.
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _NewItemValue As String = $"" ' Hält den vom Benutzer eingegebenen (neuen) Wert, der beim Bestätigen übernommen wird.
 
         ''' <summary>
@@ -32,7 +30,7 @@ Namespace IniFileControl
         ''' Stellt den alten Wert bereit, der im Label-Text (Platzhalter {0}) angezeigt wird.
         ''' Das Setzen löst ein Ereignis aus, damit die UI den Platzhalter ersetzen kann.
         ''' </summary>
-        <Browsable(True)>
+        <System.ComponentModel.Browsable(True)>
         Public Property OldItemValue As String
             Get
                 Return Me._OldItemValue
@@ -47,7 +45,7 @@ Namespace IniFileControl
         ''' Stellt den vom Benutzer bestätigten neuen Wert bereit.
         ''' Wird beim Klick auf "Ja" aus dem Textfeld übernommen.
         ''' </summary>
-        <Browsable(True)>
+        <System.ComponentModel.Browsable(True)>
         Public Property NewItemValue As String
             Get
                 Return Me._NewItemValue
@@ -66,9 +64,9 @@ Namespace IniFileControl
             ' Prüfen, welcher Button ausgelöst hat.
             If sender Is Me.ButtonYes Then
                 Me.SetNewItemValue() ' Neuen Wert aus der TextBox in die Property übernehmen.
-                Me.DialogResult = DialogResult.Yes ' Dialog mit positivem Ergebnis schließen.
+                Me.DialogResult = System.Windows.Forms.DialogResult.Yes ' Dialog mit positivem Ergebnis schließen.
             ElseIf sender Is Me.ButtonNo Then
-                Me.DialogResult = DialogResult.No ' Abbruch: Dialog mit negativem Ergebnis schließen.
+                Me.DialogResult = System.Windows.Forms.DialogResult.No ' Abbruch: Dialog mit negativem Ergebnis schließen.
             End If
             Me.Close() ' Dialog schließen (Modal-Result ist bereits gesetzt).
         End Sub
@@ -84,9 +82,9 @@ Namespace IniFileControl
         ''' Aktiviert/Deaktiviert den "Ja"-Button abhängig davon, ob ein sinnvoller Text eingegeben wurde.
         ''' Leere Eingaben oder nur Leerzeichen sind nicht zulässig.
         ''' </summary>
-        Private Sub TextBox_TextChanged(sender As Object, e As EventArgs) Handles TextBox.TextChanged
+        Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
             ' TextBox leer oder enthält nur Whitespace?
-            If String.IsNullOrWhiteSpace(CType(sender, TextBox).Text) Then
+            If String.IsNullOrWhiteSpace(CType(sender, System.Windows.Forms.TextBox).Text) Then
                 Me.ButtonYes.Enabled = False ' Bestätigungs-Button deaktivieren, solange der Text nicht gültig ist.
             Else
                 Me.ButtonYes.Enabled = True ' Gültige Eingabe: Bestätigungs-Button aktivieren.
@@ -106,7 +104,7 @@ Namespace IniFileControl
         End Sub
 
         'Wird vom Windows Form-Designer benötigt.
-        Private components As System.ComponentModel.IContainer
+        Private ReadOnly components As System.ComponentModel.IContainer
 
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
@@ -124,16 +122,16 @@ Namespace IniFileControl
             '
             'TableLayoutPanel
             '
-            TableLayoutPanel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            TableLayoutPanel.Anchor = CType(System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right, System.Windows.Forms.AnchorStyles)
             TableLayoutPanel.ColumnCount = 2
-            TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused2 = TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused1 = TableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             TableLayoutPanel.Controls.Add(Me.ButtonYes, 0, 0)
             TableLayoutPanel.Controls.Add(Me.ButtonNo, 1, 0)
             TableLayoutPanel.Location = New System.Drawing.Point(188, 68)
             TableLayoutPanel.Name = "TableLayoutPanel"
             TableLayoutPanel.RowCount = 1
-            TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Dim unused = TableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             TableLayoutPanel.Size = New System.Drawing.Size(146, 29)
             TableLayoutPanel.TabIndex = 0
             '
