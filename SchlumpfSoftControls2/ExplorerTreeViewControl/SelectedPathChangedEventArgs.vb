@@ -5,17 +5,13 @@
 
 ' TODO: Code noch überarbeiten
 
-Imports System
-
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
     ''' Stellt Daten für das Ereignis bereit, das ausgelöst wird, wenn sich der
     ''' ausgewählte Pfad ändert.
     ''' </summary>
-    Public Class SelectedPathChangedEventArgs
-
-        Inherits EventArgs
+    Public Class SelectedPathChangedEventArgs : Inherits System.EventArgs
 
         ''' <summary>
         ''' Ruft den aktuell ausgewählten Pfad ab.

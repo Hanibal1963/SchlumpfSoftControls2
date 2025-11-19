@@ -5,10 +5,6 @@
 
 ' TODO: Code noch überarbeiten
 
-Imports System
-Imports System.Collections.Generic
-Imports System.IO
-
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
@@ -27,14 +23,14 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um den Typ eines Laufwerks in eine menschenlesbare Zeichenfolge zu übersetzen.
         ''' </remarks>
-        Private ReadOnly driveTypeMappings As New Dictionary(Of DriveType, String) From {
-            {DriveType.Fixed, DRIVETYPE_FIXED},
-            {DriveType.CDRom, DRIVETYPE_CDROM},
-            {DriveType.Removable, DRIVETYPE_REMOVABLE},
-            {DriveType.Network, DRIVETYPE_NETWORK},
-            {DriveType.Ram, DRIVETYPE_RAM},
-            {DriveType.NoRootDirectory, DRIVETYPE_NOROOT},
-            {DriveType.Unknown, DRIVETYPE_UNKNOWN}
+        Private ReadOnly driveTypeMappings As New System.Collections.Generic.Dictionary(Of System.IO.DriveType, String) From {
+            {System.IO.DriveType.Fixed, DRIVETYPE_FIXED},
+            {System.IO.DriveType.CDRom, DRIVETYPE_CDROM},
+            {System.IO.DriveType.Removable, DRIVETYPE_REMOVABLE},
+            {System.IO.DriveType.Network, DRIVETYPE_NETWORK},
+            {System.IO.DriveType.Ram, DRIVETYPE_RAM},
+            {System.IO.DriveType.NoRootDirectory, DRIVETYPE_NOROOT},
+            {System.IO.DriveType.Unknown, DRIVETYPE_UNKNOWN}
         }
 
         ''' <summary>
@@ -43,13 +39,13 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um den vollständigen Pfad eines speziellen Ordners basierend auf seinem Namen zu ermitteln.
         ''' </remarks>
-        Private ReadOnly folderMappings As New Dictionary(Of String, String) From {
-            {FOLDER_DESKTOP, Environment.GetFolderPath(Environment.SpecialFolder.Desktop)},
-            {FOLDER_DOKUMENTE, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)},
-            {FOLDER_DOWNLOADS, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads")},
-            {FOLDER_MUSIK, Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)},
-            {FOLDER_BILDER, Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)},
-            {FOLDER_VIDEOS, Environment.GetFolderPath(Environment.SpecialFolder.MyVideos)}
+        Private ReadOnly folderMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
+            {FOLDER_DESKTOP, System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)},
+            {FOLDER_DOKUMENTE, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)},
+            {FOLDER_DOWNLOADS, System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads")},
+            {FOLDER_MUSIK, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)},
+            {FOLDER_BILDER, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)},
+            {FOLDER_VIDEOS, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyVideos)}
         }
 
         ''' <summary>
@@ -58,7 +54,7 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um die Imagekeys für Ordner und Laufwerke zu ermitteln.
         ''' </remarks>
-        Private ReadOnly imageKeyMappings As New Dictionary(Of String, String) From {
+        Private ReadOnly imageKeyMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
             {FOLDER_COMPUTER, ICON_COMPUTER},
             {FOLDER_DESKTOP, ICON_FOLDER_DESKTOP},
             {FOLDER_DOKUMENTE, ICON_FOLDER_DOCUMENTS},
@@ -86,7 +82,7 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt den Laufwerksnamen ohne den abschließenden Backslash
         ''' </summary>
         ''' <param name="drive">Das Laufwerk, dessen Name ermittelt werden soll.</param>
-        Public Function GetDriveName(drive As DriveInfo) As String
+        Public Function GetDriveName(drive As System.IO.DriveInfo) As String
 
             ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
             Return drive.Name.Substring(0, drive.Name.Length - 1)
@@ -108,7 +104,7 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         ''' <param name="drive">Das Laufwerk, dessen Label ermittelt werden soll.</param>
         ''' <returns>Der Volumename, der Laufwerkstyp oder leer als String. </returns>
-        Public Function GetVolumeLabel(drive As DriveInfo) As String
+        Public Function GetVolumeLabel(drive As System.IO.DriveInfo) As String
 
             ' Überprüfen, ob das Laufwerk bereit ist (z. B. ob ein Medium eingelegt und lesbar ist)
             If drive.IsReady Then
@@ -136,7 +132,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="Drive">Das Laufwerk dessen Typ ermittelt werden soll.</param>
         ''' <returns>Die Zeichenfolge die den laufwerkstyp darstellt oder eine leere Zeichenfolge.</returns>
-        Public Function GetDriveTypeString(Drive As DriveInfo) As String
+        Public Function GetDriveTypeString(Drive As System.IO.DriveInfo) As String
 
             ' Überprüfen, ob das angegebene Laufwerk ein Systemlaufwerk ist.
             ' Systemlaufwerke sind in der Regel die primären Laufwerke, auf denen das Betriebssystem installiert ist.
@@ -204,15 +200,15 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt ob das Laufwerk ein Diskettenlaufwerk ist
         ''' </summary>
         ''' <param name="drive">Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.</param>
-        Private Function IsFloppyDrive(drive As DriveInfo) As Boolean
+        Private Function IsFloppyDrive(drive As System.IO.DriveInfo) As Boolean
 
             ' Überprüft, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
             ' Diskettenlaufwerke sind traditionell die Laufwerke "A:" und "B:" unter Windows.
             ' Die Methode prüft, ob der Name des Laufwerks mit "a" oder "b" beginnt (unabhängig von Groß-/Kleinschreibung).
             ' Dies ist eine einfache Heuristik, da Diskettenlaufwerke in modernen Systemen selten sind,
             ' aber historisch immer mit diesen Buchstaben bezeichnet wurden.
-            If drive.Name.StartsWith("a", StringComparison.OrdinalIgnoreCase) Or
-               drive.Name.StartsWith("b", StringComparison.OrdinalIgnoreCase) Then
+            If drive.Name.StartsWith("a", System.StringComparison.OrdinalIgnoreCase) Or
+               drive.Name.StartsWith("b", System.StringComparison.OrdinalIgnoreCase) Then
 
                 ' Wenn das Laufwerk mit "A" oder "B" beginnt, handelt es sich um ein Diskettenlaufwerk.
                 Return True
@@ -228,15 +224,15 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt ob das Laufwerk das Systemlaufwerk ist
         ''' </summary>
         ''' <param name="drive">Das Laufwerk, welches auf den Typ SystemDrive geprüft werden soll.</param>
-        Private Function IsSystemDrive(drive As DriveInfo) As Boolean
+        Private Function IsSystemDrive(drive As System.IO.DriveInfo) As Boolean
 
             ' Ermittelt das Root-Verzeichnis des Systemlaufwerks, indem der Pfad des Windows-Ordners verwendet wird.
             ' Beispiel: Wenn Windows auf "C:\Windows" installiert ist, ergibt Path.GetPathRoot(...) "C:\".
-            Dim systemdrive As String = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows))
+            Dim systemdrive As String = System.IO.Path.GetPathRoot(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows))
 
             ' Vergleicht den Namen des übergebenen Laufwerks mit dem ermittelten Systemlaufwerk.
             ' String.Equals wird verwendet, um eine kulturunabhängige, nicht case-sensitive Prüfung durchzuführen.
-            If String.Equals(drive.Name, systemdrive, StringComparison.OrdinalIgnoreCase) Then
+            If String.Equals(drive.Name, systemdrive, System.StringComparison.OrdinalIgnoreCase) Then
 
                 ' Wenn die Namen übereinstimmen, handelt es sich um das Systemlaufwerk.
                 Return True
@@ -253,17 +249,17 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="drive">Das Laufwerk, dessen Typ ermittelt werden soll.</param>
         ''' <returns>Eine Beschreibung des Laufwerkstyps, z. B. "Lokaler Datenträger" oder "CD-Laufwerk".</returns>
-        Private Function GetDriveTypeDescription(drive As DriveInfo) As String
+        Private Function GetDriveTypeDescription(drive As System.IO.DriveInfo) As String
 
             Select Case drive.DriveType
 
-                Case DriveType.Fixed : Return DRIVE_DESC_FIXED
-                Case DriveType.CDRom : Return DRIVE_DESC_CDROM
-                Case DriveType.Removable : Return If(IsFloppyDrive(drive), DRIVE_DESC_FLOPPY, DRIVE_DESC_REMOVABLE)
-                Case DriveType.Network : Return DRIVE_DESC_NETWORK
-                Case DriveType.Ram : Return DRIVE_DESC_RAM
-                Case DriveType.NoRootDirectory : Return DRIVE_DESC_NOROOT
-                Case DriveType.Unknown : Return DRIVE_DESC_UNKNOWN
+                Case System.IO.DriveType.Fixed : Return DRIVE_DESC_FIXED
+                Case System.IO.DriveType.CDRom : Return DRIVE_DESC_CDROM
+                Case System.IO.DriveType.Removable : Return If(IsFloppyDrive(drive), DRIVE_DESC_FLOPPY, DRIVE_DESC_REMOVABLE)
+                Case System.IO.DriveType.Network : Return DRIVE_DESC_NETWORK
+                Case System.IO.DriveType.Ram : Return DRIVE_DESC_RAM
+                Case System.IO.DriveType.NoRootDirectory : Return DRIVE_DESC_NOROOT
+                Case System.IO.DriveType.Unknown : Return DRIVE_DESC_UNKNOWN
                 Case Else : Return String.Empty ' Fallback für unbekannte oder zukünftige DriveType-Werte
 
             End Select

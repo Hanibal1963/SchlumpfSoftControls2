@@ -68,7 +68,7 @@ Namespace IniFileControl
     ''' Typisches Einsatzszenario: Wird als <see cref="EventArgs"/> bei einem Ereignis (z. B. "EntryValueEdited")
     ''' verwendet, um die betroffene Sektion, den Eintragsnamen und den neuen Wert an die Event-Handler zu übergeben.
     ''' </remarks>
-    Public Class EntryValueEditEventArgs : Inherits EventArgs
+    Public Class EntryValueEditEventArgs : Inherits System.EventArgs
 
         ''' <summary>
         ''' Gibt die aktuell ausgewählte Sektion an, in der der Eintrag liegt.
@@ -121,7 +121,7 @@ Namespace IniFileControl
     ''' - Strings werden standardmäßig auf <see cref="String.Empty"/> initialisiert, können jedoch auch <c>Nothing</c> sein,
     '''   wenn dies im aufrufenden Code so gesetzt wird.
     ''' </remarks>
-    Public Class ListEditEventArgs : Inherits EventArgs
+    Public Class ListEditEventArgs : Inherits System.EventArgs
 
         ''' <summary>
         ''' Erstellt eine neue Instanz mit den relevanten Angaben zur Listenbearbeitung.

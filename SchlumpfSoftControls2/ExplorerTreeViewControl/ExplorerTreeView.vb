@@ -5,19 +5,7 @@
 
 ' TODO: Code noch überarbeiten
 
-#Region "Importe"
-
-Imports System
-Imports System.Collections.Generic
-Imports System.ComponentModel
-Imports System.Diagnostics
-Imports System.Drawing
-Imports System.IO
 Imports System.Linq
-Imports System.Windows.Forms
-Imports SchlumpfSoft.Controls.DriveWatcherControl
-
-#End Region
 
 Namespace ExplorerTreeViewControl
 
@@ -30,14 +18,12 @@ Namespace ExplorerTreeViewControl
     ''' einer hierarchischen Baumstruktur.
     ''' </remarks>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeView.bmp")>
-    Public Class ExplorerTreeView
+    <System.ComponentModel.Description("Stellt ein Steuerelement zur Anzeige und Navigation der Verzeichnisstruktur des Computers bereit.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(ExplorerTreeViewControl.ExplorerTreeView), "ExplorerTreeView.bmp")>
+    Public Class ExplorerTreeView : Inherits System.Windows.Forms.UserControl
 
-        Inherits UserControl
-
-        Implements IDisposable
+        Implements System.IDisposable
 
         Private disposedValue As Boolean = False
 
@@ -46,7 +32,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Liste der zu überwachenden Verzeichnisse.
         ''' </summary>
-        Private _FileSystemWatchers As New Dictionary(Of String, FileSystemWatcher)
+        Private ReadOnly _FileSystemWatchers As New System.Collections.Generic.Dictionary(Of String, System.IO.FileSystemWatcher)
 
 #End Region
 
@@ -62,8 +48,8 @@ Namespace ExplorerTreeViewControl
         ''' <para>Es ermöglicht eine reaktive Programmierung, bei der andere Teile der
         ''' Anwendung auf Änderungen im ausgewählten Pfad reagieren können.</para>
         ''' </remarks>
-        <Description("wird ausgelöst wenn sich der ausgewähte Pfad geändert hat.")>
-        <Browsable(True)>
+        <System.ComponentModel.Description("wird ausgelöst wenn sich der ausgewähte Pfad geändert hat.")>
+        <System.ComponentModel.Browsable(True)>
         Public Event SelectedPathChanged(sender As Object, e As SelectedPathChangedEventArgs)
 
 #End Region
@@ -73,122 +59,122 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.
         ''' </summary>
-        <Category("Behavior")>
-        <Description("Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.")>
-        <Browsable(True)>
-        Public Property LineColor As Color
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.")>
+        <System.ComponentModel.Browsable(True)>
+        Public Property LineColor As System.Drawing.Color
             Get
-                Return TV.LineColor
+                Return Me.TV.LineColor
             End Get
-            Set(value As Color)
-                TV.LineColor = value
+            Set(value As System.Drawing.Color)
+                Me.TV.LineColor = value
             End Set
         End Property
 
         ''' <summary>
         ''' Gibt an, ob Linien zwischen den Knoten angezeigt werden.
         ''' </summary>
-        <Category("Behavior")>
-        <Description("Gibt an, ob Linien zwischen den Knoten angezeigt werden.")>
-        <Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt an, ob Linien zwischen den Knoten angezeigt werden.")>
+        <System.ComponentModel.Browsable(True)>
         Public Property ShowLines As Boolean
             Get
-                Return TV.ShowLines
+                Return Me.TV.ShowLines
             End Get
             Set(value As Boolean)
-                TV.ShowLines = value
+                Me.TV.ShowLines = value
             End Set
         End Property
 
         ''' <summary>
         ''' Legt fest ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.
         ''' </summary>
-        <Category("Behavior")>
-        <Description("Legt fest ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.")>
-        <Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Legt fest ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.")>
+        <System.ComponentModel.Browsable(True)>
         Public Property ShowPlusMinus As Boolean
             Get
-                Return TV.ShowPlusMinus
+                Return Me.TV.ShowPlusMinus
             End Get
             Set(value As Boolean)
-                TV.ShowPlusMinus = value
+                Me.TV.ShowPlusMinus = value
             End Set
         End Property
 
         ''' <summary>
         ''' Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.
         ''' </summary>
-        <Category("Behavior")>
-        <Description("Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.")>
-        <Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.")>
+        <System.ComponentModel.Browsable(True)>
         Public Property ShowRootLines As Boolean
             Get
-                Return TV.ShowRootLines
+                Return Me.TV.ShowRootLines
             End Get
             Set(value As Boolean)
-                TV.ShowRootLines = value
+                Me.TV.ShowRootLines = value
             End Set
         End Property
 
         ''' <summary>
         ''' Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.
         ''' </summary>
-        <Category("Behavior")>
-        <Description("Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.")>
-        <Browsable(True)>
+        <System.ComponentModel.Category("Behavior")>
+        <System.ComponentModel.Description("Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.")>
+        <System.ComponentModel.Browsable(True)>
         Public Property Indent As Integer
             Get
-                Return TV.Indent
+                Return Me.TV.Indent
             End Get
             Set(value As Integer)
-                TV.Indent = value
+                Me.TV.Indent = value
             End Set
         End Property
 
         ''' <summary>
         ''' Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.")>
-        <Browsable(True)>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.")>
+        <System.ComponentModel.Browsable(True)>
         Public Property ItemHeight As Integer
             Get
-                Return TV.ItemHeight
+                Return Me.TV.ItemHeight
             End Get
             Set(value As Integer)
-                TV.ItemHeight = value
+                Me.TV.ItemHeight = value
             End Set
         End Property
 
         ''' <summary>
         ''' Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.")>
-        <Browsable(True)>
-        Public Overrides Property BackColor As Color
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.")>
+        <System.ComponentModel.Browsable(True)>
+        Public Overrides Property BackColor As System.Drawing.Color
             Get
                 Return MyBase.BackColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.BackColor = value
-                TV.BackColor = value
+                Me.TV.BackColor = value
             End Set
         End Property
 
         ''' <summary>
         ''' Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.")>
-        <Browsable(True)>
-        Public Overrides Property ForeColor As Color
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.")>
+        <System.ComponentModel.Browsable(True)>
+        Public Overrides Property ForeColor As System.Drawing.Color
             Get
                 Return MyBase.ForeColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.ForeColor = value
-                TV.ForeColor = value
+                Me.TV.ForeColor = value
             End Set
         End Property
 
@@ -196,16 +182,16 @@ Namespace ExplorerTreeViewControl
         ''' Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.
         ''' </summary>
         ''' <returns></returns>
-        <Category("Appearance")>
-        <Description("Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.")>
-        <Browsable(True)>
-        Public Overrides Property Font As Font
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.")>
+        <System.ComponentModel.Browsable(True)>
+        Public Overrides Property Font As System.Drawing.Font
             Get
                 Return MyBase.Font
             End Get
-            Set(value As Font)
+            Set(value As System.Drawing.Font)
                 MyBase.Font = value
-                TV.Font = value
+                Me.TV.Font = value
             End Set
         End Property
 
@@ -216,8 +202,8 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ist für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Text As String
             Get
                 Return MyBase.Text
@@ -230,13 +216,13 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ist für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImage As Image
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage As System.Drawing.Image
             Get
                 Return MyBase.BackgroundImage
             End Get
-            Set(value As Image)
+            Set(value As System.Drawing.Image)
                 MyBase.BackgroundImage = value
             End Set
         End Property
@@ -244,13 +230,13 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Ist für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImageLayout As ImageLayout
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout As System.Windows.Forms.ImageLayout
             Get
                 Return MyBase.BackgroundImageLayout
             End Get
-            Set(value As ImageLayout)
+            Set(value As System.Windows.Forms.ImageLayout)
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
@@ -271,13 +257,13 @@ Namespace ExplorerTreeViewControl
         Public Sub New()
 
             ' Dieser Aufruf ist für den Designer erforderlich.
-            InitializeComponent()
+            Me.InitializeComponent()
 
             ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-            LoadImages()
+            Me.LoadImages()
 
             ' Setzt den Wurzelknoten des TreeViews
-            SetRootNode()
+            Me.SetRootNode()
 
         End Sub
 
@@ -301,21 +287,21 @@ Namespace ExplorerTreeViewControl
             Dim lastpath As String = String.Empty
 
             ' Beginnt beim Wurzelknoten ("Dieser Computer") und öffnet diesen
-            Dim lastnode As TreeNode = TV.Nodes.Item(0)
+            Dim lastnode As System.Windows.Forms.TreeNode = Me.TV.Nodes.Item(0)
             lastnode.Expand()
 
             ' Zerlegt den Zielpfad in einzelne Segmente (z.B. "C:", "Benutzer", "Name", "Dokumente")
-            Dim foundNode As TreeNode
+            Dim foundNode As System.Windows.Forms.TreeNode
             For Each pathsegment As String In GetPathSegments(Path)
 
                 ' Fügt das aktuelle Segment zum bisherigen Pfad hinzu
-                lastpath = IO.Path.Combine(lastpath, pathsegment)
+                lastpath = System.IO.Path.Combine(lastpath, pathsegment)
 
                 ' Sucht unter den Kindknoten von lastnode nach einem Knoten mit dem aktuellen Pfad
                 foundNode = FindNodeByPath(lastnode.Nodes, lastpath)
 
                 ' Falls kein passender Knoten gefunden wurde, bricht die Methode ab (Pfad existiert nicht im TreeView)
-                If isnothing(foundNode) Then Return False
+                If IsNothing(foundNode) Then Return False
 
                 ' Expandiert den gefundenen Knoten, damit dessen Unterknoten geladen werden
                 foundNode.Expand()
@@ -327,7 +313,7 @@ Namespace ExplorerTreeViewControl
 
             ' Nach der Schleife: lastnode ist der Knoten, der dem Zielpfad entspricht
             ' Setzt diesen Knoten als ausgewählt im TreeView
-            TV.SelectedNode = lastnode
+            Me.TV.SelectedNode = lastnode
 
             ' Gibt zurück, dass der Knoten erfolgreich gefunden und selektiert wurde
             Return True
@@ -346,20 +332,20 @@ Namespace ExplorerTreeViewControl
         ''' Der Wurzelknoten repräsentiert "Dieser Computer" und bildet die Basis für die Anzeige von Laufwerken und speziellen Ordnern.
         ''' Nach dem Hinzufügen wird der Wurzelknoten automatisch erweitert, sodass dessen Unterknoten (z.B. Laufwerke) sichtbar sind.
         ''' </remarks>
-        <CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Private Sub SetRootNode()
 
             ' Alle vorhandenen Knoten im TreeView entfernen
-            TV.Nodes.Clear()
+            Me.TV.Nodes.Clear()
 
             ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
             Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
 
             ' Den Wurzelknoten zum TreeView hinzufügen
-            TV.Nodes.Add(rootnode)
+            Me.TV.Nodes.Add(rootnode)
 
             ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
-            TV.Nodes.Item(0).Expand()
+            Me.TV.Nodes.Item(0).Expand()
 
         End Sub
 
@@ -374,22 +360,22 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         Private Sub LoadImages()
 
-            TV.ImageList.Images.Clear()
-            TV.ImageList.Images.Add(ICON_COMPUTER, My.Resources.Computer)
-            TV.ImageList.Images.Add(ICON_DRIVE_SYSTEM, My.Resources.DriveSystem)
-            TV.ImageList.Images.Add(ICON_DRIVE_FIXED, My.Resources.DriveFixed)
-            TV.ImageList.Images.Add(ICON_DRIVE_CDROM, My.Resources.DriveCDRom)
-            TV.ImageList.Images.Add(ICON_DRIVE_REMOVABLE, My.Resources.DriveRemovable)
-            TV.ImageList.Images.Add(ICON_DRIVE_NETWORK, My.Resources.DriveNetwork)
-            TV.ImageList.Images.Add(ICON_DRIVE_RAM, My.Resources.DriveRamDisk)
-            TV.ImageList.Images.Add(ICON_DRIVE_FLOPPY, My.Resources.DriveDisk)
-            TV.ImageList.Images.Add(ICON_DRIVE_UNKNOWN, My.Resources.DriveUnknown)
-            TV.ImageList.Images.Add(ICON_FOLDER_FOLDER, My.Resources.Folder)
-            TV.ImageList.Images.Add(ICON_FOLDER_DESKTOP, My.Resources.FolderDesktop)
-            TV.ImageList.Images.Add(ICON_FOLDER_DOCUMENTS, My.Resources.FolderDocuments)
-            TV.ImageList.Images.Add(ICON_FOLDER_DOWNLOADS, My.Resources.FolderDownloads)
-            TV.ImageList.Images.Add(ICON_FOLDER_MUSIC, My.Resources.FolderMusic)
-            TV.ImageList.Images.Add(ICON_FOLDER_PICTURES, My.Resources.FolderPictures)
+            Me.TV.ImageList.Images.Clear()
+            Me.TV.ImageList.Images.Add(ICON_COMPUTER, My.Resources.Computer)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_SYSTEM, My.Resources.DriveSystem)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_FIXED, My.Resources.DriveFixed)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_CDROM, My.Resources.DriveCDRom)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_REMOVABLE, My.Resources.DriveRemovable)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_NETWORK, My.Resources.DriveNetwork)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_RAM, My.Resources.DriveRamDisk)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_FLOPPY, My.Resources.DriveDisk)
+            Me.TV.ImageList.Images.Add(ICON_DRIVE_UNKNOWN, My.Resources.DriveUnknown)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_FOLDER, My.Resources.Folder)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_DESKTOP, My.Resources.FolderDesktop)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_DOCUMENTS, My.Resources.FolderDocuments)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_DOWNLOADS, My.Resources.FolderDownloads)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_MUSIC, My.Resources.FolderMusic)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_PICTURES, My.Resources.FolderPictures)
 
         End Sub
 
@@ -398,7 +384,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden
         ''' sollen.</param>
-        Private Sub LoadSubfolders(Node As TreeNode)
+        Private Sub LoadSubfolders(Node As System.Windows.Forms.TreeNode)
 
             ' löscht alle untergeordneten Knoten
             Node.Nodes.Clear()
@@ -436,37 +422,37 @@ Namespace ExplorerTreeViewControl
         Private Sub CreateFileSystemWatcher(FolderPath As String)
 
             ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
-            If String.IsNullOrEmpty(FolderPath) OrElse Not Directory.Exists(FolderPath) Then Return
+            If String.IsNullOrEmpty(FolderPath) OrElse Not System.IO.Directory.Exists(FolderPath) Then Return
 
             ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
-            If _FileSystemWatchers.ContainsKey(FolderPath) Then Return
+            If Me._FileSystemWatchers.ContainsKey(FolderPath) Then Return
 
             Try
 
                 ' Neuen FileSystemWatcher erstellen (Verzeichnisse überwachen,Nur das aktuelle Verzeichnis überwachen)
-                Dim FSW As New FileSystemWatcher(FolderPath) With {
-                    .NotifyFilter = NotifyFilters.DirectoryName,
+                Dim FSW As New System.IO.FileSystemWatcher(FolderPath) With {
+                    .NotifyFilter = System.IO.NotifyFilters.DirectoryName,
                     .IncludeSubdirectories = False}
 
                 ' Event-Handler für neu erstellten Ordner hinzufügen
-                AddHandler FSW.Created, AddressOf FSW_DirectoryChanged
+                AddHandler FSW.Created, AddressOf Me.FSW_DirectoryChanged
 
                 ' Event-Handler für gelöschten Ordner hinzufügen
-                AddHandler FSW.Deleted, AddressOf FSW_DirectoryChanged
+                AddHandler FSW.Deleted, AddressOf Me.FSW_DirectoryChanged
 
                 ' Event-Handler für umbenannten Ordner hinzufügen
-                AddHandler FSW.Renamed, AddressOf FSW_DirectoryChanged
+                AddHandler FSW.Renamed, AddressOf Me.FSW_DirectoryChanged
 
                 ' Watcher in die Sammlung einfügen
-                _FileSystemWatchers.Add(FolderPath, FSW)
+                Me._FileSystemWatchers.Add(FolderPath, FSW)
 
                 ' Watcher aktivieren
                 FSW.EnableRaisingEvents = True
 
-            Catch ex As Exception
+            Catch ex As System.Exception
 
                 ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
-                Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
 
             End Try
 
@@ -482,13 +468,13 @@ Namespace ExplorerTreeViewControl
         Private Sub RemoveFileSystemWatchers(FolderPath As String)
 
             ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
-            Dim toRemove As New List(Of String)
+            Dim toRemove As New System.Collections.Generic.List(Of String)
 
             ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
-            FindWatchersToRemove(FolderPath, toRemove)
+            Me.FindWatchersToRemove(FolderPath, toRemove)
 
             ' Entferne und entsorge alle gefundenen Watcher
-            RemoveAndDisposeWatchers(toRemove)
+            Me.RemoveAndDisposeWatchers(toRemove)
 
         End Sub
 
@@ -503,14 +489,14 @@ Namespace ExplorerTreeViewControl
         ''' <param name="toRemove">
         ''' Liste, in die alle zu entfernenden Watcher-Pfade eingetragen werden.
         ''' </param>
-        Private Sub FindWatchersToRemove(FolderPath As String, toRemove As List(Of String))
+        Private Sub FindWatchersToRemove(FolderPath As String, toRemove As System.Collections.Generic.List(Of String))
 
             ' Durchlaufe alle aktuell überwachten Verzeichnispfade
-            For Each watcherPath In _FileSystemWatchers.Keys
+            For Each watcherPath In Me._FileSystemWatchers.Keys
 
                 ' Prüfe, ob der Pfad exakt übereinstimmt oder ein Unterverzeichnis des angegebenen Verzeichnisses ist
-                If watcherPath.Equals(FolderPath, StringComparison.OrdinalIgnoreCase) OrElse
-                   watcherPath.StartsWith(FolderPath & IO.Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) Then
+                If watcherPath.Equals(FolderPath, System.StringComparison.OrdinalIgnoreCase) OrElse
+                   watcherPath.StartsWith(FolderPath & System.IO.Path.DirectorySeparatorChar, System.StringComparison.OrdinalIgnoreCase) Then
 
                     ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
                     toRemove.Add(watcherPath)
@@ -528,25 +514,25 @@ Namespace ExplorerTreeViewControl
         ''' <param name="toRemove">
         ''' Liste der Verzeichnispfade, deren Watcher entfernt und entsorgt werden sollen.
         ''' </param>
-        Private Sub RemoveAndDisposeWatchers(toRemove As List(Of String))
+        Private Sub RemoveAndDisposeWatchers(toRemove As System.Collections.Generic.List(Of String))
 
             ' Durchlaufe alle zu entfernenden Watcher-Pfade
             For Each watcherPath In toRemove
 
                 ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
-                Dim watcher = _FileSystemWatchers(watcherPath)
+                Dim watcher = Me._FileSystemWatchers(watcherPath)
 
                 ' Deaktiviere die Ereignisauslösung
                 watcher.EnableRaisingEvents = False
 
                 ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
-                RemoveWatcherHandlers(watcher)
+                Me.RemoveWatcherHandlers(watcher)
 
                 ' Gib die Ressourcen des Watchers frei
                 watcher.Dispose()
 
                 ' Entferne den Watcher aus der internen Sammlung
-                Dim unused = _FileSystemWatchers.Remove(watcherPath)
+                Dim unused = Me._FileSystemWatchers.Remove(watcherPath)
 
             Next
         End Sub
@@ -559,16 +545,16 @@ Namespace ExplorerTreeViewControl
         ''' <param name="watcher">
         ''' Der FileSystemWatcher, von dem die Handler entfernt werden sollen.
         ''' </param>
-        Private Sub RemoveWatcherHandlers(watcher As FileSystemWatcher)
+        Private Sub RemoveWatcherHandlers(watcher As System.IO.FileSystemWatcher)
 
             ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
-            RemoveHandler watcher.Created, AddressOf FSW_DirectoryChanged
+            RemoveHandler watcher.Created, AddressOf Me.FSW_DirectoryChanged
 
             ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
-            RemoveHandler watcher.Deleted, AddressOf FSW_DirectoryChanged
+            RemoveHandler watcher.Deleted, AddressOf Me.FSW_DirectoryChanged
 
             ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
-            RemoveHandler watcher.Renamed, AddressOf FSW_DirectoryChanged
+            RemoveHandler watcher.Renamed, AddressOf Me.FSW_DirectoryChanged
 
         End Sub
 
@@ -591,17 +577,17 @@ Namespace ExplorerTreeViewControl
         Protected Overrides Sub Dispose(disposing As Boolean)
 
             ' Prüfen, ob das Objekt bereits entsorgt wurde, um doppelte Freigabe zu verhindern
-            If Not disposedValue Then
+            If Not Me.disposedValue Then
 
                 If disposing Then
                     ' Verwaltete Ressourcen freigeben:
                     ' Entfernt und entsorgt alle FileSystemWatcher-Objekte, die zur Überwachung von Verzeichnissen verwendet werden.
-                    RemoveAndDisposeWatchers(_FileSystemWatchers.Keys.ToList())
+                    Me.RemoveAndDisposeWatchers(Me._FileSystemWatchers.Keys.ToList())
 
                     ' Falls weitere verwaltete Ressourcen existieren, sollten diese ebenfalls hier freigegeben werden.
-                    DW.Dispose()
-                    IL.Dispose()
-                    TV.Dispose()
+                    Me.DW.Dispose()
+                    Me.IL.Dispose()
+                    Me.TV.Dispose()
 
                 End If
 
@@ -609,7 +595,7 @@ Namespace ExplorerTreeViewControl
                 ' Hier können z.B. Handles oder andere native Ressourcen freigegeben werden.
 
                 ' Markiert das Objekt als entsorgt, damit Dispose nicht mehrfach ausgeführt wird
-                disposedValue = True
+                Me.disposedValue = True
 
             End If
 
@@ -627,18 +613,18 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender">Der FileSystemWatcher, der das Ereignis ausgelöst hat.</param>
         ''' <param name="e">Informationen über die Änderung (z.B. Pfad, Art der Änderung).</param>
-        <CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
-        Private Sub FSW_DirectoryChanged(sender As Object, e As FileSystemEventArgs)
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
+        Private Sub FSW_DirectoryChanged(sender As Object, e As System.IO.FileSystemEventArgs)
 
             ' Prüfen, ob der Methodenaufruf aus einem anderen Thread als dem UI-Thread kommt.
             ' Falls ja, Methode erneut im UI-Thread ausführen (wichtig für Thread-Sicherheit bei UI-Elementen).
-            If TV.InvokeRequired Then
-                TV.Invoke(New MethodInvoker(Sub() FSW_DirectoryChanged(sender, e)))
+            If Me.TV.InvokeRequired Then
+                Me.TV.Invoke(New System.Windows.Forms.MethodInvoker(Sub() Me.FSW_DirectoryChanged(sender, e)))
                 Return
             End If
 
             ' Sucht im TreeView den Knoten, dessen Pfad dem überwachten Verzeichnis entspricht.
-            Dim node As TreeNode = FindNodeByPath(TV.Nodes, CType(sender, FileSystemWatcher).Path)
+            Dim node As System.Windows.Forms.TreeNode = FindNodeByPath(Me.TV.Nodes, CType(sender, System.IO.FileSystemWatcher).Path)
 
             ' Je nach Knotentyp (normaler Ordner oder spezieller Ordner) werden die Unterknoten neu geladen,
             ' damit neue, gelöschte oder umbenannte Unterordner sofort angezeigt werden.
@@ -646,15 +632,15 @@ Namespace ExplorerTreeViewControl
 
                 Case TypeOf node Is DriveNode
                     ' Unterknoten des Laufwerks leeren und neu laden
-                    LoadSubfolders(node)
+                    Me.LoadSubfolders(node)
 
                 Case TypeOf node Is SpecialFolderNode
                     ' Unterknoten des speziellen Ordners leeren und neu laden
-                    LoadSubfolders(node)
+                    Me.LoadSubfolders(node)
 
                 Case TypeOf node Is FolderNode
                     ' Unterknoten des Ordners leeren und neu laden
-                    LoadSubfolders(node)
+                    Me.LoadSubfolders(node)
 
             End Select
 
@@ -677,10 +663,10 @@ Namespace ExplorerTreeViewControl
         ''' indem nur die Knoten geladen werden, die tatsächlich benötigt werden.
         ''' Dadurch wird die Leistung verbessert und die Benutzererfahrung optimiert.
         ''' </remarks>
-        Private Sub TV_BeforeExpand(sender As Object, e As TreeViewCancelEventArgs) Handles TV.BeforeExpand
+        Private Sub TV_BeforeExpand(sender As Object, e As System.Windows.Forms.TreeViewCancelEventArgs) Handles TV.BeforeExpand
 
             ' Lädt die untergeordneten Knoten des aktuellen Knotens.
-            LoadSubfolders(e.Node)
+            Me.LoadSubfolders(e.Node)
 
         End Sub
 
@@ -689,10 +675,10 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub TV_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TV.AfterExpand
+        Private Sub TV_AfterExpand(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterExpand
 
             ' Einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
-            CreateFileSystemWatcher(GetDirectoryPath(e.Node))
+            Me.CreateFileSystemWatcher(GetDirectoryPath(e.Node))
 
         End Sub
 
@@ -701,10 +687,10 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub TV_AfterCollapse(sender As Object, e As TreeViewEventArgs) Handles TV.AfterCollapse
+        Private Sub TV_AfterCollapse(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterCollapse
 
             ' Den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
-            RemoveFileSystemWatchers(GetDirectoryPath(e.Node))
+            Me.RemoveFileSystemWatchers(GetDirectoryPath(e.Node))
 
         End Sub
 
@@ -717,7 +703,7 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub TV_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TV.AfterSelect
+        Private Sub TV_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterSelect
 
             ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
             RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(GetDirectoryPath(e.Node)))
@@ -733,23 +719,23 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub DW_DriveAdded(sender As Object, e As DriveAddedEventArgs) Handles DW.DriveAdded
+        Private Sub DW_DriveAdded(sender As Object, e As SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs) Handles DW.DriveAdded
 
-            Dim newNode As New DriveNode(New DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
+            Dim newNode As New DriveNode(New System.IO.DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
             Dim inserted As Boolean = False
 
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
-            For i As Integer = 0 To TV.Nodes.Item(0).Nodes.Count - 1
+            For i As Integer = 0 To Me.TV.Nodes.Item(0).Nodes.Count - 1
 
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
-                Dim currNode As TreeNode = TV.Nodes.Item(0).Nodes(i)
+                Dim currNode As System.Windows.Forms.TreeNode = Me.TV.Nodes.Item(0).Nodes(i)
 
                 If TypeOf currNode Is DriveNode AndAlso
                     String.Compare(
                     currNode.Tag.ToString,
                     newNode.Tag.ToString,
-                    StringComparison.OrdinalIgnoreCase) > 0 Then
-                    TV.Nodes.Item(0).Nodes.Insert(i, newNode)
+                    System.StringComparison.OrdinalIgnoreCase) > 0 Then
+                    Me.TV.Nodes.Item(0).Nodes.Insert(i, newNode)
                     inserted = True
                     Exit For
                 End If
@@ -758,7 +744,7 @@ Namespace ExplorerTreeViewControl
 
             ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
             If Not inserted Then
-                Dim unused = TV.Nodes.Item(0).Nodes.Add(newNode)
+                Dim unused = Me.TV.Nodes.Item(0).Nodes.Add(newNode)
             End If
 
         End Sub
@@ -768,10 +754,10 @@ Namespace ExplorerTreeViewControl
         ''' </summary>
         ''' <param name="sender"></param>
         ''' <param name="e"></param>
-        Private Sub DW_DriveRemoved(sender As Object, e As DriveRemovedEventArgs) Handles DW.DriveRemoved
+        Private Sub DW_DriveRemoved(sender As Object, e As SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs) Handles DW.DriveRemoved
 
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
-            For Each node As TreeNode In TV.Nodes.Item(0).Nodes
+            For Each node As System.Windows.Forms.TreeNode In Me.TV.Nodes.Item(0).Nodes
 
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
                 If TypeOf node Is DriveNode Then

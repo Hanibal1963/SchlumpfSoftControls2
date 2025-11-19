@@ -5,11 +5,6 @@
 
 ' TODO: Code noch überarbeiten
 
-Imports System
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Windows.Forms
-
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
@@ -33,13 +28,13 @@ Namespace ExplorerTreeViewControl
         ''' <returns>
         ''' Eine Liste der einzelnen Pfadsegmente, beginnend mit dem Wurzelverzeichnis.
         ''' </returns>
-        Public Function GetPathSegments(Path As String) As List(Of String)
+        Public Function GetPathSegments(Path As String) As System.Collections.Generic.List(Of String)
 
             ' Erzeugt ein DirectoryInfo-Objekt für den angegebenen Pfad
-            Dim dirInfo As New DirectoryInfo(Path)
+            Dim dirInfo As New System.IO.DirectoryInfo(Path)
 
             ' Liste, in der die einzelnen Segmente gesammelt werden
-            Dim result As New List(Of String)
+            Dim result As New System.Collections.Generic.List(Of String)
 
             ' Solange das DirectoryInfo-Objekt gültig ist und einen Namen hat
             While dirInfo IsNot Nothing AndAlso Not String.IsNullOrEmpty(dirInfo.Name)
@@ -68,13 +63,13 @@ Namespace ExplorerTreeViewControl
         ''' <returns>
         ''' Der gefundene TreeNode oder Nothing
         ''' </returns>
-        Public Function FindNodeByPath(Nodes As TreeNodeCollection, SearchPath As String) As TreeNode
+        Public Function FindNodeByPath(Nodes As System.Windows.Forms.TreeNodeCollection, SearchPath As String) As System.Windows.Forms.TreeNode
 
             ' Durchlaufe alle Knoten in der aktuellen Knotenliste
-            For Each node As TreeNode In Nodes
+            For Each node As System.Windows.Forms.TreeNode In Nodes
 
                 ' Vergleiche den Pfad des aktuellen Knotens mit dem gesuchten Pfad (Groß-/Kleinschreibung wird ignoriert)
-                If String.Equals(GetDirectoryPath(node), SearchPath, StringComparison.OrdinalIgnoreCase) Then
+                If String.Equals(GetDirectoryPath(node), SearchPath, System.StringComparison.OrdinalIgnoreCase) Then
 
                     ' Passender Knoten gefunden, diesen zurückgeben
                     Return node
@@ -82,7 +77,7 @@ Namespace ExplorerTreeViewControl
                 End If
 
                 ' Wenn nicht gefunden, rekursiv in den Unterknoten weitersuchen
-                Dim found As TreeNode = FindNodeByPath(node.Nodes, SearchPath)
+                Dim found As System.Windows.Forms.TreeNode = FindNodeByPath(node.Nodes, SearchPath)
                 If found IsNot Nothing Then
 
                     ' Passenden Knoten in den Unterknoten gefunden, diesen zurückgeben
@@ -101,7 +96,7 @@ Namespace ExplorerTreeViewControl
         ''' Ermittelt den Verzeichnispfad basierend auf dem ausgewählten Knoten im TreeView.
         ''' </summary>
         ''' <param name="node"></param>
-        Public Function GetDirectoryPath(node As TreeNode) As String
+        Public Function GetDirectoryPath(node As System.Windows.Forms.TreeNode) As String
 
             Select Case True
 
