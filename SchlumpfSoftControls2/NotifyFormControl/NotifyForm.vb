@@ -3,12 +3,13 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+' TODO: Code noch überarbeiten
+
 Imports System
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Threading
 Imports System.Windows.Forms
-'Imports SchlumpfSoft.Controls.Attribute
 
 Namespace NotifyFormControl
 

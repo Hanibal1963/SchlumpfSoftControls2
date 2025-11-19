@@ -3,6 +3,8 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+' TODO: Code noch überarbeiten
+
 Imports System.ComponentModel.Design
 Imports System.Drawing
 Imports System.Windows.Forms

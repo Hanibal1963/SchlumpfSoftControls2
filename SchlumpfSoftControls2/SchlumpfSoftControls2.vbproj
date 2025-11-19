@@ -170,9 +170,6 @@
     <Compile Include="ExplorerTreeViewControl\DriveDescConstantDefinitions.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
     <Compile Include="ExplorerTreeViewControl\DriveTypeKeyConstantDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.Designer.vb">
-      <DependentUpon>ExplorerTreeView.vb</DependentUpon>
-    </Compile>
     <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
       <SubType>UserControl</SubType>
     </Compile>

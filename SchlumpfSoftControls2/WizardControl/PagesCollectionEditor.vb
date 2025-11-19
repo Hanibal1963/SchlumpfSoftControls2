@@ -3,11 +3,11 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+' TODO: Code noch überarbeiten
+
 Imports System
 'Imports System.Collections
 Imports System.ComponentModel.Design
-'Imports System.Drawing
-'Imports System.Windows.Forms
 
 Namespace WizardControl
 
