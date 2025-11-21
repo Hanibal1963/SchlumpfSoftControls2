@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
@@ -28,7 +26,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="Path">Der neue ausgewählte Pfad.</param>
         Public Sub New(Path As String)
 
-            SelectedPath = Path
+            Me.SelectedPath = Path
 
         End Sub
 
