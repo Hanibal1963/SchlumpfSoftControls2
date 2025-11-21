@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Imports System.Linq
 
 Namespace ExplorerTreeViewControl
@@ -25,18 +23,41 @@ Namespace ExplorerTreeViewControl
 
         Implements System.IDisposable
 
+#Region "Variablendefinition"
+
+        ''' <summary>
+        ''' Kennzeichnet ob das Objekt bereits entsorgt wurde (zur Vermeidung mehrfacher Dispose-Aufrufe).
+        ''' </summary>
         Private disposedValue As Boolean = False
 
-#Region "Interne Variablen"
+        ''' <summary>
+        ''' Container für Designer-generierte Komponenten.
+        ''' </summary>
+        Private components As System.ComponentModel.IContainer  ' Wird vom Windows Form-Designer benötigt.
 
         ''' <summary>
         ''' Liste der zu überwachenden Verzeichnisse.
         ''' </summary>
         Private ReadOnly _FileSystemWatchers As New System.Collections.Generic.Dictionary(Of String, System.IO.FileSystemWatcher)
 
+        ''' <summary>
+        ''' Überwacht Laufwerksänderungen (Hinzufügen/Entfernen von Laufwerken).
+        ''' </summary>
+        Private WithEvents DW As SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher
+
+        ''' <summary>
+        ''' Bildliste mit Symbolen für Knoten (Ordner, Laufwerke, etc.).
+        ''' </summary>
+        Private WithEvents IL As System.Windows.Forms.ImageList
+
+        ''' <summary>
+        ''' Intern verwendetes TreeView zur Anzeige der Verzeichnisstruktur.
+        ''' </summary>
+        Private WithEvents TV As System.Windows.Forms.TreeView
+
 #End Region
 
-#Region "Definition der öffentlichen Ereignisse"
+#Region "Ereignisdefinition"
 
         ''' <summary>
         ''' Ereignis, das ausgelöst wird, wenn sich der ausgewählte Pfad geändert hat.
@@ -54,7 +75,7 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
-#Region "Öffentliche Eigenschaften"
+#Region "neue Eigenschaften"
 
         ''' <summary>
         ''' Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.
@@ -181,7 +202,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>Aktuell verwendete Schriftart.</returns>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.")>
         <System.ComponentModel.Browsable(True)>
@@ -256,14 +277,9 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         Public Sub New()
 
-            ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.InitializeComponent()
-
-            ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-            Me.LoadImages()
-
-            ' Setzt den Wurzelknoten des TreeViews
-            Me.SetRootNode()
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me.LoadImages() ' Initialisiert die Laufwerks- und Ordnersymbole.
+            Me.SetRootNode() ' Setzt den Wurzelknoten des TreeViews
 
         End Sub
 
@@ -280,49 +296,28 @@ Namespace ExplorerTreeViewControl
         ''' </returns>
         Public Function ExpandPath(Path As String) As Boolean
 
-            ' Ist der Pfad ungültig oder leer, wird keine weitere Verarbeitung durchgeführt.
-            If String.IsNullOrWhiteSpace(Path) Then Return False
-
-            ' Startet mit einem leeren Pfad (wird schrittweise aufgebaut)
-            Dim lastpath As String = String.Empty
-
-            ' Beginnt beim Wurzelknoten ("Dieser Computer") und öffnet diesen
-            Dim lastnode As System.Windows.Forms.TreeNode = Me.TV.Nodes.Item(0)
+            If String.IsNullOrWhiteSpace(Path) Then Return False ' Ist der Pfad ungültig oder leer, wird keine weitere Verarbeitung durchgeführt.
+            Dim lastpath As String = String.Empty ' Startet mit einem leeren Pfad (wird schrittweise aufgebaut)
+            Dim lastnode As System.Windows.Forms.TreeNode = Me.TV.Nodes.Item(0) ' Beginnt beim Wurzelknoten ("Dieser Computer") und öffnet diesen
             lastnode.Expand()
-
             ' Zerlegt den Zielpfad in einzelne Segmente (z.B. "C:", "Benutzer", "Name", "Dokumente")
             Dim foundNode As System.Windows.Forms.TreeNode
             For Each pathsegment As String In GetPathSegments(Path)
-
-                ' Fügt das aktuelle Segment zum bisherigen Pfad hinzu
-                lastpath = System.IO.Path.Combine(lastpath, pathsegment)
-
-                ' Sucht unter den Kindknoten von lastnode nach einem Knoten mit dem aktuellen Pfad
-                foundNode = FindNodeByPath(lastnode.Nodes, lastpath)
-
-                ' Falls kein passender Knoten gefunden wurde, bricht die Methode ab (Pfad existiert nicht im TreeView)
-                If IsNothing(foundNode) Then Return False
-
-                ' Expandiert den gefundenen Knoten, damit dessen Unterknoten geladen werden
-                foundNode.Expand()
-
-                ' Setzt lastnode auf den gefundenen Knoten, um in der nächsten Iteration darunter weiterzusuchen
-                lastnode = foundNode
-
+                lastpath = System.IO.Path.Combine(lastpath, pathsegment) ' Fügt das aktuelle Segment zum bisherigen Pfad hinzu
+                foundNode = FindNodeByPath(lastnode.Nodes, lastpath) ' Sucht unter den Kindknoten von lastnode nach einem Knoten mit dem aktuellen Pfad
+                If IsNothing(foundNode) Then Return False ' Falls kein passender Knoten gefunden wurde, bricht die Methode ab (Pfad existiert nicht im TreeView)
+                foundNode.Expand() ' Expandiert den gefundenen Knoten, damit dessen Unterknoten geladen werden
+                lastnode = foundNode ' Setzt lastnode auf den gefundenen Knoten, um in der nächsten Iteration darunter weiterzusuchen
             Next
-
             ' Nach der Schleife: lastnode ist der Knoten, der dem Zielpfad entspricht
-            ' Setzt diesen Knoten als ausgewählt im TreeView
-            Me.TV.SelectedNode = lastnode
-
-            ' Gibt zurück, dass der Knoten erfolgreich gefunden und selektiert wurde
-            Return True
+            Me.TV.SelectedNode = lastnode ' Setzt diesen Knoten als ausgewählt im TreeView
+            Return True ' Gibt zurück, dass der Knoten erfolgreich gefunden und selektiert wurde
 
         End Function
 
 #End Region
 
-#Region "Interne Hilfsroutinen"
+#Region "Interne Methoden"
 
         ''' <summary>
         ''' Setzt den Wurzelknoten des TreeViews.
@@ -332,20 +327,12 @@ Namespace ExplorerTreeViewControl
         ''' Der Wurzelknoten repräsentiert "Dieser Computer" und bildet die Basis für die Anzeige von Laufwerken und speziellen Ordnern.
         ''' Nach dem Hinzufügen wird der Wurzelknoten automatisch erweitert, sodass dessen Unterknoten (z.B. Laufwerke) sichtbar sind.
         ''' </remarks>
-        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
         Private Sub SetRootNode()
 
-            ' Alle vorhandenen Knoten im TreeView entfernen
-            Me.TV.Nodes.Clear()
-
-            ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
-            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"}
-
-            ' Den Wurzelknoten zum TreeView hinzufügen
-            Me.TV.Nodes.Add(rootnode)
-
-            ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
-            Me.TV.Nodes.Item(0).Expand()
+            Me.TV.Nodes.Clear() ' Alle vorhandenen Knoten im TreeView entfernen
+            Dim rootnode As New ComputerNode With {.ImageKey = $"Computer", .SelectedImageKey = $"Computer"} ' Neuen Wurzelknoten vom Typ ComputerNode erstellen und das passende Icon zuweisen
+            Dim unused = Me.TV.Nodes.Add(rootnode) ' Den Wurzelknoten zum TreeView hinzufügen
+            Me.TV.Nodes.Item(0).Expand() ' Den Wurzelknoten automatisch erweitern, damit die Unterknoten angezeigt werden
 
         End Sub
 
@@ -382,33 +369,25 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Lädt die untergeordneten Knoten neu ein.
         ''' </summary>
-        ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden
-        ''' sollen.</param>
+        ''' <param name="Node">Knoten dessen untergeordnete Knoten neu eingelesen werden sollen.</param>
         Private Sub LoadSubfolders(Node As System.Windows.Forms.TreeNode)
 
-            ' löscht alle untergeordneten Knoten
-            Node.Nodes.Clear()
-
+            Node.Nodes.Clear() ' löscht alle untergeordneten Knoten
             ' lädt die untergeordneten Knoten des entsprechenden Knotentyps neu
             Select Case True
-
                 Case TypeOf Node Is ComputerNode
                     ' untergeordnete Knoten (spezielle Ordner und Laufwerke) von Computernoten neu laden
                     CType(Node, ComputerNode).LoadSpecialFolders()
                     CType(Node, ComputerNode).LoadDrives()
-
                 Case TypeOf Node Is SpecialFolderNode
                     ' untergeordnete Knoten von speziellen Ordner neu laden
                     CType(Node, SpecialFolderNode).LoadSubfolders()
-
                 Case TypeOf Node Is DriveNode
                     ' untergeordnete Knoten von Laufwerken neu laden
                     CType(Node, DriveNode).LoadSubfolders()
-
                 Case TypeOf Node Is FolderNode
                     ' untergeordnete Knoten von Ordnern neu laden
                     CType(Node, FolderNode).LoadSubfolders()
-
             End Select
 
         End Sub
@@ -416,44 +395,23 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Erstellt einen FileSystemWatcher für den angegebenen Pfad, um Änderungen zu überwachen
         ''' </summary>
-        ''' <param name="FolderPath">
-        ''' Der zu überwachende Verzeichnispfad
-        ''' </param>
+        ''' <param name="FolderPath">Der zu überwachende Verzeichnispfad.</param>
         Private Sub CreateFileSystemWatcher(FolderPath As String)
 
-            ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
-            If String.IsNullOrEmpty(FolderPath) OrElse Not System.IO.Directory.Exists(FolderPath) Then Return
-
-            ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
-            If Me._FileSystemWatchers.ContainsKey(FolderPath) Then Return
-
+            If String.IsNullOrEmpty(FolderPath) OrElse Not System.IO.Directory.Exists(FolderPath) Then Return ' Prüfen ob Verzeichnispfad nicht leer und vorhanden ist
+            If Me._FileSystemWatchers.ContainsKey(FolderPath) Then Return ' Prüfen, ob bereits ein FileSystemWatcher für diesen Pfad existiert
             Try
-
                 ' Neuen FileSystemWatcher erstellen (Verzeichnisse überwachen,Nur das aktuelle Verzeichnis überwachen)
                 Dim FSW As New System.IO.FileSystemWatcher(FolderPath) With {
                     .NotifyFilter = System.IO.NotifyFilters.DirectoryName,
                     .IncludeSubdirectories = False}
-
-                ' Event-Handler für neu erstellten Ordner hinzufügen
-                AddHandler FSW.Created, AddressOf Me.FSW_DirectoryChanged
-
-                ' Event-Handler für gelöschten Ordner hinzufügen
-                AddHandler FSW.Deleted, AddressOf Me.FSW_DirectoryChanged
-
-                ' Event-Handler für umbenannten Ordner hinzufügen
-                AddHandler FSW.Renamed, AddressOf Me.FSW_DirectoryChanged
-
-                ' Watcher in die Sammlung einfügen
-                Me._FileSystemWatchers.Add(FolderPath, FSW)
-
-                ' Watcher aktivieren
-                FSW.EnableRaisingEvents = True
-
+                AddHandler FSW.Created, AddressOf Me.FSW_DirectoryChanged ' Event-Handler für neu erstellten Ordner hinzufügen
+                AddHandler FSW.Deleted, AddressOf Me.FSW_DirectoryChanged ' Event-Handler für gelöschten Ordner hinzufügen
+                AddHandler FSW.Renamed, AddressOf Me.FSW_DirectoryChanged ' Event-Handler für umbenannten Ordner hinzufügen
+                Me._FileSystemWatchers.Add(FolderPath, FSW) ' Watcher in die Sammlung einfügen
+                FSW.EnableRaisingEvents = True ' Watcher aktivieren
             Catch ex As System.Exception
-
-                ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
-                System.Diagnostics.Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}")
-
+                System.Diagnostics.Debug.WriteLine($"Fehler beim Erstellen des FileSystemWatchers: {ex.Message}") ' Fehlerbehandlung (z.B. unzureichende Berechtigungen)
             End Try
 
         End Sub
@@ -462,19 +420,12 @@ Namespace ExplorerTreeViewControl
         ''' Entfernt alle FileSystemWatcher für das angegebene Verzeichnis und alle Unterverzeichnisse.
         ''' Dies ist wichtig, um Ressourcen freizugeben und zu verhindern, dass nicht mehr benötigte Watcher weiterhin Ereignisse auslösen.
         ''' </summary>
-        ''' <param name="FolderPath">
-        ''' Das Verzeichnis, für das die zugehörigen Watcher entfernt werden sollen.
-        ''' </param>
+        ''' <param name="FolderPath">Das Verzeichnis, für das die zugehörigen Watcher entfernt werden sollen.</param>
         Private Sub RemoveFileSystemWatchers(FolderPath As String)
 
-            ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
-            Dim toRemove As New System.Collections.Generic.List(Of String)
-
-            ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
-            Me.FindWatchersToRemove(FolderPath, toRemove)
-
-            ' Entferne und entsorge alle gefundenen Watcher
-            Me.RemoveAndDisposeWatchers(toRemove)
+            Dim toRemove As New System.Collections.Generic.List(Of String) ' Erstelle eine Liste, in der alle zu entfernenden Watcher-Pfade gesammelt werden
+            Me.FindWatchersToRemove(FolderPath, toRemove) ' Finde alle Watcher, die auf das angegebene Verzeichnis oder dessen Unterverzeichnisse zeigen
+            Me.RemoveAndDisposeWatchers(toRemove) ' Entferne und entsorge alle gefundenen Watcher
 
         End Sub
 
@@ -483,26 +434,17 @@ Namespace ExplorerTreeViewControl
         ''' Ein Pfad wird dann zur Liste hinzugefügt, wenn er entweder exakt dem angegebenen Verzeichnis entspricht
         ''' oder ein Unterverzeichnis davon ist. Dies ist die Vorbereitung, um alle betroffenen Watcher später zu entfernen.
         ''' </summary>
-        ''' <param name="FolderPath">
-        ''' Das Verzeichnis, für das die zu entfernenden Watcher gesucht werden.
-        ''' </param>
-        ''' <param name="toRemove">
-        ''' Liste, in die alle zu entfernenden Watcher-Pfade eingetragen werden.
-        ''' </param>
+        ''' <param name="FolderPath">Das Verzeichnis, für das die zu entfernenden Watcher gesucht werden.</param>
+        ''' <param name="toRemove">Liste, in die alle zu entfernenden Watcher-Pfade eingetragen werden.</param>
         Private Sub FindWatchersToRemove(FolderPath As String, toRemove As System.Collections.Generic.List(Of String))
 
             ' Durchlaufe alle aktuell überwachten Verzeichnispfade
             For Each watcherPath In Me._FileSystemWatchers.Keys
-
                 ' Prüfe, ob der Pfad exakt übereinstimmt oder ein Unterverzeichnis des angegebenen Verzeichnisses ist
                 If watcherPath.Equals(FolderPath, System.StringComparison.OrdinalIgnoreCase) OrElse
                    watcherPath.StartsWith(FolderPath & System.IO.Path.DirectorySeparatorChar, System.StringComparison.OrdinalIgnoreCase) Then
-
-                    ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
-                    toRemove.Add(watcherPath)
-
+                    toRemove.Add(watcherPath) ' Füge den Pfad der Liste der zu entfernenden Watcher hinzu
                 End If
-
             Next
 
         End Sub
@@ -511,30 +453,18 @@ Namespace ExplorerTreeViewControl
         ''' Entfernt und entsorgt alle FileSystemWatcher-Objekte, deren Pfade in der übergebenen Liste enthalten sind.
         ''' Dies ist notwendig, um Ressourcen freizugeben und zu verhindern, dass nicht mehr benötigte Watcher weiterhin Ereignisse auslösen.
         ''' </summary>
-        ''' <param name="toRemove">
-        ''' Liste der Verzeichnispfade, deren Watcher entfernt und entsorgt werden sollen.
-        ''' </param>
+        ''' <param name="toRemove">Liste der Verzeichnispfade, deren Watcher entfernt und entsorgt werden sollen.</param>
         Private Sub RemoveAndDisposeWatchers(toRemove As System.Collections.Generic.List(Of String))
 
             ' Durchlaufe alle zu entfernenden Watcher-Pfade
             For Each watcherPath In toRemove
-
-                ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
-                Dim watcher = Me._FileSystemWatchers(watcherPath)
-
-                ' Deaktiviere die Ereignisauslösung
-                watcher.EnableRaisingEvents = False
-
-                ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
-                Me.RemoveWatcherHandlers(watcher)
-
-                ' Gib die Ressourcen des Watchers frei
-                watcher.Dispose()
-
-                ' Entferne den Watcher aus der internen Sammlung
-                Dim unused = Me._FileSystemWatchers.Remove(watcherPath)
-
+                Dim watcher = Me._FileSystemWatchers(watcherPath) ' Hole den zugehörigen FileSystemWatcher aus dem Dictionary
+                watcher.EnableRaisingEvents = False ' Deaktiviere die Ereignisauslösung
+                Me.RemoveWatcherHandlers(watcher) ' Entferne alle zugehörigen Event-Handler, um Speicherlecks zu vermeiden
+                watcher.Dispose() ' Gib die Ressourcen des Watchers frei
+                Dim unused = Me._FileSystemWatchers.Remove(watcherPath) ' Entferne den Watcher aus der internen Sammlung
             Next
+
         End Sub
 
         ''' <summary>
@@ -542,119 +472,52 @@ Namespace ExplorerTreeViewControl
         ''' Dies ist notwendig, um Speicherlecks und unerwünschte Ereignisauslösungen zu vermeiden,
         ''' wenn ein Watcher nicht mehr benötigt wird und entsorgt werden soll.
         ''' </summary>
-        ''' <param name="watcher">
-        ''' Der FileSystemWatcher, von dem die Handler entfernt werden sollen.
-        ''' </param>
+        ''' <param name="watcher">Der FileSystemWatcher, von dem die Handler entfernt werden sollen.</param>
         Private Sub RemoveWatcherHandlers(watcher As System.IO.FileSystemWatcher)
 
-            ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
-            RemoveHandler watcher.Created, AddressOf Me.FSW_DirectoryChanged
-
-            ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
-            RemoveHandler watcher.Deleted, AddressOf Me.FSW_DirectoryChanged
-
-            ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
-            RemoveHandler watcher.Renamed, AddressOf Me.FSW_DirectoryChanged
+            RemoveHandler watcher.Created, AddressOf Me.FSW_DirectoryChanged ' Entfernt den Handler für das Created-Ereignis (neues Verzeichnis wurde erstellt)
+            RemoveHandler watcher.Deleted, AddressOf Me.FSW_DirectoryChanged ' Entfernt den Handler für das Deleted-Ereignis (Verzeichnis wurde gelöscht)
+            RemoveHandler watcher.Renamed, AddressOf Me.FSW_DirectoryChanged ' Entfernt den Handler für das Renamed-Ereignis (Verzeichnis wurde umbenannt)
 
         End Sub
-
-#End Region
-
-        ''' <summary>
-        ''' Gibt Ressourcen frei, die von dem ExplorerTreeView-Steuerelement verwendet werden.
-        ''' </summary>
-        ''' <param name="disposing">
-        ''' <see langword="True"/>, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben;
-        ''' <see langword="False"/>, um nur nicht verwaltete Ressourcen freizugeben.
-        ''' </param>
-        ''' <remarks>
-        ''' Diese Methode wird aufgerufen, wenn das Steuerelement explizit oder implizit entsorgt wird.
-        ''' Sie sorgt dafür, dass alle FileSystemWatcher-Objekte entfernt und entsorgt werden,
-        ''' um Speicherlecks und unerwünschte Ereignisauslösungen zu vermeiden.
-        ''' Zusätzlich können hier weitere verwaltete Ressourcen freigegeben werden.
-        ''' Nicht verwaltete Ressourcen können ebenfalls an dieser Stelle freigegeben werden.
-        ''' </remarks>
-        Protected Overrides Sub Dispose(disposing As Boolean)
-
-            ' Prüfen, ob das Objekt bereits entsorgt wurde, um doppelte Freigabe zu verhindern
-            If Not Me.disposedValue Then
-
-                If disposing Then
-                    ' Verwaltete Ressourcen freigeben:
-                    ' Entfernt und entsorgt alle FileSystemWatcher-Objekte, die zur Überwachung von Verzeichnissen verwendet werden.
-                    Me.RemoveAndDisposeWatchers(Me._FileSystemWatchers.Keys.ToList())
-
-                    ' Falls weitere verwaltete Ressourcen existieren, sollten diese ebenfalls hier freigegeben werden.
-                    Me.DW.Dispose()
-                    Me.IL.Dispose()
-                    Me.TV.Dispose()
-
-                End If
-
-                ' Nicht verwaltete Ressourcen freigeben (falls vorhanden):
-                ' Hier können z.B. Handles oder andere native Ressourcen freigegeben werden.
-
-                ' Markiert das Objekt als entsorgt, damit Dispose nicht mehrfach ausgeführt wird
-                Me.disposedValue = True
-
-            End If
-
-            ' Ruft die Basisklassen-Implementierung von Dispose auf, um sicherzustellen,
-            ' dass auch die Ressourcen der Basisklasse korrekt freigegeben werden.
-            MyBase.Dispose(disposing)
-
-        End Sub
-
-#Region "Ereignisbehandlung FileSystemWatcher"
 
         ''' <summary>
         ''' Wird aufgerufen, wenn sich der Inhalt eines überwachten Verzeichnisses geändert hat (z.B. Ordner wurde erstellt, gelöscht oder umbenannt).
         ''' Aktualisiert die betroffenen Knoten im TreeView, damit die Anzeige immer dem aktuellen Dateisystem entspricht.
         ''' </summary>
-        ''' <param name="sender">Der FileSystemWatcher, der das Ereignis ausgelöst hat.</param>
-        ''' <param name="e">Informationen über die Änderung (z.B. Pfad, Art der Änderung).</param>
-        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0058:Der Ausdruckswert wird niemals verwendet.", Justification:="<Ausstehend>")>
+        ''' <param name="sender">Der auslösende <see cref="System.IO.FileSystemWatcher"/>.</param>
+        ''' <param name="e">Ereignisargumente mit Detailinformationen zur Änderung.</param>
         Private Sub FSW_DirectoryChanged(sender As Object, e As System.IO.FileSystemEventArgs)
 
             ' Prüfen, ob der Methodenaufruf aus einem anderen Thread als dem UI-Thread kommt.
             ' Falls ja, Methode erneut im UI-Thread ausführen (wichtig für Thread-Sicherheit bei UI-Elementen).
             If Me.TV.InvokeRequired Then
-                Me.TV.Invoke(New System.Windows.Forms.MethodInvoker(Sub() Me.FSW_DirectoryChanged(sender, e)))
+                Dim unused = Me.TV.Invoke(New System.Windows.Forms.MethodInvoker(Sub() Me.FSW_DirectoryChanged(sender, e)))
                 Return
             End If
-
             ' Sucht im TreeView den Knoten, dessen Pfad dem überwachten Verzeichnis entspricht.
             Dim node As System.Windows.Forms.TreeNode = FindNodeByPath(Me.TV.Nodes, CType(sender, System.IO.FileSystemWatcher).Path)
-
             ' Je nach Knotentyp (normaler Ordner oder spezieller Ordner) werden die Unterknoten neu geladen,
             ' damit neue, gelöschte oder umbenannte Unterordner sofort angezeigt werden.
             Select Case True
-
                 Case TypeOf node Is DriveNode
                     ' Unterknoten des Laufwerks leeren und neu laden
                     Me.LoadSubfolders(node)
-
                 Case TypeOf node Is SpecialFolderNode
                     ' Unterknoten des speziellen Ordners leeren und neu laden
                     Me.LoadSubfolders(node)
-
                 Case TypeOf node Is FolderNode
                     ' Unterknoten des Ordners leeren und neu laden
                     Me.LoadSubfolders(node)
-
             End Select
 
         End Sub
 
-#End Region
-
-#Region "Ereignisbehandlung TreeView"
-
         ''' <summary>
         ''' Wird ausgelöst, bevor ein Knoten erweitert wird.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="e">Ereignisargumente mit dem Knoten der erweitert werden soll.</param>
         ''' <remarks>
         ''' Abhängig vom Typ des Knotens werden die entsprechenden Unterordner geladen.
         ''' Die verschiedenen Knotentypen (ComputerNode, SpecialFolderNode, DriveNode, FolderNode) werden unterschieden,
@@ -665,28 +528,26 @@ Namespace ExplorerTreeViewControl
         ''' </remarks>
         Private Sub TV_BeforeExpand(sender As Object, e As System.Windows.Forms.TreeViewCancelEventArgs) Handles TV.BeforeExpand
 
-            ' Lädt die untergeordneten Knoten des aktuellen Knotens.
-            Me.LoadSubfolders(e.Node)
+            Me.LoadSubfolders(e.Node) ' Lädt die untergeordneten Knoten des aktuellen Knotens.
 
         End Sub
 
         ''' <summary>
         ''' Tritt ein, wenn der Strukturknoten erweitert wurde.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="e">Ereignisargumente mit dem erweiterten Knoten.</param>
         Private Sub TV_AfterExpand(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterExpand
 
-            ' Einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
-            Me.CreateFileSystemWatcher(GetDirectoryPath(e.Node))
+            Me.CreateFileSystemWatcher(GetDirectoryPath(e.Node)) ' Einen FileSystemWatcher für das geöffnete Verzeichnis erstellen
 
         End Sub
 
         ''' <summary>
         ''' Tritt ein, wenn der Strukturknoten reduziert wurde.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="e">Ereignisargumente mit dem reduzierten Knoten.</param>
         Private Sub TV_AfterCollapse(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterCollapse
 
             ' Den FilesystemWatcher für das geschlossene Verzeichnis und alle eventuell geöffnete Unterverzeichnisse entfernen
@@ -701,8 +562,8 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode ist wichtig, um sicherzustellen, dass der aktuell ausgewählte Pfad immer korrekt ist,
         ''' und ermöglicht anderen Teilen der Anwendung, auf Änderungen im ausgewählten Pfad zu reagieren.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="e">Ereignisargumente mit dem ausgewählten Knoten.</param>
         Private Sub TV_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterSelect
 
             ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
@@ -710,26 +571,19 @@ Namespace ExplorerTreeViewControl
 
         End Sub
 
-#End Region
-
-#Region "Ereignisbehandlung DriveWatcher"
-
         ''' <summary>
-        ''' Wird ausgeführt wenn ein neues Laufwerk hinzugefügt wurde
+        ''' Wird ausgeführt wenn ein neues Laufwerk hinzugefügt wurde.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende Objekt (DriveWatcher).</param>
+        ''' <param name="e">Ereignisargumente mit dem Namen des hinzugefügten Laufwerks.</param>
         Private Sub DW_DriveAdded(sender As Object, e As SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs) Handles DW.DriveAdded
 
             Dim newNode As New DriveNode(New System.IO.DriveInfo(e.DriveName)) With {.Tag = e.DriveName}
             Dim inserted As Boolean = False
-
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
             For i As Integer = 0 To Me.TV.Nodes.Item(0).Nodes.Count - 1
-
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist und alphabetisch hinter dem neuen Laufwerk liegt
                 Dim currNode As System.Windows.Forms.TreeNode = Me.TV.Nodes.Item(0).Nodes(i)
-
                 If TypeOf currNode Is DriveNode AndAlso
                     String.Compare(
                     currNode.Tag.ToString,
@@ -739,9 +593,7 @@ Namespace ExplorerTreeViewControl
                     inserted = True
                     Exit For
                 End If
-
             Next
-
             ' Falls das neue Laufwerk alphabetisch am Ende eingefügt werden muss
             If Not inserted Then
                 Dim unused = Me.TV.Nodes.Item(0).Nodes.Add(newNode)
@@ -750,51 +602,32 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         ''' <summary>
-        ''' Wird ausgeführt wenn ein Laufwerk entfernt wurde
+        ''' Wird ausgeführt wenn ein Laufwerk entfernt wurde.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Das auslösende Objekt (DriveWatcher).</param>
+        ''' <param name="e">Ereignisargumente mit dem Namen des entfernten Laufwerks.</param>
         Private Sub DW_DriveRemoved(sender As Object, e As SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs) Handles DW.DriveRemoved
 
             ' Durchlaufe alle Knoten des Computer-Knotens (Wurzelknoten)
             For Each node As System.Windows.Forms.TreeNode In Me.TV.Nodes.Item(0).Nodes
-
                 ' Überprüfe, ob der aktuelle Knoten ein DriveNode ist
                 If TypeOf node Is DriveNode Then
-
                     ' Überprüfe, ob der Tag des DriveNode mit dem Namen des entfernten Laufwerks übereinstimmt
                     If CType(node, DriveNode).Tag.ToString() = e.DriveName Then
-
                         ' Entferne den DriveNode aus der Liste
                         CType(node, DriveNode).Remove()
-
                     End If
-
                 End If
-
             Next
 
         End Sub
 
-#End Region
-
-
-
-
-
-
-    End Class
-
-
-    Partial Class ExplorerTreeView
-        Inherits System.Windows.Forms.UserControl
-
-        'Wird vom Windows Form-Designer benötigt.
-        Private components As System.ComponentModel.IContainer
-
-        'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
-        'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ''' <summary>
+        ''' Initialisiert die vom Designer generierten Komponenten des Steuerelements.
+        ''' </summary>
+        ''' <remarks>
+        ''' Diese Methode wird automatisch vom Windows Forms Designer aufgerufen und sollte nicht manuell bearbeitet werden.
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
@@ -835,10 +668,50 @@ Namespace ExplorerTreeViewControl
 
         End Sub
 
-        Private WithEvents DW As SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher
-        Private WithEvents IL As System.Windows.Forms.ImageList
-        Private WithEvents TV As System.Windows.Forms.TreeView
-    End Class
+#End Region
 
+#Region "überschriebene Methoden"
+
+        ''' <summary>
+        ''' Gibt Ressourcen frei, die von dem ExplorerTreeView-Steuerelement verwendet werden.
+        ''' </summary>
+        ''' <param name="disposing">
+        ''' <see langword="True"/>, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben;
+        ''' <see langword="False"/>, um nur nicht verwaltete Ressourcen freizugeben.
+        ''' </param>
+        ''' <remarks>
+        ''' Diese Methode wird aufgerufen, wenn das Steuerelement explizit oder implizit entsorgt wird.
+        ''' Sie sorgt dafür, dass alle FileSystemWatcher-Objekte entfernt und entsorgt werden,
+        ''' um Speicherlecks und unerwünschte Ereignisauslösungen zu vermeiden.
+        ''' Zusätzlich können hier weitere verwaltete Ressourcen freigegeben werden.
+        ''' Nicht verwaltete Ressourcen können ebenfalls an dieser Stelle freigegeben werden.
+        ''' </remarks>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+
+            ' Prüfen, ob das Objekt bereits entsorgt wurde, um doppelte Freigabe zu verhindern
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' Verwaltete Ressourcen freigeben:
+                    ' Entfernt und entsorgt alle FileSystemWatcher-Objekte, die zur Überwachung von Verzeichnissen verwendet werden.
+                    Me.RemoveAndDisposeWatchers(Me._FileSystemWatchers.Keys.ToList())
+                    ' Falls weitere verwaltete Ressourcen existieren, sollten diese ebenfalls hier freigegeben werden.
+                    Me.DW.Dispose()
+                    Me.IL.Dispose()
+                    Me.TV.Dispose()
+                End If
+                ' Nicht verwaltete Ressourcen freigeben (falls vorhanden):
+                ' Hier können z.B. Handles oder andere native Ressourcen freigegeben werden.
+                ' Markiert das Objekt als entsorgt, damit Dispose nicht mehrfach ausgeführt wird
+                Me.disposedValue = True
+            End If
+            ' Ruft die Basisklassen-Implementierung von Dispose auf, um sicherzustellen,
+            ' dass auch die Ressourcen der Basisklasse korrekt freigegeben werden.
+            MyBase.Dispose(disposing)
+
+        End Sub
+
+#End Region
+
+    End Class
 
 End Namespace
