@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace ExplorerTreeViewControl
 
     ''' <summary>
@@ -23,7 +21,7 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um den Typ eines Laufwerks in eine menschenlesbare Zeichenfolge zu übersetzen.
         ''' </remarks>
-        Private ReadOnly driveTypeMappings As New System.Collections.Generic.Dictionary(Of System.IO.DriveType, String) From {
+        Private ReadOnly DriveTypeMappings As New System.Collections.Generic.Dictionary(Of System.IO.DriveType, String) From {
             {System.IO.DriveType.Fixed, DRIVETYPE_FIXED},
             {System.IO.DriveType.CDRom, DRIVETYPE_CDROM},
             {System.IO.DriveType.Removable, DRIVETYPE_REMOVABLE},
@@ -39,7 +37,7 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um den vollständigen Pfad eines speziellen Ordners basierend auf seinem Namen zu ermitteln.
         ''' </remarks>
-        Private ReadOnly folderMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
+        Private ReadOnly FolderMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
             {FOLDER_DESKTOP, System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)},
             {FOLDER_DOKUMENTE, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)},
             {FOLDER_DOWNLOADS, System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads")},
@@ -54,7 +52,7 @@ Namespace ExplorerTreeViewControl
         ''' <remarks>
         ''' Dieses Dictionary wird verwendet, um die Imagekeys für Ordner und Laufwerke zu ermitteln.
         ''' </remarks>
-        Private ReadOnly imageKeyMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
+        Private ReadOnly ImageKeyMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
             {FOLDER_COMPUTER, ICON_COMPUTER},
             {FOLDER_DESKTOP, ICON_FOLDER_DESKTOP},
             {FOLDER_DOKUMENTE, ICON_FOLDER_DOCUMENTS},
@@ -84,8 +82,7 @@ Namespace ExplorerTreeViewControl
         ''' <param name="drive">Das Laufwerk, dessen Name ermittelt werden soll.</param>
         Public Function GetDriveName(drive As System.IO.DriveInfo) As String
 
-            ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
-            Return drive.Name.Substring(0, drive.Name.Length - 1)
+            Return drive.Name.Substring(0, drive.Name.Length - 1) ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
 
         End Function
 
@@ -108,22 +105,16 @@ Namespace ExplorerTreeViewControl
 
             ' Überprüfen, ob das Laufwerk bereit ist (z. B. ob ein Medium eingelegt und lesbar ist)
             If drive.IsReady Then
-
                 ' Wenn das Laufwerk bereit ist, wird das VolumeLabel (Laufwerksbezeichnung) ermittelt.
                 ' Falls das Laufwerk kein Label besitzt (VolumeLabel ist leer oder Nothing),
                 ' wird stattdessen die Beschreibung des Laufwerkstyps als Label verwendet.
                 Return If(String.IsNullOrEmpty(drive.VolumeLabel), GetDriveTypeDescription(drive), drive.VolumeLabel)
-
             Else
-
                 ' Wenn das Laufwerk nicht bereit ist (z. B. kein Medium eingelegt),
                 ' wird die Beschreibung des Laufwerkstyps als Label verwendet.
                 Return GetDriveTypeDescription(drive)
-
             End If
-
-            ' Rückgabe eines leeren Strings als Fallback (sollte eigentlich nie erreicht werden)
-            Return String.Empty
+            Return String.Empty ' Rückgabe eines leeren Strings als Fallback (sollte eigentlich nie erreicht werden)
 
         End Function
 
@@ -139,21 +130,17 @@ Namespace ExplorerTreeViewControl
             If IsSystemDrive(Drive) Then
                 Return DRIVETYPE_SYSTEM
             End If
-
             ' Überprüfen, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
             ' Diskettenlaufwerke sind veraltete Speichermedien, die selten verwendet werden.
             If IsFloppyDrive(Drive) Then
                 Return DRIVETYPE_FLOPPY
             End If
-
             ' Versuchen, den Laufwerkstyp (DriveType) aus der vordefinierten Mapping-Tabelle zu ermitteln.
             ' Die Mapping-Tabelle ordnet DriveType-Werte (z. B. Fixed, CDRom) entsprechenden Zeichenfolgen zu.
-            If driveTypeMappings.ContainsKey(Drive.DriveType) Then
-                Return driveTypeMappings(Drive.DriveType)
+            If DriveTypeMappings.ContainsKey(Drive.DriveType) Then
+                Return DriveTypeMappings(Drive.DriveType)
             End If
-
-            ' Wenn der Laufwerkstyp nicht erkannt wird, wird eine leere Zeichenfolge zurückgegeben.
-            Return String.Empty
+            Return String.Empty ' Wenn der Laufwerkstyp nicht erkannt wird, wird eine leere Zeichenfolge zurückgegeben.
 
         End Function
 
@@ -164,7 +151,7 @@ Namespace ExplorerTreeViewControl
         ''' <returns></returns>
         Public Function GetSpezialFolderPath(Text As String) As String
 
-            Return If(folderMappings.ContainsKey(Text), folderMappings(Text), String.Empty)
+            Return If(FolderMappings.ContainsKey(Text), FolderMappings(Text), String.Empty)
 
         End Function
 
@@ -175,19 +162,15 @@ Namespace ExplorerTreeViewControl
         ''' <returns>Der zugehörige ImageKey oder eine leere Zeichenfolge. </returns>
         Public Function GetImageKey(IconTypeString As String) As String
 
-            ' Überprüft, ob das Dictionary "imageKeyMappings" den angegebenen Schlüssel ("IconTypeString") enthält.
+            ' Überprüft, ob das Dictionary "ImageKeyMappings" den angegebenen Schlüssel ("IconTypeString") enthält.
             ' Dies ist z. B. der Name eines Ordners oder Laufwerkstyps, für den ein passender ImageKey gesucht wird.
-            If imageKeyMappings.ContainsKey(IconTypeString) Then
-
+            If ImageKeyMappings.ContainsKey(IconTypeString) Then
                 ' Wenn der Schlüssel gefunden wurde, wird der zugehörige ImageKey aus dem Dictionary zurückgegeben.
-                Return imageKeyMappings(IconTypeString)
-
+                Return ImageKeyMappings(IconTypeString)
             Else
-
                 ' Falls der Schlüssel nicht existiert, wird eine leere Zeichenfolge zurückgegeben.
                 ' Dies dient als Standardwert für unbekannte oder nicht zugeordnete Schlüssel.
                 Return String.Empty
-
             End If
 
         End Function
@@ -209,14 +192,9 @@ Namespace ExplorerTreeViewControl
             ' aber historisch immer mit diesen Buchstaben bezeichnet wurden.
             If drive.Name.StartsWith("a", System.StringComparison.OrdinalIgnoreCase) Or
                drive.Name.StartsWith("b", System.StringComparison.OrdinalIgnoreCase) Then
-
-                ' Wenn das Laufwerk mit "A" oder "B" beginnt, handelt es sich um ein Diskettenlaufwerk.
-                Return True
-
+                Return True ' Wenn das Laufwerk mit "A" oder "B" beginnt, handelt es sich um ein Diskettenlaufwerk.
             End If
-
-            ' Wenn das Laufwerk nicht mit "A" oder "B" beginnt, ist es kein Diskettenlaufwerk.
-            Return False
+            Return False ' Wenn das Laufwerk nicht mit "A" oder "B" beginnt, ist es kein Diskettenlaufwerk.
 
         End Function
 
@@ -229,18 +207,12 @@ Namespace ExplorerTreeViewControl
             ' Ermittelt das Root-Verzeichnis des Systemlaufwerks, indem der Pfad des Windows-Ordners verwendet wird.
             ' Beispiel: Wenn Windows auf "C:\Windows" installiert ist, ergibt Path.GetPathRoot(...) "C:\".
             Dim systemdrive As String = System.IO.Path.GetPathRoot(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows))
-
             ' Vergleicht den Namen des übergebenen Laufwerks mit dem ermittelten Systemlaufwerk.
             ' String.Equals wird verwendet, um eine kulturunabhängige, nicht case-sensitive Prüfung durchzuführen.
             If String.Equals(drive.Name, systemdrive, System.StringComparison.OrdinalIgnoreCase) Then
-
-                ' Wenn die Namen übereinstimmen, handelt es sich um das Systemlaufwerk.
-                Return True
-
+                Return True ' Wenn die Namen übereinstimmen, handelt es sich um das Systemlaufwerk.
             End If
-
-            ' Falls keine Übereinstimmung vorliegt, ist das Laufwerk kein Systemlaufwerk.
-            Return False
+            Return False ' Falls keine Übereinstimmung vorliegt, ist das Laufwerk kein Systemlaufwerk.
 
         End Function
 
@@ -252,7 +224,6 @@ Namespace ExplorerTreeViewControl
         Private Function GetDriveTypeDescription(drive As System.IO.DriveInfo) As String
 
             Select Case drive.DriveType
-
                 Case System.IO.DriveType.Fixed : Return DRIVE_DESC_FIXED
                 Case System.IO.DriveType.CDRom : Return DRIVE_DESC_CDROM
                 Case System.IO.DriveType.Removable : Return If(IsFloppyDrive(drive), DRIVE_DESC_FLOPPY, DRIVE_DESC_REMOVABLE)
@@ -261,7 +232,6 @@ Namespace ExplorerTreeViewControl
                 Case System.IO.DriveType.NoRootDirectory : Return DRIVE_DESC_NOROOT
                 Case System.IO.DriveType.Unknown : Return DRIVE_DESC_UNKNOWN
                 Case Else : Return String.Empty ' Fallback für unbekannte oder zukünftige DriveType-Werte
-
             End Select
 
         End Function
