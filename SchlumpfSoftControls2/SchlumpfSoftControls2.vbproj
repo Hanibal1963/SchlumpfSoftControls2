@@ -87,6 +87,9 @@
     <EmbeddedResource Include="FileSearchControl\FileSearch.resx">
       <DependentUpon>FileSearch.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NotifyFormControl\FormTemplate.resx">
+      <DependentUpon>FormTemplate.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Information.png" />
     <EmbeddedResource Include="Resources\FolderVideos.png" />
     <EmbeddedResource Include="Resources\FolderPictures.png" />
@@ -213,6 +216,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="NotifyFormControl\FormTemplate.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="NotifyFormControl\NotifyForm.vb">
       <SubType>Component</SubType>
