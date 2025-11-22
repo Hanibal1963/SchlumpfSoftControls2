@@ -566,6 +566,8 @@ Namespace ExplorerTreeViewControl
         ''' <param name="e">Ereignisargumente mit dem ausgewählten Knoten.</param>
         Private Sub TV_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterSelect
 
+            ' Wenn der Pfad des ausgewählten Knotens leer ist, wird keine weitere Verarbeitung durchgeführt.
+            If String.IsNullOrEmpty(GetDirectoryPath(e.Node)) Then Exit Sub
             ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
             RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(GetDirectoryPath(e.Node)))
 
