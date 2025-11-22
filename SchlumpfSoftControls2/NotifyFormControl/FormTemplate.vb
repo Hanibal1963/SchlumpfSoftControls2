@@ -3,40 +3,97 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace NotifyFormControl
 
+    ''' <summary>
+    ''' Formularvorlage für die Anzeige eines Benachrichtigungsfensters (Popup) mit Titel, Symbol und Nachricht.
+    ''' </summary>
     Friend Class FormTemplate : Inherits System.Windows.Forms.Form
 
-        Private CloseThread As System.Threading.Thread
+#Region "Variablendefinition"
 
-        'Eigenschaften
+        ''' <summary>
+        ''' Hintergrundfarbe des Formulars.
+        ''' </summary>
         Public Shared BackgroundColor As System.Drawing.Color
+
+        ''' <summary>
+        ''' Schriftfarbe für Titel und Nachricht.
+        ''' </summary>
         Public Shared FontColor As System.Drawing.Color
+
+        ''' <summary>
+        ''' Anzuzeigendes Symbolbild.
+        ''' </summary>
         Public Shared Image As System.Drawing.Image
+
+        ''' <summary>
+        ''' Textnachricht die im Fenster dargestellt wird.
+        ''' </summary>
         Public Shared Message As String
+
+        ''' <summary>
+        ''' Zeit in Millisekunden bis zum automatischen Schließen (0 = kein Autoclose).
+        ''' </summary>
         Public Shared ShowTime As Integer
+
+        ''' <summary>
+        ''' Hintergrundfarbe des Nachrichtentextfeldes.
+        ''' </summary>
         Public Shared TextFieldColor As System.Drawing.Color
+
+        ''' <summary>
+        ''' Titeltext für die Titelleiste.
+        ''' </summary>
         Public Shared Title As String
+
+        ''' <summary>
+        ''' Hintergrundfarbe der Titelleiste.
+        ''' </summary>
         Public Shared TitleBarColor As System.Drawing.Color
 
-        'Controls
+        ''' <summary>
+        ''' Label-Steuerelement zum Schließen des Fensters.
+        ''' </summary>
         Private ReadOnly LabelClose As New System.Windows.Forms.Label
+
+        ''' <summary>
+        ''' Label-Steuerelement zur Anzeige des Titels.
+        ''' </summary>
         Private ReadOnly LabelTitle As New System.Windows.Forms.Label
+
+        ''' <summary>
+        ''' Trenn-Panel zwischen Symbol und Text.
+        ''' </summary>
         Private ReadOnly PanelSpacer As New System.Windows.Forms.Panel
+
+        ''' <summary>
+        ''' Panel für die Titelleiste, enthält Titel und Schließen-Label.
+        ''' </summary>
         Private ReadOnly PanelTitle As New System.Windows.Forms.Panel
+
+        ''' <summary>
+        ''' Bildanzeige für das Symbol.
+        ''' </summary>
         Private ReadOnly PictureBoxImage As New System.Windows.Forms.PictureBox
+
+        ''' <summary>
+        ''' RichTextBox zur Anzeige der Nachricht.
+        ''' </summary>
         Private ReadOnly RichTextBoxMessage As New System.Windows.Forms.RichTextBox
 
-        Private Sub CloseForm()
-            If Me.InvokeRequired Then
-                Dim unused = Me.Invoke(New System.Windows.Forms.MethodInvoker(AddressOf Me.CloseForm))
-            Else
-                Me.Close()
-            End If
-        End Sub
+        ''' <summary>
+        ''' Hintergrundthread für das automatische Schließen.
+        ''' </summary>
+        Private CloseThread As System.Threading.Thread
 
+#End Region
+
+#Region "öffentliche Methoden"
+
+        ''' <summary>
+        ''' Initialisiert die Form-Eigenschaften und zeigt das Formular an.
+        ''' </summary>
         Public Sub Initialize()
             With Me
                 .MaximizeBox = False
@@ -50,19 +107,24 @@ Namespace NotifyFormControl
             Me.Show()
         End Sub
 
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            'Bereinigung durchführen
-            With Me
-                .LabelClose.Dispose()
-                .LabelTitle.Dispose()
-                .PanelSpacer.Dispose()
-                .PanelTitle.Dispose()
-                .PictureBoxImage.Dispose()
-                .RichTextBoxMessage.Dispose()
-            End With
-            MyBase.Dispose(disposing)
+#End Region
+
+#Region "interne Methoden"
+
+        ''' <summary>
+        ''' Schließt das Formular thread-sicher (Invoke bei Bedarf).
+        ''' </summary>
+        Private Sub CloseForm()
+            If Me.InvokeRequired Then
+                Dim unused = Me.Invoke(New System.Windows.Forms.MethodInvoker(AddressOf Me.CloseForm))
+            Else
+                Me.Close()
+            End If
         End Sub
 
+        ''' <summary>
+        ''' Fügt die benötigten Steuerelemente dem Formular hinzu.
+        ''' </summary>
         Private Sub AddControls()
             With Me.Controls
                 .Add(Me.LabelTitle)
@@ -74,6 +136,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Führt den automatischen Schließvorgang nach Ablauf der eingestellten Zeit aus.
+        ''' </summary>
         Private Sub AutoClose()
             'Fenster nur automatisch schließen wenn Zeit > 0 ist.
             If ShowTime > 0 Then
@@ -82,6 +147,9 @@ Namespace NotifyFormControl
             End If
         End Sub
 
+        ''' <summary>
+        ''' Animierter Ausblendvorgang beim Schließen des Formulars.
+        ''' </summary>
         Private Sub Form_Closing(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
             System.Threading.Thread.Sleep(150)
             For iCount As Integer = 90 To 10 Step -15
@@ -91,6 +159,9 @@ Namespace NotifyFormControl
             Next
         End Sub
 
+        ''' <summary>
+        ''' Lädt und initialisiert die Steuerelemente, positioniert das Formular und startet den Autoclose-Thread.
+        ''' </summary>
         Private Sub Form_Load(sender As Object, e As System.EventArgs) Handles Me.Load
             With Me
                 .Opacity = 0.1
@@ -117,6 +188,9 @@ Namespace NotifyFormControl
             Me.CloseThread.Start()
         End Sub
 
+        ''' <summary>
+        ''' Führt die Einblendanimation durch.
+        ''' </summary>
         Private Sub FormFadeIn()
             For iCount As Integer = 10 To 100 Step +15
                 Me.Opacity = iCount / 100
@@ -125,10 +199,16 @@ Namespace NotifyFormControl
             Next
         End Sub
 
+        ''' <summary>
+        ''' Ereignishandler für das Schließen-Label. Schließt das Formular sofort.
+        ''' </summary>
         Private Sub Lbl_Close_Click(sender As Object, e As System.EventArgs)
             Me.Close()
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften des Schließen-Labels.
+        ''' </summary>
         Private Sub SetPropertys_Lbl_Close()
             With Me.LabelClose
                 .AutoSize = True
@@ -142,6 +222,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften des Titel-Labels.
+        ''' </summary>
         Private Sub SetPropertys_Lbl_Title()
             With Me.LabelTitle
                 .AutoSize = True
@@ -155,6 +238,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften des Trenn-Panels.
+        ''' </summary>
         Private Sub SetPropertys_Panel_Spacer()
             With Me.PanelSpacer
                 .BackColor = TitleBarColor
@@ -165,6 +251,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften des Titel-Panels.
+        ''' </summary>
         Private Sub SetPropertys_Panel_Title()
             With Me.PanelTitle
                 .BackColor = TitleBarColor
@@ -177,6 +266,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften der PictureBox für das Symbol.
+        ''' </summary>
         Private Sub SetPropertys_Pb_Image()
             With Me.PictureBoxImage
                 .BackColor = System.Drawing.Color.Transparent
@@ -191,6 +283,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
+        ''' <summary>
+        ''' Setzt die Eigenschaften der RichTextBox für die Nachricht.
+        ''' </summary>
         Private Sub SetPropertys_Txt_Msg()
             With Me.RichTextBoxMessage
                 .BackColor = TextFieldColor
@@ -208,10 +303,9 @@ Namespace NotifyFormControl
             End With
         End Sub
 
-        Protected Overrides Sub Finalize()
-            MyBase.Finalize()
-        End Sub
-
+        ''' <summary>
+        ''' Initialisiert Designer-generierte Komponenten (Platzhalter).
+        ''' </summary>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             '
@@ -221,6 +315,36 @@ Namespace NotifyFormControl
             Me.Name = "FormTemplate"
             Me.ResumeLayout(False)
         End Sub
+
+#End Region
+
+#Region "überschriebene Methoden"
+
+        ''' <summary>
+        ''' Gibt verwendete Ressourcen frei und ruft die Basisimplementation auf.
+        ''' </summary>
+        ''' <param name="disposing">True wenn verwaltete Ressourcen freigegeben werden sollen.</param>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            'Bereinigung durchführen
+            With Me
+                .LabelClose.Dispose()
+                .LabelTitle.Dispose()
+                .PanelSpacer.Dispose()
+                .PanelTitle.Dispose()
+                .PictureBoxImage.Dispose()
+                .RichTextBoxMessage.Dispose()
+            End With
+            MyBase.Dispose(disposing)
+        End Sub
+
+        ''' <summary>
+        ''' Finalizer; ruft Basis-Finalizer auf. (Keine zusätzliche Logik vorhanden.)
+        ''' </summary>
+        Protected Overrides Sub Finalize()
+            MyBase.Finalize()
+        End Sub
+
+#End Region
 
     End Class
 
