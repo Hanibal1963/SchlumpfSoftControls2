@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace NotifyFormControl
 
     ''' <summary>
@@ -65,6 +63,9 @@ Namespace NotifyFormControl
 
 #Region "öffentliche Methoden"
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz der <see cref="NotifyForm"/> Klasse mit Standardwerten.
+        ''' </summary>
         Public Sub New()
             Me.Title = $"Titel"
             Me.Message = $"Mitteilung"
@@ -90,12 +91,17 @@ Namespace NotifyFormControl
 
 #Region "Interne Methoden"
 
+        ''' <summary>
+        ''' Erstellt und initialisiert das zugrunde liegende Formular.
+        ''' </summary>
         Private Sub ShowForm()
             Dim frm As New FormTemplate
             frm.Initialize()
         End Sub
 
-        ' Setzt das Design des Fensters
+        ''' <summary>
+        ''' Wählt anhand der aktuellen Einstellung das Design aus und setzt es.
+        ''' </summary>
         Private Sub SetFormDesign()
             Select Case Me.Design
                 Case NotifyFormDesign.Bright : SetFormDesignBright()
@@ -104,7 +110,9 @@ Namespace NotifyFormControl
             End Select
         End Sub
 
-        ' Setzt das helle Design
+        ''' <summary>
+        ''' Setzt das helle Design.
+        ''' </summary>
         Private Shared Sub SetFormDesignBright()
             FormTemplate.BackgroundColor = System.Drawing.Color.White
             FormTemplate.TextFieldColor = System.Drawing.Color.White
@@ -112,7 +120,9 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.Black
         End Sub
 
-        ' Setz das farbige Design
+        ''' <summary>
+        ''' Setzt das farbige Design.
+        ''' </summary>
         Private Shared Sub SetFormDesignColorful()
             FormTemplate.BackgroundColor = System.Drawing.Color.LightBlue
             FormTemplate.TextFieldColor = System.Drawing.Color.LightBlue
@@ -120,7 +130,9 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.White
         End Sub
 
-        ' Setzt das dunkle Design
+        ''' <summary>
+        ''' Setzt das dunkle Design.
+        ''' </summary>
         Private Shared Sub SetFormDesignDark()
             FormTemplate.BackgroundColor = System.Drawing.Color.FromArgb(83, 79, 75)
             FormTemplate.TextFieldColor = System.Drawing.Color.FromArgb(83, 79, 75)
@@ -128,7 +140,10 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.White
         End Sub
 
-        ' Setzt das Symbol des Fensters
+        ''' <summary>
+        ''' Ermittelt das anzuzeigende Symbol entsprechend dem eingestellten Stil.
+        ''' </summary>
+        ''' <returns>Das anzuzeigende <see cref="System.Drawing.Image"/> Objekt oder Nothing.</returns>
         Private Function SetFormImage() As System.Drawing.Image
             Dim result As System.Drawing.Bitmap = Nothing
             Select Case Me.Style
@@ -140,6 +155,9 @@ Namespace NotifyFormControl
             Return result
         End Function
 
+        ''' <summary>
+        ''' Initialisiert die durch den Designer generierten Komponenten (Platzhalter).
+        ''' </summary>
         Private Sub InitializeComponent()
         End Sub
 
