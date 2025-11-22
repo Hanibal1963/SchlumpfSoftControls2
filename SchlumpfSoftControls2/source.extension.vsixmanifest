@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="3.2025.1116.0" Language="de-DE" Publisher="Andreas Sauer" />
+        <Identity Id="SchlumpfSoftControls2.c1250a8d-8cd4-4650-afa7-7103d0aabef8" Version="3.2025.1122.0" Language="de-DE" Publisher="Andreas Sauer" />
         <DisplayName>SchlumpfSoftControls2</DisplayName>
         <Description xml:space="preserve">Eine Sammlung verschiedener Steuerelemente.</Description>
         <License>LICENSE.rtf</License>

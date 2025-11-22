@@ -52,6 +52,11 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1122.0 (22.11.2025)**
+- Es wurde ein Fehler im ExplorerTreeView Control beseitigt, der einen Absturz verursachte wenn beim öffnen 
+eines Knotens keine Pfadangabe erfolgte (im konkreten Fall wurde der Fehler verursacht wenn der 
+Knoten „Diese Computer“ geöffnet wurde)
+
 **Version 3.2025.1116.0 (16.11.2025)**
 - Fehler in internen Dialogen beseitigt.
 - Fehler im IniFileControl beseitigt der einen Absturz verursachte wenn
