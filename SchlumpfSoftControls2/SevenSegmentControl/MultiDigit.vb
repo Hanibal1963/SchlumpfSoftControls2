@@ -5,117 +5,28 @@
 
 ' TODO: Code noch überarbeiten
 
-Imports System
-Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Windows.Forms
-
 Namespace SevenSegmentControl
 
     ''' <summary>
     ''' Stellt ein Control dar, das mehrere Siebensegmentanzeigen enthält.
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("ClassDescriptionSevSegMultiDigit")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "MultiDigit.bmp")>
-    Public Class MultiDigit : Inherits Control
+    <System.ComponentModel.Description("ClassDescriptionSevSegMultiDigit")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "MultiDigit.bmp")>
+    Public Class MultiDigit : Inherits System.Windows.Forms.Control
 
-#Region "Eigenschaftsvariablen"
+#Region "Variablendefinition"
 
         Private _digits As SingleDigit() = Nothing
         Private _segmentWidth As Integer = 10
         Private _italicFactor As Single = -0.1F
-        Private _backgroundColor As Color = Color.LightGray
-        Private _inactiveColor As Color = Color.DarkGray
-        Private _foreColor As Color = Color.DarkGreen
+        Private _backgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
+        Private _inactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
+        Private _foreColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
         Private _showDecimalPoint As Boolean = True
-        Private _digitPadding As Padding
+        Private _digitPadding As System.Windows.Forms.Padding
         Private _value As String = Nothing
-
-#End Region
-
-        ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit"/>.
-        ''' </summary>
-        Public Sub New()
-            SuspendLayout()
-            Name = "SevSegMultiDigit"
-            Size = New Size(100, 25)
-            AddHandler Resize, New EventHandler(AddressOf SevSegMultiDigit_Resize)
-            ResumeLayout(False)
-            TabStop = False
-            _digitPadding = New Padding(10, 4, 10, 4)
-            CreateSegments(4)
-        End Sub
-
-#Region "interne Methoden"
-
-        ''' <summary>
-        ''' <para>Ändert die Anzahl der Elemente im LED-Array. </para>
-        ''' <para>Dadurch werden die vorherigen Elemente zerstört und an ihrer Stelle neue
-        ''' erstellt, </para>
-        ''' <para>wobei alle aktuellen Optionen auf die neuen angewendet werden.</para>
-        ''' </summary>
-        ''' <param name="count">Anzahl der zu erstellenden Elemente.</param>
-        Private Sub CreateSegments(count As Integer)
-            If _digits IsNot Nothing Then
-                For i = 0 To _digits.Length - 1
-                    _digits(i).Parent = Nothing
-                    _digits(i).Dispose()
-                Next
-            End If
-            If count <= 0 Then Return
-            _digits = New SingleDigit(count - 1) {}
-            For i = 0 To count - 1
-                _digits(i) = New SingleDigit With {
-                    .Parent = Me,
-                    .Top = 0,
-                    .Height = Height,
-                    .Anchor = AnchorStyles.Top Or AnchorStyles.Bottom,
-                    .Visible = True
-                }
-            Next
-            ResizeSegments()
-            UpdateSegments()
-            Value = _value
-        End Sub
-
-        ''' <summary>
-        ''' Richtet die Elemente des Arrays so aus, dass sie genau in die Breite des
-        ''' übergeordneten Steuerelements passen.
-        ''' </summary>
-        Private Sub ResizeSegments()
-            Dim segWidth As Integer = CInt(Width / _digits.Length)
-            For i = 0 To _digits.Length - 1
-                _digits(i).Left = CInt(Width * (_digits.Length - 1 - i) / _digits.Length)
-                _digits(i).Width = segWidth
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften.
-        ''' </summary>
-        Private Sub UpdateSegments()
-            For i = 0 To _digits.Length - 1
-                _digits(i).BackColor = _backgroundColor
-                _digits(i).InactiveColor = _inactiveColor
-                _digits(i).ForeColor = _foreColor
-                _digits(i).SegmentWidth = _segmentWidth
-                _digits(i).ItalicFactor = _italicFactor
-                _digits(i).ShowDecimalPoint = _showDecimalPoint
-                _digits(i).Padding = _digitPadding
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' Wird ausgeführt wenn die Größe des Controls geändert wird
-        ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
-        Private Sub SevSegMultiDigit_Resize(sender As Object, e As EventArgs)
-            ResizeSegments()
-        End Sub
 
 #End Region
 
@@ -124,30 +35,30 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
-        Public Property InactiveColor As Color
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
+        Public Property InactiveColor As System.Drawing.Color
             Get
-                Return _inactiveColor
+                Return Me._inactiveColor
             End Get
-            Set(value As Color)
-                _inactiveColor = value
-                UpdateSegments()
+            Set(value As System.Drawing.Color)
+                Me._inactiveColor = value
+                Me.UpdateSegments()
             End Set
         End Property
 
         ''' <summary>
         ''' Legt die Breite der LED-Segmente fest oder gibt diese zurück.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
         Public Property SegmentWidth As Integer
             Get
-                Return _segmentWidth
+                Return Me._segmentWidth
             End Get
             Set(value As Integer)
-                _segmentWidth = value
-                UpdateSegments()
+                Me._segmentWidth = value
+                Me.UpdateSegments()
             End Set
         End Property
 
@@ -157,44 +68,44 @@ Namespace SevenSegmentControl
         ''' <remarks>
         ''' Standardwert ist -0.1
         ''' </remarks>
-        <Category("Appearance")>
-        <Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
         Public Property ItalicFactor As Single
             Get
-                Return _italicFactor
+                Return Me._italicFactor
             End Get
             Set(value As Single)
-                _italicFactor = value
-                UpdateSegments()
+                Me._italicFactor = value
+                Me.UpdateSegments()
             End Set
         End Property
 
         ''' <summary>
         ''' Gibt an, ob die Dezimalpunkt-LED angezeigt wird.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
         Public Property ShowDecimalPoint As Boolean
             Get
-                Return _showDecimalPoint
+                Return Me._showDecimalPoint
             End Get
             Set(value As Boolean)
-                _showDecimalPoint = value
-                UpdateSegments()
+                Me._showDecimalPoint = value
+                Me.UpdateSegments()
             End Set
         End Property
 
         ''' <summary>
         ''' Anzahl der Digits in diesem Control.
         ''' </summary>
-        <Category("Appearance")>
-        <Description("Anzahl der Digits in diesem Control.")>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Anzahl der Digits in diesem Control.")>
         Public Property DigitCount As Integer
             Get
-                Return _digits.Length
+                Return Me._digits.Length
             End Get
             Set(value As Integer)
-                If value > 0 AndAlso value <= 100 Then CreateSegments(value)
+                If value > 0 AndAlso value <= 100 Then Me.CreateSegments(value)
             End Set
         End Property
 
@@ -205,15 +116,15 @@ Namespace SevenSegmentControl
         ''' Passen Sie diese Zahlen an, um das perfekte Erscheinungsbild für das Control
         ''' Ihrer Größe zu erhalten.
         ''' </remarks>
-        <Category("Appearance")>
-        <Description("Auffüllung, die für jedes Digit im Control gilt.")>
-        Public Property DigitPadding As Padding
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Auffüllung, die für jedes Digit im Control gilt.")>
+        Public Property DigitPadding As System.Windows.Forms.Padding
             Get
-                Return _digitPadding
+                Return Me._digitPadding
             End Get
-            Set(value As Padding)
-                _digitPadding = value
-                UpdateSegments()
+            Set(value As System.Windows.Forms.Padding)
+                Me._digitPadding = value
+                Me.UpdateSegments()
             End Set
         End Property
 
@@ -223,26 +134,26 @@ Namespace SevenSegmentControl
         ''' <remarks>
         ''' Kann Zahlen, bestimmte Buchstaben und Dezimalpunkte enthalten.
         ''' </remarks>
-        <Category("Appearance")>
-        <Description("Der auf dem Control anzuzeigende Wert.")>
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Der auf dem Control anzuzeigende Wert.")>
         Public Property Value As String
             Get
-                Return _value
+                Return Me._value
             End Get
             Set(value As String)
-                _value = value
-                For i = 0 To _digits.Length - 1
-                    _digits(i).CustomBitPattern = 0
-                    _digits(i).DecimalPointActive = False
+                Me._value = value
+                For i = 0 To Me._digits.Length - 1
+                    Me._digits(i).CustomBitPattern = 0
+                    Me._digits(i).DecimalPointActive = False
                 Next
-                If Not Equals(_value, Nothing) Then
+                If Not Equals(Me._value, Nothing) Then
                     Dim segmentIndex = 0
-                    For i = _value.Length - 1 To 0 Step -1
-                        If segmentIndex >= _digits.Length Then Exit For
-                        If _value(i) = "."c Then
-                            _digits(segmentIndex).DecimalPointActive = True
+                    For i = Me._value.Length - 1 To 0 Step -1
+                        If segmentIndex >= Me._digits.Length Then Exit For
+                        If Me._value(i) = "."c Then
+                            Me._digits(segmentIndex).DecimalPointActive = True
                         Else
-                            _digits(Math.Min(Threading.Interlocked.Increment(segmentIndex), segmentIndex - 1)).DigitValue = _value(i).ToString()
+                            Me._digits(System.Math.Min(System.Threading.Interlocked.Increment(segmentIndex), segmentIndex - 1)).DigitValue = Me._value(i).ToString()
                         End If
                     Next
                 End If
@@ -251,21 +162,21 @@ Namespace SevenSegmentControl
 
 #End Region
 
-#Region "geänderte Eigenschaften"
+#Region "überschriebene Eigenschaften"
 
         ''' <summary>
         ''' Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.
         ''' </summary>
         ''' <returns></returns>
-        <Category("Appearance")>
-        <Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
-        Public Overrides Property BackColor As Color
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
+        Public Overrides Property BackColor As System.Drawing.Color
             Get
-                Return _backgroundColor
+                Return Me._backgroundColor
             End Get
-            Set(value As Color)
-                _backgroundColor = value
-                UpdateSegments()
+            Set(value As System.Drawing.Color)
+                Me._backgroundColor = value
+                Me.UpdateSegments()
             End Set
         End Property
 
@@ -273,32 +184,28 @@ Namespace SevenSegmentControl
         ''' Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.
         ''' </summary>
         ''' <returns></returns>
-        <Category("Appearance")>
-        <Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
-        Public Overrides Property ForeColor As Color
+        <System.ComponentModel.Category("Appearance")>
+        <System.ComponentModel.Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
+        Public Overrides Property ForeColor As System.Drawing.Color
             Get
-                Return _foreColor
+                Return Me._foreColor
             End Get
-            Set(value As Color)
-                _foreColor = value
-                UpdateSegments()
+            Set(value As System.Drawing.Color)
+                Me._foreColor = value
+                Me.UpdateSegments()
             End Set
         End Property
-
-#End Region
-
-#Region "Ausgeblendete Eigenschaften"
 
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImage As Image
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage As System.Drawing.Image
             Get
                 Return MyBase.BackgroundImage
             End Get
-            Set(value As Image)
+            Set(value As System.Drawing.Image)
                 MyBase.BackgroundImage = value
             End Set
         End Property
@@ -306,13 +213,13 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImageLayout As ImageLayout
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout As System.Windows.Forms.ImageLayout
             Get
                 Return MyBase.BackgroundImageLayout
             End Get
-            Set(value As ImageLayout)
+            Set(value As System.Windows.Forms.ImageLayout)
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
@@ -320,19 +227,19 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property Font As Font
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property Font As System.Drawing.Font
             Get
                 Return MyBase.Font
             End Get
-            Set(value As Font)
+            Set(value As System.Drawing.Font)
                 MyBase.Font = value
             End Set
         End Property
 
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Text As String
             Get
                 Return MyBase.Text
@@ -345,28 +252,116 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property RightToLeft As RightToLeft
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property RightToLeft As System.Windows.Forms.RightToLeft
             Get
                 Return MyBase.RightToLeft
             End Get
-            Set(value As RightToLeft)
+            Set(value As System.Windows.Forms.RightToLeft)
                 MyBase.RightToLeft = value
             End Set
         End Property
 
 #End Region
 
-#Region "geänderte Methoden"
+#Region "öffentliche Methoden"
 
-        Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
-            e.Graphics.Clear(_backgroundColor)
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit"/>.
+        ''' </summary>
+        Public Sub New()
+            Me.SuspendLayout()
+            Me.Name = "SevSegMultiDigit"
+            Me.Size = New System.Drawing.Size(100, 25)
+            AddHandler Resize, New System.EventHandler(AddressOf Me.SevSegMultiDigit_Resize)
+            Me.ResumeLayout(False)
+            Me.TabStop = False
+            Me._digitPadding = New System.Windows.Forms.Padding(10, 4, 10, 4)
+            Me.CreateSegments(4)
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
+        ''' <summary>
+        ''' <para>Ändert die Anzahl der Elemente im LED-Array. </para>
+        ''' <para>Dadurch werden die vorherigen Elemente zerstört und an ihrer Stelle neue
+        ''' erstellt, </para>
+        ''' <para>wobei alle aktuellen Optionen auf die neuen angewendet werden.</para>
+        ''' </summary>
+        ''' <param name="count">Anzahl der zu erstellenden Elemente.</param>
+        Private Sub CreateSegments(count As Integer)
+            If Me._digits IsNot Nothing Then
+                For i = 0 To Me._digits.Length - 1
+                    Me._digits(i).Parent = Nothing
+                    Me._digits(i).Dispose()
+                Next
+            End If
+            If count <= 0 Then Return
+            Me._digits = New SingleDigit(count - 1) {}
+            For i = 0 To count - 1
+                Me._digits(i) = New SingleDigit With {
+                    .Parent = Me,
+                    .Top = 0,
+                    .Height = Me.Height,
+                    .Anchor = System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom,
+                    .Visible = True
+                }
+            Next
+            Me.ResizeSegments()
+            Me.UpdateSegments()
+            Me.Value = Me._value
+        End Sub
+
+        ''' <summary>
+        ''' Richtet die Elemente des Arrays so aus, dass sie genau in die Breite des
+        ''' übergeordneten Steuerelements passen.
+        ''' </summary>
+        Private Sub ResizeSegments()
+            Dim segWidth As Integer = CInt(Me.Width / Me._digits.Length)
+            For i = 0 To Me._digits.Length - 1
+                Me._digits(i).Left = CInt(Me.Width * (Me._digits.Length - 1 - i) / Me._digits.Length)
+                Me._digits(i).Width = segWidth
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften.
+        ''' </summary>
+        Private Sub UpdateSegments()
+            For i = 0 To Me._digits.Length - 1
+                Me._digits(i).BackColor = Me._backgroundColor
+                Me._digits(i).InactiveColor = Me._inactiveColor
+                Me._digits(i).ForeColor = Me._foreColor
+                Me._digits(i).SegmentWidth = Me._segmentWidth
+                Me._digits(i).ItalicFactor = Me._italicFactor
+                Me._digits(i).ShowDecimalPoint = Me._showDecimalPoint
+                Me._digits(i).Padding = Me._digitPadding
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Wird ausgeführt wenn die Größe des Controls geändert wird
+        ''' </summary>
+        ''' <param name="sender"></param>
+        ''' <param name="e"></param>
+        Private Sub SevSegMultiDigit_Resize(sender As Object, e As System.EventArgs)
+            Me.ResizeSegments()
         End Sub
 
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             Me.ResumeLayout(False)
+        End Sub
+
+#End Region
+
+#Region "überschriebene Methoden"
+
+        Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
+            e.Graphics.Clear(Me._backgroundColor)
         End Sub
 
 #End Region
