@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace SevenSegmentControl
 
     ''' <summary>
@@ -18,15 +16,50 @@ Namespace SevenSegmentControl
 
 #Region "Variablendefinition"
 
-        Private _digits As SingleDigit() = Nothing
-        Private _segmentWidth As Integer = 10
-        Private _italicFactor As Single = -0.1F
-        Private _backgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
-        Private _inactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
-        Private _foreColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
-        Private _showDecimalPoint As Boolean = True
-        Private _digitPadding As System.Windows.Forms.Padding
-        Private _value As String = Nothing
+        ''' <summary>
+        ''' Array der untergeordneten Einzelanzeigen (Digits), welche die Zeichen darstellen.
+        ''' </summary>
+        Private _Digits As SingleDigit() = Nothing
+
+        ''' <summary>
+        ''' Breite der LED-Segmente in Pixeln.
+        ''' </summary>
+        Private _SegmentWidth As Integer = 10
+
+        ''' <summary>
+        ''' Scherkoeffizient zur Simulation von Kursivschrift (negativ = nach links geneigt).
+        ''' </summary>
+        Private _ItalicFactor As Single = -0.1F
+
+        ''' <summary>
+        ''' Hintergrundfarbe des Controls.
+        ''' </summary>
+        Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
+
+        ''' <summary>
+        ''' Farbe, mit der inaktive Segmente gezeichnet werden.
+        ''' </summary>
+        Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
+
+        ''' <summary>
+        ''' Farbe, mit der aktive Segmente gezeichnet werden.
+        ''' </summary>
+        Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
+
+        ''' <summary>
+        ''' Gibt an, ob der Dezimalpunkt pro Digit sichtbar sein kann.
+        ''' </summary>
+        Private _ShowDecimalPoint As Boolean = True
+
+        ''' <summary>
+        ''' Innenabstand (Padding), der für jedes Digit angewendet wird.
+        ''' </summary>
+        Private _DigitPadding As System.Windows.Forms.Padding
+
+        ''' <summary>
+        ''' Der aktuell darzustellende Textwert.
+        ''' </summary>
+        Private _Value As String = Nothing
 
 #End Region
 
@@ -39,10 +72,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
         Public Property InactiveColor As System.Drawing.Color
             Get
-                Return Me._inactiveColor
+                Return Me._InactiveColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._inactiveColor = value
+                Me._InactiveColor = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -54,10 +87,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
         Public Property SegmentWidth As Integer
             Get
-                Return Me._segmentWidth
+                Return Me._SegmentWidth
             End Get
             Set(value As Integer)
-                Me._segmentWidth = value
+                Me._SegmentWidth = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -72,10 +105,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
         Public Property ItalicFactor As Single
             Get
-                Return Me._italicFactor
+                Return Me._ItalicFactor
             End Get
             Set(value As Single)
-                Me._italicFactor = value
+                Me._ItalicFactor = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -87,10 +120,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
         Public Property ShowDecimalPoint As Boolean
             Get
-                Return Me._showDecimalPoint
+                Return Me._ShowDecimalPoint
             End Get
             Set(value As Boolean)
-                Me._showDecimalPoint = value
+                Me._ShowDecimalPoint = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -102,7 +135,7 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Anzahl der Digits in diesem Control.")>
         Public Property DigitCount As Integer
             Get
-                Return Me._digits.Length
+                Return Me._Digits.Length
             End Get
             Set(value As Integer)
                 If value > 0 AndAlso value <= 100 Then Me.CreateSegments(value)
@@ -120,10 +153,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Auffüllung, die für jedes Digit im Control gilt.")>
         Public Property DigitPadding As System.Windows.Forms.Padding
             Get
-                Return Me._digitPadding
+                Return Me._DigitPadding
             End Get
             Set(value As System.Windows.Forms.Padding)
-                Me._digitPadding = value
+                Me._DigitPadding = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -138,22 +171,22 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Der auf dem Control anzuzeigende Wert.")>
         Public Property Value As String
             Get
-                Return Me._value
+                Return Me._Value
             End Get
             Set(value As String)
-                Me._value = value
-                For i = 0 To Me._digits.Length - 1
-                    Me._digits(i).CustomBitPattern = 0
-                    Me._digits(i).DecimalPointActive = False
+                Me._Value = value
+                For i = 0 To Me._Digits.Length - 1
+                    Me._Digits(i).CustomBitPattern = 0
+                    Me._Digits(i).DecimalPointActive = False
                 Next
-                If Not Equals(Me._value, Nothing) Then
+                If Not Equals(Me._Value, Nothing) Then
                     Dim segmentIndex = 0
-                    For i = Me._value.Length - 1 To 0 Step -1
-                        If segmentIndex >= Me._digits.Length Then Exit For
-                        If Me._value(i) = "."c Then
-                            Me._digits(segmentIndex).DecimalPointActive = True
+                    For i = Me._Value.Length - 1 To 0 Step -1
+                        If segmentIndex >= Me._Digits.Length Then Exit For
+                        If Me._Value(i) = "."c Then
+                            Me._Digits(segmentIndex).DecimalPointActive = True
                         Else
-                            Me._digits(System.Math.Min(System.Threading.Interlocked.Increment(segmentIndex), segmentIndex - 1)).DigitValue = Me._value(i).ToString()
+                            Me._Digits(System.Math.Min(System.Threading.Interlocked.Increment(segmentIndex), segmentIndex - 1)).DigitValue = Me._Value(i).ToString()
                         End If
                     Next
                 End If
@@ -172,10 +205,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
         Public Overrides Property BackColor As System.Drawing.Color
             Get
-                Return Me._backgroundColor
+                Return Me._BackgroundColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._backgroundColor = value
+                Me._BackgroundColor = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -188,10 +221,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
         Public Overrides Property ForeColor As System.Drawing.Color
             Get
-                Return Me._foreColor
+                Return Me._ForeColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._foreColor = value
+                Me._ForeColor = value
                 Me.UpdateSegments()
             End Set
         End Property
@@ -277,7 +310,7 @@ Namespace SevenSegmentControl
             AddHandler Resize, New System.EventHandler(AddressOf Me.SevSegMultiDigit_Resize)
             Me.ResumeLayout(False)
             Me.TabStop = False
-            Me._digitPadding = New System.Windows.Forms.Padding(10, 4, 10, 4)
+            Me._DigitPadding = New System.Windows.Forms.Padding(10, 4, 10, 4)
             Me.CreateSegments(4)
         End Sub
 
@@ -293,16 +326,16 @@ Namespace SevenSegmentControl
         ''' </summary>
         ''' <param name="count">Anzahl der zu erstellenden Elemente.</param>
         Private Sub CreateSegments(count As Integer)
-            If Me._digits IsNot Nothing Then
-                For i = 0 To Me._digits.Length - 1
-                    Me._digits(i).Parent = Nothing
-                    Me._digits(i).Dispose()
+            If Me._Digits IsNot Nothing Then
+                For i = 0 To Me._Digits.Length - 1
+                    Me._Digits(i).Parent = Nothing
+                    Me._Digits(i).Dispose()
                 Next
             End If
             If count <= 0 Then Return
-            Me._digits = New SingleDigit(count - 1) {}
+            Me._Digits = New SingleDigit(count - 1) {}
             For i = 0 To count - 1
-                Me._digits(i) = New SingleDigit With {
+                Me._Digits(i) = New SingleDigit With {
                     .Parent = Me,
                     .Top = 0,
                     .Height = Me.Height,
@@ -312,7 +345,7 @@ Namespace SevenSegmentControl
             Next
             Me.ResizeSegments()
             Me.UpdateSegments()
-            Me.Value = Me._value
+            Me.Value = Me._Value
         End Sub
 
         ''' <summary>
@@ -320,10 +353,10 @@ Namespace SevenSegmentControl
         ''' übergeordneten Steuerelements passen.
         ''' </summary>
         Private Sub ResizeSegments()
-            Dim segWidth As Integer = CInt(Me.Width / Me._digits.Length)
-            For i = 0 To Me._digits.Length - 1
-                Me._digits(i).Left = CInt(Me.Width * (Me._digits.Length - 1 - i) / Me._digits.Length)
-                Me._digits(i).Width = segWidth
+            Dim segWidth As Integer = CInt(Me.Width / Me._Digits.Length)
+            For i = 0 To Me._Digits.Length - 1
+                Me._Digits(i).Left = CInt(Me.Width * (Me._Digits.Length - 1 - i) / Me._Digits.Length)
+                Me._Digits(i).Width = segWidth
             Next
         End Sub
 
@@ -331,26 +364,29 @@ Namespace SevenSegmentControl
         ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften.
         ''' </summary>
         Private Sub UpdateSegments()
-            For i = 0 To Me._digits.Length - 1
-                Me._digits(i).BackColor = Me._backgroundColor
-                Me._digits(i).InactiveColor = Me._inactiveColor
-                Me._digits(i).ForeColor = Me._foreColor
-                Me._digits(i).SegmentWidth = Me._segmentWidth
-                Me._digits(i).ItalicFactor = Me._italicFactor
-                Me._digits(i).ShowDecimalPoint = Me._showDecimalPoint
-                Me._digits(i).Padding = Me._digitPadding
+            For i = 0 To Me._Digits.Length - 1
+                Me._Digits(i).BackColor = Me._BackgroundColor
+                Me._Digits(i).InactiveColor = Me._InactiveColor
+                Me._Digits(i).ForeColor = Me._ForeColor
+                Me._Digits(i).SegmentWidth = Me._SegmentWidth
+                Me._Digits(i).ItalicFactor = Me._ItalicFactor
+                Me._Digits(i).ShowDecimalPoint = Me._ShowDecimalPoint
+                Me._Digits(i).Padding = Me._DigitPadding
             Next
         End Sub
 
         ''' <summary>
-        ''' Wird ausgeführt wenn die Größe des Controls geändert wird
+        ''' Wird ausgeführt wenn die Größe des Controls geändert wird.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Auslösendes Objekt.</param>
+        ''' <param name="e">Ereignisdaten der Größenänderung.</param>
         Private Sub SevSegMultiDigit_Resize(sender As Object, e As System.EventArgs)
             Me.ResizeSegments()
         End Sub
 
+        ''' <summary>
+        ''' Initialisierungsmethode, die vom Designer verwendet wird.
+        ''' </summary>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             Me.ResumeLayout(False)
@@ -360,8 +396,12 @@ Namespace SevenSegmentControl
 
 #Region "überschriebene Methoden"
 
+        ''' <summary>
+        ''' Zeichnet den Hintergrund des Steuerelements in der festgelegten Hintergrundfarbe.
+        ''' </summary>
+        ''' <param name="e">Zeicheninformationen für das Hintergrundrendering.</param>
         Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
-            e.Graphics.Clear(Me._backgroundColor)
+            e.Graphics.Clear(Me._BackgroundColor)
         End Sub
 
 #End Region
