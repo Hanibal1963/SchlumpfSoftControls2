@@ -217,14 +217,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="NotifyFormControl\EnumDefinitions.vb" />
     <Compile Include="NotifyFormControl\FormTemplate.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NotifyFormControl\NotifyForm.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="NotifyFormControl\NotifyFormDesign.vb" />
-    <Compile Include="NotifyFormControl\NotifyFormStyle.vb" />
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
     <Compile Include="SevenSegmentControl\MultiDigit.vb">
