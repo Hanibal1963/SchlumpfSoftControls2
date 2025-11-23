@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace SevenSegmentControl
 
     ''' <summary>
@@ -20,19 +18,74 @@ Namespace SevenSegmentControl
 
 #Region "Variablendefinition"
 
+        ''' <summary>
+        ''' Sammlung der Eckpunkte für jedes der 7 Segmente (jedes Segment als Polygon mit 6 Punkten).
+        ''' </summary>
         Private ReadOnly _SegmentPoints As System.Drawing.Point()()
+
+        ''' <summary>
+        ''' Interne, fixe Höhe (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
+        ''' </summary>
         Private ReadOnly _DigitHeight As Integer = 80
+
+        ''' <summary>
+        ''' Interne, fixe Breite (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
+        ''' </summary>
         Private ReadOnly _DigitWidth As Integer = 48
+
+        ''' <summary>
+        ''' Aktuelle Segmentbreite (Dicke der LED-Balken) in Pixeln.
+        ''' </summary>
         Private _SegmentWidth As Integer = 10
+
+        ''' <summary>
+        ''' Scherfaktor zur Erzeugung einer kursiven Darstellung (negativ neigt nach links).
+        ''' </summary>
         Private _ItalicFactor As Single = -0.1F
+
+        ''' <summary>
+        ''' Zwischengespeicherte Hintergrundfarbe des Steuerelements.
+        ''' </summary>
         Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
+
+        ''' <summary>
+        ''' Farbe für inaktive (nicht leuchtende) Segmente.
+        ''' </summary>
         Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
+
+        ''' <summary>
+        ''' Vordergrundfarbe für aktive (leuchtende) Segmente.
+        ''' </summary>
         Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
+
+        ''' <summary>
+        ''' Zu darstellender Zeichenwert (Ziffer/Buchstabe/Sonderzeichen) als String.
+        ''' </summary>
         Private _DigitValue As String = Nothing
+
+        ''' <summary>
+        ''' Steuert, ob der Dezimalpunkt gezeichnet wird.
+        ''' </summary>
         Private _ShowDecimalPoint As Boolean = True
+
+        ''' <summary>
+        ''' Status des Dezimalpunktes (aktiv = leuchtend).
+        ''' </summary>
         Private _DecimalPointActive As Boolean = False
+
+        ''' <summary>
+        ''' Steuert, ob der Doppelpunkt (zwei Punkte) gezeichnet wird.
+        ''' </summary>
         Private _ShowColon As Boolean = False
+
+        ''' <summary>
+        ''' Status des Doppelpunkts (aktiv = beide Punkte leuchten).
+        ''' </summary>
         Private _ColonActive As Boolean = False
+
+        ''' <summary>
+        ''' Bitmaske für die 7 Segmente (Bit0..Bit6); ermöglicht benutzerdefinierte Muster.
+        ''' </summary>
         Private _CustomBitPattern As Integer = 0
 
 #End Region
@@ -46,10 +99,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
         Public Property InactiveColor As System.Drawing.Color
             Get
-                Return Me._inactiveColor
+                Return Me._InactiveColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._inactiveColor = value
+                Me._InactiveColor = value
                 Me.Invalidate()
             End Set
         End Property
@@ -61,11 +114,11 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
         Public Property SegmentWidth As Integer
             Get
-                Return Me._segmentWidth
+                Return Me._SegmentWidth
             End Get
             Set(value As Integer)
-                Me._segmentWidth = value
-                Me.CalculatePoints(Me._segmentPoints, Me._digitHeight, Me._digitWidth, Me._segmentWidth)
+                Me._SegmentWidth = value
+                Me.CalculatePoints(Me._SegmentPoints, Me._DigitHeight, Me._DigitWidth, Me._SegmentWidth)
                 Me.Invalidate()
             End Set
         End Property
@@ -74,16 +127,16 @@ Namespace SevenSegmentControl
         ''' Scherkoeffizient für die Kursivschrift der Anzeige.
         ''' </summary>
         ''' <remarks>
-        ''' Standarwert ist -0,1.
+        ''' Standardwert ist -0,1.
         ''' </remarks>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
         Public Property ItalicFactor As Single
             Get
-                Return Me._italicFactor
+                Return Me._ItalicFactor
             End Get
             Set(value As Single)
-                Me._italicFactor = value
+                Me._ItalicFactor = value
                 Me.Invalidate()
             End Set
         End Property
@@ -98,11 +151,11 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt das anzuzeigende Zeichen fest oder gibt dieses zurück.")>
         Public Property DigitValue As String
             Get
-                Return Me._digitValue
+                Return Me._DigitValue
             End Get
             Set(value As String)
-                Me._customBitPattern = 0
-                Me._digitValue = value
+                Me._CustomBitPattern = 0
+                Me._DigitValue = value
                 Me.Invalidate()
                 If Equals(value, Nothing) OrElse value.Length = 0 Then
                     Return
@@ -113,57 +166,57 @@ Namespace SevenSegmentControl
                     If tempValue < 0 Then tempValue = 0
                     'ist es eine ganze Zahl?
                     Select Case tempValue
-                        Case 0 : Me._customBitPattern = CharacterPattern.Zero
-                        Case 1 : Me._customBitPattern = CharacterPattern.One
-                        Case 2 : Me._customBitPattern = CharacterPattern.Two
-                        Case 3 : Me._customBitPattern = CharacterPattern.Three
-                        Case 4 : Me._customBitPattern = CharacterPattern.Four
-                        Case 5 : Me._customBitPattern = CharacterPattern.Five
-                        Case 6 : Me._customBitPattern = CharacterPattern.Six
-                        Case 7 : Me._customBitPattern = CharacterPattern.Seven
-                        Case 8 : Me._customBitPattern = CharacterPattern.Eight
-                        Case 9 : Me._customBitPattern = CharacterPattern.Nine
-                        Case 8 : Me._customBitPattern = CharacterPattern.Eight
-                        Case 9 : Me._customBitPattern = CharacterPattern.Nine
+                        Case 0 : Me._CustomBitPattern = CharacterPattern.Zero
+                        Case 1 : Me._CustomBitPattern = CharacterPattern.One
+                        Case 2 : Me._CustomBitPattern = CharacterPattern.Two
+                        Case 3 : Me._CustomBitPattern = CharacterPattern.Three
+                        Case 4 : Me._CustomBitPattern = CharacterPattern.Four
+                        Case 5 : Me._CustomBitPattern = CharacterPattern.Five
+                        Case 6 : Me._CustomBitPattern = CharacterPattern.Six
+                        Case 7 : Me._CustomBitPattern = CharacterPattern.Seven
+                        Case 8 : Me._CustomBitPattern = CharacterPattern.Eight
+                        Case 9 : Me._CustomBitPattern = CharacterPattern.Nine
+                        Case 8 : Me._CustomBitPattern = CharacterPattern.Eight
+                        Case 9 : Me._CustomBitPattern = CharacterPattern.Nine
                     End Select
                 Else
                     'ist es ein Buchstabe?
                     Select Case value(0)
-                        Case "A"c, "a"c : Me._customBitPattern = CharacterPattern.A
-                        Case "B"c, "b"c : Me._customBitPattern = CharacterPattern.B
-                        Case "C"c : Me._customBitPattern = CharacterPattern.C
-                        Case "c"c : Me._customBitPattern = CharacterPattern.cField
-                        Case "D"c, "d"c : Me._customBitPattern = CharacterPattern.D
-                        Case "E"c, "e"c : Me._customBitPattern = CharacterPattern.E
-                        Case "F"c, "f"c : Me._customBitPattern = CharacterPattern.F
-                        Case "G"c, "g"c : Me._customBitPattern = CharacterPattern.G
-                        Case "H"c : Me._customBitPattern = CharacterPattern.H
-                        Case "h"c : Me._customBitPattern = CharacterPattern.hField
-                        Case "I"c : Me._customBitPattern = CharacterPattern.One
-                        Case "i"c : Me._customBitPattern = CharacterPattern.i
-                        Case "J"c, "j"c : Me._customBitPattern = CharacterPattern.J
-                        Case "L"c, "l"c : Me._customBitPattern = CharacterPattern.L
-                        Case "N"c, "n"c : Me._customBitPattern = CharacterPattern.N
-                        Case "O"c : Me._customBitPattern = CharacterPattern.Zero
-                        Case "o"c : Me._customBitPattern = CharacterPattern.o
-                        Case "P"c, "p"c : Me._customBitPattern = CharacterPattern.P
-                        Case "Q"c, "q"c : Me._customBitPattern = CharacterPattern.Q
-                        Case "R"c, "r"c : Me._customBitPattern = CharacterPattern.R
-                        Case "S"c, "s"c : Me._customBitPattern = CharacterPattern.Five
-                        Case "T"c, "t"c : Me._customBitPattern = CharacterPattern.T
-                        Case "U"c : Me._customBitPattern = CharacterPattern.U
-                        Case "u"c, "µ"c, "μ"c : Me._customBitPattern = CharacterPattern.uField
-                        Case "Y"c, "y"c : Me._customBitPattern = CharacterPattern.Y
-                        Case "-"c : Me._customBitPattern = CharacterPattern.Dash
-                        Case "="c : Me._customBitPattern = CharacterPattern.Equals
-                        Case "°"c : Me._customBitPattern = CharacterPattern.Degrees
-                        Case "'"c : Me._customBitPattern = CharacterPattern.Apostrophe
-                        Case """"c : Me._customBitPattern = CharacterPattern.Quote
-                        Case "["c, "{"c : Me._customBitPattern = CharacterPattern.C
-                        Case "]"c, "}"c : Me._customBitPattern = CharacterPattern.RBracket
-                        Case "_"c : Me._customBitPattern = CharacterPattern.Underscore
-                        Case "≡"c : Me._customBitPattern = CharacterPattern.Identical
-                        Case "¬"c : Me._customBitPattern = CharacterPattern.Not
+                        Case "A"c, "a"c : Me._CustomBitPattern = CharacterPattern.A
+                        Case "B"c, "b"c : Me._CustomBitPattern = CharacterPattern.B
+                        Case "C"c : Me._CustomBitPattern = CharacterPattern.C
+                        Case "c"c : Me._CustomBitPattern = CharacterPattern.cField
+                        Case "D"c, "d"c : Me._CustomBitPattern = CharacterPattern.D
+                        Case "E"c, "e"c : Me._CustomBitPattern = CharacterPattern.E
+                        Case "F"c, "f"c : Me._CustomBitPattern = CharacterPattern.F
+                        Case "G"c, "g"c : Me._CustomBitPattern = CharacterPattern.G
+                        Case "H"c : Me._CustomBitPattern = CharacterPattern.H
+                        Case "h"c : Me._CustomBitPattern = CharacterPattern.hField
+                        Case "I"c : Me._CustomBitPattern = CharacterPattern.One
+                        Case "i"c : Me._CustomBitPattern = CharacterPattern.i
+                        Case "J"c, "j"c : Me._CustomBitPattern = CharacterPattern.J
+                        Case "L"c, "l"c : Me._CustomBitPattern = CharacterPattern.L
+                        Case "N"c, "n"c : Me._CustomBitPattern = CharacterPattern.N
+                        Case "O"c : Me._CustomBitPattern = CharacterPattern.Zero
+                        Case "o"c : Me._CustomBitPattern = CharacterPattern.o
+                        Case "P"c, "p"c : Me._CustomBitPattern = CharacterPattern.P
+                        Case "Q"c, "q"c : Me._CustomBitPattern = CharacterPattern.Q
+                        Case "R"c, "r"c : Me._CustomBitPattern = CharacterPattern.R
+                        Case "S"c, "s"c : Me._CustomBitPattern = CharacterPattern.Five
+                        Case "T"c, "t"c : Me._CustomBitPattern = CharacterPattern.T
+                        Case "U"c : Me._CustomBitPattern = CharacterPattern.U
+                        Case "u"c, "µ"c, "μ"c : Me._CustomBitPattern = CharacterPattern.uField
+                        Case "Y"c, "y"c : Me._CustomBitPattern = CharacterPattern.Y
+                        Case "-"c : Me._CustomBitPattern = CharacterPattern.Dash
+                        Case "="c : Me._CustomBitPattern = CharacterPattern.Equals
+                        Case "°"c : Me._CustomBitPattern = CharacterPattern.Degrees
+                        Case "'"c : Me._CustomBitPattern = CharacterPattern.Apostrophe
+                        Case """"c : Me._CustomBitPattern = CharacterPattern.Quote
+                        Case "["c, "{"c : Me._CustomBitPattern = CharacterPattern.C
+                        Case "]"c, "}"c : Me._CustomBitPattern = CharacterPattern.RBracket
+                        Case "_"c : Me._CustomBitPattern = CharacterPattern.Underscore
+                        Case "≡"c : Me._CustomBitPattern = CharacterPattern.Identical
+                        Case "¬"c : Me._CustomBitPattern = CharacterPattern.Not
                     End Select
                 End If
             End Set
@@ -179,10 +232,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten angezeigt werden soll.")>
         Public Property CustomBitPattern As Integer
             Get
-                Return Me._customBitPattern
+                Return Me._CustomBitPattern
             End Get
             Set(value As Integer)
-                Me._customBitPattern = value
+                Me._CustomBitPattern = value
                 Me.Invalidate()
             End Set
         End Property
@@ -194,10 +247,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
         Public Property ShowDecimalPoint As Boolean
             Get
-                Return Me._showDecimalPoint
+                Return Me._ShowDecimalPoint
             End Get
             Set(value As Boolean)
-                Me._showDecimalPoint = value
+                Me._ShowDecimalPoint = value
                 Me.Invalidate()
             End Set
         End Property
@@ -209,10 +262,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED aktiv ist.")>
         Public Property DecimalPointActive As Boolean
             Get
-                Return Me._decimalPointActive
+                Return Me._DecimalPointActive
             End Get
             Set(value As Boolean)
-                Me._decimalPointActive = value
+                Me._DecimalPointActive = value
                 Me.Invalidate()
             End Set
         End Property
@@ -224,10 +277,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Gibt an, ob die Doppelpunkt-LEDs angezeigt werden.")>
         Public Property ShowColon As Boolean
             Get
-                Return Me._showColon
+                Return Me._ShowColon
             End Get
             Set(value As Boolean)
-                Me._showColon = value
+                Me._ShowColon = value
                 Me.Invalidate()
             End Set
         End Property
@@ -239,10 +292,10 @@ Namespace SevenSegmentControl
         <System.ComponentModel.Description("Gibt an, ob die Doppelpunkt-LEDs aktiv sind.")>
         Public Property ColonActive As Boolean
             Get
-                Return Me._colonActive
+                Return Me._ColonActive
             End Get
             Set(value As Boolean)
-                Me._colonActive = value
+                Me._ColonActive = value
                 Me.Invalidate()
             End Set
         End Property
@@ -250,15 +303,15 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>Aktuelle Hintergrundfarbe.</returns>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
         Public Overrides Property BackColor As System.Drawing.Color
             Get
-                Return Me._backgroundColor
+                Return Me._BackgroundColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._backgroundColor = value
+                Me._BackgroundColor = value
                 Me.Invalidate()
             End Set
         End Property
@@ -266,21 +319,21 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>Aktuelle Segment-Vordergrundfarbe.</returns>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
         Public Overrides Property ForeColor As System.Drawing.Color
             Get
-                Return Me._foreColor
+                Return Me._ForeColor
             End Get
             Set(value As System.Drawing.Color)
-                Me._foreColor = value
+                Me._ForeColor = value
                 Me.Invalidate()
             End Set
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant.
+        ''' Ausgeblendet da nicht relevant für die Funktion der Anzeige.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
@@ -294,7 +347,7 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant.
+        ''' Ausgeblendet da nicht relevant für die Funktion der Anzeige.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
@@ -308,7 +361,7 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant.
+        ''' Ausgeblendet da nicht relevant für die Funktion der Anzeige.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
@@ -322,7 +375,7 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant.
+        ''' Ausgeblendet da nicht relevant für die Funktion der Anzeige.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
@@ -336,7 +389,7 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' ausgeblendet da nicht relevant.
+        ''' Ausgeblendet da nicht relevant für die Funktion der Anzeige.
         ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
@@ -354,7 +407,7 @@ Namespace SevenSegmentControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Wird ausgeführt wenn eine neue Instanz dieses Controls erstellt wird.
+        ''' Initialisiert eine neue Instanz der <see cref="SingleDigit"/>-Klasse.
         ''' </summary>
         Public Sub New()
             Me.SuspendLayout()
@@ -378,47 +431,46 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Tritt ein, wenn das Steuerelement neu gezeichnet wird.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Ereignisquelle.</param>
+        ''' <param name="e">Paint-Argumente mit Grafikobjekt.</param>
         Private Sub SevSegsingleDigit_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
-            Dim useValue = Me._customBitPattern
-            Dim brushLight As System.Drawing.Brush = New System.Drawing.SolidBrush(Me._foreColor)
-            Dim brushDark As System.Drawing.Brush = New System.Drawing.SolidBrush(Me._inactiveColor)
+            Dim useValue = Me._CustomBitPattern
+            Dim brushLight As System.Drawing.Brush = New System.Drawing.SolidBrush(Me._ForeColor)
+            Dim brushDark As System.Drawing.Brush = New System.Drawing.SolidBrush(Me._InactiveColor)
             'Definiert die Transformation für den Container ...
             Dim srcRect As System.Drawing.RectangleF
-            Dim colonWidth As Integer = CInt(Me._digitWidth / 4)
-            srcRect = If(Me._showColon,
-                New System.Drawing.RectangleF(0.0F, 0.0F, Me._digitWidth + colonWidth, Me._digitHeight),
-                New System.Drawing.RectangleF(0.0F, 0.0F, Me._digitWidth, Me._digitHeight))
+            Dim colonWidth As Integer = CInt(Me._DigitWidth / 4)
+            srcRect = If(Me._ShowColon,
+                New System.Drawing.RectangleF(0.0F, 0.0F, Me._DigitWidth + colonWidth, Me._DigitHeight),
+                New System.Drawing.RectangleF(0.0F, 0.0F, Me._DigitWidth, Me._DigitHeight))
             Dim destRect As New System.Drawing.RectangleF(Me.Padding.Left, Me.Padding.Top, Me.Width - Me.Padding.Left - Me.Padding.Right, Me.Height - Me.Padding.Top - Me.Padding.Bottom)
             'Grafikcontainer, der die Koordinaten neu zuordnet
             Dim containerState = e.Graphics.BeginContainer(destRect, srcRect, System.Drawing.GraphicsUnit.Pixel)
             Dim trans As New System.Drawing.Drawing2D.Matrix()
-            trans.Shear(Me._italicFactor, 0.0F)
+            trans.Shear(Me._ItalicFactor, 0.0F)
             e.Graphics.Transform = trans
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Default
             'Segmente zeichnen
-            Me.PaintSegments(e, useValue, brushLight, brushDark, Me._segmentPoints)
-            If Me._showDecimalPoint Then
-                e.Graphics.FillEllipse(If(Me._decimalPointActive, brushLight, brushDark), Me._digitWidth - 1, Me._digitHeight - Me._segmentWidth + 1, Me._segmentWidth, Me._segmentWidth)
+            Me.PaintSegments(e, useValue, brushLight, brushDark, Me._SegmentPoints)
+            If Me._ShowDecimalPoint Then
+                e.Graphics.FillEllipse(If(Me._DecimalPointActive, brushLight, brushDark), Me._DigitWidth - 1, Me._DigitHeight - Me._SegmentWidth + 1, Me._SegmentWidth, Me._SegmentWidth)
             End If
-            If Me._showColon Then
-                e.Graphics.FillEllipse(If(Me._colonActive, brushLight, brushDark), Me._digitWidth + colonWidth - 4, CInt((Me._digitHeight / 4) - Me._segmentWidth + 8), Me._segmentWidth, Me._segmentWidth)
-                e.Graphics.FillEllipse(If(Me._colonActive, brushLight, brushDark), Me._digitWidth + colonWidth - 4, CInt((Me._digitHeight * 3 / 4) - Me._segmentWidth + 4), Me._segmentWidth, Me._segmentWidth)
+            If Me._ShowColon Then
+                e.Graphics.FillEllipse(If(Me._ColonActive, brushLight, brushDark), Me._DigitWidth + colonWidth - 4, CInt((Me._DigitHeight / 4) - Me._SegmentWidth + 8), Me._SegmentWidth, Me._SegmentWidth)
+                e.Graphics.FillEllipse(If(Me._ColonActive, brushLight, brushDark), Me._DigitWidth + colonWidth - 4, CInt((Me._DigitHeight * 3 / 4) - Me._SegmentWidth + 4), Me._SegmentWidth, Me._SegmentWidth)
             End If
             e.Graphics.EndContainer(containerState)
         End Sub
 
-
         ''' <summary>
-        ''' Zeichnet die Segmente basierend darauf, ob das entsprechende Bit hoch ist
+        ''' Zeichnet die Segmente basierend auf den gesetzten Bits im Bitmuster.
         ''' </summary>
-        ''' <param name="e"></param>
-        ''' <param name="BitPattern"></param>
-        ''' <param name="BrushLight"></param>
-        ''' <param name="BrushDark"></param>
-        ''' <param name="SegmentPoints"></param>
+        ''' <param name="e">Paint-Ereignisargumente mit Grafik.</param>
+        ''' <param name="BitPattern">Bitmaske (Bit0..Bit6) für die 7 Segmente.</param>
+        ''' <param name="BrushLight">Pinsel für aktive Segmente.</param>
+        ''' <param name="BrushDark">Pinsel für inaktive Segmente.</param>
+        ''' <param name="SegmentPoints">Polygonpunkte je Segment.</param>
         Private Sub PaintSegments(e As System.Windows.Forms.PaintEventArgs, BitPattern As Integer, BrushLight As System.Drawing.Brush, BrushDark As System.Drawing.Brush, ByRef SegmentPoints As System.Drawing.Point()())
             e.Graphics.FillPolygon(If((BitPattern And &H1) = &H1, BrushLight, BrushDark), SegmentPoints(0))
             e.Graphics.FillPolygon(If((BitPattern And &H2) = &H2, BrushLight, BrushDark), SegmentPoints(1))
@@ -429,17 +481,13 @@ Namespace SevenSegmentControl
             e.Graphics.FillPolygon(If((BitPattern And &H40) = &H40, BrushLight, BrushDark), SegmentPoints(6))
         End Sub
 
-
         ''' <summary>
-        ''' <para>Berechnet die Punkte, die die Polygone der sieben Segmente darstellen,
-        ''' </para>
-        ''' <para>unabhängig davon, ob initialisiert oder die Segmentbreite geändert
-        ''' wird.</para>
+        ''' Berechnet die Polygonpunkte für alle sieben Segmente bei Initialisierung oder Segmentbreitenänderung.
         ''' </summary>
-        ''' <param name="SegmentCornerPoints"></param>
-        ''' <param name="DigitHeight"></param>
-        ''' <param name="DigitWidth"></param>
-        ''' <param name="SegmentWidth"></param>
+        ''' <param name="SegmentCornerPoints">Zielarray mit Punktdaten für die Segmente.</param>
+        ''' <param name="DigitHeight">Virtuelle Höhe der Ziffer.</param>
+        ''' <param name="DigitWidth">Virtuelle Breite der Ziffer.</param>
+        ''' <param name="SegmentWidth">Breite (Dicke) eines Segments.</param>
         Private Sub CalculatePoints(ByRef SegmentCornerPoints As System.Drawing.Point()(), DigitHeight As Integer, DigitWidth As Integer, SegmentWidth As Integer)
             Dim halfHeight As Integer = CInt(DigitHeight / 2)
             Dim halfWidth As Integer = CInt(SegmentWidth / 2)
@@ -537,10 +585,10 @@ Namespace SevenSegmentControl
         End Sub
 
         ''' <summary>
-        ''' Tritt beim Ändern der Größe des Steuerelements ein.
+        ''' Tritt beim Ändern der Größe des Steuerelements ein und invalidiert die Anzeige.
         ''' </summary>
-        ''' <param name="sender"></param>
-        ''' <param name="e"></param>
+        ''' <param name="sender">Ereignisquelle.</param>
+        ''' <param name="e">Argumente zum Resize-Ereignis.</param>
         Private Sub SevSegSingleDigit_Resize(sender As Object, e As System.EventArgs) Handles Me.Resize
             Me.Invalidate()
         End Sub
@@ -549,26 +597,23 @@ Namespace SevenSegmentControl
 
 #Region "überschriebene Methoden"
 
-
         ''' <summary>
-        ''' Löst das PaddingChanged-Ereignis aus.
+        ''' Löst das PaddingChanged-Ereignis aus und invalidiert die Anzeige.
         ''' </summary>
-        ''' <param name="e"></param>
+        ''' <param name="e">Ereignisargumente.</param>
         Protected Overrides Sub OnPaddingChanged(e As System.EventArgs)
             MyBase.OnPaddingChanged(e)
             Me.Invalidate()
         End Sub
 
-
         ''' <summary>
-        ''' Zeichnet den Hintergrund des Steuerelements.
+        ''' Zeichnet den Hintergrund des Steuerelements (überschreibt Standardverhalten).
         ''' </summary>
-        ''' <param name="e"></param>
+        ''' <param name="e">Paint-Argumente.</param>
         Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
             'MyBase.OnPaintBackground(e)
-            e.Graphics.Clear(Me._backgroundColor)
+            e.Graphics.Clear(Me._BackgroundColor)
         End Sub
-
 
         ''' <summary>
         ''' <para>Gibt nicht verwaltete Ressourcen frei und führt weitere
@@ -580,6 +625,9 @@ Namespace SevenSegmentControl
             MyBase.Finalize()
         End Sub
 
+        ''' <summary>
+        ''' Initialisiert Komponenten des Steuerelements (Designer-Unterstützung).
+        ''' </summary>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             Me.ResumeLayout(False)
