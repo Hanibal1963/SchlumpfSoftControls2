@@ -3,49 +3,38 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System.ComponentModel
-Imports System.Drawing
-Imports System.Windows.Forms
-
 Namespace TransparentLabelControl
 
     ''' <summary>
     ''' Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
     ''' </summary>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
-    <Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
-    <ToolboxItem(True)>
-    <ToolboxBitmap(GetType(TransparentLabelControl.TransparentLabel), "TransparentLabel.bmp")>
-    Public Class TransparentLabel
+    <System.ComponentModel.Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
+    <System.ComponentModel.ToolboxItem(True)>
+    <System.Drawing.ToolboxBitmap(GetType(TransparentLabelControl.TransparentLabel), "TransparentLabel.bmp")>
+    Public Class TransparentLabel : Inherits System.Windows.Forms.Label
 
-        Inherits Label
-
-        Private components As IContainer
+#Region "Variablendefinition"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz der <see cref="TransparentLabel"/>-Klasse.
+        ''' Container für verwaltete Komponenten dieses Steuerelements.
         ''' </summary>
-        Public Sub New()
-            'Dieser Aufruf ist für den Designer erforderlich.
-            InitializeComponent()
-            'Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
-            InitializeStyles()
-        End Sub
+        Private components As System.ComponentModel.IContainer
 
-#Region "ausgeblendete Eigenschaften"
+#End Region
+
+#Region "Eigenschaften"
 
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackColor As Color
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackColor As System.Drawing.Color
             Get
                 Return MyBase.BackColor
             End Get
-            Set(value As Color)
+            Set(value As System.Drawing.Color)
                 MyBase.BackColor = value
             End Set
         End Property
@@ -53,13 +42,13 @@ Namespace TransparentLabelControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImage As Image
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImage As System.Drawing.Image
             Get
                 Return MyBase.BackgroundImage
             End Get
-            Set(value As Image)
+            Set(value As System.Drawing.Image)
                 MyBase.BackgroundImage = value
             End Set
         End Property
@@ -67,13 +56,13 @@ Namespace TransparentLabelControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overrides Property BackgroundImageLayout As ImageLayout
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overrides Property BackgroundImageLayout As System.Windows.Forms.ImageLayout
             Get
                 Return MyBase.BackgroundImageLayout
             End Get
-            Set(value As ImageLayout)
+            Set(value As System.Windows.Forms.ImageLayout)
                 MyBase.BackgroundImageLayout = value
             End Set
         End Property
@@ -81,54 +70,55 @@ Namespace TransparentLabelControl
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
         ''' </summary>
-        <Browsable(False)>
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public Overloads Property FlatStyle As FlatStyle
+        <System.ComponentModel.Browsable(False)>
+        <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
+        Public Overloads Property FlatStyle As System.Windows.Forms.FlatStyle
             Get
                 Return MyBase.FlatStyle
             End Get
-            Set(value As FlatStyle)
+            Set(value As System.Windows.Forms.FlatStyle)
                 MyBase.FlatStyle = value
             End Set
         End Property
-
-#End Region
 
         ''' <summary>
         ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
         ''' </summary>
         ''' <returns>Die angepassten <see cref="CreateParams"/> mit aktiviertem WS_EX_TRANSPARENT-Stil.</returns>
-        Protected Overrides ReadOnly Property CreateParams As CreateParams
+        Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
             Get
-                Dim cp As CreateParams = MyBase.CreateParams
+                Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
                 ' WS EX TRANSPARENT aktivieren (https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles)
                 cp.ExStyle = cp.ExStyle Or &H20
                 Return cp
             End Get
         End Property
 
+#End Region
+
+#Region "öffentliche Methoden"
+
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz der <see cref="TransparentLabel"/>-Klasse.
+        ''' </summary>
+        Public Sub New()
+            'Dieser Aufruf ist für den Designer erforderlich.
+            Me.InitializeComponent()
+            'Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
+            Me.InitializeStyles()
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
         ''' <summary>
         ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
         ''' </summary>
         Private Sub InitializeStyles()
-            SetStyle(ControlStyles.Opaque, True)
-            SetStyle(ControlStyles.SupportsTransparentBackColor, True)
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, False)
-        End Sub
-
-        ''' <summary>
-        ''' Bereinigt die von der <see cref="TransparentLabel"/> verwendeten Ressourcen.
-        ''' </summary>
-        ''' <param name="disposing">Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
+            Me.SetStyle(System.Windows.Forms.ControlStyles.Opaque, True)
+            Me.SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, True)
+            Me.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, False)
         End Sub
 
         ''' <summary>
@@ -142,8 +132,29 @@ Namespace TransparentLabelControl
         ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
-            components = New Container()
+            Me.components = New System.ComponentModel.Container()
         End Sub
+
+#End Region
+
+#Region "überschriebene Methoden"
+
+        ''' <summary>
+        ''' Bereinigt die von der <see cref="TransparentLabel"/> verwendeten Ressourcen.
+        ''' </summary>
+        ''' <param name="disposing">Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.</param>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso Me.components IsNot Nothing Then
+                    Me.components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
 
     End Class
 
