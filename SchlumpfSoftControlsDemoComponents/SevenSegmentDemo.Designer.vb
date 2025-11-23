@@ -53,7 +53,7 @@ Partial Class SevenSegmentDemo
         'TextBoxMulti
         '
         Me.TextBoxMulti.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBoxMulti.Location = New System.Drawing.Point(176, 131)
+        Me.TextBoxMulti.Location = New System.Drawing.Point(188, 131)
         Me.TextBoxMulti.MaxLength = 7
         Me.TextBoxMulti.Name = "TextBoxMulti"
         Me.TextBoxMulti.ScrollBars = System.Windows.Forms.ScrollBars.Both
@@ -82,7 +82,7 @@ Partial Class SevenSegmentDemo
         Me.MultiDigit1.Name = "MultiDigit1"
         Me.MultiDigit1.SegmentWidth = 10
         Me.MultiDigit1.ShowDecimalPoint = True
-        Me.MultiDigit1.Size = New System.Drawing.Size(263, 44)
+        Me.MultiDigit1.Size = New System.Drawing.Size(275, 44)
         Me.MultiDigit1.TabIndex = 15
         Me.MultiDigit1.TabStop = False
         Me.MultiDigit1.Value = Nothing
@@ -116,7 +116,7 @@ Partial Class SevenSegmentDemo
         Me.Controls.Add(Me.TextBoxMulti)
         Me.Controls.Add(Me.TextBoxSingle)
         Me.Name = "SevenSegmentDemo"
-        Me.Size = New System.Drawing.Size(302, 253)
+        Me.Size = New System.Drawing.Size(341, 253)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
