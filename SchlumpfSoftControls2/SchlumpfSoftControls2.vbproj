@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
+    <Compile Include="SevenSegmentControl\EnumDefinitions.vb" />
     <Compile Include="SevenSegmentControl\MultiDigit.vb">
       <SubType>Component</SubType>
     </Compile>
