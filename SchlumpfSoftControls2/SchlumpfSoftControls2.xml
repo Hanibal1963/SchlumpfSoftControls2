@@ -32,7 +32,7 @@ FramesPerSecond</seealso>
 StartAnimation</seealso>
       <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
 StopAnimation</seealso>
-      <seealso cref="InitLayout">
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
 InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.Gif">
@@ -76,7 +76,7 @@ Gif</seealso>
 StartAnimation</seealso>
       <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
 StopAnimation</seealso>
-      <seealso cref="InitLayout">
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
 InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
@@ -106,7 +106,7 @@ GifSizeMode</seealso>
 SizeMode.Zoom</seealso>
       <seealso cref="CheckZoomFactorValue(Decimal)">
 CheckZoomFactorValue</seealso>
-      <seealso cref="OnPaint(System.Windows.Forms.PaintEventArgs)">
+      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint(System.Windows.Forms.PaintEventArgs)">
 OnPaint</seealso>
       <seealso cref="GetRectStartSize(SizeMode,AniGif,System.Drawing.Bitmap,Decimal)">
 GetRectStartSize</seealso>
@@ -179,6 +179,26 @@ Startet die Animation (falls noch nicht aktiv).</summary>
       <summary>
 Stoppt die Animation und beendet Timer sowie ImageAnimator.</summary>
     </member>
+    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
+      <summary>
+Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.</summary>
+      <remarks>
+Stoppt vorher eine bestehende Animation um Mehrfach-Registrierungen zu vermeiden.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint(System.Windows.Forms.PaintEventArgs)">
+      <summary>
+Zeichnet das aktuelle Frame des GIFs unter Berücksichtigung der Skalierung.</summary>
+      <remarks>
+Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.</remarks>
+      <param name="e">
+Zeicheninformationen.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose(System.Boolean)">
+      <summary>
+Gibt Ressourcen frei und stoppt ggf. laufende Animationen.</summary>
+      <param name="disposing">
+True um verwaltete Ressourcen freizugeben.</param>
+    </member>
     <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose">
       <summary>
 IDisposable Support</summary>
@@ -216,328 +236,6 @@ Die Größe der Grafik wird einheitlich skaliert, sodass sie in den verfügbaren
 Die Grafik wird so skaliert, dass der verfügbare Bereich vollständig gefüllt wird; zentrierte Ausrichtung.</summary>
       <remarks>
 <list type="bullet"><item><description>Kleinere Grafiken werden vergrößert, größere verkleinert. </description></item><item><description>Abhängig von der Implementierung kann entweder das Seitenverhältnis beibehalten werden (dann erfolgt Zuschnitt an gegenüberliegenden Kanten), oder die Grafik wird an das Seitenverhältnis des Controls angepasst (mögliche Verzerrung).</description></item></list></remarks>
-    </member>
-    <member name="N:SchlumpfSoft.Controls.ColorProgressBarControl">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar">
-      <summary>
-Control zum Anzeigen eines farbigen Fortschrittbalkens.</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Click">
-      <summary>
-Tritt auf, wenn auf das Steuerelement oder einen seiner sichtbaren Bereiche geklickt wird.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Value">
-      <summary>
-Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ProgressMaximumValue">
-      <summary>
-Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BarColor">
-      <summary>
-Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.EmptyColor">
-      <summary>
-Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.</summary>
-      <value>
-Die aktuell eingestellte Farbe für den leeren Bereich.</value>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BorderColor">
-      <summary>
-Gibt die Farbe des Rahmens zurück oder legt diese fest.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ShowBorder">
-      <summary>
-Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.IsGlossy">
-      <summary>
-Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackColor">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackgroundImage">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BackgroundImageLayout">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.BorderStyle">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.ForeColor">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Padding">
-      <summary>
-Ausgeblendet da nicht relevant.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.EmptyColor1">
-      <summary>
-Interne Eigenschaft für die Farbe des leeren Bereichs (Backing für <see cref="EmptyColor" />).</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.#ctor">
-      <summary>
-Initialisiert eine neue Instanz der <see cref="ColorProgressBar" />-Klasse und setzt Standardwerte.</summary>
-    </member>
-    <member name="N:SchlumpfSoft.Controls.DriveWatcherControl">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs">
-      <summary>
-Übergibt die Argumente für das hinzugefügte Laufwerk.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveName">
-      <summary>
-Ruft den Namen eines Laufwerks ab, z.B. C:\.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.VolumeLabel">
-      <summary>
-Ruft die Volumebezeichnung eines Laufwerks ab oder legt diese fest.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.AvailableFreeSpace">
-      <summary>
-Gibt die Gesamtmenge an verfügbarem freiem Speicherplatz in Bytes an, die auf einem Laufwerk verfügbar ist.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalFreeSpace">
-      <summary>
-Ruft die Gesamtmenge an freiem Speicherplatz in Bytes ab, die auf einem Laufwerk verfügbar ist.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalSize">
-      <summary>
-Ruft die Gesamtgröße des Speicherplatzes in Bytes auf einem Laufwerk ab.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveFormat">
-      <summary>
-Ruft den Namen des Dateisystems ab, z. B. NTFS oder FAT32.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveType">
-      <summary>
-Ruft den Laufwerkstyp ab, wie z. B. CD-ROM, Wechseldatenträger, Netzlaufwerk oder lokales Festplattenlaufwerk.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.IsReady">
-      <summary>
-Ruft einen Wert ab, der angibt, ob ein Laufwerk bereit ist.</summary>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs">
-      <summary>
-Übergibt das entfernte Laufwerk.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs.DriveName">
-      <summary>
-Ruft den Namen eines Laufwerks ab, z.B. C:\.</summary>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher">
-      <summary>
-Steuerelement um die Laufwerke zu überwachen.</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveAdded">
-      <summary>
-Wird ausgelöst wenn ein Laufwerk hinzugefügt wurde.</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveRemoved">
-      <summary>
-Wird ausgelöst wenn ein Laufwerk entfernt wurde.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.#ctor">
-    </member>
-    <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.#ctor(System.ComponentModel.IContainer)">
-      <param name="container">
-</param>
-    </member>
-    <member name="N:SchlumpfSoft.Controls.ExtendedRTFControl">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions">
-      <summary>
-Definition der API-Funktionen</summary>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF">
-      <summary>
-Erweiterte <see cref="System.Windows.Forms.RichTextBox" /> mit bequemen Formatierungs- und Abfrage-Hilfen (Schriftgröße, Stil-Flags, Farben, Einzüge, Ausrichtung) sowie Batch-Update (Redraw-Suppression).</summary>
-      <remarks>
-<para>Redraw-Suppression (verringerte Flackereffekte) über verschachteltes <see cref="System.Windows.Forms.RichTextBox.BeginUpdate" /> / <see cref="System.Windows.Forms.RichTextBox.EndUpdate" /> mittels <c>WM_SETREDRAW</c>.</para> <para>Mischzustände (uneinheitliche Formatierung in einer Auswahl) werden als <c>Nothing</c> (Nullable) dargestellt – soweit implementiert (z.B. Stil-Flags, Schriftgröße, Einzug).</para> <para>Vorder-/Hintergrundfarbe melden aktuell keinen Mischzustand (immer konkreter Wert).</para></remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.#ctor">
-      <summary>
-Erzeugt eine neue Instanz der erweiterten RichTextBox.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ClearFormatting">
-      <summary>
-Entfernt Formatierungen (Schriftstil, Vorder-/Hintergrundfarbe, Bullet-Aufzählung) vollständig aus aktueller Auswahl oder – ohne Auswahl – ab der Caret-Position.</summary>
-      <remarks>
-Optimiert: Wendet die Normalisierung einmal auf die gesamte Auswahl an (statt per Zeichen).</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SetSelectionAlignment(System.Windows.Forms.HorizontalAlignment)">
-      <summary>
-Setzt die horizontale Ausrichtung der aktuellen Absatz-/Absatzauswahl.</summary>
-      <param name="alignment">
-Die gewünschte horizontale Ausrichtung.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleBold">
-      <summary>
-Schaltet Fettdruck für aktuelle Auswahl bzw. Caret um.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleItalic">
-      <summary>
-Schaltet Kursiv für aktuelle Auswahl bzw. Caret um.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleUnderline">
-      <summary>
-Schaltet Unterstreichung für aktuelle Auswahl bzw. Caret um.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleStrikeout">
-      <summary>
-Schaltet Durchstreichung für aktuelle Auswahl bzw. Caret um.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleBullet">
-      <summary>
-Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.</summary>
-      <remarks>
-Funktioniert nur auf Absatzebene (SelectionLength=0 -&gt; aktueller Absatz).</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionFontSize">
-      <summary>
-Setzt die Schriftgröße der Auswahl oder Größe am Caret oder gibt diese zurück.</summary>
-      <remarks>
-Ein Mischzustand ergibt Nothing.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionBold">
-      <summary>
-Setzt den Bold-Zustand der Auswahl oder am Caret oder gibt diesen zurück.</summary>
-      <remarks>
-Ein Mischzustand ergibt Nothing.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionItalic">
-      <summary>
-Setzt den Kursiv-Zustand der Auswahl oder am Caret oder gibt diesen zurück.</summary>
-      <remarks>
-Ein Mischzustand ergibt Nothing.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionUnderline">
-      <summary>
-Setzt die Unterstreichung der Auswahl oder am Caret oder gibt diesen zurück.</summary>
-      <remarks>
-Ein Mischzustand ergibt Nothing.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionStrikeout">
-      <summary>
-Setzt die Durchstreichung der Auswahl oder am Caret oder gibt diesen zurück.</summary>
-      <remarks>
-Ein Mischzustand ergibt Nothing.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionForeColor">
-      <summary>
-Setzt die aktuelle Vordergrundfarbe (Textfarbe) der Auswahl oder am Caret oder gibt diese zurück.</summary>
-      <remarks>
-<para>Meldet keinen Mischzustand (immer konkreter Wert). </para> <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.</para></remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionBackColor">
-      <summary>
-Setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl oder am Caret oder gibt diese zurück.</summary>
-      <remarks>
-<para>Meldet keinen Mischzustand (immer konkreter Wert).</para> <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.</para></remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionLeftIndent">
-      <summary>
-Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurück.</summary>
-      <remarks>
-<para>Ein Mischzustand ergibt Nothing.</para> <para>Der Einzug wird immer für den gesamten Absatz gesetzt (SelectionLength wird intern ignoriert).</para></remarks>
-    </member>
-    <member name="N:SchlumpfSoft.Controls.FileSearchControl">
-    </member>
-    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearch">
-      <summary>
-Führt eine (optionale rekursive) asynchrone Dateisuche anhand eines Suchmusters aus und meldet Ergebnisse sowie Fortschritt über Ereignisse.</summary>
-      <remarks>
-<para>Die Suche läuft in einem ThreadPool-Thread (via <see cref="Task.Run(System.Action)" />). </para> <para>Events werden (über <see cref="SimpleProgress(Of T)" />) typischerweise auf dem Ersteller- Synchronisierungskontext (z. B. UI-Thread) aufgerufen, sofern beim Start vorhanden. </para> <para>Ein erneuter Aufruf von <see cref="StartSearchAsync" /> beendet eine laufende Suche vor Start der neuen. </para> <para>Es erfolgt eine doppelte Enumeration (Zählen + Iterieren), was bei sehr vielen Dateien Performance kosten kann.</para></remarks>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.FileFound">
-      <summary>
-Wird für jede gefundene Datei ausgelöst.</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchCompleted">
-      <summary>
-Wird nach Abschluss oder Abbruch der Suche ausgelöst.</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ErrorOccurred">
-      <summary>
-Meldet aufgetretene Fehler (z. B. fehlende Zugriffsrechte, ungültiger Pfad).</summary>
-    </member>
-    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ProgressChanged">
-      <summary>
-Meldet aggregierte Fortschrittsinformationen (Anzahl gefunden, Gesamtzahl, Prozent).</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartPath">
-      <summary>
-Startverzeichnis der Suche (Initialwert ist String.Empty).</summary>
-      <remarks>
-Änderungen wirken sich auf nachfolgende Aufrufe von <see cref="StartSearchAsync" /> aus.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchPattern">
-      <summary>
-Suchmuster (z. B. *.txt). (Standardwert ist "*.*").</summary>
-      <remarks>
-Mehrere Muster werden nicht unterstützt; für komplexere Filterung eigenes Matching vornehmen.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchInSubfolders">
-      <summary>
-Gibt an, ob die Suche rekursiv in Unterordnern erfolgen soll. (Standardwert ist False).</summary>
-      <remarks>
-Kann Performance und Dauer der Suche stark verlängern bei tiefen Verzeichnisstrukturen.</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor">
-      <summary>
-Erstellt eine neue Instanz der <see cref="FileSearch" /> Komponente.</summary>
-      <remarks>
-Verwendet <see cref="InitializeComponent" /> zur Designer-Initialisierung.</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor(System.ComponentModel.IContainer)">
-      <summary>
-Erstellt eine neue Instanz und fügt sie optional einem übergebenen Komponenten-Container hinzu.</summary>
-      <remarks>
-Ermöglicht Designtime-Komposition in Windows Forms.</remarks>
-      <param name="container">
-Ein vorhandener <see cref="System.ComponentModel.IContainer" />, dem die Instanz hinzugefügt wird, oder <c>Nothing</c>.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartSearchAsync">
-      <summary>
-Startet eine neue asynchrone Dateisuche gemäß den aktuell gesetzten Parametern.</summary>
-      <remarks>
-<para>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige zuerst kooperativ abgebrochen.</para> <para>Ergebnisse und Fortschritt werden über die Ereignisse <see cref="FileFound" />, <see cref="ProgressChanged" /> und <see cref="SearchCompleted" /> gemeldet.</para> <para>Fehler während der Enumeration lösen <see cref="ErrorOccurred" /> aus und beenden die Suche.</para></remarks>
-      <returns>
-Ein <see cref="System.Threading.Tasks.Task" />, das den Abschluss der Suchoperation repräsentiert.</returns>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StopSearch">
-      <summary>
-Bricht eine eventuell laufende Suche ab.</summary>
-      <remarks>
-Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.</remarks>
-    </member>
-    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs">
-      <summary>
-Stellt Fortschrittsinformationen für den Datei-Suchvorgang bereit und wird beim <c>ProgressChanged</c>-Ereignis der Dateisuche übergeben.</summary>
-      <remarks>
-Die Werte werden bei jeder gefundenen Datei aktualisiert. Es wird kein Thread-Sicherheits- garantiert; Konsumenten sollten nur lesend zugreifen.</remarks>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Percent">
-      <summary>
-<para>Prozentualer Fortschritt (0–100). </para> <para>Wird aus <see cref="Found" /> und <see cref="Total" /> berechnet. </para> <para>Ist 0, wenn keine Dateien gezählt wurden oder die Berechnung noch nicht erfolgt ist.</para></summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Found">
-      <summary>
-Anzahl der bislang gefundenen (und gemeldeten) Dateien.</summary>
-    </member>
-    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Total">
-      <summary>
-<para>Gesamtanzahl der zu erwartenden Dateien gemäß aktueller Zählung. </para> <para>Kann 0 sein, wenn kein Treffer vorliegt oder die Gesamtmenge nicht ermittelt werden konnte.</para></summary>
     </member>
   </members>
 </doc>

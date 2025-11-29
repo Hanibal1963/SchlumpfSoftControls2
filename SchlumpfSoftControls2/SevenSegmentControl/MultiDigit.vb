@@ -14,7 +14,7 @@ Namespace SevenSegmentControl
     <System.Drawing.ToolboxBitmap(GetType(SevenSegmentControl.MultiDigit), "MultiDigit.bmp")>
     Public Class MultiDigit : Inherits System.Windows.Forms.Control
 
-#Region "Variablendefinition"
+#Region "Variablen"
 
         ''' <summary>
         ''' Array der untergeordneten Einzelanzeigen (Digits), welche die Zeichen darstellen.
@@ -63,7 +63,7 @@ Namespace SevenSegmentControl
 
 #End Region
 
-#Region "neue Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
         ''' Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.
@@ -192,10 +192,6 @@ Namespace SevenSegmentControl
                 End If
             End Set
         End Property
-
-#End Region
-
-#Region "überschriebene Eigenschaften"
 
         ''' <summary>
         ''' Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.

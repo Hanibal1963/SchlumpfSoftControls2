@@ -108,7 +108,7 @@ Namespace IniFileControl
         ''' Gibt den Text der Titelzeile (GroupBox) zurück oder legt diesen fest.
         ''' </summary>
         ''' <remarks>
-        ''' Das Setzen löst intern <see cref="TitelTextChanged"/> aus, wodurch der UI-Text aktualisiert wird.
+        ''' Das Setzen löst intern <see cref="TextChanged"/> aus, wodurch der UI-Text aktualisiert wird.
         ''' </remarks>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
@@ -132,7 +132,7 @@ Namespace IniFileControl
         ''' <remarks>
         ''' - Jede Array-Position entspricht einer Zeile in der Textbox.
         ''' - Änderungserkennung erfolgt per <see cref="Enumerable.SequenceEqual(Of TSource)"/>.
-        ''' - Das Setzen löst intern <see cref="PropCommentChanged"/> aus, wodurch die Textbox synchronisiert wird.
+        ''' - Das Setzen löst intern <see cref="CommentChanged"/> aus, wodurch die Textbox synchronisiert wird.
         ''' </remarks>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>

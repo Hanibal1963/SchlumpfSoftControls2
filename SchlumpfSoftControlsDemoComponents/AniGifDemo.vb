@@ -33,13 +33,13 @@ Public Class AniGifDemo
         'Anzeigemodus umschalten
         Select Case CType(sender, ComboBox).SelectedIndex
             Case 0
-                Me.AniGif.GifSizeMode = SizeMode.Normal
+                Me.AniGif.GifSizeMode = ImageSizeMode.Normal
             Case 1
-                Me.AniGif.GifSizeMode = SizeMode.CenterImage
+                Me.AniGif.GifSizeMode = ImageSizeMode.CenterImage
             Case 2
-                Me.AniGif.GifSizeMode = SizeMode.Zoom
+                Me.AniGif.GifSizeMode = ImageSizeMode.Zoom
             Case 3
-                Me.AniGif.GifSizeMode = SizeMode.Fill
+                Me.AniGif.GifSizeMode = ImageSizeMode.Fill
         End Select
     End Sub
 

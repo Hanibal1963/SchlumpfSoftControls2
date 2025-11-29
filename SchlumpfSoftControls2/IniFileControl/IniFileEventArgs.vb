@@ -1,5 +1,5 @@
 ﻿' *************************************************************************************************
-' IniFileEventArgsDefinitions.vb
+' IniFileEventArgs.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
@@ -65,7 +65,7 @@ Namespace IniFileControl
     ''' Transportiert Kontextinformationen, wenn der Wert eines INI-Eintrags editiert wurde.
     ''' </summary>
     ''' <remarks>
-    ''' Typisches Einsatzszenario: Wird als <see cref="EventArgs"/> bei einem Ereignis (z. B. "EntryValueEdited")
+    ''' Typisches Einsatzszenario: Wird als <see cref="system.EventArgs"/> bei einem Ereignis (z. B. "EntryValueEdited")
     ''' verwendet, um die betroffene Sektion, den Eintragsnamen und den neuen Wert an die Event-Handler zu übergeben.
     ''' </remarks>
     Public Class EntryValueEditEventArgs : Inherits System.EventArgs
@@ -107,7 +107,7 @@ Namespace IniFileControl
     ''' innerhalb einer INI-Abschnittsstruktur.
     ''' </summary>
     ''' <remarks>
-    ''' Diese Klasse wird typischerweise als <see cref="EventArgs"/>-Ableitung in Ereignissen verwendet, 
+    ''' Diese Klasse wird typischerweise als <see cref="system.EventArgs"/>-Ableitung in Ereignissen verwendet, 
     ''' die eine Listeneintrag-Operation beschreiben. 
     ''' 
     ''' Bedeutungen der Felder/Eigenschaften:

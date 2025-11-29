@@ -516,7 +516,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Wird ausgelöst, bevor ein Knoten erweitert wird.
         ''' </summary>
-        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="sender">Das auslösende <see cref="System.Windows.Forms.TreeView"/>-Steuerelement.</param>
         ''' <param name="e">Ereignisargumente mit dem Knoten der erweitert werden soll.</param>
         ''' <remarks>
         ''' Abhängig vom Typ des Knotens werden die entsprechenden Unterordner geladen.
@@ -535,7 +535,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Tritt ein, wenn der Strukturknoten erweitert wurde.
         ''' </summary>
-        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="sender">Das auslösende <see cref="System.Windows.Forms.TreeView"/>-Steuerelement.</param>
         ''' <param name="e">Ereignisargumente mit dem erweiterten Knoten.</param>
         Private Sub TV_AfterExpand(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterExpand
 
@@ -546,7 +546,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Tritt ein, wenn der Strukturknoten reduziert wurde.
         ''' </summary>
-        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="sender">Das auslösende <see cref="System.Windows.Forms.TreeView"/>-Steuerelement.</param>
         ''' <param name="e">Ereignisargumente mit dem reduzierten Knoten.</param>
         Private Sub TV_AfterCollapse(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterCollapse
 
@@ -562,7 +562,7 @@ Namespace ExplorerTreeViewControl
         ''' Diese Methode ist wichtig, um sicherzustellen, dass der aktuell ausgewählte Pfad immer korrekt ist,
         ''' und ermöglicht anderen Teilen der Anwendung, auf Änderungen im ausgewählten Pfad zu reagieren.
         ''' </summary>
-        ''' <param name="sender">Das auslösende <see cref="TreeView"/>-Steuerelement.</param>
+        ''' <param name="sender">Das auslösende <see cref="System.Windows.Forms.TreeView"/>-Steuerelement.</param>
         ''' <param name="e">Ereignisargumente mit dem ausgewählten Knoten.</param>
         Private Sub TV_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterSelect
 

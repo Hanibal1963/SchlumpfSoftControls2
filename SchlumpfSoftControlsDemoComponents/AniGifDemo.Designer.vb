@@ -91,7 +91,7 @@ Partial Class AniGifDemo
         Me.AniGif.CustomDisplaySpeed = False
         Me.AniGif.FramesPerSecond = New Decimal(New Integer() {10, 0, 0, 0})
         Me.AniGif.Gif = CType(resources.GetObject("AniGif.Gif"), System.Drawing.Bitmap)
-        Me.AniGif.GifSizeMode = SchlumpfSoft.Controls.AniGifControl.SizeMode.Normal
+        Me.AniGif.GifSizeMode = SchlumpfSoft.Controls.AniGifControl.AniGif.ImageSizeMode.Normal
         Me.AniGif.Location = New System.Drawing.Point(3, 3)
         Me.AniGif.Name = "AniGif"
         Me.TableLayoutPanel.SetRowSpan(Me.AniGif, 5)

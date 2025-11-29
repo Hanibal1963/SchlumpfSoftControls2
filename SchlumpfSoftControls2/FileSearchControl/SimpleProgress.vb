@@ -15,8 +15,7 @@ Namespace FileSearchControl
     ''' Rückruf direkt synchron ausgeführt.</para>
     ''' </summary>
     ''' <remarks>
-    ''' <para>Diese Klasse ist eine schlanke Alternative zu <see cref="IProgress(Of
-    ''' T)"/> bzw. <see cref="Progress(Of T)"/>. </para>
+    ''' <para>Diese Klasse ist eine schlanke Alternative zu "IProgress(Of T)" bzw. "Progress(Of T)". </para>
     ''' <para>Sie führt keine zusätzliche Thread-Sicherheitslogik ein; Mehrfachaufrufe
     ''' von <see cref="Report"/> können parallel erfolgen.</para>
     ''' </remarks>
@@ -41,7 +40,7 @@ Namespace FileSearchControl
         ''' </summary>
         ''' <param name="callback">Delegat, der bei jedem Aufruf von <see cref="Report"/>
         ''' mit dem gemeldeten Wert ausgeführt wird.</param>
-        ''' <exception cref="ArgumentNullException">Wird ausgelöst, wenn <paramref name="callback"/> <c>Nothing</c> ist.</exception>
+        ''' <exception cref="system.ArgumentNullException">Wird ausgelöst, wenn <paramref name="callback"/> <c>Nothing</c> ist.</exception>
         Public Sub New(callback As System.Action(Of T))
             If callback Is Nothing Then Throw New System.ArgumentNullException(NameOf(callback))
             _callback = callback

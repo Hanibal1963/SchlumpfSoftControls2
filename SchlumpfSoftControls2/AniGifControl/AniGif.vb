@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System.Drawing
-
 Namespace AniGifControl
 
     ''' <summary>
@@ -18,7 +16,7 @@ Namespace AniGifControl
 
         Implements System.IDisposable
 
-#Region "Variablendefinitionen"
+#Region "Variablen"
 
         ''' <summary>
         ''' Bildwiederholrate (Frames pro Sekunde) für die Animation, sofern <see
@@ -29,7 +27,7 @@ Namespace AniGifControl
         ''' <para>Dezimalwerte sind möglich (z. B. 12,5). </para>
         ''' <para>Negative oder 0-Werte sind ungültig.</para>
         ''' </remarks>
-        Private _FramesPerSecond As Decimal
+        Private _FramesPerSecond As Decimal = 10
 
         ''' <summary>
         ''' Die Dimension der animierten Frames im GIF.
@@ -66,7 +64,7 @@ Namespace AniGifControl
         ''' Konkreter Startzeitpunkt und -auslöser (z. B. beim Laden des GIFs oder beim
         ''' Anzeigen des Steuerelements) hängen von der Steuerelementlogik ab.
         ''' </remarks>
-        Private _Autoplay As Boolean
+        Private _Autoplay As Boolean = False
 
         ''' <summary>
         ''' Zoomfaktor für die Darstellung.
@@ -76,7 +74,7 @@ Namespace AniGifControl
         ''' <para>(Werte&#160;kleiner oder gleich&#160;0 sind ungültig.)</para>
         ''' <para>Die Wirkung kann von <see cref="_GifSizeMode"/> abhängen.</para>
         ''' </remarks>
-        Private _ZoomFactor As Decimal
+        Private _ZoomFactor As Decimal = 50
 
         ''' <summary>
         ''' Kennzeichnet, ob eine benutzerdefinierte Anzeigegeschwindigkeit aktiv ist.
@@ -87,7 +85,7 @@ Namespace AniGifControl
         ''' <para>(Entspricht der öffentlichen Eigenschaft <see
         ''' cref="CustomDisplaySpeed"/>.)</para>
         ''' </remarks>
-        Private _CustomDisplaySpeed As Boolean
+        Private _CustomDisplaySpeed As Boolean = False
 
         ''' <summary>
         ''' Aktuell verwendeter Anzeigemodus für das GIF (Skalierung/Ausrichtung).
@@ -98,7 +96,7 @@ Namespace AniGifControl
         ''' <para>(Beeinflusst ausschließlich die Darstellung, nicht die
         ''' Animationsdaten.)</para>
         ''' </remarks>
-        Private _GifSizeMode As SizeMode
+        Private _GifSizeMode As ImageSizeMode = ImageSizeMode.Normal
 
         ''' <summary>
         ''' Referenz auf das aktuell geladene GIF-Bitmap.
@@ -107,7 +105,7 @@ Namespace AniGifControl
         ''' <para>Die AniGif-Control übernimmt Ownership und ruft <c>Dispose()</c> beim Wechsel oder im eigenen <see cref="Dispose(Boolean)"/> auf.</para>
         ''' <para>(Kann <c>Nothing</c> sein; dann wird ein Standardbild verwendet.)</para>
         ''' </remarks>
-        Private _Gif As Bitmap
+        Private _Gif As System.Drawing.Bitmap = My.Resources.Standard
 
 
         ''' <summary>
@@ -149,7 +147,126 @@ Namespace AniGifControl
 
 #End Region
 
-#Region "Ereignisdefinitionen"
+#Region "Aufzählungen"
+
+        ''' <summary>
+        ''' Legt fest, wie eine Grafik innerhalb der verfügbaren Client-Fläche eines
+        ''' Controls angezeigt wird.
+        ''' </summary>
+        ''' <remarks>
+        ''' Die Anzeigemodi bestimmen Ausrichtung und Skalierung der Grafik in Bezug auf die
+        ''' Größe des Controls. <list type="bullet">
+        '''  <item>
+        '''   <description> <see cref="ImageSizeMode.Normal"/><b>:</b> Keine Skalierung;
+        ''' Ausrichtung oben links. </description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="ImageSizeMode.CenterImage"/><b>:</b> Keine Skalierung;
+        ''' zentriert. </description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="ImageSizeMode.Zoom"/><b>:</b> Einheitliche Skalierung,
+        ''' sodass die Grafik vollständig in den verfügbaren Bereich passt
+        ''' (letterboxing/pillarboxing möglich). </description>
+        '''  </item>
+        '''  <item>
+        '''   <description><see cref="ImageSizeMode.Fill"/><b>:</b> Skalierung, sodass der
+        ''' verfügbare Bereich vollständig gefüllt wird (Zuschnitt oder Verzerrung abhängig
+        ''' von der Implementierung möglich). </description>
+        '''  </item>
+        ''' </list>
+        ''' </remarks>
+        ''' <seealso cref="System.Drawing.Image"/>
+        ''' <seealso cref="System.Windows.Forms.Control"/>
+        Public Enum ImageSizeMode
+
+            ''' <summary>
+            ''' Die Grafik wird in Originalgröße angezeigt; Ausrichtung erfolgt oben links.
+            ''' </summary>
+            ''' <remarks>
+            ''' <list type="bullet">
+            '''  <item>
+            '''   <description>Es findet keine Skalierung statt. </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Ist die Grafik größer als das Control, werden nicht sichtbare
+            ''' Bereiche an den Rändern abgeschnitten. </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Ist die Grafik kleiner, bleibt der restliche Bereich des Controls
+            ''' leer.</description>
+            '''  </item>
+            ''' </list>
+            ''' </remarks>
+            Normal = 0
+
+            ''' <summary>
+            ''' Die Grafik wird in Originalgröße zentriert angezeigt.
+            ''' </summary>
+            ''' <remarks>
+            ''' <list type="bullet">
+            '''  <item>
+            '''   <description>Es findet keine Skalierung statt. </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Ist die Grafik größer als das Control, werden an den Rändern
+            ''' nicht anzeigbare Teile abgeschnitten. </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Ist die Grafik kleiner, entstehen umlaufende Ränder (leere
+            ''' Flächen).</description>
+            '''  </item>
+            ''' </list>
+            ''' </remarks>
+            CenterImage = 1
+
+            ''' <summary>
+            ''' Die Größe der Grafik wird einheitlich skaliert, sodass sie in den verfügbaren
+            ''' Bereich des Controls passt; zentrierte Ausrichtung (1–100%).
+            ''' </summary>
+            ''' <remarks>
+            ''' <list type="bullet">
+            '''  <item>
+            '''   <description>Das Seitenverhältnis bleibt erhalten (keine Verzerrung).
+            ''' </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Die Grafik passt immer vollständig in das Control; ggf. mit
+            ''' Rändern oben/unten oder links/rechts. </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Eine Vergrößerung über 100% kann je nach Implementierung
+            ''' unterbunden werden.</description>
+            '''  </item>
+            ''' </list>
+            ''' </remarks>
+            Zoom = 2
+
+            ''' <summary>
+            ''' Die Grafik wird so skaliert, dass der verfügbare Bereich vollständig gefüllt
+            ''' wird; zentrierte Ausrichtung.
+            ''' </summary>
+            ''' <remarks>
+            ''' <list type="bullet">
+            '''  <item>
+            '''   <description>Kleinere Grafiken werden vergrößert, größere verkleinert.
+            ''' </description>
+            '''  </item>
+            '''  <item>
+            '''   <description>Abhängig von der Implementierung kann entweder das
+            ''' Seitenverhältnis beibehalten werden (dann erfolgt Zuschnitt an
+            ''' gegenüberliegenden Kanten), oder die Grafik wird an das Seitenverhältnis des
+            ''' Controls angepasst (mögliche Verzerrung).</description>
+            '''  </item>
+            ''' </list>
+            ''' </remarks>
+            Fill = 3
+
+        End Enum
+
+#End Region
+
+#Region "Ereignisse"
 
         ''' <summary>
         ''' Wird ausgelöst wenn die Grafik nicht animiert werden kann.
@@ -176,7 +293,7 @@ Namespace AniGifControl
 
 #End Region
 
-#Region "neue Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
         ''' Steuert, ob die GIF‑Animation automatisch gestartet wird, sobald ein Bild
@@ -223,21 +340,6 @@ Namespace AniGifControl
         ''' <value>
         ''' <c>True</c>, um die Animation automatisch zu starten; andernfalls <c>False</c>. Standard: <c>False</c>.
         ''' </value>
-        ''' <example>
-        ''' Beispiel: <code language="vb"><![CDATA[
-        ''' ' Automatisch abspielen (Geschwindigkeit aus GIF)
-        ''' AniGif1.Gif = My.Resources.Standard
-        ''' AniGif1.CustomDisplaySpeed = False
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' Benutzerdefinierte Geschwindigkeit (z. B. 15 FPS) und starten
-        ''' AniGif1.CustomDisplaySpeed = True
-        ''' AniGif1.FramesPerSecond = 15D
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' Animation explizit stoppen (Timer + Animator)
-        ''' AniGif1.StopAnimation()]]></code>
-        ''' </example>
         ''' <seealso cref="Gif"/>
         ''' <seealso cref="CustomDisplaySpeed"/>
         ''' <seealso cref="FramesPerSecond"/>
@@ -247,6 +349,7 @@ Namespace AniGifControl
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Legt fest ob die Animation sofort nach dem laden gestartet wird.")>
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0049:Namen vereinfachen", Justification:="<Ausstehend>")>
         Public Property AutoPlay() As Boolean
             Get
                 Return _Autoplay
@@ -298,23 +401,6 @@ Namespace AniGifControl
         ''' <value>
         ''' Das anzuzeigende <see cref="System.Drawing.Bitmap"/>. Bei <c>Nothing</c> wird ein Standard‑GIF aus den Ressourcen verwendet.
         ''' </value>
-        ''' <example>
-        ''' Beispiel: <code language="vb"><![CDATA[
-        ''' ' 1) GIF aus Ressourcen, automatische Geschwindigkeit aus der Datei
-        ''' AniGif1.Gif = My.Resources.Standard
-        ''' AniGif1.CustomDisplaySpeed = False
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' 2) GIF aus Datei, benutzerdefinierte Geschwindigkeit (15 FPS)
-        ''' Dim bmp As New System.Drawing.Bitmap("C:\Bilder\loader.gif")
-        ''' AniGif1.Gif = bmp              ' Kontrolle übernimmt Ownership von bmp
-        ''' AniGif1.CustomDisplaySpeed = True
-        ''' AniGif1.FramesPerSecond = 15D
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' 3) Auf Standard zurücksetzen
-        ''' AniGif1.Gif = Nothing]]></code>
-        ''' </example>
         ''' <seealso cref="AutoPlay"/>
         ''' <seealso cref="CustomDisplaySpeed"/>
         ''' <seealso cref="FramesPerSecond"/>
@@ -337,21 +423,21 @@ Namespace AniGifControl
         ''' ihn fest.
         ''' </summary>
         ''' <remarks>
-        ''' <b>Verhalten je Modus:</b> <para>- <see cref="SizeMode.Normal"/>: Das Bild wird
+        ''' <b>Verhalten je Modus:</b> <para>- <see cref="ImageSizeMode.Normal"/>: Das Bild wird
         ''' unverändert an Position (0,0) gezeichnet. Ist das Bild größer als das Control,
         ''' wird es abgeschnitten.</para>
-        ''' <para>- <see cref="SizeMode.CenterImage"/>: Das Bild wird unverändert zentriert
+        ''' <para>- <see cref="ImageSizeMode.CenterImage"/>: Das Bild wird unverändert zentriert
         ''' gezeichnet. Es kann abgeschnitten werden, wenn es größer als das Control
         ''' ist.</para>
-        ''' <para>- <see cref="SizeMode.Zoom"/>: Das Bild wird proportional skaliert und
+        ''' <para>- <see cref="ImageSizeMode.Zoom"/>: Das Bild wird proportional skaliert und
         ''' zentriert. Die Skalierung richtet sich nach <see cref="ZoomFactor"/> (1–100%).
         ''' Die Berechnung orientiert sich an der Controlgröße, das Seitenverhältnis bleibt
         ''' erhalten.</para>
-        ''' <para>- <see cref="SizeMode.Fill"/>: Das Bild wird proportional so skaliert,
+        ''' <para>- <see cref="ImageSizeMode.Fill"/>: Das Bild wird proportional so skaliert,
         ''' dass das Control vollständig gefüllt wird. Dadurch kann das Bild an einer Seite
         ''' zugeschnitten werden; es wird zentriert gezeichnet.</para>
-        ''' <b> Rendering:</b> <para>Für <see cref="SizeMode.Zoom"/> und <see
-        ''' cref="SizeMode.Fill"/> werden hochwertige Interpolations- und
+        ''' <b> Rendering:</b> <para>Für <see cref="ImageSizeMode.Zoom"/> und <see
+        ''' cref="ImageSizeMode.Fill"/> werden hochwertige Interpolations- und
         ''' Glättungseinstellungen (HighQualityBicubic, HighQuality) verwendet, um die
         ''' Bildqualität bei der Skalierung zu verbessern.</para>
         '''  Ablauf/Seiteneffekte: <para>Beim Setzen dieser Eigenschaft wird das Control
@@ -360,53 +446,40 @@ Namespace AniGifControl
         ''' eigener Ereignis-Callback ausgelöst.</para>
         ''' <b> Hinweise:</b> <para>- Der Standardwert wird in <c>InitializeValues</c> gesetzt.</para>
         ''' <para>- <see cref="ZoomFactor"/> wirkt ausschließlich, wenn der Modus <see
-        ''' cref="SizeMode.Zoom"/> aktiv ist.</para>
+        ''' cref="ImageSizeMode.Zoom"/> aktiv ist.</para>
         ''' <para>- Die Eigenschaft ist im Designer sichtbar (Kategorie "Behavior").</para>
         ''' </remarks>
         ''' <value>
-        ''' Einer der <see cref="SizeMode"/>-Werte: <list type="bullet">
+        ''' Einer der <see cref="ImageSizeMode"/>-Werte: <list type="bullet">
         '''  <item>
-        '''   <description><see cref="SizeMode.Normal"/>: Bild in Originalgröße, oben
+        '''   <description><see cref="ImageSizeMode.Normal"/>: Bild in Originalgröße, oben
         ''' links.</description>
         '''  </item>
         '''  <item>
-        '''   <description><see cref="SizeMode.CenterImage"/>: Bild in Originalgröße,
+        '''   <description><see cref="ImageSizeMode.CenterImage"/>: Bild in Originalgröße,
         ''' zentriert.</description>
         '''  </item>
         '''  <item>
-        '''   <description><see cref="SizeMode.Zoom"/>: Proportionale Skalierung nach <see
+        '''   <description><see cref="ImageSizeMode.Zoom"/>: Proportionale Skalierung nach <see
         ''' cref="ZoomFactor"/>, zentriert.</description>
         '''  </item>
         '''  <item>
-        '''   <description><see cref="SizeMode.Fill"/>: Proportionale Skalierung, Control
+        '''   <description><see cref="ImageSizeMode.Fill"/>: Proportionale Skalierung, Control
         ''' wird vollständig gefüllt (ggf. Zuschnitt), zentriert.</description>
         '''  </item>
         ''' </list>
-        '''  Standardwert ist <see cref="SizeMode.Normal"/>.
+        '''  Standardwert ist <see cref="ImageSizeMode.Normal"/>.
         ''' </value>
-        ''' <example>
-        ''' Beispiel: <code language="vb"><![CDATA[
-        '''  ' Bild proportional zoomen und auf 75% skalieren
-        '''  AniGif1.GifSizeMode = SizeMode.Zoom
-        '''  AniGif1.ZoomFactor = 75D
-        '''  
-        '''  ' Bild zentriert in Originalgröße anzeigen
-        '''  AniGif1.GifSizeMode = SizeMode.CenterImage
-        '''  
-        '''  ' Bild das Control ausfüllen lassen (möglicher Zuschnitt)
-        '''  AniGif1.GifSizeMode = SizeMode.Fill
-        '''  ]]></code>
-        ''' </example>
         ''' <seealso cref="ZoomFactor"/>
         ''' <seealso cref="Gif"/>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Gibt die Art wie die Grafik angezeigt wird zurück oder legt diese fest.")>
-        Public Property GifSizeMode() As SizeMode
+        Public Property GifSizeMode() As SchlumpfSoft.Controls.AniGifControl.AniGif.ImageSizeMode
             Get
                 Return _GifSizeMode
             End Get
-            Set(value As SizeMode)
+            Set(value As ImageSizeMode)
                 Me.SetGifSizeMode(value)
             End Set
         End Property
@@ -459,23 +532,6 @@ Namespace AniGifControl
         ''' <value>
         ''' <c>True</c>, um die Anzeigegeschwindigkeit über <see cref="FramesPerSecond"/> zu steuern; andernfalls <c>False</c>, um die im GIF hinterlegte Geschwindigkeit to verwenden. Standard: <c>False</c>.
         ''' </value>
-        ''' <example>
-        ''' Beispiel: <code language="vb"><![CDATA[
-        ''' ' 1) Geschwindigkeit aus GIF-Datei verwenden
-        ''' AniGif1.CustomDisplaySpeed = False
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' 2) Benutzerdefinierte Geschwindigkeit (24 FPS) verwenden
-        ''' AniGif1.CustomDisplaySpeed = True
-        ''' AniGif1.FramesPerSecond = 24D
-        ''' AniGif1.AutoPlay = True
-        '''  
-        ''' ' 3) Zur GIF-Geschwindigkeit zurückkehren
-        ''' AniGif1.CustomDisplaySpeed = False
-        '''  
-        ''' ' 4) Animation vollständig stoppen (Timer + Animator)
-        ''' AniGif1.StopAnimation()]]></code>
-        ''' </example>
         ''' <seealso cref="AutoPlay"/>
         ''' <seealso cref="FramesPerSecond"/>
         ''' <seealso cref="Gif"/>
@@ -548,20 +604,6 @@ Namespace AniGifControl
         ''' <value>
         ''' Zielwert in Bildern pro Sekunde (1–50). Werte außerhalb des Bereichs werden automatisch korrigiert. Standard: <c>10</c>.
         ''' </value>
-        ''' <example>
-        ''' Beispiel: <code language="vb"><![CDATA[
-        '''  ' Benutzerdefinierte Geschwindigkeit aktivieren und während der Laufzeit ändern
-        '''  AniGif1.CustomDisplaySpeed = True
-        '''  AniGif1.FramesPerSecond = 12.5D   ' Dezimalwerte möglich, Intervall wird gerundet
-        '''  AniGif1.AutoPlay = True           ' Sichtbare Animation aktivieren
-        '''  
-        '''  ' Später schneller machen
-        '''  AniGif1.FramesPerSecond = 24D
-        '''  
-        '''  ' Zur GIF-internen Geschwindigkeit zurückkehren
-        '''  AniGif1.CustomDisplaySpeed = False
-        '''  ]]></code>
-        ''' </example>
         ''' <seealso cref="CustomDisplaySpeed"/>
         ''' <seealso cref="AutoPlay"/>
         ''' <seealso cref="StartAnimation"/>
@@ -588,7 +630,7 @@ Namespace AniGifControl
         ''' <b>Geltungsbereich:</b>
         ''' <list type="bullet">
         '''  <item>
-        '''   <description>Wirksam nur, wenn <see cref="GifSizeMode"/> auf <see cref="SizeMode.Zoom"/> steht. In den Modi <see cref="SizeMode.Normal"/>, <see cref="SizeMode.CenterImage"/> und <see cref="SizeMode.Fill"/> hat der Wert keine Auswirkung auf die Darstellung.</description>
+        '''   <description>Wirksam nur, wenn <see cref="GifSizeMode"/> auf <see cref="ImageSizeMode.Zoom"/> steht. In den Modi <see cref="ImageSizeMode.Normal"/>, <see cref="ImageSizeMode.CenterImage"/> und <see cref="ImageSizeMode.Fill"/> hat der Wert keine Auswirkung auf die Darstellung.</description>
         '''  </item>
         ''' </list>
         ''' <b>Wertebereich und Validierung:</b>
@@ -597,7 +639,7 @@ Namespace AniGifControl
         '''   <description>Zulässiger Bereich: <c>1</c> bis <c>100</c> (%). Abweichungen werden in <see cref="CheckZoomFactorValue(Decimal)"/> automatisch begrenzt.</description>
         '''  </item>
         '''  <item>
-        '''   <description>Dezimalwerte sind erlaubt (z. B. <c>62.5</c>). Intern wird in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)"/> der Faktor als Dezimalwert zwischen <c>0</c> und <c>1</c> verwendet (<c>_ZoomFactor / 100</c>) und an <see cref="GetRectStartSize(SizeMode, AniGif, System.Drawing.Bitmap, Decimal)"/> übergeben.</description>
+        '''   <description>Dezimalwerte sind erlaubt (z. B. <c>62.5</c>). Intern wird in <see cref="OnPaint(System.Windows.Forms.PaintEventArgs)"/> der Faktor als Dezimalwert zwischen <c>0</c> und <c>1</c> verwendet (<c>_ZoomFactor / 100</c>) und an <see cref="GetRectStartSize(ImageSizeMode, AniGif, System.Drawing.Bitmap, Decimal)"/> übergeben.</description>
         '''  </item>
         ''' </list>
         ''' <b>Laufzeitverhalten:</b>
@@ -618,7 +660,7 @@ Namespace AniGifControl
         ''' <b>Interaktion mit anderen Eigenschaften:</b>
         ''' <list type="bullet">
         '''  <item>
-        '''   <description><see cref="GifSizeMode"/>: Muss auf <see cref="SizeMode.Zoom"/> stehen, damit der Wert sichtbar wird.</description>
+        '''   <description><see cref="GifSizeMode"/>: Muss auf <see cref="ImageSizeMode.Zoom"/> stehen, damit der Wert sichtbar wird.</description>
         '''  </item>
         '''  <item>
         '''   <description><see cref="AutoPlay"/> / <see cref="CustomDisplaySpeed"/> / <see cref="FramesPerSecond"/>: Beeinflussen nur die Animation, nicht die Skalierung. <c>ZoomFactor</c> wirkt unabhängig davon.</description>
@@ -638,26 +680,11 @@ Namespace AniGifControl
         ''' <value>
         ''' Zoomfaktor in Prozent im Bereich <c>1</c>–<c>100</c>. Werte außerhalb werden automatisch korrigiert. Standard: <c>50</c>.
         ''' </value>
-        ''' <example>
-        ''' Beispiel:
-        ''' <code language="vb"><![CDATA[
-        ''' ' Bild proportional auf 75% skalieren (Zoom-Modus erforderlich)
-        ''' AniGif1.GifSizeMode = SizeMode.Zoom
-        ''' AniGif1.ZoomFactor = 75D
-        ''' 
-        ''' ' Feinstufiger Zoom mit Dezimalwerten
-        ''' AniGif1.ZoomFactor = 62.5D
-        ''' 
-        ''' ' Wechsel in einen Modus, in dem ZoomFactor keine Wirkung hat
-        ''' AniGif1.GifSizeMode = SizeMode.CenterImage
-        ''' ' ... Darstellung bleibt jetzt unabhängig vom ZoomFactor unverändert
-        ''' ]]></code>
-        ''' </example>
         ''' <seealso cref="GifSizeMode"/>
-        ''' <seealso cref="SizeMode.Zoom"/>
+        ''' <seealso cref="ImageSizeMode.Zoom"/>
         ''' <seealso cref="CheckZoomFactorValue(Decimal)"/>
         ''' <seealso cref="OnPaint(System.Windows.Forms.PaintEventArgs)"/>
-        ''' <seealso cref="GetRectStartSize(SizeMode, AniGif, System.Drawing.Bitmap, Decimal)"/>
+        ''' <seealso cref="GetRectStartSize(ImageSizeMode, AniGif, System.Drawing.Bitmap, Decimal)"/>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Legt den Zoomfaktor fest wenn GifSizeMode auf Zoom festgelegt ist.")>
@@ -669,10 +696,6 @@ Namespace AniGifControl
                 Me.SetZoomFactor(value)
             End Set
         End Property
-
-#End Region
-
-#Region "ausgeblendete Eigenschaften"
 
         ''' <summary>
         ''' Ausgeblendet da für dieses Control nicht relevant.
@@ -906,7 +929,7 @@ Namespace AniGifControl
 
 #End Region
 
-#Region "überladene und überschriebene Methoden"
+#Region "überschriebene Methoden"
 
         ''' <summary>
         ''' Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.
@@ -942,7 +965,7 @@ Namespace AniGifControl
             Dim rectstartpoint As System.Drawing.Point = Me.GetRectStartPoint(_GifSizeMode, Me, _Gif, rectstartsize) 'Startpunkt der Zeichenfläche berechnen
 
             ' Qualitätsverbesserung nur bei Skalierung
-            If _GifSizeMode = SizeMode.Zoom OrElse _GifSizeMode = SizeMode.Fill Then
+            If _GifSizeMode = ImageSizeMode.Zoom OrElse _GifSizeMode = ImageSizeMode.Fill Then
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
@@ -984,7 +1007,7 @@ Namespace AniGifControl
 
 #End Region
 
-#Region "interne Ereignisbehandlungen"
+#Region "Interne Methoden"
 
         ''' <summary>
         ''' Reagiert auf den Wechsel des GIF-Bildes und initialisiert Animationsparameter.
@@ -1061,10 +1084,6 @@ Namespace AniGifControl
             End If
         End Sub
 
-#End Region
-
-#Region "Interne Methoden"
-
         ''' <summary>
         ''' <para>Initialisiert die Komponenten des Steuerelements.</para>
         ''' <para><b>Achtung!</b></para>
@@ -1092,12 +1111,12 @@ Namespace AniGifControl
         ''' Setzt die Standardwerte für die wichtigsten Variablen der AniGif Control.
         ''' </summary>
         Private Sub InitializeValues()
-            _Gif = My.Resources.Standard ' Standard-GIF aus den Ressourcen laden
-            _Autoplay = False                   ' Animation startet nicht automatisch
-            _GifSizeMode = SizeMode.Normal      ' GIF wird in Originalgröße angezeigt
-            _CustomDisplaySpeed = False         ' Keine benutzerdefinierte Geschwindigkeit
-            _FramesPerSecond = 10               ' Standard: 10 Bilder pro Sekunde
-            _ZoomFactor = 50                    ' Standard-Zoomfaktor: 50%
+            '_Gif = My.Resources.Standard ' Standard-GIF aus den Ressourcen laden
+            '_Autoplay = False                   ' Animation startet nicht automatisch
+            '_GifSizeMode = ImageSizeMode.Normal      ' GIF wird in Originalgröße angezeigt
+            '_CustomDisplaySpeed = False         ' Keine benutzerdefinierte Geschwindigkeit
+            '_FramesPerSecond = 10               ' Standard: 10 Bilder pro Sekunde
+            '_ZoomFactor = 50                    ' Standard-Zoomfaktor: 50%
         End Sub
 
         ''' <summary>
@@ -1117,8 +1136,8 @@ Namespace AniGifControl
         ''' <summary>
         ''' Setzt die Anzeigeart der Animation.
         ''' </summary>
-        ''' <param name="value">Neuer SizeMode.</param>
-        Private Sub SetGifSizeMode(value As SizeMode)
+        ''' <param name="value">Neuer ImageSizeMode.</param>
+        Private Sub SetGifSizeMode(value As ImageSizeMode)
             _GifSizeMode = value
             Me.Invalidate()
         End Sub
@@ -1171,21 +1190,21 @@ Namespace AniGifControl
         ''' <summary>
         ''' Berechnet die Zielgröße des zu zeichnenden Bildes abhängig vom Modus.
         ''' </summary>
-        ''' <param name="Mode">Aktueller SizeMode.</param>
+        ''' <param name="Mode">Aktueller ImageSizeMode.</param>
         ''' <param name="Control">Referenz auf das Control.</param>
         ''' <param name="Gif">Aktuelles GIF.</param>
         ''' <param name="Zoom">Zoomfaktor (0-1) bei Zoom-Modus.</param>
         ''' <returns>Berechnete Größe.</returns>
-        Private Function GetRectStartSize(Mode As SizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, Zoom As Decimal) As System.Drawing.Size
+        Private Function GetRectStartSize(Mode As ImageSizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, Zoom As Decimal) As System.Drawing.Size
             If Gif Is Nothing Then Return System.Drawing.Size.Empty ' Null-Schutz
             Select Case Mode
-                Case SizeMode.Normal
+                Case ImageSizeMode.Normal
                     ' Bild wird in Originalgröße angezeigt (keine Skalierung)
                     Return New System.Drawing.Size(Gif.Size.Width, Gif.Size.Height)
-                Case SizeMode.CenterImage
+                Case ImageSizeMode.CenterImage
                     ' Bild wird ebenfalls in Originalgröße angezeigt (zentriert, aber Größe bleibt gleich)
                     Return New System.Drawing.Size(Gif.Size.Width, Gif.Size.Height)
-                Case SizeMode.Zoom
+                Case ImageSizeMode.Zoom
                     ' Bild wird proportional zum Zoomfaktor skaliert
                     If Gif.Size.Width < Gif.Size.Height Then
                         Return New System.Drawing.Size(CInt(Control.Height / CDec(Gif.Size.Height / Gif.Size.Width) * Zoom), CInt(Control.Height * Zoom))
@@ -1194,7 +1213,7 @@ Namespace AniGifControl
                         ' Breite des Controls als Basis, Höhe proportional berechnen und mit Zoom multiplizieren
                         Return New System.Drawing.Size(CInt(Control.Width * Zoom), CInt(Control.Width * CDec(Gif.Size.Height / Gif.Size.Width) * Zoom))
                     End If
-                Case SizeMode.Fill
+                Case ImageSizeMode.Fill
                     ' Bild wird so skaliert, dass es das Control vollständig ausfüllt (Seitenverhältnis bleibt erhalten)
                     If Gif.Size.Width < Gif.Size.Height Then
                         ' Bild ist höher als breit
@@ -1213,28 +1232,28 @@ Namespace AniGifControl
         ''' <summary>
         ''' Berechnet den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes.
         ''' </summary>
-        ''' <param name="Mode">Aktueller SizeMode.</param>
+        ''' <param name="Mode">Aktueller ImageSizeMode.</param>
         ''' <param name="Control">Referenz auf das Control.</param>
         ''' <param name="Gif">Aktuelles GIF.</param>
         ''' <param name="RectStartSize">Berechnete Zielgröße.</param>
         ''' <returns>Zeichenursprung.</returns>
-        Private Function GetRectStartPoint(Mode As SizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, RectStartSize As System.Drawing.Size) As System.Drawing.Point
+        Private Function GetRectStartPoint(Mode As ImageSizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, RectStartSize As System.Drawing.Size) As System.Drawing.Point
             ' Bestimmt den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes
             Select Case Mode
-                Case SizeMode.Normal
+                Case ImageSizeMode.Normal
                     ' Bild wird in Originalgröße oben links gezeichnet
                     Return New System.Drawing.Point(0, 0)
-                Case SizeMode.CenterImage
+                Case ImageSizeMode.CenterImage
                     ' Bild wird in Originalgröße zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und Bild-Höhe
                     Return New System.Drawing.Point(CInt((Control.Width - Gif.Size.Width) / 2), CInt((Control.Height - Gif.Size.Height) / 2))
-                Case SizeMode.Zoom
+                Case ImageSizeMode.Zoom
                     ' Bild wird skaliert (gezoomt) und zentriert gezeichnet
                     ' X-Position: Hälfte der Differenz zwischen Control-Breite und skalierter Bild-Breite
                     ' Y-Position: Hälfte der Differenz zwischen Control-Höhe und skalierter Bild-Höhe
                     Return New System.Drawing.Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))
-                Case SizeMode.Fill
+                Case ImageSizeMode.Fill
                     ' Bild wird so skaliert, dass es das Control ausfüllt und zentriert gezeichnet
                     ' X- und Y-Position wie bei Zoom
                     Return New System.Drawing.Point(CInt((Control.Width - RectStartSize.Width) / 2), CInt((Control.Height - RectStartSize.Height) / 2))

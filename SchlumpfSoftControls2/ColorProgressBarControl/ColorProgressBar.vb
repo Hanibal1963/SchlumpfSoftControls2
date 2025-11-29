@@ -50,6 +50,7 @@ Namespace ColorProgressBarControl
         ''' Farbe des leeren (noch nicht gefüllten) Fortschrittsbereichs.
         ''' </summary>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
+        <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _EmptyColor As System.Drawing.Color = System.Drawing.Color.LightGray
 
         ''' <summary>
@@ -156,11 +157,11 @@ Namespace ColorProgressBarControl
         <System.ComponentModel.Description("Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.")>
         Public Property EmptyColor As System.Drawing.Color
             Get
-                Return Me.EmptyColor1
+                Return Me._EmptyColor
             End Get
             Set(value As System.Drawing.Color)
-                Me.EmptyColor1 = value
-                Me.ProgressEmpty.BackColor = Me.EmptyColor1
+                Me._EmptyColor = value
+                Me.ProgressEmpty.BackColor = Me._EmptyColor
             End Set
         End Property
 
@@ -302,18 +303,6 @@ Namespace ColorProgressBarControl
             End Set
         End Property
 
-        ''' <summary>
-        ''' Interne Eigenschaft für die Farbe des leeren Bereichs (Backing für <see cref="EmptyColor"/>).
-        ''' </summary>
-        Public Property EmptyColor1 As System.Drawing.Color
-            Get
-                Return Me._EmptyColor
-            End Get
-            Set(value As System.Drawing.Color)
-                Me._EmptyColor = value
-            End Set
-        End Property
-
 #End Region
 
 #Region "öffentliche Methoden"
@@ -401,7 +390,7 @@ Namespace ColorProgressBarControl
             Me.GlossLeft.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
             Me.GlossRight.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
             Me.BackColor = Me._BorderColor
-            Me.ProgressEmpty.BackColor = Me.EmptyColor1
+            Me.ProgressEmpty.BackColor = Me._EmptyColor
             Me.ProgressFull.BackColor = Me._BarColor
         End Sub
 

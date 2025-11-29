@@ -16,18 +16,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|arm64'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|arm64'">
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -64,6 +68,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
     <DeployExtension>True</DeployExtension>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,6 +79,7 @@
     <ErrorReport>prompt</ErrorReport>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
+    <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="LICENSE.rtf">
@@ -81,6 +87,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="ReleaseNotes.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="SchlumpfSoftControls2.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -161,21 +171,19 @@
     <Compile Include="AniGifControl\AniGif.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AniGifControl\SizeMode.vb" />
     <Compile Include="ColorProgressBarControl\ColorProgressBar.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DriveWatcherControl\DriveEventArgDefinitions.vb" />
+    <Compile Include="DriveWatcherControl\DriveEventArgs.vb" />
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ExplorerTreeViewControl\NodeDefinitions.vb" />
-    <Compile Include="ExplorerTreeViewControl\ConstantDefinitions.vb" />
+    <Compile Include="ExplorerTreeViewControl\Nodes.vb" />
+    <Compile Include="ExplorerTreeViewControl\Constants.vb" />
     <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ExplorerTreeViewControl\ExplorerTreeViewHelpers.vb" />
-    <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
+    <Compile Include="ExplorerTreeViewControl\Helpers.vb" />
     <Compile Include="ExplorerTreeViewControl\SelectedPathChangedEventArgs.vb" />
     <Compile Include="ExtendedRTFControl\ApiDefinitions.vb" />
     <Compile Include="ExtendedRTFControl\ExtendedRTF.vb">
@@ -204,7 +212,7 @@
     <Compile Include="IniFileControl\IniFile.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IniFileControl\IniFileEventArgsDefinitions.vb" />
+    <Compile Include="IniFileControl\IniFileEventArgs.vb" />
     <Compile Include="IniFileControl\ListEdit.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -217,7 +225,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="NotifyFormControl\EnumDefinitions.vb" />
     <Compile Include="NotifyFormControl\FormTemplate.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -226,18 +233,15 @@
     </Compile>
     <Compile Include="ProvideToolboxControlAttribute.vb" />
     <Compile Include="SchlumpfSoftControls2Package.vb" />
-    <Compile Include="SevenSegmentControl\EnumDefinitions.vb" />
     <Compile Include="SevenSegmentControl\MultiDigit.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SevenSegmentControl\SingleDigit.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ShapeControl\DiagonalLineModes.vb" />
     <Compile Include="ShapeControl\Shape.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ShapeControl\ShapeModes.vb" />
     <Compile Include="TransparentLabelControl\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>

@@ -1,5 +1,5 @@
 ﻿' *************************************************************************************************
-' ConstantDefinitions.vb
+' Constants.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
@@ -8,7 +8,7 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Definiert die Keykonstanten für Lauwerkstypen
     ''' </summary>
-    Friend Module DriveTypeKeyConstantDefinitions
+    Friend Module DriveTypeKeyConstants
 
         ''' <summary>
         ''' Schlüssel für Laufwerkstyp: Lokaler Datenträger
@@ -60,7 +60,7 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Definition der Konstanten für die Anzeigenamen der Laufwerkstypen
     ''' </summary>
-    Friend Module DriveDescConstantDefinitions
+    Friend Module DriveDescConstants
 
         ''' <summary>
         ''' Anzeigename für Laufwerkstyp: Lokaler Datenträger
@@ -107,7 +107,7 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Definiert die Keykonstanten für Ordnernamen
     ''' </summary>
-    Friend Module FolderNamesKeyConstantDefinitions
+    Friend Module FolderNamesKeyConstants
 
         ''' <summary>
         ''' Schlüssel für speziellen Ordner: Computer
@@ -154,7 +154,7 @@ Namespace ExplorerTreeViewControl
     ''' <summary>
     ''' Definiert die Keykonstanten für Symbolbezeichnungen
     ''' </summary>
-    Friend Module IconKeyConstantDefinitions
+    Friend Module IconKeyConstants
 
         ''' <summary>
         ''' Symbolschlüssel: Computer

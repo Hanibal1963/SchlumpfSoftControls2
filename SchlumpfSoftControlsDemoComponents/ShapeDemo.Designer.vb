@@ -113,13 +113,13 @@ Partial Class ShapeDemo
         '
         'Shape1
         '
-        Me.Shape1.DiagonalLineModus = SchlumpfSoft.Controls.ShapeControl.DiagonalLineModes.TopLeftToBottomRight
+        Me.Shape1.DiagonalLineModus = SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModes.TopLeftToBottomRight
         Me.Shape1.FillColor = System.Drawing.Color.Gray
         Me.Shape1.LineColor = System.Drawing.Color.Black
         Me.Shape1.LineWidth = 2.0!
         Me.Shape1.Location = New System.Drawing.Point(129, 85)
         Me.Shape1.Name = "Shape1"
-        Me.Shape1.ShapeModus = SchlumpfSoft.Controls.ShapeControl.ShapeModes.HorizontalLine
+        Me.Shape1.ShapeModus = SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.HorizontalLine
         Me.Shape1.Size = New System.Drawing.Size(154, 147)
         Me.Shape1.TabIndex = 36
         '

@@ -1,5 +1,5 @@
 ﻿' *************************************************************************************************
-' NodeDefinitions.vb
+' Nodes.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
@@ -81,7 +81,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Gibt den Laufwerkstyp des Knotens zurück
         ''' </summary>
-        ''' <remarks>Diese Eigenschaft verwendet <see cref="DriveInfo"/>, um den Typ des Laufwerks zu ermitteln.</remarks>
+        ''' <remarks>Diese Eigenschaft verwendet <see cref="system.IO.DriveInfo"/>, um den Typ des Laufwerks zu ermitteln.</remarks>
         Public ReadOnly Property DriveType As System.IO.DriveType
             Get
                 Return New System.IO.DriveInfo(Me.Tag.ToString()).DriveType
@@ -91,7 +91,7 @@ Namespace ExplorerTreeViewControl
         ''' <summary>
         ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ExplorerTreeViewControl.DriveNode"/>. 
         ''' </summary>
-        ''' <param name="Drive">Laufwerk für welches diese Instanz erstellt werden soll als <see cref="DriveInfo"/></param>
+        ''' <param name="Drive">Laufwerk für welches diese Instanz erstellt werden soll als <see cref="system.IO.DriveInfo"/></param>
         ''' <remarks></remarks>
         Public Sub New(Drive As System.IO.DriveInfo)
 

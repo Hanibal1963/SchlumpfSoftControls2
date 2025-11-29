@@ -154,10 +154,10 @@ Partial Class NotifyFormDemo
         '
         'NotifyForm1
         '
-        Me.NotifyForm1.Design = SchlumpfSoft.Controls.NotifyFormControl.NotifyFormDesign.Bright
+        Me.NotifyForm1.Design = SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormDesign.Bright
         Me.NotifyForm1.Message = "Mitteilung"
         Me.NotifyForm1.ShowTime = 5000
-        Me.NotifyForm1.Style = SchlumpfSoft.Controls.NotifyFormControl.NotifyFormStyle.Information
+        Me.NotifyForm1.Style = SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle.Information
         Me.NotifyForm1.Title = "Titel"
         '
         'NotifyFormDemo

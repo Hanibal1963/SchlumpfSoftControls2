@@ -24,9 +24,7 @@
     <File Path="LICENSE.txt" />
     <File Path="Links.md" />
     <File Path="README.md" />
-    <File Path="SchlumpfSoftControls2.sln.vsdoc" />
     <File Path="SchlumpfSoftControls2.vsix" />
-    <File Path="SchlumpfSoftControls2/VSdoc/FINAL_CHM_DOC/SchlumpfSoftControls2.chm" />
     <File Path="VS Marketplace Vorlage.md" />
   </Folder>
   <Project Path="SchlumpfSoftControls2/SchlumpfSoftControls2.vbproj" Id="83f010a0-d057-4eb4-b44e-443d19d425df">

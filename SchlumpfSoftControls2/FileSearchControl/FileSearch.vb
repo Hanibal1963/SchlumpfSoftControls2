@@ -9,7 +9,7 @@ Namespace FileSearchControl
     ''' Führt eine (optionale rekursive) asynchrone Dateisuche anhand eines Suchmusters aus und meldet Ergebnisse sowie Fortschritt über Ereignisse.
     ''' </summary>
     ''' <remarks>
-    ''' <para>Die Suche läuft in einem ThreadPool-Thread (via <see cref="Task.Run(System.Action)"/>). </para>
+    ''' <para>Die Suche läuft in einem ThreadPool-Thread. </para>
     ''' <para>Events werden (über <see cref="SimpleProgress(Of T)"/>) typischerweise auf
     ''' dem Ersteller- Synchronisierungskontext (z. B. UI-Thread) aufgerufen, sofern beim Start vorhanden. </para>
     ''' <para>Ein erneuter Aufruf von <see cref="StartSearchAsync"/> beendet eine laufende Suche vor Start der neuen. </para>
