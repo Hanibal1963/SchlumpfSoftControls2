@@ -52,6 +52,10 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2025.1129.0 (29.11.2025)**
+- Es wurde ein Fehler beseitigt, der eine korrekte Funktion der Controls „AniGif“, „NotifyForm“, 
+„SevenSegment“ und „Shape“ verhinderte.
+
 **Version 3.2025.1122.0 (22.11.2025)**
 - Es wurde ein Fehler im ExplorerTreeView Control beseitigt, der einen Absturz verursachte wenn beim öffnen 
 eines Knotens keine Pfadangabe erfolgte (im konkreten Fall wurde der Fehler verursacht wenn der 
