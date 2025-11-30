@@ -11,6 +11,6 @@
 <Assembly: System.Reflection.AssemblyCopyright("Copyright © Andreas Sauer 2025")>
 <Assembly: System.Reflection.AssemblyTrademark("privat")>
 <Assembly: System.Reflection.AssemblyCulture("")>
-<Assembly: System.Reflection.AssemblyVersion("3.2025.1129.0")>
-<Assembly: System.Reflection.AssemblyFileVersion("3.2025.1129.0")>
+<Assembly: System.Reflection.AssemblyVersion("3.2025.1130.0")>
+<Assembly: System.Reflection.AssemblyFileVersion("3.2025.1130.0")>
 <Assembly: System.Runtime.InteropServices.ComVisible(False)>

@@ -66,7 +66,7 @@ FramesPerSecond</seealso>
 StartAnimation</seealso>
       <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
 StopAnimation</seealso>
-      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
+      <seealso cref="InitLayout">
 InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.Gif">
@@ -110,7 +110,7 @@ Gif</seealso>
 StartAnimation</seealso>
       <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
 StopAnimation</seealso>
-      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
+      <seealso cref="InitLayout">
 InitLayout</seealso>
     </member>
     <member name="P:SchlumpfSoft.Controls.AniGifControl.AniGif.FramesPerSecond">
@@ -140,7 +140,7 @@ GifSizeMode</seealso>
 ImageSizeMode.Zoom</seealso>
       <seealso cref="CheckZoomFactorValue(Decimal)">
 CheckZoomFactorValue</seealso>
-      <seealso cref="M:SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint(System.Windows.Forms.PaintEventArgs)">
+      <seealso cref="OnPaint(System.Windows.Forms.PaintEventArgs)">
 OnPaint</seealso>
       <seealso cref="GetRectStartSize(ImageSizeMode,AniGif,System.Drawing.Bitmap,Decimal)">
 GetRectStartSize</seealso>
@@ -212,26 +212,6 @@ Startet die Animation (falls noch nicht aktiv).</summary>
     <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.StopAnimation">
       <summary>
 Stoppt die Animation und beendet Timer sowie ImageAnimator.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.InitLayout">
-      <summary>
-Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.</summary>
-      <remarks>
-Stoppt vorher eine bestehende Animation um Mehrfach-Registrierungen zu vermeiden.</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.OnPaint(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-Zeichnet das aktuelle Frame des GIFs unter Berücksichtigung der Skalierung.</summary>
-      <remarks>
-Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.</remarks>
-      <param name="e">
-Zeicheninformationen.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose(System.Boolean)">
-      <summary>
-Gibt Ressourcen frei und stoppt ggf. laufende Animationen.</summary>
-      <param name="disposing">
-True um verwaltete Ressourcen freizugeben.</param>
     </member>
     <member name="M:SchlumpfSoft.Controls.AniGifControl.AniGif.Dispose">
       <summary>
@@ -305,12 +285,6 @@ Ausgeblendet da nicht relevant.</summary>
       <summary>
 Initialisiert eine neue Instanz der <see cref="ColorProgressBar" />-Klasse und setzt Standardwerte.</summary>
     </member>
-    <member name="M:SchlumpfSoft.Controls.ColorProgressBarControl.ColorProgressBar.Dispose(System.Boolean)">
-      <summary>
-Gibt verwendete Ressourcen frei.</summary>
-      <param name="disposing">
-True, um verwaltete Ressourcen zu löschen; andernfalls False.</param>
-    </member>
     <member name="N:SchlumpfSoft.Controls.DriveWatcherControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs">
@@ -373,12 +347,6 @@ Wird ausgelöst wenn ein Laufwerk entfernt wurde.</summary>
     </member>
     <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.#ctor(System.ComponentModel.IContainer)">
       <param name="container">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.Dispose(System.Boolean)">
-      <summary>
-Die Komponente überschreibt den Löschvorgang zum Bereinigen der Komponentenliste.</summary>
-      <param name="disposing">
 </param>
     </member>
     <member name="N:SchlumpfSoft.Controls.ExplorerTreeViewControl">
@@ -460,14 +428,6 @@ Funktioniert auch bei noch nicht geladenen Unterknoten.</remarks>
 <see langword="true" />, wenn der Knoten gefunden wurde, sonst <see langword="false" /></returns>
       <param name="Path">
 Vollständiger Pfad der göffnet werden soll.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Dispose(System.Boolean)">
-      <summary>
-Gibt Ressourcen frei, die von dem ExplorerTreeView-Steuerelement verwendet werden.</summary>
-      <remarks>
-Diese Methode wird aufgerufen, wenn das Steuerelement explizit oder implizit entsorgt wird. Sie sorgt dafür, dass alle FileSystemWatcher-Objekte entfernt und entsorgt werden, um Speicherlecks und unerwünschte Ereignisauslösungen zu vermeiden. Zusätzlich können hier weitere verwaltete Ressourcen freigegeben werden. Nicht verwaltete Ressourcen können ebenfalls an dieser Stelle freigegeben werden.</remarks>
-      <param name="disposing">
-<see langword="True" />, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben; <see langword="False" />, um nur nicht verwaltete Ressourcen freizugeben.</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.ExplorerTreeViewControl.SelectedPathChangedEventArgs">
       <summary>
@@ -581,16 +541,6 @@ Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurü
       <remarks>
 <para>Ein Mischzustand ergibt Nothing.</para> <para>Der Einzug wird immer für den gesamten Absatz gesetzt (SelectionLength wird intern ignoriert).</para></remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.OnSelectionChanged(System.EventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.Dispose(System.Boolean)">
-      <summary>
-Gibt verwendete Ressourcen frei und stellt sicher, dass angehaltene Update-Blöcke beendet werden.</summary>
-      <param name="disposing">
-True, um verwaltete Ressourcen freizugeben; andernfalls False.</param>
-    </member>
     <member name="N:SchlumpfSoft.Controls.FileSearchControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearch">
@@ -661,14 +611,6 @@ Bricht eine eventuell laufende Suche ab.</summary>
       <remarks>
 Der Abbruch ist kooperativ; bereits ausgelöste Events (FileFound/Progress) können noch kurzfristig eintreffen.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.Dispose(System.Boolean)">
-      <summary>
-Gibt die von der Komponente verwendeten Ressourcen frei.</summary>
-      <remarks>
-Ruft die Basisklassenimplementierung auf und bereinigt den Komponenten-Container.</remarks>
-      <param name="disposing">
-<c>True</c>, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls <c>False</c>.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs">
       <summary>
 Stellt Fortschrittsinformationen für den Datei-Suchvorgang bereit und wird beim <c>ProgressChanged</c>-Ereignis der Dateisuche übergeben.</summary>
@@ -707,12 +649,6 @@ Initialisiert eine neue Instanz des Dialogs und setzt den OK-Button auf deaktivi
       <remarks>
 Ruft <see cref="InitializeComponent" /> auf und deaktiviert anschließend den OK-Button, bis eine gültige Eingabe erfolgt ist.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.AddItemDialog.Dispose(System.Boolean)">
-      <summary>
-Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.</summary>
-      <param name="disposing">
-True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEdit">
       <summary>
 Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars einer INI-Datei.</summary>
@@ -749,12 +685,6 @@ Gibt den Namen des INI-Abschnitts zurück oder legt diesen fest, für den der Ko
       <remarks>
 Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see cref="CommentChanged" /> übermittelt.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.CommentEdit.Dispose(System.Boolean)">
-      <summary>
-Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.</summary>
-      <param name="disposing">
-True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.ContentView">
       <summary>
 Steuerelement zum Anzeigen des Dateiinhalts (z. B. einer INI-Datei) in einer TextBox innerhalb einer GroupBox.</summary>
@@ -779,12 +709,6 @@ Gibt den Dateiinhalt als Array von Zeilen zurück oder legt diesen fest.</summar
       <remarks>
 - Das Setzen löst das interne Event <c>PropertyLinesChanged</c> aus, welches die UI aktualisiert. - Der Vergleich <c>IsNot</c> prüft hier Referenzungleichheit des Arrays. Wird derselbe Array-Instanzinhalt verändert, ohne das Array-Objekt zu tauschen, wird kein Event ausgelöst.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.ContentView.Dispose(System.Boolean)">
-      <summary>
-Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.</summary>
-      <param name="disposing">
-True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.DeleteItemDialog">
       <summary>
 Dialog zur Bestätigung des Löschens eines Elements.</summary>
@@ -802,14 +726,6 @@ Beim Setzen wird der UI-Text des Labels aktualisiert.</remarks>
 Erstellt eine neue Instanz des <see cref="DeleteItemDialog" /> und initialisiert Steuerelemente.</summary>
       <remarks>
 Die UI-Elemente werden in <see cref="InitializeComponent" /> erzeugt.</remarks>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.DeleteItemDialog.Dispose(System.Boolean)">
-      <summary>
-Gibt die vom Dialog verwendeten Ressourcen frei.</summary>
-      <remarks>
-Überschreibt <see cref="System.Windows.Forms.Form.Dispose(Boolean)" /> zur Freigabe des Komponenten-Containers.</remarks>
-      <param name="disposing">
-<c>True</c>, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls <c>False</c>.</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit">
       <summary>
@@ -838,12 +754,6 @@ Gibt den Eintragswert zurück oder legt diesen fest. Beim Setzen wird die TextBo
     <member name="M:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.#ctor">
       <summary>
 Initialisiert eine neue Instanz von <see cref="EntryValueEdit" /> und übernimmt den initialen Titeltext.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.Dispose(System.Boolean)">
-      <summary>
-Bereinigt verwendete Ressourcen.</summary>
-      <param name="disposing">
-True, um verwaltete Ressourcen zu bereinigen; andernfalls False.</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.IniFile">
     </member>
@@ -1181,12 +1091,6 @@ Initialisiert eine neue Instanz des Steuerelements <see cref="ListEdit" /> und �
       <remarks>
 Ruft <see cref="InitializeComponent" /> auf und spiegelt anschließend den in der GroupBox gesetzten Text in die interne Variable für <see cref="TitelText" />.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.IniFileControl.ListEdit.Dispose(System.Boolean)">
-      <summary>
-Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.</summary>
-      <param name="disposing">
-True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-    </member>
     <member name="N:SchlumpfSoft.Controls.NotifyFormControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm">
@@ -1329,12 +1233,6 @@ ausgeblendet da nicht relevant.</summary>
       <summary>
 Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit" />.</summary>
     </member>
-    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-Zeichnet den Hintergrund des Steuerelements in der festgelegten Hintergrundfarbe.</summary>
-      <param name="e">
-Zeicheninformationen für das Hintergrundrendering.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit">
       <summary>
 <para>Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, </para> <para>das eine Ziffer oder einen Buchstaben anzeigt.</para></summary>
@@ -1415,22 +1313,6 @@ Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
       <summary>
 Initialisiert eine neue Instanz der <see cref="SingleDigit" />-Klasse.</summary>
     </member>
-    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.OnPaddingChanged(System.EventArgs)">
-      <summary>
-Löst das PaddingChanged-Ereignis aus und invalidiert die Anzeige.</summary>
-      <param name="e">
-Ereignisargumente.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.OnPaintBackground(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-Zeichnet den Hintergrund des Steuerelements (überschreibt Standardverhalten).</summary>
-      <param name="e">
-Paint-Argumente.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Finalize">
-      <summary>
-<para>Gibt nicht verwaltete Ressourcen frei und führt weitere Bereinigungsvorgänge durch, </para> <para>bevor <see cref="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit" /> durch die Garbage Collection zurückgefordert wird.</para></summary>
-    </member>
     <member name="N:SchlumpfSoft.Controls.ShapeControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.ShapeControl.Shape">
@@ -1501,14 +1383,6 @@ Legt die Füllfarbe für die Form fest oder gibt diese zurück.</summary>
       <summary>
 Legt fest ob eine diagonale Linie von links oben nach rechts unten oder umgekehrt verläuft oder gibt dieses zurück.</summary>
     </member>
-    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.CreateParams">
-      <summary>
-Legt spezielle Parameter für das ShapeControl fest.</summary>
-      <remarks>
-https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form</remarks>
-      <value>
-Ein <see cref="System.Windows.Forms.CreateParams" /> Objekt mit erweiterten Stil-Flags.</value>
-    </member>
     <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.BackColor">
       <summary>
 ausgeblendet da nicht relevant.</summary>
@@ -1543,18 +1417,6 @@ Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ShapeContro
       <remarks>
 Richtet Standardwerte und Zeichenstile ein.</remarks>
     </member>
-    <member name="M:SchlumpfSoft.Controls.ShapeControl.Shape.OnPaint(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-zeichnet das ShapeControl neu.</summary>
-      <param name="e">
-Ein <see cref="System.Windows.Forms.PaintEventArgs" />, das die Ereignisdaten enthält.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.ShapeControl.Shape.Dispose(System.Boolean)">
-      <summary>
-Gibt die vom <see cref="SchlumpfSoft.Controls.ShapeControl.Shape" /> verwendeten nicht verwalteten Ressourcen frei und gibt optional die verwalteten Ressourcen frei.</summary>
-      <param name="disposing">
-Wenn auf <see langword="true" /> gesetzt, dann werden verwaltete und nicht verwaltete Ressourcen freigegeben, andernfalls nur nicht verwaltete Ressourcen.</param>
-    </member>
     <member name="N:SchlumpfSoft.Controls.TransparentLabelControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel">
@@ -1577,29 +1439,15 @@ Ausgeblendet da für dieses Control nicht relevant.</summary>
       <summary>
 Ausgeblendet da für dieses Control nicht relevant.</summary>
     </member>
-    <member name="P:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.CreateParams">
-      <summary>
-Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.</summary>
-      <value>
-Die angepassten <see cref="CreateParams" /> mit aktiviertem WS_EX_TRANSPARENT-Stil.</value>
-    </member>
     <member name="M:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.#ctor">
       <summary>
 Initialisiert eine neue Instanz der <see cref="TransparentLabel" />-Klasse.</summary>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.Dispose(System.Boolean)">
-      <summary>
-Bereinigt die von der <see cref="TransparentLabel" /> verwendeten Ressourcen.</summary>
-      <param name="disposing">
-Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.</param>
     </member>
     <member name="N:SchlumpfSoft.Controls.WizardControl">
     </member>
     <member name="T:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs">
       <summary>
 Enthält die Indexwerte der Seiten nachdem die Seiten gewechselt wurden.</summary>
-    </member>
-    <member name="F:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs._NewIndex">
     </member>
     <member name="P:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs.OldIndex">
       <summary>
@@ -1663,22 +1511,6 @@ Definiert die Auflistung der Seiten des Assistenten</summary>
     </member>
     <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.Contains(SchlumpfSoft.Controls.WizardControl.WizardPage)">
       <param name="Page">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.OnInsertComplete(System.Int32,System.Object)">
-      <summary>
-Führt zusätzliche benutzerdefinierte Prozesse nach dem Einfügen eines neuen Elements in die <see cref="T:System.Collections.CollectionBase" />-Instanz aus.</summary>
-      <param name="Index">
-</param>
-      <param name="Value">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.OnRemoveComplete(System.Int32,System.Object)">
-      <summary>
-Führt zusätzliche benutzerdefinierte Prozesse nach dem Entfernen eines Elements aus der <see cref="T:System.Collections.CollectionBase" />-Instanz aus.</summary>
-      <param name="Index">
-</param>
-      <param name="Value">
 </param>
     </member>
     <member name="T:SchlumpfSoft.Controls.WizardControl.PageStandard">
@@ -1809,56 +1641,6 @@ Entspricht einem Klick auf die Schaltfläche "weiter".</summary>
       <summary>
 Entspricht einem Klick auf die Schaltfläche "zurück".</summary>
     </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnBeforeSwitchPages(SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnAfterSwitchPages(SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnCancel(System.ComponentModel.CancelEventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnFinish(System.EventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnHelp(System.EventArgs)">
-      <param name="e">
-</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnLoad(System.EventArgs)">
-      <summary>
-Löst das <see cref="E:System.Windows.Forms.UserControl.Load" />-Ereignis aus.</summary>
-      <param name="e">
-Ein <see cref="T:System.EventArgs" />, das die Ereignisdaten enthält.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnResize(System.EventArgs)">
-      <summary>
-Löst das <see cref="E:System.Windows.Forms.Control.Resize" />-Ereignis aus.</summary>
-      <param name="e">
-Ein <see cref="T:System.EventArgs" />, das die Ereignisdaten enthält.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnPaint(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-Löst das <see cref="E:System.Windows.Forms.Control.Paint" />-Ereignis aus.</summary>
-      <param name="e">
-Ein <see cref="T:System.Windows.Forms.PaintEventArgs" />, das die Ereignisdaten enthält.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.OnControlAdded(System.Windows.Forms.ControlEventArgs)">
-      <summary>
-Löst das <see cref="E:System.Windows.Forms.Control.ControlAdded" />-Ereignis aus.</summary>
-      <param name="e">
-Ein <see cref="T:System.Windows.Forms.ControlEventArgs" />, das die Ereignisdaten enthält.</param>
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.Dispose(System.Boolean)">
-      <summary>
-Gibt die vom <see cref="T:System.Windows.Forms.Control" /> und den untergeordneten Steuerelementen verwendeten nicht verwalteten Ressourcen und optional auch die verwalteten Ressourcen frei.</summary>
-      <param name="disposing">
-<see langword="true" />, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben, <see langword="false" />, um ausschließlich nicht verwaltete Ressourcen freizugeben.</param>
-    </member>
     <member name="T:SchlumpfSoft.Controls.WizardControl.WizardPage">
       <summary>
 Definiert eine Seite des Controls</summary>
@@ -1870,12 +1652,6 @@ Definiert eine Seite des Controls</summary>
     <member name="P:SchlumpfSoft.Controls.WizardControl.WizardPage.Description">
     </member>
     <member name="M:SchlumpfSoft.Controls.WizardControl.WizardPage.#ctor">
-    </member>
-    <member name="M:SchlumpfSoft.Controls.WizardControl.WizardPage.OnPaint(System.Windows.Forms.PaintEventArgs)">
-      <summary>
-Löst das <see cref="E:System.Windows.Forms.Control.Paint" />-Ereignis aus.</summary>
-      <param name="e">
-Ein <see cref="T:System.Windows.Forms.PaintEventArgs" />, das die Ereignisdaten enthält.</param>
     </member>
   </members>
 </doc>

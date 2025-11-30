@@ -371,4 +371,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>copy "$(ProjectDir)*.xml" "$(TargetDir)"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
