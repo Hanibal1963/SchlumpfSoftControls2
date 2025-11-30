@@ -8,6 +8,45 @@ Namespace AniGifControl
     ''' <summary>
     ''' Control zum anzeigen von animierten Grafiken.
     ''' </summary>
+    ''' <example>
+    ''' Beispiel: Verwendung des AniGif-Controls in einer Windows-Forms-Anwendung. <code><![CDATA[Imports SchlumpfSoftControls2.AniGifControl
+    '''  
+    ''' Public Class MainForm
+    '''     Inherits System.Windows.Forms.Form
+    '''  
+    '''     Private ReadOnly _gifControl As AniGif = New AniGif() With {
+    '''         .Name = "AniGif1",
+    '''         .Size = New System.Drawing.Size(200, 200),
+    '''         .Location = New System.Drawing.Point(10, 10),
+    '''         .GifSizeMode = AniGif.ImageSizeMode.Zoom,
+    '''         .ZoomFactor = 75D,
+    '''         .CustomDisplaySpeed = True,
+    '''         .FramesPerSecond = 12.5D,
+    '''         .AutoPlay = True
+    '''     }
+    '''  
+    '''     Public Sub New()
+    '''         Me.Text = "AniGif Demo"
+    '''         Me.ClientSize = New System.Drawing.Size(320, 240)
+    '''  
+    '''         ' Ein GIF aus Datei laden und setzen (Ownership liegt beim Control).
+    '''         ' Hinweis: Verwenden Sie bei Bedarf .Clone(), wenn die Bitmap außerhalb weitergenutzt wird.
+    '''         Dim bmp As System.Drawing.Bitmap = CType(System.Drawing.Image.FromFile("C:\Pfad\zu\animiert.gif"), System.Drawing.Bitmap)
+    '''         _gifControl.Gif = bmp
+    '''  
+    '''         Me.Controls.Add(_gifControl)
+    '''     End Sub
+    '''  
+    '''     ' Animation zur Laufzeit explizit starten/stoppen:
+    '''     Private Sub StartButton_Click(sender As Object, e As System.EventArgs) Handles MyBase.Click
+    '''         _gifControl.StartAnimation() ' setzt AutoPlay = True und initialisiert Animation
+    '''     End Sub
+    '''  
+    '''     Private Sub StopButton_Click(sender As Object, e As System.EventArgs)
+    '''         _gifControl.StopAnimation()  ' setzt AutoPlay = False, stoppt Timer und Animator
+    '''     End Sub
+    ''' End Class]]></code>
+    ''' </example>
     <ProvideToolboxControlAttribute("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -18,131 +57,18 @@ Namespace AniGifControl
 
 #Region "Variablen"
 
-        ''' <summary>
-        ''' Bildwiederholrate (Frames pro Sekunde) für die Animation, sofern <see
-        ''' cref="_CustomDisplaySpeed"/> aktiviert ist.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Typischer Wertebereich: 1–60 FPS.</para>
-        ''' <para>Dezimalwerte sind möglich (z. B. 12,5). </para>
-        ''' <para>Negative oder 0-Werte sind ungültig.</para>
-        ''' </remarks>
         Private _FramesPerSecond As Decimal = 10
-
-        ''' <summary>
-        ''' Die Dimension der animierten Frames im GIF.
-        ''' </summary>
-        ''' <remarks>
-        ''' Für zeitbasierte Animationen ist normalerweise <see
-        ''' cref="System.Drawing.Imaging.FrameDimension.Time"/> relevant.
-        ''' </remarks>
-        ''' <seealso cref="System.Drawing.Imaging.FrameDimension"/>
         Private _Dimension As System.Drawing.Imaging.FrameDimension
-
-        ''' <summary>
-        ''' Der aktuell ausgewählte Frame-Index.
-        ''' </summary>
-        ''' <remarks>
-        ''' Der Index ist in der Regel 0-basiert und muss im Bereich <c>0</c> bis <c>_MaxFrame - 1</c> liegen.
-        ''' </remarks>
         Private _Frame As Integer
-
-        ''' <summary>
-        ''' Die Gesamtanzahl verfügbarer Frames im geladenen GIF.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Dieser Wert bestimmt den gültigen Bereich für <see cref="_Frame"/>.
-        ''' </para>
-        ''' <para>Bei nicht animierten GIFs ist der Wert üblicherweise 1.</para>
-        ''' </remarks>
         Private _MaxFrame As Integer
-
-        ''' <summary>
-        ''' Gibt an, ob die Animation automatisch abgespielt wird.
-        ''' </summary>
-        ''' <remarks>
-        ''' Konkreter Startzeitpunkt und -auslöser (z. B. beim Laden des GIFs oder beim
-        ''' Anzeigen des Steuerelements) hängen von der Steuerelementlogik ab.
-        ''' </remarks>
         Private _Autoplay As Boolean = False
-
-        ''' <summary>
-        ''' Zoomfaktor für die Darstellung.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para><c>1.0</c> entspricht 100% (Originalgröße), <c>2.0</c> entspricht 200% usw.</para>
-        ''' <para>(Werte&#160;kleiner oder gleich&#160;0 sind ungültig.)</para>
-        ''' <para>Die Wirkung kann von <see cref="_GifSizeMode"/> abhängen.</para>
-        ''' </remarks>
         Private _ZoomFactor As Decimal = 50
-
-        ''' <summary>
-        ''' Kennzeichnet, ob eine benutzerdefinierte Anzeigegeschwindigkeit aktiv ist.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Steuert, ob statt der GIF-internen Verzögerungen der <see cref="Timer"/>
-        ''' genutzt wird.</para>
-        ''' <para>(Entspricht der öffentlichen Eigenschaft <see
-        ''' cref="CustomDisplaySpeed"/>.)</para>
-        ''' </remarks>
         Private _CustomDisplaySpeed As Boolean = False
-
-        ''' <summary>
-        ''' Aktuell verwendeter Anzeigemodus für das GIF (Skalierung/Ausrichtung).
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Interner Speicher für die öffentliche Eigenschaft <see
-        ''' cref="GifSizeMode"/>.</para>
-        ''' <para>(Beeinflusst ausschließlich die Darstellung, nicht die
-        ''' Animationsdaten.)</para>
-        ''' </remarks>
         Private _GifSizeMode As ImageSizeMode = ImageSizeMode.Normal
-
-        ''' <summary>
-        ''' Referenz auf das aktuell geladene GIF-Bitmap.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Die AniGif-Control übernimmt Ownership und ruft <c>Dispose()</c> beim Wechsel oder im eigenen <see cref="Dispose(Boolean)"/> auf.</para>
-        ''' <para>(Kann <c>Nothing</c> sein; dann wird ein Standardbild verwendet.)</para>
-        ''' </remarks>
         Private _Gif As System.Drawing.Bitmap = My.Resources.Standard
-
-
-        ''' <summary>
-        ''' Interner Timer zur Steuerung der benutzerdefinierten Animationsgeschwindigkeit.
-        ''' </summary>
-        ''' <remarks>
-        ''' Wird verwendet, wenn <see cref="_CustomDisplaySpeed"/> aktiv ist; löst <see cref="Timer_Tick"/> aus, um Frames manuell fortzuschalten.
-        ''' </remarks>
         Private WithEvents Timer As System.Windows.Forms.Timer
-
-        ''' <summary>
-        ''' Komponentencontainer für vom Designer erstellte Komponenten.
-        ''' </summary>
-        ''' <remarks>
-        ''' Wird im <see cref="Dispose(Boolean)"/> freigegeben.
-        ''' </remarks>
         Private components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Kennzeichnet, ob das Steuerelement bereits entsorgt wurde.
-        ''' </summary>
-        ''' <remarks>
-        ''' Verhindert mehrfaches Freigeben von Ressourcen in <see cref="Dispose(Boolean)"/>.
-        ''' </remarks>
         Private disposedValue As Boolean
-
-        ''' <summary>
-        ''' Gemeinsamer Ereignishandler für den <see cref="System.Drawing.ImageAnimator"/>.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Wird bei <see
-        ''' cref="System.Drawing.ImageAnimator.Animate(System.Drawing.Image,
-        ''' System.EventHandler)"/> registriert und in <see
-        ''' cref="System.Drawing.ImageAnimator.StopAnimate(System.Drawing.Image,
-        ''' System.EventHandler)"/> wieder abgemeldet.</para>
-        ''' <para>Delegiert an <see cref="OnNextFrame"/>.</para>
-        ''' </remarks>
         Private ReadOnly _AnimationHandler As System.EventHandler = AddressOf Me.OnNextFrame ' Gemeinsamer Handler für ImageAnimator zum Stoppen/Neu-Registrieren
 
 #End Region
@@ -271,29 +197,63 @@ Namespace AniGifControl
         ''' <summary>
         ''' Wird ausgelöst wenn die Grafik nicht animiert werden kann.
         ''' </summary>
+        ''' <example>
+        ''' Beispiel: Ereignis abonnieren und ein Fallback setzen, falls das Bild nicht animierbar ist.
+        ''' <code><![CDATA[
+        ''' Imports SchlumpfSoftControls2.AniGifControl
+        ''' 
+        ''' Public Class MainForm
+        '''     Inherits System.Windows.Forms.Form
+        ''' 
+        '''     Private ReadOnly _gifControl As New AniGif() With {
+        '''         .GifSizeMode = AniGif.ImageSizeMode.Zoom,
+        '''         .ZoomFactor = 60D,
+        '''         .CustomDisplaySpeed = False,
+        '''         .AutoPlay = True
+        '''     }
+        ''' 
+        '''     Public Sub New()
+        '''         Me.Text = "AniGif NoAnimation-Beispiel"
+        '''         Me.ClientSize = New System.Drawing.Size(300, 220)
+        '''         Me.Controls.Add(_gifControl)
+        ''' 
+        '''         ' Ein GIF laden (ggf. ist dieses nicht animierbar)
+        '''         Dim bmp As System.Drawing.Bitmap =
+        '''             CType(System.Drawing.Image.FromFile("C:\Pfad\zu\möglicherweise_nicht_animiert.gif"), System.Drawing.Bitmap)
+        '''         _gifControl.Gif = bmp
+        ''' 
+        '''         ' Ereignis abonnieren
+        '''         AddHandler _gifControl.NoAnimation, AddressOf OnNoAnimation
+        '''     End Sub
+        ''' 
+        '''     Private Sub OnNoAnimation(sender As Object, e As System.EventArgs)
+        '''         ' Benutzer informieren
+        '''         System.Windows.Forms.MessageBox.Show("Das Bild ist nicht animierbar.", "Hinweis",
+        '''             System.Windows.Forms.MessageBoxButtons.OK,
+        '''             System.Windows.Forms.MessageBoxIcon.Information)
+        ''' 
+        '''         ' Optional: auf ein bekannt animiertes Standard-GIF wechseln
+        '''         Dim fallback As System.Drawing.Bitmap =
+        '''             CType(System.Drawing.Image.FromFile("C:\Pfad\zu\fallback_animiert.gif"), System.Drawing.Bitmap)
+        '''         _gifControl.Gif = fallback
+        '''     End Sub
+        ''' End Class
+        ''' ]]></code>
+        ''' </example>        
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Wird ausgelöst wenn die Grafik nicht animiert werden kann.")>
         Public Event NoAnimation(sender As Object, e As System.EventArgs)
 
-        ''' <summary>
-        ''' Wird ausgelöst wenn sich das Bild geändert hat.
-        ''' </summary>
         Private Event GifChanged()
-
-        ''' <summary>
-        ''' Wird ausgelöst wenn sich die Anzeigegeschwindigkeit geändert hat.
-        ''' </summary>
         Private Event CustomDisplaySpeedChanged()
-
-        ''' <summary>
-        ''' Wird ausgelöst wenn sich die Frames pro Sekunde geändert haben.
-        ''' </summary>
         Private Event FramesPerSecondChanged()
 
 #End Region
 
 #Region "Eigenschaften"
+
+        ' TODO: XML-Kommentare ergänzen
 
         ''' <summary>
         ''' Steuert, ob die GIF‑Animation automatisch gestartet wird, sobald ein Bild
@@ -302,10 +262,16 @@ Namespace AniGifControl
         ''' <remarks>
         ''' <b>Verhalten:</b> <list type="bullet">
         '''  <item>
-        '''   <description>Beim Setzen auf <c>True</c> wird in <see cref="InitLayout"/> eine ggf. laufende Animation zuerst sicher beendet und anschließend – falls ein animierbares GIF in <see cref="Gif"/> vorliegt und kein Designmodus aktiv ist – die Animation über <see cref="System.Drawing.ImageAnimator.Animate(System.Drawing.Image,System.EventHandler)"/> neu registriert.</description>
+        '''   <description>Beim Setzen auf <c>True</c> wird in <see cref="InitLayout"/> eine ggf. laufende Animation zuerst sicher beendet und anschließend<br/>
+        ''' (falls ein animierbares GIF in <see cref="Gif"/> vorliegt und kein Designmodus
+        ''' aktiv ist) die Animation über <see
+        ''' cref="System.Drawing.ImageAnimator.Animate(System.Drawing.Image,System.EventHandler)"/>
+        ''' neu registriert.</description>
         '''  </item>
         '''  <item>
-        '''   <description>Beim Setzen auf <c>False</c> wird in <see cref="InitLayout"/> keine Neu‑Registrierung vorgenommen; bereits registrierte Animationen werden zuvor gestoppt. Für ein explizites Beenden inkl. Timer empfiehlt sich <see cref="StopAnimation"/>.</description>
+        '''   <description>Beim Setzen auf <c>False</c> wird in <see cref="InitLayout"/> keine Neu‑Registrierung vorgenommen, bereits registrierte Animationen werden zuvor gestoppt.<br/>
+        ''' Für ein explizites Beenden inkl. Timer empfiehlt sich <see
+        ''' cref="StopAnimation"/>.</description>
         '''  </item>
         '''  <item>
         '''   <description>Im Designmodus (<c>DesignMode = True</c>) wird nie animiert.</description>
@@ -329,7 +295,7 @@ Namespace AniGifControl
         ''' </list>
         '''  <b> Hinweise:</b> <list type="bullet">
         '''  <item>
-        '''   <description>Standardwert ist <c>False</c> (siehe <see cref="InitializeValues"/>).</description>
+        '''   <description>Standardwert ist <c>False</c>.</description>
         '''  </item>
         '''  <item>
         '''   <description>Das Setzen dieser Eigenschaft löst kein eigenes Ereignis
@@ -338,7 +304,8 @@ Namespace AniGifControl
         ''' </list>
         ''' </remarks>
         ''' <value>
-        ''' <c>True</c>, um die Animation automatisch zu starten; andernfalls <c>False</c>. Standard: <c>False</c>.
+        ''' <c>True</c>, um die Animation automatisch zu starten; andernfalls <c>False</c>.<br/>
+        ''' Standard: <c>False</c>.
         ''' </value>
         ''' <seealso cref="Gif"/>
         ''' <seealso cref="CustomDisplaySpeed"/>
@@ -514,9 +481,6 @@ Namespace AniGifControl
         ''' </list>
         '''  <b>Lebenszyklus/Design:</b> <list type="bullet">
         '''  <item>
-        '''   <description>Standardwert ist <c>False</c> (siehe <see cref="InitializeValues"/>).</description>
-        '''  </item>
-        '''  <item>
         '''   <description><see cref="StartAnimation"/> ändert diese Eigenschaft nicht; sie steuert lediglich <see cref="AutoPlay"/>. Die Auswahl der Geschwindigkeitsquelle erfolgt ausschließlich über <c>CustomDisplaySpeed</c>.</description>
         '''  </item>
         '''  <item>
@@ -593,9 +557,6 @@ Namespace AniGifControl
         ''' </list>
         '''  <b>Design/Standardwerte:</b> <list type="bullet">
         '''  <item>
-        '''   <description>Standardwert ist <c>10</c> FPS (siehe <see cref="InitializeValues"/>).</description>
-        '''  </item>
-        '''  <item>
         '''   <description>Im Designmodus (<c>DesignMode = True</c>) wird nicht animiert.</description>
         '''  </item>
         ''' </list>
@@ -668,9 +629,6 @@ Namespace AniGifControl
         ''' </list>
         ''' <b>Design/Standardwerte:</b>
         ''' <list type="bullet">
-        '''  <item>
-        '''   <description>Standardwert ist <c>50</c> (%), gesetzt in <see cref="InitializeValues"/>.</description>
-        '''  </item>
         '''  <item>
         '''   <description>Im Designmodus wird nicht animiert; die Skalierung im Zoom-Modus bleibt jedoch sichtbar.</description>
         '''  </item>
@@ -897,13 +855,14 @@ Namespace AniGifControl
 
 #Region "öffentliche Methoden"
 
+        ' TODO: XML-Kommentar für öffentlichen Methoden hinzufügen
+
         ''' <summary>
         ''' Initialisiert eine neue Instanz von <see
         ''' cref="SchlumpfSoft.Controls.AniGifControl.AniGif"/>.
         ''' </summary>
         Public Sub New()
             Me.InitializeComponent() 'Designer-Initialisierung
-            Me.InitializeValues() 'Standardwerte laden
         End Sub
 
         ''' <summary>
@@ -927,16 +886,15 @@ Namespace AniGifControl
             End If
         End Sub
 
+        Public Overloads Sub Dispose() Implements System.IDisposable.Dispose
+            Me.Dispose(True)
+            System.GC.SuppressFinalize(Me)
+        End Sub
+
 #End Region
 
 #Region "überschriebene Methoden"
 
-        ''' <summary>
-        ''' Führt Layout-Initialisierung durch und startet ggf. die GIF-Animation.
-        ''' </summary>
-        ''' <remarks>
-        ''' Stoppt vorher eine bestehende Animation um Mehrfach-Registrierungen zu vermeiden.
-        ''' </remarks>
         Protected Overloads Overrides Sub InitLayout()
             MyBase.InitLayout()
             ' Alte Animation stoppen um Mehrfach-Registrierungen zu vermeiden
@@ -949,13 +907,6 @@ Namespace AniGifControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Zeichnet das aktuelle Frame des GIFs unter Berücksichtigung der Skalierung.
-        ''' </summary>
-        ''' <param name="e">Zeicheninformationen.</param>
-        ''' <remarks>
-        ''' Aktualisiert die Animation bei automatischer Geschwindigkeitssteuerung.
-        ''' </remarks>
         Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
             MyBase.OnPaint(e)
             If _Gif Is Nothing Then Return ' Null-Schutz
@@ -977,10 +928,6 @@ Namespace AniGifControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Gibt Ressourcen frei und stoppt ggf. laufende Animationen.
-        ''' </summary>
-        ''' <param name="disposing">True um verwaltete Ressourcen freizugeben.</param>
         Protected Overrides Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
@@ -997,21 +944,10 @@ Namespace AniGifControl
             MyBase.Dispose(disposing)
         End Sub
 
-        ''' <summary>
-        ''' IDisposable Support
-        ''' </summary>
-        Public Overloads Sub Dispose() Implements System.IDisposable.Dispose
-            Me.Dispose(True)
-            System.GC.SuppressFinalize(Me)
-        End Sub
-
 #End Region
 
 #Region "Interne Methoden"
 
-        ''' <summary>
-        ''' Reagiert auf den Wechsel des GIF-Bildes und initialisiert Animationsparameter.
-        ''' </summary>
         Private Sub AniGif_GifChange() Handles Me.GifChanged
             If System.Drawing.ImageAnimator.CanAnimate(_Gif) = False And _Autoplay = True Then 'überprüfen ob das Bild animiert werden kann wenn Autoplay auf True gesetzt ist
                 Me.Timer.Stop() 'Timer stoppen und Anzahl der Frames auf 0 setzen (für nicht animiertes bild)
@@ -1030,9 +966,6 @@ Namespace AniGifControl
             Me.InitLayout() ' Animation starten
         End Sub
 
-        ''' <summary>
-        ''' Aktiviert oder deaktiviert die benutzerdefinierte Animationsgeschwindigkeit.
-        ''' </summary>
         Private Sub AniGif_CustomDisplaySpeedChanged() Handles Me.CustomDisplaySpeedChanged
             ' Intervall direkt setzen und Timer entsprechend Zustand starten/stoppen
             If _CustomDisplaySpeed Then
@@ -1043,9 +976,6 @@ Namespace AniGifControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Reagiert auf Änderung der Frames-pro-Sekunde Einstellung.
-        ''' </summary>
         Private Sub AniGif_FramesPerSecondChanged() Handles Me.FramesPerSecondChanged
             If _FramesPerSecond < 1D Then _FramesPerSecond = 1D ' Sicherheitsprüfung
             If Me.Timer.Enabled Then
@@ -1057,22 +987,12 @@ Namespace AniGifControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Wird vom ImageAnimator bei jedem anstehenden Frame aufgerufen.
-        ''' </summary>
-        ''' <param name="o">Auslösendes Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
         Private Sub OnNextFrame(o As Object, e As System.EventArgs)
             If Me.AutoPlay AndAlso Not Me.DesignMode Then
                 Me.Invalidate() 'neu zeichnen
             End If
         End Sub
 
-        ''' <summary>
-        ''' Timer-Tick zur manuellen Frame-Steuerung bei benutzerdefinierter Geschwindigkeit.
-        ''' </summary>
-        ''' <param name="sender">Timer.</param>
-        ''' <param name="e">Ereignisdaten.</param>
         Private Sub Timer_Tick(sender As Object, e As System.EventArgs) Handles Timer.Tick
             'Bild animieren wenn AutoPlay und Benutzerdefinierte Geschwindigkeit aktiv
             If Not Me.DesignMode AndAlso Me.AutoPlay Then
@@ -1107,22 +1027,6 @@ Namespace AniGifControl
             Me.ResumeLayout(False)
         End Sub
 
-        ''' <summary>
-        ''' Setzt die Standardwerte für die wichtigsten Variablen der AniGif Control.
-        ''' </summary>
-        Private Sub InitializeValues()
-            '_Gif = My.Resources.Standard ' Standard-GIF aus den Ressourcen laden
-            '_Autoplay = False                   ' Animation startet nicht automatisch
-            '_GifSizeMode = ImageSizeMode.Normal      ' GIF wird in Originalgröße angezeigt
-            '_CustomDisplaySpeed = False         ' Keine benutzerdefinierte Geschwindigkeit
-            '_FramesPerSecond = 10               ' Standard: 10 Bilder pro Sekunde
-            '_ZoomFactor = 50                    ' Standard-Zoomfaktor: 50%
-        End Sub
-
-        ''' <summary>
-        ''' Setzt eine neue Animation.
-        ''' </summary>
-        ''' <param name="value">Neues GIF-Bitmap oder Nothing für Standard.</param>
         Private Sub SetGifImage(value As System.Drawing.Bitmap)
             ' Vorherige Animation stoppen bevor Bild entsorgt wird
             If _Gif IsNot Nothing Then
@@ -1133,38 +1037,21 @@ Namespace AniGifControl
             RaiseEvent GifChanged()
         End Sub
 
-        ''' <summary>
-        ''' Setzt die Anzeigeart der Animation.
-        ''' </summary>
-        ''' <param name="value">Neuer ImageSizeMode.</param>
         Private Sub SetGifSizeMode(value As ImageSizeMode)
             _GifSizeMode = value
             Me.Invalidate()
         End Sub
 
-        ''' <summary>
-        ''' Setzt die benutzerdefinierte Anzeigegeschwindigkeit (aktiv/inaktiv).
-        ''' </summary>
-        ''' <param name="value">True zur Aktivierung.</param>
         Private Sub SetCustomDisplaySpeed(value As Boolean)
             _CustomDisplaySpeed = value
             RaiseEvent CustomDisplaySpeedChanged()
         End Sub
 
-        ''' <summary>
-        ''' Setzt den Zoomfaktor (wird geprüft und begrenzt).
-        ''' </summary>
-        ''' <param name="value">Neuer Zoomfaktor (1-100).</param>
         Private Sub SetZoomFactor(value As Decimal)
             _ZoomFactor = Me.CheckZoomFactorValue(value)
             Me.Invalidate() 'neu zeichnen
         End Sub
 
-        ''' <summary>
-        ''' Prüft und korrigiert den FPS-Wert in den Bereich 1..50.
-        ''' </summary>
-        ''' <param name="Frames">Angeforderte Frames pro Sekunde.</param>
-        ''' <returns>Korrigierter Wert.</returns>
         Private Function CheckFramesPerSecondValue(Frames As Decimal) As Decimal
             ' Überprüft, ob der FPS-Wert im zulässigen Bereich liegt (1 bis 50)
             Select Case Frames
@@ -1174,11 +1061,6 @@ Namespace AniGifControl
             End Select
         End Function
 
-        ''' <summary>
-        ''' Prüft, ob der übergebene Zoomfaktor im gültigen Bereich (1-100) liegt.
-        ''' </summary>
-        ''' <param name="ZoomFactor">Angeforderter Zoomfaktor.</param>
-        ''' <returns>Gibt den korrigierten Zoomfaktor im Bereich 1 bis 100 zurück.</returns>
         Private Function CheckZoomFactorValue(ZoomFactor As Decimal) As Decimal
             Select Case ZoomFactor
                 Case Is < 1 : Return 1 ' Wenn der Zoomfaktor kleiner als 1 ist, auf Mindestwert 1 setzen
@@ -1187,14 +1069,6 @@ Namespace AniGifControl
             End Select
         End Function
 
-        ''' <summary>
-        ''' Berechnet die Zielgröße des zu zeichnenden Bildes abhängig vom Modus.
-        ''' </summary>
-        ''' <param name="Mode">Aktueller ImageSizeMode.</param>
-        ''' <param name="Control">Referenz auf das Control.</param>
-        ''' <param name="Gif">Aktuelles GIF.</param>
-        ''' <param name="Zoom">Zoomfaktor (0-1) bei Zoom-Modus.</param>
-        ''' <returns>Berechnete Größe.</returns>
         Private Function GetRectStartSize(Mode As ImageSizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, Zoom As Decimal) As System.Drawing.Size
             If Gif Is Nothing Then Return System.Drawing.Size.Empty ' Null-Schutz
             Select Case Mode
@@ -1229,14 +1103,6 @@ Namespace AniGifControl
             End Select
         End Function
 
-        ''' <summary>
-        ''' Berechnet den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes.
-        ''' </summary>
-        ''' <param name="Mode">Aktueller ImageSizeMode.</param>
-        ''' <param name="Control">Referenz auf das Control.</param>
-        ''' <param name="Gif">Aktuelles GIF.</param>
-        ''' <param name="RectStartSize">Berechnete Zielgröße.</param>
-        ''' <returns>Zeichenursprung.</returns>
         Private Function GetRectStartPoint(Mode As ImageSizeMode, Control As AniGif, Gif As System.Drawing.Bitmap, RectStartSize As System.Drawing.Size) As System.Drawing.Point
             ' Bestimmt den Startpunkt (linke obere Ecke) für das Zeichnen des Bildes
             Select Case Mode
