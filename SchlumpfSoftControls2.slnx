@@ -31,5 +31,4 @@
     <Platform Solution="*|arm64" Project="arm64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>
-  <Project Path="SchlumpfSoftControlsDemoComponents/SchlumpfSoftControlsDemoComponents.vbproj" Id="ae03f411-4760-4adb-b8b3-243cad92eb5c" />
 </Solution>
