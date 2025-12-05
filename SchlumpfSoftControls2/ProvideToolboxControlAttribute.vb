@@ -3,13 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System
-'Imports System.Collections.Generic
-Imports System.Globalization
-'Imports System.Linq
-'Imports System.Text
-Imports Microsoft.VisualStudio.Shell
-
 ''' <summary>
 ''' Dieses Attribut fügt für die Assembly einen ToolboxControlsInstaller-Schlüssel
 ''' hinzu, um Steuerelemente aus der Assembly in die Toolbox zu installieren.
@@ -25,14 +18,17 @@ Imports Microsoft.VisualStudio.Shell
 ''' "WPFControls"="1"]]></code>
 ''' <para></para>
 ''' </example>
-<AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
+<System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
 <System.Runtime.InteropServices.ComVisibleAttribute(False)>
-Public NotInheritable Class ProvideToolboxControlAttribute
-    Inherits RegistrationAttribute
+Public NotInheritable Class ProvideToolboxControlAttribute : Inherits Microsoft.VisualStudio.Shell.RegistrationAttribute
 
     Private Const ToolboxControlsInstallerPath As String = "ToolboxControlsInstaller"
 
+    <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
+    <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
     Private _isWpfControls As Boolean
+    <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
+    <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
     Private _name As String
 
     ''' <summary>
@@ -44,9 +40,8 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     ''' andernfalls False.</param>
     Public Sub New(name As String, isWpfControls As Boolean)
         If name Is Nothing Then
-            Throw New ArgumentException("name")
+            Throw New System.ArgumentException("name")
         End If
-
         Me.Name = name
         Me.IsWpfControls = isWpfControls
     End Sub
@@ -83,11 +78,11 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     ''' Pfadinformationen.</para>
     ''' </summary>
     ''' <param name="context">Der Kontext, in dem registriert werden soll.</param>
-    Public Overrides Sub Register(context As RegistrationAttribute.RegistrationContext)
+    Public Overrides Sub Register(context As Microsoft.VisualStudio.Shell.RegistrationAttribute.RegistrationContext)
         If context Is Nothing Then
-            Throw New ArgumentNullException("context")
+            Throw New System.ArgumentNullException("context")
         End If
-        Using key As Key = context.CreateKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
+        Using key As Key = context.CreateKey(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
             key.SetValue(String.Empty, Me.Name)
             key.SetValue("Codebase", context.CodeBase)
             If Me.IsWpfControls Then
@@ -104,9 +99,10 @@ Public NotInheritable Class ProvideToolboxControlAttribute
     ''' <para>Der Kontext kann verwendet werden, um Registrierungsschlüssel zu
     ''' entfernen, die Registrierungsaktivität zu protokollieren und Informationen über
     ''' die zu registrierende Komponente abzurufen.</para></param>
-    Public Overrides Sub Unregister(context As RegistrationAttribute.RegistrationContext)
+    <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0031:NULL-Weitergabe verwenden", Justification:="<Ausstehend>")>
+    Public Overrides Sub Unregister(context As Microsoft.VisualStudio.Shell.RegistrationAttribute.RegistrationContext)
         If context IsNot Nothing Then
-            context.RemoveKey(String.Format(CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
+            context.RemoveKey(String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}\{1}", ToolboxControlsInstallerPath, context.ComponentType.Assembly.FullName))
         End If
     End Sub
 End Class

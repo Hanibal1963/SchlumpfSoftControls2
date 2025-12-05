@@ -3,14 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-Imports System
-Imports System.Runtime.InteropServices
-Imports System.Threading
-'Imports Microsoft.VisualBasic
-Imports Microsoft.VisualStudio.Shell
-Imports Task = System.Threading.Tasks.Task
-
-
 ''' <summary>
 ''' Dies ist die Klasse, die das von dieser Assembly bereitgestellte Paket
 ''' implementiert.
@@ -31,10 +23,9 @@ Imports Task = System.Threading.Tasks.Task
 ''' &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; darauf verwiesen
 ''' werden. </para>
 ''' </remarks>
-<PackageRegistration(UseManagedResourcesOnly:=True, AllowsBackgroundLoading:=True)>
-<Guid(SchlumpfSoftControls2Package.PackageGuidString)>
-Public NotInheritable Class SchlumpfSoftControls2Package
-    Inherits AsyncPackage
+<Microsoft.VisualStudio.Shell.PackageRegistration(UseManagedResourcesOnly:=True, AllowsBackgroundLoading:=True)>
+<System.Runtime.InteropServices.Guid(SchlumpfSoftControls2Package.PackageGuidString)>
+Public NotInheritable Class SchlumpfSoftControls2Package : Inherits Microsoft.VisualStudio.Shell.AsyncPackage
 
     ''' <summary>
     ''' Paket-GUID
@@ -58,7 +49,9 @@ Public NotInheritable Class SchlumpfSoftControls2Package
     ''' </para>
     ''' <para>Geben Sie aus dieser Methode nicht null zurück.</para>
     ''' </returns>
-    Protected Overrides Async Function InitializeAsync(cancellationToken As CancellationToken, progress As IProgress(Of ServiceProgressData)) As Task
+    Protected Overrides Async Function InitializeAsync(
+                                                      cancellationToken As System.Threading.CancellationToken,
+                                                      progress As System.IProgress(Of Microsoft.VisualStudio.Shell.ServiceProgressData)) As System.Threading.Tasks.Task
         ' Bei asynchroner Initialisierung kann der aktuelle Thread zu diesem Zeitpunkt ein Hintergrundthread sein.
         ' Führen Sie Initialisierungen, die den UI-Thread erfordern, erst nach dem Wechsel auf den UI-Thread aus.
         Await Me.JoinableTaskFactory.SwitchToMainThreadAsync()
