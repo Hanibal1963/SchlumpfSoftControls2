@@ -6,101 +6,105 @@
 Namespace ColorProgressBarControl
 
     ''' <summary>
-    ''' Control zum Anzeigen eines farbigen Fortschrittbalkens.
+    ''' Ein benutzerdefiniertes Windows Forms-Steuerelement zur Anzeige eines farbigen
+    ''' Fortschrittsbalkens mit optionalem Rahmen und Glanzeffekt.
     ''' </summary>
+    ''' <remarks>
+    ''' Das Steuerelement besteht aus zwei <see
+    ''' cref="System.Windows.Forms.Panel"/>-Elementen: <list type="bullet">
+    '''  <item>
+    '''   <description><c>ProgressFull</c>:<br/>
+    ''' Visualisiert den aktuellen Fortschritt.</description>
+    '''  </item>
+    '''  <item>
+    '''   <description><c>ProgressEmpty</c>:<br/>
+    ''' Visualisiert den verbleibenden Fortschritt bis zum Maximum.</description>
+    '''  </item>
+    ''' </list>
+    '''  Die Glanzeffekte (<c>GlossLeft</c> und <c>GlossRight</c>) können über <see cref="IsGlossy"/> ein- bzw. ausgeschaltet werden. Der Rahmen wird über <see cref="ShowBorder"/> gesteuert.
+    ''' </remarks>
+    ''' <example>
+    ''' <code language="vb"><![CDATA[' Beispiel: Verwendung in einem Formular
+    ''' Dim bar As New ColorProgressBarControl.ColorProgressBar() With {
+    '''     .Dock = DockStyle.Top,
+    '''     .ProgressMaximumValue = 100,
+    '''     .Value = 25,
+    '''     .BarColor = System.Drawing.Color.SeaGreen,
+    '''     .EmptyColor = System.Drawing.Color.Gainsboro,
+    '''     .BorderColor = System.Drawing.Color.Black,
+    '''     .ShowBorder = True,
+    '''     .IsGlossy = True
+    ''' }
+    ''' Me.Controls.Add(bar)
+    '''  
+    ''' ' Fortschritt aktualisieren
+    ''' bar.Value = Math.Min(bar.ProgressMaximumValue, bar.Value + 10)]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Control zum Anzeigen eines farbigen Fortschrittbalkens.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(ColorProgressBarControl.ColorProgressBar), "ColorProgressBar.bmp")>
     Public Class ColorProgressBar : Inherits System.Windows.Forms.UserControl
 
-#Region "Variablendefinitionen"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Der Betrag in Pixeln, um den der Fortschrittsbalken pro Einheit vergrößert wird.
-        ''' </summary>
         Private _ProgressUnit As Integer = 20
-
-        ''' <summary>
-        ''' Aktueller Fortschrittswert (Anzahl der gefüllten Einheiten).
-        ''' </summary>
         Private _ProgressValue As Integer = 1
-
-        ''' <summary>
-        ''' Maximal möglicher Fortschrittswert des Balkens.
-        ''' </summary>
         Private _MaxValue As Integer = 10
-
-        ''' <summary>
-        ''' Legt fest, ob ein Rahmen um die Fortschrittsanzeige dargestellt wird.
-        ''' </summary>
         Private _ShowBorder As Boolean = True
-
-        ''' <summary>
-        ''' Legt fest, ob Glanzeffekte (Gloss-Panels) angezeigt werden.
-        ''' </summary>
         Private _IsGlossy As Boolean = True
-
-        ''' <summary>
-        ''' Farbe des gefüllten Fortschrittsbereichs.
-        ''' </summary>
         Private _BarColor As System.Drawing.Color = System.Drawing.Color.Blue
-
-        ''' <summary>
-        ''' Farbe des leeren (noch nicht gefüllten) Fortschrittsbereichs.
-        ''' </summary>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _EmptyColor As System.Drawing.Color = System.Drawing.Color.LightGray
-
-        ''' <summary>
-        ''' Rahmenfarbe des Steuerelements.
-        ''' </summary>
         Private _BorderColor As System.Drawing.Color = System.Drawing.Color.Black
-
-        ''' <summary>
-        ''' Container für Komponenten. Wird vom Windows Forms-Designer benötigt.
-        ''' </summary>
-        Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Panel, das den gefüllten Anteil des Fortschritts darstellt.
-        ''' </summary>
         Private WithEvents ProgressFull As System.Windows.Forms.Panel
-
-        ''' <summary>
-        ''' Panel, das den leeren Anteil des Fortschritts darstellt.
-        ''' </summary>
         Private WithEvents ProgressEmpty As System.Windows.Forms.Panel
-
-        ''' <summary>
-        ''' Linkes Glanzelement über dem gefüllten Bereich.
-        ''' </summary>
         Private WithEvents GlossLeft As System.Windows.Forms.Panel
-
-        ''' <summary>
-        ''' Rechtes Glanzelement über dem leeren Bereich.
-        ''' </summary>
         Private WithEvents GlossRight As System.Windows.Forms.Panel
+        Private ReadOnly components As System.ComponentModel.IContainer
 
 #End Region
 
-#Region "Ereignisdefinitionen für öffentliche Ereignisse"
+#Region "Ereignisse"
 
         ''' <summary>
-        ''' Tritt auf, wenn auf das Steuerelement oder einen seiner sichtbaren Bereiche geklickt wird.
+        ''' Tritt auf, wenn auf das Steuerelement oder einen seiner sichtbaren Bereiche
+        ''' geklickt wird.
         ''' </summary>
-        ''' <param name="sender">Das auslösende Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
+        ''' <remarks>
+        ''' Dieses Ereignis wird ausgelöst, wenn einer der internen Panels (<c>GlossLeft</c>, <c>GlossRight</c>, <c>ProgressFull</c>, <c>ProgressEmpty</c>) angeklickt wird.<br/>
+        ''' Verwenden Sie <see
+        ''' href="https://learn.microsoft.com/de-de/dotnet/visual-basic/language-reference/statements/addhandler-statement">AddHandler</see>,
+        ''' um eine Klickbehandlung zu registrieren.
+        ''' </remarks>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[AddHandler myProgressBar.Click,
+        '''     Sub(s, args)
+        '''         System.Windows.Forms.MessageBox.Show("Fortschrittsbalken geklickt.")
+        '''     End Sub]]></code>
+        ''' </example>
         Public Shadows Event Click(sender As Object, e As System.EventArgs)
 
 #End Region
 
-#Region "neue Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
-        ''' Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.
+        ''' Gibt den aktuellen Fortschrittswert zurück oder legt diesen fest.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Setzen wird der Wert automatisch auf <see cref="ProgressMaximumValue"/>
+        ''' begrenzt.<br/>
+        ''' Das Layout wird anschließend über <see cref="UpdateProgress"/> aktualisiert.
+        ''' </remarks>
+        ''' <value>
+        ''' Ein ganzzahliger Wert im Bereich [0..ProgressMaximumValue].
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.ProgressMaximumValue = 100
+        ''' progressBar.Value = 75 ' Zeigt 75% Fortschritt]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Gibt den Gesamtfortschritt des Fortschrittsbalkens zurück oder legt diesen fest.")>
@@ -118,6 +122,21 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.
         ''' </summary>
+        ''' <remarks>
+        ''' Der visuelle Fortschritt berechnet sich aus <c>Width/ProgressMaximumValue</c>.<br/>
+        ''' Beim Setzen wird der Maximalwert auf die aktuelle Breite des Steuerelements
+        ''' begrenzt, um eine sinnvolle Skalierung sicherzustellen.
+        ''' </remarks>
+        ''' <value>
+        ''' Ein ganzzahliger positiver Wert.<br/>
+        ''' Der interne Layoutwert wird durch die Steuerelementbreite begrenzt.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.ProgressMaximumValue = 50
+        ''' For i = 0 To 50
+        '''     progressBar.Value = i
+        ''' Next]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Gibt den Maximalwert des Fortschrittsbalkens zurück oder legt diesen fest.")>
@@ -133,8 +152,17 @@ Namespace ColorProgressBarControl
         End Property
 
         ''' <summary>
-        ''' Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.
+        ''' Gibt die Farbe des gefüllten Fortschrittsbereichs zurück oder legt diese fest.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Setzen wird die Hintergrundfarbe von <c>ProgressFull</c> entsprechend aktualisiert.
+        ''' </remarks>
+        ''' <value>
+        ''' Eine <see cref="System.Drawing.Color"/> für den gefüllten Bereich.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.BarColor = System.Drawing.Color.DarkOrange]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt die Farbe des Fortschrittsbalkens zurück oder legt diese fest.")>
@@ -149,9 +177,17 @@ Namespace ColorProgressBarControl
         End Property
 
         ''' <summary>
-        ''' Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.
+        ''' Gibt die Farbe des leeren Fortschrittsbereichs zurück oder legt diese fest.
         ''' </summary>
-        ''' <returns>Die aktuell eingestellte Farbe für den leeren Bereich.</returns>
+        ''' <remarks>
+        ''' Beim Setzen wird die Hintergrundfarbe von <c>ProgressEmpty</c> entsprechend aktualisiert.
+        ''' </remarks>
+        ''' <value>
+        ''' Die aktuell eingestellte Farbe für den leeren Bereich.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.EmptyColor = System.Drawing.Color.LightSteelBlue]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt die Farbe des leeren Fortschrittsbalkens zurück oder legt diese fest.")>
@@ -168,6 +204,17 @@ Namespace ColorProgressBarControl
         ''' <summary>
         ''' Gibt die Farbe des Rahmens zurück oder legt diese fest.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Setzen wird <see cref="System.Windows.Forms.Control.BackColor"/> des
+        ''' Steuerelements angepasst.
+        ''' </remarks>
+        ''' <value>
+        ''' Eine <see cref="System.Drawing.Color"/> für den Rahmen des Steuerelements.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.BorderColor = System.Drawing.Color.Gray
+        ''' progressBar.ShowBorder = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt die Farbe des Rahmens zurück oder legt diese fest.")>
@@ -182,8 +229,18 @@ Namespace ColorProgressBarControl
         End Property
 
         ''' <summary>
-        ''' Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.
+        ''' Legt fest, ob ein Rahmen um die Fortschrittsanzeige angezeigt wird.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Umschalten wird das <see cref="Padding"/> intern auf 1 (mit Rahmen) bzw. 0
+        ''' (ohne Rahmen) gesetzt.
+        ''' </remarks>
+        ''' <value>
+        ''' <c>True</c>, wenn ein Rahmen angezeigt wird; andernfalls <c>False</c>.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.ShowBorder = False ' Rand ausblenden]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob der Rahmen auf der Fortschrittsanzeige aktiviert ist.")>
@@ -199,8 +256,17 @@ Namespace ColorProgressBarControl
         End Property
 
         ''' <summary>
-        ''' Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.
+        ''' Legt fest, ob ein Glanzeffekt auf der Fortschrittsleiste angezeigt wird.
         ''' </summary>
+        ''' <remarks>
+        ''' Beim Umschalten werden die Panels <c>GlossLeft</c> und <c>GlossRight</c> sichtbar bzw. unsichtbar.
+        ''' </remarks>
+        ''' <value>
+        ''' <c>True</c>, wenn der Glanzeffekt sichtbar ist; andernfalls <c>False</c>.
+        ''' </value>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[progressBar.IsGlossy = True ' Glanzeffekt aktivieren]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob der Glanz auf der Fortschrittsleiste angezeigt wird.")>
@@ -214,10 +280,6 @@ Namespace ColorProgressBarControl
                 Dim unused = Me.UpdateProgress()
             End Set
         End Property
-
-#End Region
-
-#Region "ausgeblendete Eigenschaften"
 
         ''' <summary>
         ''' Ausgeblendet da nicht relevant.
@@ -308,8 +370,18 @@ Namespace ColorProgressBarControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz der <see cref="ColorProgressBar"/>-Klasse und setzt Standardwerte.
+        ''' Initialisiert eine neue Instanz der <see cref="ColorProgressBar"/>-Klasse und
+        ''' setzt Standardwerte.
         ''' </summary>
+        ''' <remarks>
+        ''' <see cref="InitializeComponent"/> erstellt die internen Steuerelemente.<br/>
+        ''' <see cref="InitializeDefaults"/> setzt Standardfarben und -zustände.
+        ''' </remarks>
+        ''' <example>
+        ''' <code language="vb"><![CDATA[Dim bar As New ColorProgressBarControl.ColorProgressBar()
+        ''' bar.ProgressMaximumValue = 100
+        ''' bar.Value = 10]]></code>
+        ''' </example>
         Public Sub New()
             Me.InitializeComponent()  ' Dieser Aufruf ist für den Designer erforderlich.
             Me.InitializeDefaults() ' Standardwerte setzen
@@ -317,12 +389,17 @@ Namespace ColorProgressBarControl
 
 #End Region
 
-#Region "interne Funktionen"
+#Region "interne Methoden"
 
         ''' <summary>
-        ''' Vom Designer generierte Methode zur Initialisierung der Steuerelement-Komponenten.
-        ''' Änderungen sollten ausschließlich über den Designer erfolgen.
+        ''' Vom Designer generierte Methode zur Initialisierung der
+        ''' Steuerelement-Komponenten.
         ''' </summary>
+        ''' <remarks>
+        ''' <b>Achtung!</b><br/>
+        ''' Änderungen sollten ausschließlich über den Designer erfolgen.<br/>
+        ''' Eine Änderung mit dem Editor kann zu unerwarteten Fehlern führen.
+        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.ProgressFull = New System.Windows.Forms.Panel()
@@ -383,9 +460,6 @@ Namespace ColorProgressBarControl
 
         End Sub
 
-        ''' <summary>
-        ''' Setzt Standardfarben und -zustände für das Steuerelement.
-        ''' </summary>
         Private Sub InitializeDefaults()
             Me.GlossLeft.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
             Me.GlossRight.BackColor = System.Drawing.Color.FromArgb(100, 255, 255, 255)
@@ -394,10 +468,6 @@ Namespace ColorProgressBarControl
             Me.ProgressFull.BackColor = Me._BarColor
         End Sub
 
-        ''' <summary>
-        ''' Aktualisiert die Größe der Glanzelemente in Abhängigkeit von der Kontrollehöhe.
-        ''' </summary>
-        ''' <returns>True bei Erfolg, andernfalls False.</returns>
         Private Function UpdateGloss() As Boolean
             Try
                 ' Jedes Glanzfeld ausblenden
@@ -410,10 +480,6 @@ Namespace ColorProgressBarControl
             Return True
         End Function
 
-        ''' <summary>
-        ''' Aktualisiert Breite, Rahmen und Sichtbarkeit der Elemente entsprechend dem Fortschrittswert.
-        ''' </summary>
-        ''' <returns>True bei Erfolg, andernfalls False.</returns>
         Private Function UpdateProgress() As Boolean
             Try
                 'Globale Werte neu berechnen
@@ -440,24 +506,10 @@ Namespace ColorProgressBarControl
             Return True
         End Function
 
-#End Region
-
-#Region "Interne Ereignisbehandlungen"
-
-        ''' <summary>
-        ''' Stellt sicher, dass die Innenabstände dem Rahmenstatus entsprechen, wenn sich das Padding ändert.
-        ''' </summary>
-        ''' <param name="sender">Das auslösende Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
         Private Sub ColorProgressBar_PaddingChanged(sender As Object, e As System.EventArgs) Handles Me.PaddingChanged
             Me.Padding = If(Me._ShowBorder, New System.Windows.Forms.Padding(1), New System.Windows.Forms.Padding(0))
         End Sub
 
-        ''' <summary>
-        ''' Reagiert auf Größenänderungen und aktualisiert Anzeige und Glanzeffekte.
-        ''' </summary>
-        ''' <param name="sender">Das auslösende Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
         Private Sub ColorProgressBar_Resize(sender As Object, e As System.EventArgs) Handles Me.Resize
             If Me.Value <= Me._MaxValue Then
                 Dim unused = Me.UpdateProgress()
@@ -465,24 +517,11 @@ Namespace ColorProgressBarControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Leitet Klicks auf interne Panels an das öffentliche Klick-Ereignis weiter.
-        ''' </summary>
-        ''' <param name="sender">Das auslösende Objekt.</param>
-        ''' <param name="e">Ereignisdaten.</param>
         Private Sub Panel_Click(sender As Object, e As System.EventArgs) Handles GlossLeft.Click, ProgressFull.Click, ProgressEmpty.Click, GlossRight.Click
             RaiseEvent Click(Me, e)
         End Sub
 
-#End Region
-
-#Region "überschriebene Methoden"
-
         'UserControl1 überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        ''' <summary>
-        ''' Gibt verwendete Ressourcen frei.
-        ''' </summary>
-        ''' <param name="disposing">True, um verwaltete Ressourcen zu löschen; andernfalls False.</param>
         <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
