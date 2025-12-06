@@ -69,7 +69,7 @@ Namespace ExplorerTreeViewControl
 
 #End Region
 
-#Region "Definition der internen Dictionarys"
+#Region "interne Dictionarys"
 
         ' Dieses Dictionary wird verwendet, um den Typ eines Laufwerks in eine menschenlesbare Zeichenfolge zu übersetzen.
         Private ReadOnly DriveTypeMappings As New System.Collections.Generic.Dictionary(Of System.IO.DriveType, String) From {
@@ -117,29 +117,10 @@ Namespace ExplorerTreeViewControl
 
 #Region "öffentliche Methoden"
 
-        ''' <summary>
-        ''' Ermittelt den Laufwerksnamen ohne den abschließenden Backslash
-        ''' </summary>
-        ''' <param name="drive">Das Laufwerk, dessen Name ermittelt werden soll.</param>
         Public Function GetDriveName(drive As System.IO.DriveInfo) As String
             Return drive.Name.Substring(0, drive.Name.Length - 1) ' Der Laufwerksname endet mit einem Backslash, der entfernt werden muss
         End Function
 
-        ''' <summary>
-        ''' Ermittelt das Laufwerkslabel
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Wenn das Laufwerk bereit ist, wird das VolumeLabel (Laufwerksbezeichnung)
-        ''' ermittelt.</para>
-        ''' <para><br/>
-        ''' Falls das Laufwerk kein Label besitzt (VolumeLabel ist leer oder
-        ''' Nothing),</para>
-        ''' <para><br/>
-        ''' wird stattdessen die Beschreibung des Laufwerkstyps als Label verwendet.<br/>
-        ''' </para>
-        ''' </remarks>
-        ''' <param name="drive">Das Laufwerk, dessen Label ermittelt werden soll.</param>
-        ''' <returns>Der Volumename, der Laufwerkstyp oder leer als String. </returns>
         Public Function GetVolumeLabel(drive As System.IO.DriveInfo) As String
 
             ' Überprüfen, ob das Laufwerk bereit ist (z. B. ob ein Medium eingelegt und lesbar ist)
@@ -157,11 +138,6 @@ Namespace ExplorerTreeViewControl
 
         End Function
 
-        ''' <summary>
-        ''' Ermittelt den String der den Laufwerkstyp darstellt.
-        ''' </summary>
-        ''' <param name="Drive">Das Laufwerk dessen Typ ermittelt werden soll.</param>
-        ''' <returns>Die Zeichenfolge die den laufwerkstyp darstellt oder eine leere Zeichenfolge.</returns>
         Public Function GetDriveTypeString(Drive As System.IO.DriveInfo) As String
 
             ' Überprüfen, ob das angegebene Laufwerk ein Systemlaufwerk ist.
@@ -183,20 +159,10 @@ Namespace ExplorerTreeViewControl
 
         End Function
 
-        ''' <summary>
-        ''' Ermittelt den vollständigen Pfad des speziellen Ordners basierend auf dem angezeigtem Text.
-        ''' </summary>
-        ''' <param name="Text"></param>
-        ''' <returns></returns>
         Public Function GetSpezialFolderPath(Text As String) As String
             Return If(FolderMappings.ContainsKey(Text), FolderMappings(Text), String.Empty)
         End Function
 
-        ''' <summary>
-        ''' Gibt den ImageKey für den angegebenen Namen zurück.
-        ''' </summary>
-        ''' <param name="IconTypeString">Der Name (z. B. Ordner- oder Laufwerksname).</param>
-        ''' <returns>Der zugehörige ImageKey oder eine leere Zeichenfolge. </returns>
         Public Function GetImageKey(IconTypeString As String) As String
 
             ' Überprüft, ob das Dictionary "ImageKeyMappings" den angegebenen Schlüssel ("IconTypeString") enthält.
@@ -216,10 +182,6 @@ Namespace ExplorerTreeViewControl
 
 #Region "Interne Methoden"
 
-        ''' <summary>
-        ''' Ermittelt ob das Laufwerk ein Diskettenlaufwerk ist
-        ''' </summary>
-        ''' <param name="drive">Das Laufwerk, welches auf den Typ FloppyDrive geprüft werden soll.</param>
         Private Function IsFloppyDrive(drive As System.IO.DriveInfo) As Boolean
 
             ' Überprüft, ob das angegebene Laufwerk ein Diskettenlaufwerk ist.
@@ -235,10 +197,6 @@ Namespace ExplorerTreeViewControl
 
         End Function
 
-        ''' <summary>
-        ''' Ermittelt ob das Laufwerk das Systemlaufwerk ist
-        ''' </summary>
-        ''' <param name="drive">Das Laufwerk, welches auf den Typ SystemDrive geprüft werden soll.</param>
         Private Function IsSystemDrive(drive As System.IO.DriveInfo) As Boolean
 
             ' Ermittelt das Root-Verzeichnis des Systemlaufwerks, indem der Pfad des Windows-Ordners verwendet wird.
@@ -253,11 +211,6 @@ Namespace ExplorerTreeViewControl
 
         End Function
 
-        ''' <summary>
-        ''' Ermittelt den Laufwerkstyp als String.
-        ''' </summary>
-        ''' <param name="drive">Das Laufwerk, dessen Typ ermittelt werden soll.</param>
-        ''' <returns>Eine Beschreibung des Laufwerkstyps, z. B. "Lokaler Datenträger" oder "CD-Laufwerk".</returns>
         Private Function GetDriveTypeDescription(drive As System.IO.DriveInfo) As String
 
             Select Case drive.DriveType
