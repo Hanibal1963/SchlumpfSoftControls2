@@ -132,6 +132,68 @@ Namespace ExplorerTreeViewControl
     ''' </summary>
     Friend Module NodeHelpers
 
+#Region "Keykonstanten für Laufwerkstypen"
+
+        Public Const DRIVETYPE_FIXED As String = "Fixed" ' Schlüssel für Laufwerkstyp: Lokaler Datenträger
+        Public Const DRIVETYPE_CDROM As String = "CDROM"  ' Schlüssel für Laufwerkstyp: CD/DVD/BD-Laufwerk
+        Public Const DRIVETYPE_REMOVABLE As String = "Removable" ' Schlüssel für Laufwerkstyp: Wechselmedium (z. B. USB-Stick)
+        Public Const DRIVETYPE_NETWORK As String = "Network" ' Schlüssel für Laufwerkstyp: Netzlaufwerk
+        Public Const DRIVETYPE_RAM As String = "RamDisk" ' Schlüssel für Laufwerkstyp: RAM-Disk
+        Public Const DRIVETYPE_NOROOT As String = "NoRoot" ' Schlüssel für Laufwerkstyp: Kein Root-Verzeichnis vorhanden
+        Public Const DRIVETYPE_UNKNOWN As String = "Unknown" ' Schlüssel für Laufwerkstyp: Unbekannt
+        Public Const DRIVETYPE_SYSTEM As String = "System" ' Schlüssel für Laufwerkstyp: Systemlaufwerk
+        Public Const DRIVETYPE_FLOPPY As String = "Floppy" ' Schlüssel für Laufwerkstyp: Diskettenlaufwerk
+
+#End Region
+
+#Region "Konstanten für die Anzeigenamen der Laufwerkstypen"
+
+        Public Const DRIVE_DESC_FIXED As String = "Lokaler Datenträger" ' Anzeigename für Laufwerkstyp: Lokaler Datenträger
+        Public Const DRIVE_DESC_CDROM As String = "CD-Laufwerk" ' Anzeigename für Laufwerkstyp: CD-Laufwerk
+        Public Const DRIVE_DESC_FLOPPY As String = "Diskettenlaufwerk" ' Anzeigename für Laufwerkstyp: Diskettenlaufwerk
+        Public Const DRIVE_DESC_REMOVABLE As String = "Wechselmedium" ' Anzeigename für Laufwerkstyp: Wechselmedium
+        Public Const DRIVE_DESC_NETWORK As String = "Netzlaufwerk" ' Anzeigename für Laufwerkstyp: Netzlaufwerk
+        Public Const DRIVE_DESC_RAM As String = "Ramlaufwerk" ' Anzeigename für Laufwerkstyp: RAM-Laufwerk
+        Public Const DRIVE_DESC_NOROOT As String = "kein Root-Verzeichnis" ' Anzeigename für Laufwerkstyp: Kein Root-Verzeichnis
+        Public Const DRIVE_DESC_UNKNOWN As String = "Unbekanntes Laufwerk" ' Anzeigename für Laufwerkstyp: Unbekanntes Laufwerk
+
+#End Region
+
+#Region "Keykonstanten für Ordnernamen"
+
+        Public Const FOLDER_COMPUTER As String = "Computer" ' Schlüssel für speziellen Ordner: Computer
+        Public Const FOLDER_DESKTOP As String = "Desktop" ' Schlüssel für speziellen Ordner: Desktop
+        Public Const FOLDER_DOKUMENTE As String = "Dokumente" ' Schlüssel für speziellen Ordner: Dokumente
+        Public Const FOLDER_DOWNLOADS As String = "Downloads" ' Schlüssel für speziellen Ordner: Downloads
+        Public Const FOLDER_MUSIK As String = "Musik" ' Schlüssel für speziellen Ordner: Musik
+        Public Const FOLDER_BILDER As String = "Bilder" ' Schlüssel für speziellen Ordner: Bilder
+        Public Const FOLDER_VIDEOS As String = "Videos" ' Schlüssel für speziellen Ordner: Videos
+        Public Const FOLDER_FOLDER As String = "Folder" ' Schlüssel für allgemeinen Ordner
+
+#End Region
+
+#Region "Keykonstanten für Symbolbezeichnungen"
+
+        Public Const ICON_COMPUTER As String = "Computer" ' Symbolschlüssel: Computer
+        Public Const ICON_FOLDER_DESKTOP As String = "FolderDesktop" ' Symbolschlüssel: Ordner Desktop
+        Public Const ICON_FOLDER_DOCUMENTS As String = "FolderDocuments" ' Symbolschlüssel: Ordner Dokumente
+        Public Const ICON_FOLDER_DOWNLOADS As String = "FolderDownloads" ' Symbolschlüssel: Ordner Downloads
+        Public Const ICON_FOLDER_MUSIC As String = "FolderMusic" 'Symbolschlüssel: Ordner Musik
+        Public Const ICON_FOLDER_PICTURES As String = "FolderPictures" ' Symbolschlüssel: Ordner Bilder
+        Public Const ICON_FOLDER_VIDEOS As String = "FolderVideos" ' Symbolschlüssel: Ordner Videos
+        Public Const ICON_FOLDER_FOLDER As String = "Folder" ' Symbolschlüssel: Allgemeiner Ordner
+        Public Const ICON_DRIVE_SYSTEM As String = "DriveSystem" ' Symbolschlüssel: Systemlaufwerk
+        Public Const ICON_DRIVE_FIXED As String = "DriveFixed" ' Symbolschlüssel: Lokaler Datenträger
+        Public Const ICON_DRIVE_CDROM As String = "DriveCDROM" ' Symbolschlüssel: CD/DVD/BD-Laufwerk
+        Public Const ICON_DRIVE_FLOPPY As String = "DriveFloppy" ' Symbolschlüssel: Diskettenlaufwerk
+        Public Const ICON_DRIVE_REMOVABLE As String = "DriveRemovable" ' Symbolschlüssel: Wechselmedium
+        Public Const ICON_DRIVE_NETWORK As String = "DriveNetwork" ' Symbolschlüssel: Netzlaufwerk
+        Public Const ICON_DRIVE_RAM As String = "DiveRamDisk" ' Symbolschlüssel: RAM-Disk
+        Public Const ICON_DRIVE_NOROOT As String = "DriveNoRoot" ' Symbolschlüssel: Kein Root-Verzeichnis
+        Public Const ICON_DRIVE_UNKNOWN As String = "DriveUnknown" ' Symbolschlüssel: Unbekannter Laufwerkstyp
+
+#End Region
+
 #Region "Definition der internen Dictionarys"
 
         ''' <summary>

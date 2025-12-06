@@ -179,7 +179,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ExplorerTreeViewControl\Nodes.vb" />
-    <Compile Include="ExplorerTreeViewControl\Constants.vb" />
     <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
       <SubType>UserControl</SubType>
     </Compile>
