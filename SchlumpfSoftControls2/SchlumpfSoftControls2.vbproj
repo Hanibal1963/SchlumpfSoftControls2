@@ -178,11 +178,14 @@
     <Compile Include="DriveWatcherControl\DriveWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ExplorerTreeViewControl\Nodes.vb" />
+    <Compile Include="ExplorerTreeViewControl\ComputerNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\DriveNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\FolderNode.vb" />
+    <Compile Include="ExplorerTreeViewControl\SpecialFolderNode.vb" />
     <Compile Include="ExplorerTreeViewControl\ExplorerTreeView.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ExplorerTreeViewControl\Helpers.vb" />
+    <Compile Include="ExplorerTreeViewControl\NodeHelpers.vb" />
     <Compile Include="ExplorerTreeViewControl\SelectedPathChangedEventArgs.vb" />
     <Compile Include="ExtendedRTFControl\ApiDefinitions.vb" />
     <Compile Include="ExtendedRTFControl\ExtendedRTF.vb">
