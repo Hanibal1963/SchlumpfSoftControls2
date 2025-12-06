@@ -407,5 +407,121 @@ Geeignet für Designer-/Kompositionsszenarien.<br />Bei Übergabe eines Containe
       <param name="container">
 Ein optionaler <see cref="System.ComponentModel.IContainer" />, dem die Komponente hinzugefügt wird.</param>
     </member>
+    <member name="N:SchlumpfSoft.Controls.ExplorerTreeViewControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView">
+      <summary>
+Steuerelement zur Anzeige und Navigation der lokalen Verzeichnisstruktur.</summary>
+      <remarks>
+<para>Das Control zeigt eine hierarchische Baumstruktur mit: </para> <list type="bullet"><item><description>dem Wurzelknoten "Dieser Computer", allen verfügbaren Laufwerken, sowie bekannten Spezialordnern (z. B. Desktop, Dokumente, Bilder). Funktionen: </description></item><item><description>Lazy-Loading von Unterordnern beim Expandieren eines Knotens. </description></item><item><description>Live-Aktualisierung durch <see cref="System.IO.FileSystemWatcher" /> bei Änderungen im Dateisystem. </description></item><item><description>Ereignis <see cref="SelectedPathChanged" /> bei Auswahl eines Knotens mit gültigem Pfad. </description></item><item><description>Öffnen und Selektieren eines Pfads über <see cref="ExpandPath(String)" />. </description></item></list> <para><b>Hinweise:</b> </para> <list type="bullet"><item><description>Der Wurzelknoten ("Dieser Computer") besitzt keinen Pfad. </description></item><item><description>Für geöffnete Knoten wird automatisch ein FileSystemWatcher angelegt; beim Zuklappen wird er entfernt.</description></item></list></remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.SelectedPathChanged">
+      <summary>
+Ereignis, das ausgelöst wird, wenn sich der ausgewählte Pfad geändert hat.</summary>
+      <remarks>
+<para>Dieses Ereignis wird verwendet, um andere Steuerelemente oder Logik zu benachrichtigen, wenn der Benutzer einen anderen Knoten im TreeView auswählt. </para> <para>Es ermöglicht eine reaktive Programmierung, bei der andere Teile der Anwendung auf Änderungen im ausgewählten Pfad reagieren können.</para></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.LineColor">
+      <summary>
+Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.</summary>
+      <remarks>
+Diese Eigenschaft beeinflusst die Farbe der Verbindungslinien im TreeView.<br />Eine Änderung wirkt sich sofort auf die Darstellung aus.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowLines">
+      <summary>
+Gibt an, ob Linien zwischen den Knoten angezeigt werden.</summary>
+      <remarks>
+Wenn <see langword="True" />, werden Verbindungslinien zwischen Eltern- und Kindknoten dargestellt.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowPlusMinus">
+      <summary>
+Legt fest, ob die Plus- und Minuszeichen zum Anzeigen von Unterknoten angezeigt werden.</summary>
+      <remarks>
+Wenn <see langword="True" />, werden Expand-/Collapse-Glyphen (Plus/Minus) neben Knoten angezeigt.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ShowRootLines">
+      <summary>
+Gibt an, ob Linien zwischen den Stammknoten angezeigt werden.</summary>
+      <remarks>
+Betrifft ausschließlich die Linien zwischen den obersten Knotenebenen (Root-Level).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Indent">
+      <summary>
+Ruft den Abstand für das Einrücken der einzelnen Ebenen von untergeordneten Strukturknoten ab oder legt diesen fest.</summary>
+      <remarks>
+Bestimmt die horizontale Einrückung pro Ebene in Pixel.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ItemHeight">
+      <summary>
+Ruft die Höhe des jeweiligen Strukturknotens im Strukturansicht-Steuerelement ab oder legt diese fest.</summary>
+      <remarks>
+Die Knotenhöhe wird in Pixel angegeben und beeinflusst die vertikale Dichte der Einträge.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackColor">
+      <summary>
+Legt die Hintergrundfarbe für das Steuerelement fest oder gibt diese zurück.</summary>
+      <remarks>
+Die Hintergrundfarbe des UserControls wird übernommen und auf das interne TreeView angewendet, sodass beide konsistent erscheinen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ForeColor">
+      <summary>
+Legt die Vordergrundfarbe für das Anzeigen von Text fest oder gibt diese zurück.</summary>
+      <remarks>
+Die Textfarbe des UserControls wird übernommen und auf das interne TreeView angewendet.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Font">
+      <summary>
+Legt die Schriftart für den Text im Steuerelement fest oder gibt diese zurück.</summary>
+      <remarks>
+Die Schriftart wird sowohl auf das UserControl als auch auf das interne TreeView angewendet, um eine einheitliche Darstellung sicherzustellen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.Text">
+      <summary>
+Ist für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackgroundImage">
+      <summary>
+Ist für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.BackgroundImageLayout">
+      <summary>
+Ist für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.#ctor">
+      <summary>
+Konstruktor für das ExplorerTreeView-Steuerelement.</summary>
+      <remarks>
+<para>Dieser Konstruktor initialisiert das Steuerelement und lädt die erforderlichen Bilder. </para> <para>Außerdem wird der Wurzelknoten des TreeViews gesetzt, um die Struktur des Steuerelements zu definieren.</para></remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExplorerTreeViewControl.ExplorerTreeView.ExpandPath(System.String)">
+      <summary>
+Öffnet und selektiert den Knoten zum angegebenen Verzeichnispfad.</summary>
+      <remarks>
+Funktioniert auch bei noch nicht geladenen Unterknoten.</remarks>
+      <returns>
+<see langword="true" />, wenn der Knoten gefunden wurde, sonst <see langword="false" /></returns>
+      <param name="Path">
+Vollständiger Pfad der göffnet werden soll.</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ExplorerTreeViewControl.SelectedPathChangedEventArgs">
+      <summary>
+Stellt Daten für das Ereignis bereit, das ausgelöst wird, wenn sich der ausgewählte Pfad ändert.</summary>
+      <remarks>
+Dieser Typ wird typischerweise mit einem Ereignis vom Typ <see cref="System.EventHandler(Of TEventArgs)" /> verwendet, um den neuen Pfad an Abonnenten zu übermitteln.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExplorerTreeViewControl.SelectedPathChangedEventArgs.SelectedPath">
+      <summary>
+Ruft den aktuell ausgewählten Pfad ab.</summary>
+      <remarks>
+Der Wert repräsentiert typischerweise einen Dateisystempfad (z. B. "C:\Ordner\Datei.txt").</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExplorerTreeViewControl.SelectedPathChangedEventArgs.#ctor(System.String)">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="SelectedPathChangedEventArgs" />-Klasse.</summary>
+      <remarks>
+Der übergebene Wert wird der schreibgeschützten Eigenschaft <see cref="SelectedPath" /> zugewiesen.</remarks>
+      <param name="Path">
+Der neue ausgewählte Pfad.</param>
+    </member>
   </members>
 </doc>
