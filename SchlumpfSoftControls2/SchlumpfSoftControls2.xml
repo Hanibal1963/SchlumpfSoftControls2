@@ -319,5 +319,93 @@ Initialisiert eine neue Instanz der <see cref="ColorProgressBar" />-Klasse und s
       <remarks>
 <see cref="InitializeComponent" /> erstellt die internen Steuerelemente.<br /><see cref="InitializeDefaults" /> setzt Standardfarben und -zustände.</remarks>
     </member>
+    <member name="N:SchlumpfSoft.Controls.DriveWatcherControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs">
+      <summary>
+Stellt Ereignisdaten für ein hinzugefügtes Laufwerk bereit.</summary>
+      <remarks>
+Diese Argumente werden typischerweise mit einem Ereignis wie <c>DriveWatcher.DriveAdded</c> übergeben und enthalten grundlegende Metadaten des erkannten Laufwerks (z. B. Name, Volumebezeichnung, Dateisystem, Typ und Speichergrößen in Bytes).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveName">
+      <summary>
+Ruft den Namen eines Laufwerks ab oder legt ihn fest, z. B. <c>C:\</c>.</summary>
+      <remarks>
+Der Wert entspricht typischerweise <see cref="System.IO.DriveInfo.Name" />.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.VolumeLabel">
+      <summary>
+Ruft die Volumebezeichnung eines Laufwerks ab oder legt diese fest.</summary>
+      <remarks>
+Entspricht der vom Betriebssystem gemeldeten Bezeichnung (z. B. „System“, „USB_STICK“).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.AvailableFreeSpace">
+      <summary>
+Ruft die Gesamtmenge an verfügbarem freiem Speicherplatz in Bytes ab oder legt sie fest, die für den aktuellen Benutzer auf dem Laufwerk verfügbar ist.</summary>
+      <remarks>
+Dieser Wert kann von <see cref="TotalFreeSpace" /> abweichen, wenn Kontingente gelten.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalFreeSpace">
+      <summary>
+Ruft die Gesamtmenge an freiem Speicherplatz in Bytes ab oder legt sie fest, die auf dem Laufwerk verfügbar ist (unabhängig von Benutzerkontingenten).</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.TotalSize">
+      <summary>
+Ruft die Gesamtgröße des Speicherplatzes in Bytes auf einem Laufwerk ab oder legt sie fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveFormat">
+      <summary>
+Ruft den Namen des Dateisystems ab oder legt ihn fest, z. B. <c>NTFS</c> oder <c>FAT32</c>.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.DriveType">
+      <summary>
+Ruft den Laufwerkstyp ab oder legt ihn fest, z. B. <see cref="System.IO.DriveType.CDRom" />, <see cref="System.IO.DriveType.Removable" />, <see cref="System.IO.DriveType.Network" /> oder <see cref="System.IO.DriveType.Fixed" />.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs.IsReady">
+      <summary>
+Ruft einen Wert ab oder legt diesen fest, der angibt, ob ein Laufwerk bereit ist (Medien vorhanden, lesbar).</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs">
+      <summary>
+Stellt Ereignisdaten für ein entferntes Laufwerk bereit.</summary>
+      <remarks>
+Diese Argumente werden typischerweise mit einem Ereignis wie <c>DriveWatcher.DriveRemoved</c> übergeben und enthalten mindestens den Namen des entfernten Laufwerks.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.DriveWatcherControl.DriveRemovedEventArgs.DriveName">
+      <summary>
+Ruft den Namen des Laufwerks ab oder legt ihn fest, z. B. <c>C:\</c>.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher">
+      <summary>
+Steuerelement zum Überwachen von logischen Laufwerken (Volumes).<br />Erkennt das Hinzufügen und Entfernen von Laufwerken.</summary>
+      <remarks>
+Dieses Komponentenobjekt erzeugt intern ein natives Fenster, um Windows-Nachrichten für Geräteänderungen (WM_DEVICECHANGE) zu empfangen.<br />Bei relevanten Ereignissen werden die .NET-Events <see cref="DriveAdded" /> und <see cref="DriveRemoved" /> ausgelöst.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveAdded">
+      <summary>
+Wird ausgelöst, wenn ein logisches Laufwerk (Volume) hinzugefügt wurde.</summary>
+      <remarks>
+Das Ereignis wird typischerweise bei Anschluss eines Wechselmediums (z. B. USB-Stick) ausgelöst. Wenn das Volume noch nicht bereit ist (<see cref="DriveAddedEventArgs.IsReady" /> = False), sind Größen-/Formatfelder neutral befüllt.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.DriveRemoved">
+      <summary>
+Wird ausgelöst, wenn ein logisches Laufwerk (Volume) entfernt wurde.</summary>
+      <remarks>
+Das Ereignis enthält mindestens den Laufwerksnamen (z. B. "E:\"). Nach dem Entfernen sind keine Größen-/Formatinformationen verfügbar.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.#ctor">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="DriveWatcher" />-Komponente.</summary>
+      <remarks>
+Erstellt ein internes natives Fenster zum Empfang von Geräteänderungsnachrichten (WM_DEVICECHANGE).</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher.#ctor(System.ComponentModel.IContainer)">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="DriveWatcher" />-Komponente und fügt sie einem Container hinzu.</summary>
+      <remarks>
+Geeignet für Designer-/Kompositionsszenarien.<br />Bei Übergabe eines Containers wird die Instanz registriert und gemeinsam verwaltet.</remarks>
+      <param name="container">
+Ein optionaler <see cref="System.ComponentModel.IContainer" />, dem die Komponente hinzugefügt wird.</param>
+    </member>
   </members>
 </doc>
