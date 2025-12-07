@@ -523,5 +523,229 @@ Der übergebene Wert wird der schreibgeschützten Eigenschaft <see cref="Selecte
       <param name="Path">
 Der neue ausgewählte Pfad.</param>
     </member>
+    <member name="N:SchlumpfSoft.Controls.ExtendedRTFControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions.WM_SETREDRAW">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions.MIN_FONT_SIZE">
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ApiDefinitions.SendMessage(System.IntPtr,System.Int32,System.Boolean,System.IntPtr)">
+      <param name="hWnd">
+</param>
+      <param name="msg">
+</param>
+      <param name="wParam">
+</param>
+      <param name="lParam">
+</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF">
+      <summary>
+Erweiterte <see cref="System.Windows.Forms.RichTextBox" /> mit bequemen Formatierungs- und Abfrage-Hilfen für Auswahl und Caret (u.a. Schriftgröße, Stil-Flags, Vorder-/Hintergrundfarbe, Absatz-Einzüge, Ausrichtung) sowie Batch-Updates über Redraw-Suppression.</summary>
+      <remarks>
+<list type="bullet"><item><description>Redraw-Suppression zur Verringerung von Flackern und zur Leistungssteigerung via <c>WM_SETREDRAW</c> (siehe <see cref="BeginUpdate" />/<see cref="EndUpdate" />).</description></item></list> <list type="bullet"><item><description>Mischzustände in der Auswahl werden (soweit implementiert) als <c>Nothing</c> gemeldet (z.B. bei Stil-Flags, Schriftgröße, Einzug).<br />Farben melden derzeit keinen Mischzustand.</description></item></list> <list type="bullet"><item><description>Interne per-Zeichen-Operationen (z.B. Mischzustandserkennung, Stiländerungen über die gesamte Auswahl) unterdrücken <see cref="OnSelectionChanged(System.EventArgs)" /> bewusst, um UI-Event-Spam zu vermeiden.</description></item></list> <para><b>Hinweis:</b><br />Transformationen über die gesamte Auswahl erfolgen per Zeichen und können bei sehr großen Texten zeitintensiv sein; nutzen Sie nach Möglichkeit Batch-Blöcke.</para></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionFontSize">
+      <summary>
+Liest oder setzt die Schriftgröße der aktuellen Auswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).<br />Die Zuweisung validiert gegen <c>MIN_FONT_SIZE</c>.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionBold">
+      <summary>
+Liest oder setzt den Fettdruck der aktuellen Auswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionItalic">
+      <summary>
+Liest oder setzt Kursiv (Italic) der aktuellen Auswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionUnderline">
+      <summary>
+Liest oder setzt Unterstreichung der aktuellen Auswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionStrikeout">
+      <summary>
+Liest oder setzt Durchstreichung der aktuellen Auswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionForeColor">
+      <summary>
+Liest oder setzt die aktuelle Vordergrundfarbe (Textfarbe) der Auswahl bzw. am Caret.</summary>
+      <remarks>
+Meldet keinen Mischzustand (immer konkreter Wert).<br />Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionBackColor">
+      <summary>
+Liest oder setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl bzw. am Caret.</summary>
+      <remarks>
+Meldet keinen Mischzustand (immer konkreter Wert).<br />Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den Stil-Flags nötig.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SelectionLeftIndent">
+      <summary>
+Liest oder setzt den linken Absatz-Einzug (in Pixel) der aktuellen Absatz-/Absatzauswahl bzw. am Caret.</summary>
+      <remarks>
+Bei uneinheitlicher Auswahl wird <see langword="Nothing" /> zurückgegeben (Mischzustand).<br />Der Einzug wirkt absatzweise; die Auswahl wird intern absatzweise behandelt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.#ctor">
+      <summary>
+Erzeugt eine neue Instanz der erweiterten RichTextBox und initialisiert Designer-Komponenten.</summary>
+      <remarks>
+Ruft <see cref="InitializeComponent" /> auf, um Designer-generierte Eigenschaften zu setzen.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ClearFormatting">
+      <summary>
+Entfernt Formatierungen (Schriftstil, Vorder-/Hintergrundfarbe, Bullet-Aufzählung) vollständig aus aktueller Auswahl oder – ohne Auswahl – ab der Caret-Position.</summary>
+      <remarks>
+Optimiert: Wendet die Normalisierung einmal auf die gesamte Auswahl an (statt per Zeichen).<br />Bei keiner Auswahl wird das Format an der aktuellen Einfügemarke (Caret) zurückgesetzt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.SetSelectionAlignment(System.Windows.Forms.HorizontalAlignment)">
+      <summary>
+Setzt die horizontale Ausrichtung der aktuellen Absatz-/Absatzauswahl.</summary>
+      <remarks>
+Wirkt absatzweise. Bei keiner Auswahl wird der aktuelle Absatz ausgerichtet.</remarks>
+      <param name="alignment">
+Die gewünschte horizontale Ausrichtung.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleBold">
+      <summary>
+Schaltet Fettdruck für aktuelle Auswahl bzw. Caret um.</summary>
+      <remarks>
+Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den invertierten Zustand umgestellt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleItalic">
+      <summary>
+Schaltet Kursiv für aktuelle Auswahl bzw. Caret um.</summary>
+      <remarks>
+Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den invertierten Zustand umgestellt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleUnderline">
+      <summary>
+Schaltet Unterstreichung für aktuelle Auswahl bzw. Caret um.</summary>
+      <remarks>
+Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den invertierten Zustand umgestellt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleStrikeout">
+      <summary>
+Schaltet Durchstreichung für aktuelle Auswahl bzw. Caret um.</summary>
+      <remarks>
+Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den invertierten Zustand umgestellt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ExtendedRTFControl.ExtendedRTF.ToggleBullet">
+      <summary>
+Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.</summary>
+      <remarks>
+Wirkt absatzweise. Funktioniert nur auf Absatzebene (SelectionLength = 0 -&gt; aktueller Absatz).</remarks>
+    </member>
+    <member name="N:SchlumpfSoft.Controls.FileSearchControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearch">
+      <summary>
+Führt eine optionale rekursive, asynchrone Dateisuche anhand eines Suchmusters aus und meldet Ergebnisse sowie Fortschritt über Ereignisse (<see cref="FileFound" />, <see cref="ProgressChanged" /> und <see cref="SearchCompleted" />).</summary>
+      <remarks>
+<list type="bullet"><item><description>Die Suche läuft in einem ThreadPool-Thread und nutzt <see cref="SimpleProgress(Of T)" /> zum Marshallen der Ereignisse auf den Synchronisierungskontext des Aufrufers (z. B. UI-Thread), sofern vorhanden.</description></item></list> <list type="bullet"><item><description>Ein erneuter Aufruf von <see cref="StartSearchAsync" /> bricht eine laufende Suche kooperativ ab und startet sofort neu.<br />Kurzzeitig können noch Ereignisse der vorherigen Suche eintreffen.</description></item></list> <list type="bullet"><item><description>Die Implementierung zählt zunächst alle passenden Dateien und iteriert anschließend darüber (doppelte Enumeration), was bei sehr großen Datenmengen die Laufzeit erhöhen kann.</description></item></list> <list type="bullet"><item><description>Fehler (z. B. fehlende Zugriffsrechte, ungültige Pfade) werden über <see cref="ErrorOccurred" /> gemeldet und beenden die Suche.<br />Ein kooperativer Abbruch erfolgt über <see cref="System.Threading.CancellationToken" />.</description></item></list></remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.FileFound">
+      <summary>
+Wird für jede gefundene Datei ausgelöst.</summary>
+      <remarks>
+Dieses Ereignis wird unmittelbar gemeldet, sobald eine Datei gefunden wurde.<br />Es wird vom internen <c>SimpleProgress(Of String)</c> auf den Synchronisierungskontext (z. B. UI) gemarshallt.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchCompleted">
+      <summary>
+Wird nach Abschluss oder Abbruch der Suche ausgelöst.</summary>
+      <remarks>
+Das Ereignis signalisiert das Ende der laufenden Suche.<br />Bei kooperativem Abbruch ist <c>cancel=True</c>.<br />Kurzzeitig können noch Ereignisse der vorherigen Suche eintreffen, wenn unmittelbar neu gestartet wurde.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ErrorOccurred">
+      <summary>
+Meldet aufgetretene Fehler (z. B. fehlende Zugriffsrechte, ungültiger Pfad).</summary>
+      <remarks>
+Bei Fehlern während der Enumeration wird die Suche beendet und der Fehler gemeldet.<br />Typische Ursachen: <see cref="System.UnauthorizedAccessException" />, <see cref="System.IO.DirectoryNotFoundException" />.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.FileSearchControl.FileSearch.ProgressChanged">
+      <summary>
+Meldet aggregierte Fortschrittsinformationen (Anzahl gefunden, Gesamtzahl, Prozent).</summary>
+      <remarks>
+<see cref="FileSearchEventArgs" /> enthält <c>Percent</c>, <c>Found</c> und <c>Total</c>.<br />Die Werte werden nach jeder gefundenen Datei aktualisiert und auf den Synchronisierungskontext gemarshallt.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartPath">
+      <summary>
+Startverzeichnis der Suche (Initialwert ist <c>String.Empty</c>).</summary>
+      <remarks>
+<list type="bullet"><item><description>Änderungen wirken sich auf nachfolgende Aufrufe von <see cref="StartSearchAsync" /> aus.</description></item><item><description>Ungültige oder nicht erreichbare Pfade führen zu <see cref="ErrorOccurred" /> mit einer entsprechenden Ausnahme.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchPattern">
+      <summary>
+Suchmuster (z. B. <c>*.txt</c>). Standardwert ist <c>*.*</c>.</summary>
+      <remarks>
+<list type="bullet"><item><description>Mehrere Muster werden nicht unterstützt; für komplexere Filterung eigenes Matching nachladen.</description></item><item><description>Einige Dateisysteme können die Groß-/Kleinschreibung ignorieren; das Verhalten ist abhängig vom System.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearch.SearchInSubfolders">
+      <summary>
+Gibt an, ob die Suche rekursiv in Unterordnern erfolgen soll. Standardwert ist <c>False</c>.</summary>
+      <remarks>
+<list type="bullet"><item><description>Rekursion kann die Laufzeit bei tiefen Strukturen deutlich erhöhen.</description></item><item><description>Zugriffsprobleme in Unterordnern werden über <see cref="ErrorOccurred" /> gemeldet und beenden die Suche.</description></item></list></remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor">
+      <summary>
+Erstellt eine neue Instanz der <see cref="FileSearch" /> Komponente.</summary>
+      <remarks>
+Initialisiert interne Ressourcen über <see cref="InitializeComponent" /> und setzt Standardwerte (z. B. <c>StartPath=String.Empty</c>, <c>SearchPattern=*.*</c>, <c>SearchInSubfolders=False</c>).</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.#ctor(System.ComponentModel.IContainer)">
+      <summary>
+Erstellt eine neue Instanz und fügt sie optional einem übergebenen Komponenten-Container hinzu.</summary>
+      <remarks>
+Ermöglicht Designtime-Komposition in Windows Forms; bei Übergabe eines Containers wird die Instanz diesem hinzugefügt und dort verwaltet.</remarks>
+      <param name="container">
+Ein vorhandener <see cref="System.ComponentModel.IContainer" />, dem die Instanz hinzugefügt wird, oder <c>Nothing</c>.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StartSearchAsync">
+      <summary>
+Startet eine neue asynchrone Dateisuche gemäß den aktuell gesetzten Parametern.</summary>
+      <remarks>
+<list type="bullet"><item><description>Bei erneutem Aufruf während eine Suche läuft, wird die vorherige kooperativ abgebrochen.</description></item></list> <list type="bullet"><item><description>Ergebnisse und Fortschritt werden über <see cref="FileFound" />, <see cref="ProgressChanged" /> und <see cref="SearchCompleted" /> gemeldet.</description></item></list> <list type="bullet"><item><description>Fehler während der Enumeration lösen <see cref="ErrorOccurred" /> aus und beenden die Suche.</description></item></list> <para><b>Hinweis:</b><br />Die Implementierung enumeriert die Ergebnisse zweimal (für <c>Total</c> und Verarbeitung).</para></remarks>
+      <returns>
+Ein <see cref="System.Threading.Tasks.Task" />, das den Abschluss der Suchoperation repräsentiert.</returns>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.FileSearchControl.FileSearch.StopSearch">
+      <summary>
+Bricht eine eventuell laufende Suche ab.</summary>
+      <remarks>
+Der Abbruch ist kooperativ; bereits ausgelöste Events (<see cref="FileFound" />/<see cref="ProgressChanged" />) können noch kurzfristig eintreffen.<br />Ein Abschluss wird über <see cref="SearchCompleted" /> mit <c>cancel=True</c> signalisiert.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs">
+      <summary>
+Stellt Fortschrittsinformationen für einen Datei-Suchvorgang bereit.<br />Instanzen werden beim <c>ProgressChanged</c>-Ereignis der Dateisuche an Handler übergeben.</summary>
+      <remarks>
+Die Werte werden bei jeder gefundenen Datei aktualisiert.<br />Es wird keine Thread-Sicherheit garantiert; Konsumenten sollten nur lesend zugreifen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Percent">
+      <summary>
+Prozentualer Fortschritt (0–100).</summary>
+      <remarks>
+Ist 0, wenn keine Dateien gezählt wurden oder die Berechnung noch nicht erfolgt ist, oder wenn <see cref="Total" /> gleich 0 ist.<br />Werte außerhalb des Bereichs 0–100 sollten vermieden werden.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Found">
+      <summary>
+Anzahl der bislang gefundenen (und gemeldeten) Dateien.</summary>
+      <remarks>
+Der Wert kann kleiner oder gleich <see cref="Total" /> sein.<br />Bei unbekannter Gesamtmenge kann <see cref="Total" /> 0 bleiben, während <see cref="Found" /> steigt.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs.Total">
+      <summary>
+Gesamtanzahl der zu erwartenden Dateien gemäß aktueller Zählung.</summary>
+      <remarks>
+Dieser Wert kann sich im Verlauf der Suche ändern, wenn neue Verzeichnisse/Filter berücksichtigt werden.<br />Bei <see cref="Total" /> = 0 ist eine Prozentberechnung nicht sinnvoll.</remarks>
+    </member>
   </members>
 </doc>

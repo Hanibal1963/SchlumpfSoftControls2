@@ -82,6 +82,11 @@
     <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Help\**\*">
+      <!-- Alle Dateien aus dem ordner "Help" inclusive Unterordner und enthaltene dateien in VSIX aufnehmen-->
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="LICENSE.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
