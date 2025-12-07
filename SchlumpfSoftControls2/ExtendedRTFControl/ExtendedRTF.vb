@@ -6,152 +6,106 @@
 Namespace ExtendedRTFControl
 
     ''' <summary>
-    ''' Erweiterte <see cref="System.Windows.Forms.RichTextBox"/> mit bequemen Formatierungs- und Abfrage-Hilfen
-    ''' (Schriftgröße, Stil-Flags, Farben, Einzüge, Ausrichtung) sowie Batch-Update (Redraw-Suppression).
+    ''' Erweiterte <see cref="System.Windows.Forms.RichTextBox"/> mit bequemen
+    ''' Formatierungs- und Abfrage-Hilfen für Auswahl und Caret (u.a. Schriftgröße,
+    ''' Stil-Flags, Vorder-/Hintergrundfarbe, Absatz-Einzüge, Ausrichtung) sowie
+    ''' Batch-Updates über Redraw-Suppression.
     ''' </summary>
     ''' <remarks>
-    ''' <para>Redraw-Suppression (verringerte Flackereffekte) mittels <c>WM_SETREDRAW</c>.</para>
-    ''' <para>Mischzustände (uneinheitliche Formatierung in einer Auswahl) werden als <c>Nothing</c> (Nullable)
-    ''' dargestellt – soweit implementiert (z.B. Stil-Flags, Schriftgröße, Einzug).</para>
-    ''' <para>Vorder-/Hintergrundfarbe melden aktuell keinen Mischzustand (immer konkreter Wert).</para>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Redraw-Suppression zur Verringerung von Flackern und zur Leistungssteigerung via <c>WM_SETREDRAW</c> (siehe <see cref="BeginUpdate"/>/<see cref="EndUpdate"/>).</description>
+    '''  </item>
+    ''' </list>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Mischzustände in der Auswahl werden (soweit implementiert) als <c>Nothing</c> gemeldet (z.B. bei Stil-Flags, Schriftgröße, Einzug).<br/>
+    ''' Farben melden derzeit keinen Mischzustand.</description>
+    '''  </item>
+    ''' </list>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Interne per-Zeichen-Operationen (z.B. Mischzustandserkennung,
+    ''' Stiländerungen über die gesamte Auswahl) unterdrücken <see
+    ''' cref="OnSelectionChanged(System.EventArgs)"/> bewusst, um UI-Event-Spam zu
+    ''' vermeiden.</description>
+    '''  </item>
+    ''' </list>
+    ''' <para><b>Hinweis:</b><br/>
+    ''' Transformationen über die gesamte Auswahl erfolgen per Zeichen und können bei
+    ''' sehr großen Texten zeitintensiv sein; nutzen Sie nach Möglichkeit
+    ''' Batch-Blöcke.</para>
     ''' </remarks>
+    ''' <example>
+    ''' <para> Schriftstil und -größe der aktuellen Auswahl ändern, Farben setzen und
+    ''' Bullet-Listen umschalten.</para>
+    ''' <code><![CDATA[ Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+    '''  rtf.Text = "Dies ist ein Beispieltext."
+    '''  
+    '''  ' Auswahl festlegen
+    '''  rtf.Select(0, rtf.TextLength)
+    '''  
+    '''  ' Stil-Flags setzen
+    '''  rtf.SelectionBold = True
+    '''  rtf.SelectionItalic = False
+    '''  rtf.SelectionUnderline = True
+    '''  
+    '''  ' Schriftgröße setzen (validiert gegen MIN_FONT_SIZE)
+    '''  rtf.SelectionFontSize = 12.0F
+    '''  
+    '''  ' Farben setzen
+    '''  rtf.SelectionForeColor = System.Drawing.Color.DarkBlue
+    '''  rtf.SelectionBackColor = System.Drawing.Color.LightYellow
+    '''  
+    '''  ' Absatz-Einzug und Ausrichtung
+    '''  rtf.SelectionLeftIndent = 24
+    '''  rtf.SetSelectionAlignment(System.Windows.Forms.HorizontalAlignment.Center)
+    '''  
+    '''  ' Bullet-Aufzählung toggeln
+    '''  rtf.ToggleBullet()
+    '''  
+    '''  ' Batch-Update bei mehreren Operationen
+    '''  rtf.BeginUpdate()
+    '''  Try
+    '''      rtf.ClearFormatting()
+    '''  Finally
+    '''      rtf.EndUpdate()
+    '''  End Try]]></code>
+    ''' </example>
     <ProvideToolboxControlAttribute("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Control zum Anzeigen von animierten Grafiken.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(ExtendedRTFControl.ExtendedRTF), "ExtendedRTF.bmp")>
     Public Class ExtendedRTF : Inherits System.Windows.Forms.RichTextBox
 
-#Region "Variablendefinitionen"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Zähler für geschachtelte Update-Blöcke.
-        ''' </summary>
-        ''' <remarks>
-        ''' Redraw-Unterdrückung
-        ''' </remarks>
-        Private _updateNesting As Integer = 0
-
-        ''' <summary>
-        ''' Flag zur Unterdrückung von "OnSelectionChanged", wenn intern temporär
-        ''' per-Zeichen-Selektionen durchgeführt werden.
-        ''' </summary>
-        ''' <remarks>
-        ''' Mischzustandsanalyse
-        ''' </remarks>
-        Private _suppressSelectionEvents As Boolean = False
-
-        ''' <summary>
-        ''' Container für Komponenten. Wird vom Windows Forms-Designer benötigt.
-        ''' </summary>
-        Private ReadOnly components As System.ComponentModel.IContainer
+        Private _updateNesting As Integer = 0 ' Zähler für geschachtelte Update-Blöcke.
+        Private _suppressSelectionEvents As Boolean = False ' Flag zur Unterdrückung von "OnSelectionChanged", wenn intern temporär per-Zeichen-Selektionen durchgeführt werden.
+        Private ReadOnly components As System.ComponentModel.IContainer ' Container für Komponenten. Wird vom Windows Forms-Designer benötigt.
 
 #End Region
 
-#Region "Öffentliche Methoden"
+#Region "Eigenschaften"
 
         ''' <summary>
-        ''' Erzeugt eine neue Instanz der erweiterten RichTextBox.
-        ''' </summary>
-        Public Sub New()
-            MyBase.New()
-            Me.InitializeComponent()
-        End Sub
-
-
-        ''' <summary>
-        ''' Entfernt Formatierungen (Schriftstil, Vorder-/Hintergrundfarbe, Bullet-Aufzählung)
-        ''' vollständig aus aktueller Auswahl oder – ohne Auswahl – ab der Caret-Position.
+        ''' Liest oder setzt die Schriftgröße der aktuellen Auswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' Optimiert: Wendet die Normalisierung einmal auf die gesamte Auswahl an (statt per Zeichen).
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).<br/>
+        ''' Die Zuweisung validiert gegen <c>MIN_FONT_SIZE</c>.
         ''' </remarks>
-        Public Sub ClearFormatting()
-            If Me.SelectionLength = 0 Then
-                ' Kein Bereich markiert -> Format am Caret zurücksetzen.
-                Dim baseFont = Me.SelectionFont
-                If baseFont Is Nothing Then baseFont = Me.Font
-                ' Neuer Font auf Regular (alle Stil-Flags weg)
-                Using resetFont As New System.Drawing.Font(baseFont.FontFamily, baseFont.Size, System.Drawing.FontStyle.Regular, baseFont.Unit, baseFont.GdiCharSet, baseFont.GdiVerticalFont)
-                    Me.SelectionFont = resetFont
-                End Using
-                Me.SelectionColor = Me.ForeColor
-                Me.SelectionBackColor = Me.BackColor
-                Me.SelectionBullet = False
-                Return
-            End If
-
-            Me.BeginUpdate()
-            Try
-                Dim baseFont = Me.SelectionFont
-                If baseFont Is Nothing Then baseFont = Me.Font
-                Using resetFont As New System.Drawing.Font(baseFont.FontFamily, baseFont.Size, System.Drawing.FontStyle.Regular, baseFont.Unit, baseFont.GdiCharSet, baseFont.GdiVerticalFont)
-                    Me.SelectionFont = resetFont
-                End Using
-                Me.SelectionColor = Me.ForeColor
-                Me.SelectionBackColor = Me.BackColor
-                Me.SelectionBullet = False
-            Finally
-                Me.EndUpdate()
-            End Try
-        End Sub
-
-        ''' <summary>
-        ''' Setzt die horizontale Ausrichtung der aktuellen Absatz-/Absatzauswahl.
-        ''' </summary>
-        ''' <param name="alignment">Die gewünschte horizontale Ausrichtung.</param>
-        Public Sub SetSelectionAlignment(alignment As System.Windows.Forms.HorizontalAlignment)
-            Me.SelectionAlignment = alignment
-        End Sub
-
-        ''' <summary>
-        ''' Schaltet Fettdruck für aktuelle Auswahl bzw. Caret um.
-        ''' </summary>
-        Public Sub ToggleBold()
-            Me.SelectionBold = Not Me.SelectionBold.GetValueOrDefault(False)
-        End Sub
-
-        ''' <summary>
-        ''' Schaltet Kursiv für aktuelle Auswahl bzw. Caret um.
-        ''' </summary>
-        Public Sub ToggleItalic()
-            Me.SelectionItalic = Not Me.SelectionItalic.GetValueOrDefault(False)
-        End Sub
-
-        ''' <summary>
-        ''' Schaltet Unterstreichung für aktuelle Auswahl bzw. Caret um.
-        ''' </summary>
-        Public Sub ToggleUnderline()
-            Me.SelectionUnderline = Not Me.SelectionUnderline.GetValueOrDefault(False)
-        End Sub
-
-        ''' <summary>
-        ''' Schaltet Durchstreichung für aktuelle Auswahl bzw. Caret um.
-        ''' </summary>
-        Public Sub ToggleStrikeout()
-            Me.SelectionStrikeout = Not Me.SelectionStrikeout.GetValueOrDefault(False)
-        End Sub
-
-        ''' <summary>
-        ''' Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.
-        ''' </summary>
-        ''' <remarks>
-        ''' Funktioniert nur auf Absatzebene (SelectionLength=0 -> aktueller Absatz).
-        ''' </remarks>
-        Public Sub ToggleBullet()
-            Me.SelectionBullet = Not Me.SelectionBullet
-        End Sub
-
-#End Region
-
-#Region "neue Eigenschaften"
-
-        ''' <summary>
-        ''' Setzt die Schriftgröße der Auswahl oder Größe am Caret oder gibt diese
-        ''' zurück.
-        ''' </summary>
-        ''' <remarks>
-        ''' Ein Mischzustand ergibt Nothing.
-        ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Single)"/>: Konkreter Wert oder <see
+        ''' langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Ausgewählte Zeichen auf 14pt setzen: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Beispieltext"
+        ''' rtf.Select(0, 5)
+        ''' rtf.SelectionFontSize = 14.0F]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionFontSize As System.Nullable(Of Single)
             Get
@@ -173,11 +127,22 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt den Bold-Zustand der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' Liest oder setzt den Fettdruck der aktuellen Auswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' Ein Mischzustand ergibt Nothing.
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Boolean)"/>: <see langword="True"/> oder <see
+        ''' langword="False"/>, bzw. <see langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Fettdruck für die komplette Auswahl aktivieren: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Fett markieren"
+        ''' rtf.Select(0, rtf.TextLength)
+        ''' rtf.SelectionBold = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionBold As System.Nullable(Of Boolean)
             Get
@@ -195,11 +160,22 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt den Kursiv-Zustand der Auswahl oder am Caret  oder gibt diesen zurück.
+        ''' Liest oder setzt Kursiv (Italic) der aktuellen Auswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' Ein Mischzustand ergibt Nothing.
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Boolean)"/>: <see langword="True"/> oder <see
+        ''' langword="False"/>, bzw. <see langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Kursiv für ein Wort einschalten: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "kursives Wort"
+        ''' rtf.Select(9, 4) ' "Wort"
+        ''' rtf.SelectionItalic = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionItalic As System.Nullable(Of Boolean)
             Get
@@ -217,11 +193,22 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt die Unterstreichung der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' Liest oder setzt Unterstreichung der aktuellen Auswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' Ein Mischzustand ergibt Nothing.
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Boolean)"/>: <see langword="True"/> oder <see
+        ''' langword="False"/>, bzw. <see langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Unterstreichung für die ersten Zeichen aktivieren: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "unterstrichener Anfang"
+        ''' rtf.Select(0, 12)
+        ''' rtf.SelectionUnderline = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionUnderline As System.Nullable(Of Boolean)
             Get
@@ -239,11 +226,22 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt die Durchstreichung der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' Liest oder setzt Durchstreichung der aktuellen Auswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' Ein Mischzustand ergibt Nothing.
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Boolean)"/>: <see langword="True"/> oder <see
+        ''' langword="False"/>, bzw. <see langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Durchstreichung für einen Bereich aktivieren: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "durchgestrichener Teil"
+        ''' rtf.Select(0, 17)
+        ''' rtf.SelectionStrikeout = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionStrikeout As System.Nullable(Of Boolean)
             Get
@@ -261,13 +259,23 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt die aktuelle Vordergrundfarbe (Textfarbe) der Auswahl oder am Caret oder gibt diese zurück.
+        ''' Liest oder setzt die aktuelle Vordergrundfarbe (Textfarbe) der Auswahl bzw. am
+        ''' Caret.
         ''' </summary>
         ''' <remarks>
-        ''' <para>Meldet keinen Mischzustand (immer konkreter Wert). </para>
-        ''' <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu
-        ''' den Stil-Flags nötig.</para>
+        ''' Meldet keinen Mischzustand (immer konkreter Wert).<br/>
+        ''' Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den
+        ''' Stil-Flags nötig.
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Drawing.Color"/> der Auswahl bzw. am Caret.
+        ''' </value>
+        ''' <example>
+        ''' Textfarbe der Auswahl auf Dunkelblau setzen: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "farbiger Text"
+        ''' rtf.Select(0, rtf.TextLength)
+        ''' rtf.SelectionForeColor = System.Drawing.Color.DarkBlue]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionForeColor As System.Drawing.Color
             Get
@@ -279,13 +287,23 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl oder am Caret oder gibt diese zurück.
+        ''' Liest oder setzt die aktuelle Hintergrund-/Highlightfarbe der Auswahl bzw. am
+        ''' Caret.
         ''' </summary>
         ''' <remarks>
-        ''' <para>Meldet keinen Mischzustand (immer konkreter Wert).</para>
-        ''' <para>Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu
-        ''' den Stil-Flags nötig.</para>
+        ''' Meldet keinen Mischzustand (immer konkreter Wert).<br/>
+        ''' Für echte Mischzustandserkennung wäre eine per-Zeichen-Prüfung analog zu den
+        ''' Stil-Flags nötig.
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Drawing.Color"/> der Markierung/Hinterlegung.
+        ''' </value>
+        ''' <example>
+        ''' Hintergrundfarbe der Auswahl auf Hellgelb setzen: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "markierter Hintergrund"
+        ''' rtf.Select(0, rtf.TextLength)
+        ''' rtf.SelectionBackColor = System.Drawing.Color.LightYellow]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Overloads Property SelectionBackColor As System.Drawing.Color
             Get
@@ -297,13 +315,24 @@ Namespace ExtendedRTFControl
         End Property
 
         ''' <summary>
-        ''' Setzt den Absatz-Einzug (Pixel) der Auswahl oder am Caret oder gibt diesen zurück.
+        ''' Liest oder setzt den linken Absatz-Einzug (in Pixel) der aktuellen
+        ''' Absatz-/Absatzauswahl bzw. am Caret.
         ''' </summary>
         ''' <remarks>
-        ''' <para>Ein Mischzustand ergibt Nothing.</para>
-        ''' <para>Der Einzug wird immer für den gesamten Absatz gesetzt (SelectionLength wird
-        ''' intern ignoriert).</para>
+        ''' Bei uneinheitlicher Auswahl wird <see langword="Nothing"/> zurückgegeben
+        ''' (Mischzustand).<br/>
+        ''' Der Einzug wirkt absatzweise; die Auswahl wird intern absatzweise behandelt.
         ''' </remarks>
+        ''' <value>
+        ''' <see cref="System.Nullable(Of Integer)"/>: konkreter Einzug oder <see
+        ''' langword="Nothing"/> bei Mischzustand.
+        ''' </value>
+        ''' <example>
+        ''' Linken Einzug des aktuellen Absatzes auf 24 Pixel setzen: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Absatz mit Einzug"
+        ''' rtf.Select(0, 0) ' Caret im Absatz
+        ''' rtf.SelectionLeftIndent = 24]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(False)>
         Public Property SelectionLeftIndent As System.Nullable(Of Integer)
             Get
@@ -315,6 +344,207 @@ Namespace ExtendedRTFControl
                 MyBase.SelectionIndent = value.Value
             End Set
         End Property
+
+#End Region
+
+#Region "öffentliche Methoden"
+
+        ''' <summary>
+        ''' Erzeugt eine neue Instanz der erweiterten RichTextBox und initialisiert
+        ''' Designer-Komponenten.
+        ''' </summary>
+        ''' <remarks>
+        ''' Ruft <see cref="InitializeComponent"/> auf, um Designer-generierte Eigenschaften
+        ''' zu setzen.
+        ''' </remarks>
+        ''' <example>
+        ''' Einfaches Erstellen und Verwenden im Formular: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Dock = System.Windows.Forms.DockStyle.Fill
+        ''' rtf.Text = "Hallo Welt"
+        ''' Me.Controls.Add(rtf)]]></code>
+        ''' </example>
+        Public Sub New()
+            MyBase.New()
+            Me.InitializeComponent()
+        End Sub
+
+        ''' <summary>
+        ''' Entfernt Formatierungen (Schriftstil, Vorder-/Hintergrundfarbe,
+        ''' Bullet-Aufzählung) vollständig aus aktueller Auswahl oder – ohne Auswahl – ab
+        ''' der Caret-Position.
+        ''' </summary>
+        ''' <remarks>
+        ''' Optimiert: Wendet die Normalisierung einmal auf die gesamte Auswahl an (statt
+        ''' per Zeichen).<br/>
+        ''' Bei keiner Auswahl wird das Format an der aktuellen Einfügemarke (Caret)
+        ''' zurückgesetzt.
+        ''' </remarks>
+        ''' <example>
+        ''' Formatierungen für die komplette Auswahl zurücksetzen: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Fett, kursiv und mit Farbe"
+        ''' rtf.Select(0, rtf.TextLength)
+        ''' rtf.ClearFormatting()]]></code>
+        ''' </example>
+        Public Sub ClearFormatting()
+            If Me.SelectionLength = 0 Then
+                Dim baseFont = Me.SelectionFont ' Kein Bereich markiert -> Format am Caret zurücksetzen.
+                If baseFont Is Nothing Then baseFont = Me.Font
+                ' Neuer Font auf Regular (alle Stil-Flags weg)
+                Using resetFont As New System.Drawing.Font(baseFont.FontFamily, baseFont.Size, System.Drawing.FontStyle.Regular, baseFont.Unit, baseFont.GdiCharSet, baseFont.GdiVerticalFont)
+                    Me.SelectionFont = resetFont
+                End Using
+                Me.SelectionColor = Me.ForeColor
+                Me.SelectionBackColor = Me.BackColor
+                Me.SelectionBullet = False
+                Return
+            End If
+            Me.BeginUpdate()
+            Try
+                Dim baseFont = Me.SelectionFont
+                If baseFont Is Nothing Then baseFont = Me.Font
+                Using resetFont As New System.Drawing.Font(baseFont.FontFamily, baseFont.Size, System.Drawing.FontStyle.Regular, baseFont.Unit, baseFont.GdiCharSet, baseFont.GdiVerticalFont)
+                    Me.SelectionFont = resetFont
+                End Using
+                Me.SelectionColor = Me.ForeColor
+                Me.SelectionBackColor = Me.BackColor
+                Me.SelectionBullet = False
+            Finally
+                Me.EndUpdate()
+            End Try
+        End Sub
+
+        ''' <summary>
+        ''' Setzt die horizontale Ausrichtung der aktuellen Absatz-/Absatzauswahl.
+        ''' </summary>
+        ''' <remarks>
+        ''' Wirkt absatzweise. Bei keiner Auswahl wird der aktuelle Absatz ausgerichtet.
+        ''' </remarks>
+        ''' <param name="alignment">Die gewünschte horizontale Ausrichtung.</param>
+        ''' <example>
+        ''' Den aktuellen Absatz mittig ausrichten: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Absatz"
+        ''' rtf.Select(0, 0) ' Caret im Absatz
+        ''' rtf.SetSelectionAlignment(System.Windows.Forms.HorizontalAlignment.Center)]]></code>
+        ''' </example>
+        Public Sub SetSelectionAlignment(alignment As System.Windows.Forms.HorizontalAlignment)
+            Me.SelectionAlignment = alignment
+        End Sub
+
+        ''' <summary>
+        ''' Schaltet Fettdruck für aktuelle Auswahl bzw. Caret um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den
+        ''' invertierten Zustand umgestellt.
+        ''' </remarks>
+        ''' <example>
+        ''' Fettdruck für ein Wort toggeln: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Text fett"
+        ''' rtf.Select(5, 4) ' "fett"
+        ''' rtf.ToggleBold()]]></code>
+        ''' </example>
+        Public Sub ToggleBold()
+            Me.SelectionBold = Not Me.SelectionBold.GetValueOrDefault(False)
+        End Sub
+
+        ''' <summary>
+        ''' Schaltet Kursiv für aktuelle Auswahl bzw. Caret um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den
+        ''' invertierten Zustand umgestellt.
+        ''' </remarks>
+        ''' <example>
+        ''' Kursiv für die gesamte Auswahl toggeln: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Alles kursiv"
+        ''' rtf.Select(0, rtf.TextLength)
+        ''' rtf.ToggleItalic()]]></code>
+        ''' </example>
+        Public Sub ToggleItalic()
+            Me.SelectionItalic = Not Me.SelectionItalic.GetValueOrDefault(False)
+        End Sub
+
+        ''' <summary>
+        ''' Schaltet Unterstreichung für aktuelle Auswahl bzw. Caret um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den
+        ''' invertierten Zustand umgestellt.
+        ''' </remarks>
+        ''' <example>
+        ''' Unterstreichung für die ersten Zeichen toggeln: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Unterstrichener Anfang"
+        ''' rtf.Select(0, 12)
+        ''' rtf.ToggleUnderline()]]></code>
+        ''' </example>
+        Public Sub ToggleUnderline()
+            Me.SelectionUnderline = Not Me.SelectionUnderline.GetValueOrDefault(False)
+        End Sub
+
+        ''' <summary>
+        ''' Schaltet Durchstreichung für aktuelle Auswahl bzw. Caret um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Auswahl mit Mischzustand wird für alle ausgewählten Zeichen auf den
+        ''' invertierten Zustand umgestellt.
+        ''' </remarks>
+        ''' <example>
+        ''' Durchstreichung für einen Bereich toggeln: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "durchgestrichener Teil"
+        ''' rtf.Select(0, 17)
+        ''' rtf.ToggleStrikeout()]]></code>
+        ''' </example>
+        Public Sub ToggleStrikeout()
+            Me.SelectionStrikeout = Not Me.SelectionStrikeout.GetValueOrDefault(False)
+        End Sub
+
+        ''' <summary>
+        ''' Schaltet Bullet-Aufzählung für aktuelle Absatz-/Absatzauswahl um.
+        ''' </summary>
+        ''' <remarks>
+        ''' Wirkt absatzweise. Funktioniert nur auf Absatzebene (SelectionLength = 0 -&gt;
+        ''' aktueller Absatz).
+        ''' </remarks>
+        ''' <example>
+        ''' Bullet für den aktuellen Absatz toggeln: <code><![CDATA[Dim rtf As New ExtendedRTFControl.ExtendedRTF()
+        ''' rtf.Text = "Listenpunkt"
+        ''' rtf.Select(0, 0) ' Caret im Absatz
+        ''' rtf.ToggleBullet()]]></code>
+        ''' </example>
+        Public Sub ToggleBullet()
+            Me.SelectionBullet = Not Me.SelectionBullet
+        End Sub
+
+        ''' <summary>
+        ''' Gibt verwendete Ressourcen frei und stellt sicher, dass angehaltene
+        ''' Update-Blöcke beendet werden.
+        ''' </summary>
+        ''' <remarks>
+        ''' Stellt sicher, dass verbleibende Redraw-Suppression-Blöcke beendet werden, falls
+        ''' <see cref="EndUpdate"/> nicht korrekt aufgerufen wurde.
+        ''' </remarks>
+        ''' <param name="disposing">True, um verwaltete Ressourcen freizugeben; andernfalls
+        ''' False.</param>
+        ''' <example>
+        ''' Sicheres Entsorgen aus einem Formular: <code><![CDATA[Using rtf As New ExtendedRTFControl.ExtendedRTF()
+        '''     rtf.Text = "Temporärer Inhalt"
+        ''' End Using ' Dispose wird automatisch aufgerufen]]></code>
+        ''' </example>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso Me.components IsNot Nothing Then
+                    Me.components.Dispose()
+                End If
+                ' Falls Entwickler vergessen hat EndUpdate mehrfach aufzurufen.
+                While Me._updateNesting > 0
+                    Me._updateNesting = 1
+                    Me.EndUpdate()
+                End While
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
 
 #End Region
 
@@ -439,8 +669,7 @@ Namespace ExtendedRTFControl
                 Function(f)
                     Dim targetStyle = If(enabled, f.Style Or flag, f.Style And Not flag)
                     If targetStyle = f.Style Then
-                        ' Keine Änderung nötig -> selben Font zurückgeben (wird nicht ersetzt)
-                        Return f
+                        Return f ' Keine Änderung nötig -> selben Font zurückgeben (wird nicht ersetzt)
                     End If
                     Return New System.Drawing.Font(f, targetStyle)
                 End Function)
@@ -453,8 +682,7 @@ Namespace ExtendedRTFControl
         ''' Gibt sie exakt denselben Font zurück, erfolgt keine Zuweisung.</param>
         Private Sub ApplyFontTransformation(transform As System.Func(Of System.Drawing.Font, System.Drawing.Font))
             If Me.SelectionLength = 0 Then
-                ' Nur Caret: Einfach einmal transformieren
-                Dim f = Me.SelectionFont
+                Dim f = Me.SelectionFont ' Nur Caret: Einfach einmal transformieren
                 If f Is Nothing Then f = Me.Font
                 Dim nf = transform(f)
                 If nf Is Nothing Then Exit Sub
@@ -466,9 +694,7 @@ Namespace ExtendedRTFControl
                 End Try
                 Return
             End If
-
-            ' Auswahl: pro Zeichen anwenden (RichTextBox hat kein native Multi-Teil-Transform API auf .NET-Level)
-            Dim start = Me.SelectionStart
+            Dim start = Me.SelectionStart ' Auswahl: pro Zeichen anwenden (RichTextBox hat kein native Multi-Teil-Transform API auf .NET-Level)
             Dim len = Me.SelectionLength
             Me.BeginUpdate()
             Try
@@ -486,18 +712,15 @@ Namespace ExtendedRTFControl
 #Disable Warning BC42030 ' Die Variable wurde als Verweis übergeben, bevor ihr ein Wert zugewiesen wurde.
                     If cache.TryGetValue(key, apply) Then
 #Enable Warning BC42030 ' Die Variable wurde als Verweis übergeben, bevor ihr ein Wert zugewiesen wurde.
-                        ' Haben bereits ein identisches Font-Objekt -> erstellen entsorgtes verwerfen
-                        nf.Dispose()
+                        nf.Dispose() ' Haben bereits ein identisches Font-Objekt -> erstellen entsorgtes verwerfen
                     Else
                         cache(key) = nf
                         apply = nf
                     End If
                     Me.SelectionFont = apply
                 Next
-                ' Ursprüngliche Auswahl wiederherstellen
-                Me.[Select](start, len)
-                ' Fonts aus Cache entsorgen (RichTextBox kopiert Formatdaten intern)
-                For Each kv In cache
+                Me.[Select](start, len) ' Ursprüngliche Auswahl wiederherstellen
+                For Each kv In cache ' Fonts aus Cache entsorgen (RichTextBox kopiert Formatdaten intern)
                     kv.Value.Dispose()
                 Next
             Finally
@@ -556,34 +779,9 @@ Namespace ExtendedRTFControl
         ''' <inheritdoc/>
         Protected Overrides Sub OnSelectionChanged(e As System.EventArgs)
             If Me._suppressSelectionEvents Then
-                ' Intern ausgelöste per-Zeichen-Select-Operation -> nicht an UI weiterreichen.
-                Return
+                Return ' Intern ausgelöste per-Zeichen-Select-Operation -> nicht an UI weiterreichen.
             End If
             MyBase.OnSelectionChanged(e)
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' Gibt verwendete Ressourcen frei und stellt sicher, dass angehaltene Update-Blöcke beendet werden.
-        ''' </summary>
-        ''' <param name="disposing">True, um verwaltete Ressourcen freizugeben; andernfalls False.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso Me.components IsNot Nothing Then
-                    Me.components.Dispose()
-                End If
-                ' Falls Entwickler vergessen hat EndUpdate mehrfach aufzurufen.
-                While Me._updateNesting > 0
-                    Me._updateNesting = 1
-                    Me.EndUpdate()
-                End While
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region

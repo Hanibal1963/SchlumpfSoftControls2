@@ -5,41 +5,19 @@
 
 Namespace ExtendedRTFControl
 
-    ''' <summary>
-    ''' Definition der API-Funktionen
-    ''' </summary>
-    ''' <remarks></remarks>
     Module ApiDefinitions
 
-        ''' <summary>
-        ''' Win32-Konstante zum De-/Aktivieren des Redraws eines Fenster-Handles.
-        ''' </summary>
-        Friend Const WM_SETREDRAW As Integer = &HB
+        ' Win32-Konstante zum De-/Aktivieren des Redraws eines Fenster-Handles.
+        Public Const WM_SETREDRAW As Integer = &HB
 
-        ''' <summary>
-        ''' Mindest-Schriftgröße.
-        ''' </summary>
-        ''' <remarks>
-        ''' Kann bei Bedarf angepasst werden.
-        ''' </remarks>
-        Friend Const MIN_FONT_SIZE As Single = 8.0F
+        ' Mindest-Schriftgröße.
+        ' Kann bei Bedarf angepasst werden.
+        Public Const MIN_FONT_SIZE As Single = 8.0F
 
-        ''' <summary>
-        ''' Sendet ein Windows-Message direkt an ein Fenster .
-        ''' </summary>
-        ''' <param name="hWnd">Das Fensterhandle des Zielfensters.</param>
-        ''' <param name="msg">WM_SETREDRAW zum Ein/Aus-Schalten der Darstellung</param>
-        ''' <param name="wParam"><para>Der Neuzeichnungsstatus. </para>
-        ''' <para>Wenn dieser Parameter <b>TRUE</b> ist , kann der Inhalt nach einer
-        ''' Änderung neu gezeichnet werden. </para>
-        ''' <para>Wenn dieser Parameter <b>FALSE</b> ist , kann der Inhalt nach einer
-        ''' Änderung nicht neu gezeichnet werden.</para></param>
-        ''' <param name="lParam">Dieser Parameter wird nicht verwendet.</param>
-        ''' <returns>
-        ''' Ihre Anwendung sollte 0 zurückgeben, wenn sie diese Nachricht verarbeitet.
-        ''' </returns>
+        ' Sendet ein Windows-Message direkt an ein Fenster .
+        ' Die Anwendung sollte 0 zurückgeben, wenn sie diese Nachricht verarbeitet.
         <System.Runtime.InteropServices.DllImport("user32.dll")>
-        Friend Function SendMessage(hWnd As System.IntPtr, msg As Integer, wParam As Boolean, lParam As System.IntPtr) As System.IntPtr
+        Public Function SendMessage(hWnd As System.IntPtr, msg As Integer, wParam As Boolean, lParam As System.IntPtr) As System.IntPtr
         End Function
 
     End Module
