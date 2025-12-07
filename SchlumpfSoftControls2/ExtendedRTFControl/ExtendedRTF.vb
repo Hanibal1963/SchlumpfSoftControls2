@@ -565,9 +565,7 @@ Namespace ExtendedRTFControl
 
         End Sub
 
-        ''' <summary>
-        ''' Liefert ein einheitliches Bool-Stil-Flag (oder Nothing bei Mischzustand).
-        ''' </summary>
+        ' Liefert ein einheitliches Bool-Stil-Flag (oder Nothing bei Mischzustand).
         Private Function GetUniformFontFlag(selector As System.Func(Of System.Drawing.Font, Boolean)) As System.Nullable(Of Boolean)
             Dim len = Me.SelectionLength
             If len <= 0 Then Return Nothing
@@ -594,9 +592,7 @@ Namespace ExtendedRTFControl
             Return result
         End Function
 
-        ''' <summary>
-        ''' Liefert einen einheitlichen Single-Wert (Schriftgröße) oder Nothing (Mischzustand).
-        ''' </summary>
+        ' Liefert einen einheitlichen Single-Wert (Schriftgröße) oder Nothing (Mischzustand).
         Private Function GetUniformFontValue(selector As System.Func(Of System.Drawing.Font, Single)) As System.Nullable(Of Single)
             Dim len = Me.SelectionLength
             If len <= 0 Then Return Nothing
@@ -623,9 +619,7 @@ Namespace ExtendedRTFControl
             Return value
         End Function
 
-        ''' <summary>
-        ''' Liefert einen einheitlichen Absatzwert (Integer) oder Nothing bei Mischzustand.
-        ''' </summary>
+        ' Liefert einen einheitlichen Absatzwert (Integer) oder Nothing bei Mischzustand.
         Private Function GetUniformParagraphValue(selector As System.Func(Of Integer)) As System.Nullable(Of Integer)
             Dim len = Me.SelectionLength
             If len <= 0 Then Return Nothing
@@ -650,9 +644,7 @@ Namespace ExtendedRTFControl
             Return v
         End Function
 
-        ''' <summary>
-        ''' Setzt die Schriftgröße (alle anderen Attribute bleiben erhalten).
-        ''' </summary>
+        ' Setzt die Schriftgröße (alle anderen Attribute bleiben erhalten).
         Private Sub SetSelectionFontSize(newSize As Single)
             If newSize <= 0 Then Throw New System.ArgumentOutOfRangeException(NameOf(newSize))
             Me.ApplyFontTransformation(
@@ -661,9 +653,7 @@ Namespace ExtendedRTFControl
                 End Function)
         End Sub
 
-        ''' <summary>
-        ''' Wendet / entfernt ein einzelnes FontStyle-Flag auf Auswahl/Caret an.
-        ''' </summary>
+        ' Wendet / entfernt ein einzelnes FontStyle-Flag auf Auswahl/Caret an.
         Private Sub ApplyStyleFlag(flag As System.Drawing.FontStyle, enabled As Boolean)
             Me.ApplyFontTransformation(
                 Function(f)
@@ -675,11 +665,9 @@ Namespace ExtendedRTFControl
                 End Function)
         End Sub
 
-        ''' <summary>
-        ''' Kernroutine zur Font-Transformation (Stil-/Größenänderungen) für Caret oder Auswahl.
-        ''' </summary>
-        ''' <param name="transform">Funktion, die auf Basis des vorhandenen Fonts einen neuen zurückgibt.
-        ''' Gibt sie exakt denselben Font zurück, erfolgt keine Zuweisung.</param>
+        ' Kernroutine zur Font-Transformation (Stil-/Größenänderungen) für Caret oder Auswahl.
+        ' Funktion, die auf Basis des vorhandenen Fonts einen neuen zurückgibt.
+        ' Gibt sie exakt denselben Font zurück, erfolgt keine Zuweisung.
         Private Sub ApplyFontTransformation(transform As System.Func(Of System.Drawing.Font, System.Drawing.Font))
             If Me.SelectionLength = 0 Then
                 Dim f = Me.SelectionFont ' Nur Caret: Einfach einmal transformieren
@@ -728,16 +716,12 @@ Namespace ExtendedRTFControl
             End Try
         End Sub
 
-        ''' <summary>
-        ''' Erzeugt einen konsistenten Cache-Schlüssel für einen Font (Familie+Größe+Stil+Einheit+Charset+Vertikal).
-        ''' </summary>
+        ' Erzeugt einen konsistenten Cache-Schlüssel für einen Font (Familie+Größe+Stil+Einheit+Charset+Vertikal).
         Private Shared Function FontCacheKey(f As System.Drawing.Font) As String
             Return $"{f.FontFamily.Name}|{f.Size}|{CInt(f.Style)}|{CInt(f.Unit)}|{f.GdiCharSet}|{f.GdiVerticalFont}"
         End Function
 
-        ''' <summary>
-        ''' Start eines verschachtelbaren Batch-Blocks. Unterdrückt Neuzeichnen via WM_SETREDRAW.
-        ''' </summary>
+        ' Start eines verschachtelbaren Batch-Blocks. Unterdrückt Neuzeichnen via WM_SETREDRAW.
         Private Sub BeginUpdate()
             If Not Me.IsHandleCreated Then Return
             If Me._updateNesting = 0 Then
@@ -746,9 +730,7 @@ Namespace ExtendedRTFControl
             Me._updateNesting += 1
         End Sub
 
-        ''' <summary>
-        ''' Ende eines Batch-Blocks. Bei Erreichen von 0 wird Redraw wieder aktiviert und das Control neu gezeichnet.
-        ''' </summary>
+        ' Ende eines Batch-Blocks. Bei Erreichen von 0 wird Redraw wieder aktiviert und das Control neu gezeichnet.
         Private Sub EndUpdate()
             If Not Me.IsHandleCreated Then Return
             Me._updateNesting -= 1
@@ -760,23 +742,18 @@ Namespace ExtendedRTFControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Signalisiert Beginn eines internen Auswahl-Scans (Mischzustandserkennung): unterdrückt SelectionChanged.
-        ''' </summary>
+        ' Signalisiert Beginn eines internen Auswahl-Scans (Mischzustandserkennung): unterdrückt SelectionChanged.
         Private Sub BeginInternalSelectionScan()
             Me._suppressSelectionEvents = True
             Me.BeginUpdate()
         End Sub
 
-        ''' <summary>
-        ''' Beendet internen Auswahl-Scan und reaktiviert Events/Redraw (verschachtelt sicher).
-        ''' </summary>
+        ' Beendet internen Auswahl-Scan und reaktiviert Events/Redraw (verschachtelt sicher).
         Private Sub EndInternalSelectionScan()
             Me._suppressSelectionEvents = False
             Me.EndUpdate()
         End Sub
 
-        ''' <inheritdoc/>
         Protected Overrides Sub OnSelectionChanged(e As System.EventArgs)
             If Me._suppressSelectionEvents Then
                 Return ' Intern ausgelöste per-Zeichen-Select-Operation -> nicht an UI weiterreichen.
