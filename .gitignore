@@ -363,9 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Eigene Ausschlüsse
-/VSdocman
 /Links.md
 *.vsdoc
 *.vsix
 /VS Marketplace Vorlage.md
 *.zip
+/SchlumpfSoftControls2/Help
