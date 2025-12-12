@@ -20,6 +20,7 @@
   </Folder>
   <Folder Name="/Projektmappenelemente/">
     <File Path=".gitattributes" />
+    <File Path=".github/prompts/.anweisungen.md" />
     <File Path=".gitignore" />
     <File Path="LICENSE.txt" />
     <File Path="Links.md" />
