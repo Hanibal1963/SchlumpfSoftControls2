@@ -6,95 +6,89 @@
 Namespace IniFileControl
 
     ''' <summary>
-    ''' Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.
+    ''' Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer
+    ''' INI - Datei.
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: Verwendung auf einem WinForms-Formular
+    ''' Public Class Form1
+    '''     Inherits Form
+    '''  
+    '''     Private ReadOnly entryEdit As New IniFileControl.EntryValueEdit() With {
+    '''         .Dock = DockStyle.Top,
+    '''         .TitelText = "Wert bearbeiten",
+    '''         .SelectedSection = "Allgemein",
+    '''         .SelectedEntry = "Benutzername",
+    '''         .Value = "admin"
+    '''     }
+    '''  
+    '''     Public Sub New()
+    '''         InitializeComponent()
+    '''  
+    '''         ' Ereignis abonnieren: Bestätigte Änderungen persistieren/verarbeiten
+    '''         AddHandler entryEdit.ValueChanged, Sub(sender, args)
+    '''             ' Hier z. B. in die INI-Datei schreiben:
+    '''             ' IniFile.Write(args.Section, args.Entry, args.Value)
+    '''             MessageBox.Show("[" & args.Section & "] " & args.Entry & " = " & args.Value)
+    '''         End Sub
+    '''  
+    '''         ' Control zum Formular hinzufügen
+    '''         Me.Controls.Add(entryEdit)
+    '''     End Sub
+    ''' End Class]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.")>
     <System.ComponentModel.ToolboxItem(True)>
     <System.Drawing.ToolboxBitmap(GetType(IniFileControl.EntryValueEdit), "EntryValueEdit.bmp")> ' Hinweis: Das Bitmap "EntryValueEdit.bmp" muss als eingebettete Ressource vorliegen (BuildAction: Embedded Resource).
     Public Class EntryValueEdit : Inherits System.Windows.Forms.UserControl
 
-#Region "Variablendefinition"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Anzeige-/Titeltext der GroupBox.
-        ''' </summary>
         Private _TitelText As String
-
-        ''' <summary>
-        ''' Aktueller Eintragswert (interne Quelle der Wahrheit, wird mit der TextBox synchronisiert).
-        ''' </summary>
         Private _Value As String = String.Empty
-
-        ''' <summary>
-        ''' Der aktuell ausgewählte Abschnitt (INI-Sektion)
-        ''' </summary>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _SelectedSection As String = String.Empty
-
-        ''' <summary>
-        ''' Der aktuell ausgewählte Eintrag innerhalb der Sektion
-        ''' </summary>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _SelectedEntry As String
-
-        ''' <summary>
-        ''' Erforderliche Designervariable.
-        ''' </summary>
         Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Übernehmen-/Bestätigen-Schaltfläche.
-        ''' </summary>
         Private WithEvents Button As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Eingabefeld zur Bearbeitung des Eintragswerts.
-        ''' </summary>
         Private WithEvents TextBox As System.Windows.Forms.TextBox
-
-        ''' <summary>
-        ''' Rahmen/Container-Element (GroupBox) für die enthaltenen Steuerelemente.
-        ''' </summary>
         Private WithEvents GroupBox As System.Windows.Forms.GroupBox
-
-        ''' <summary>
-        ''' Layoutcontainer zur Anordnung von TextBox und Button.
-        ''' </summary>
         Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
 
 #End Region
 
-#Region "Ereignisdefinition"
+#Region "Ereignisse"
 
         ''' <summary>
-        ''' Wird ausgelöst, wenn sich der Wert geändert hat und der Benutzer die Änderung bestätigt hat.
-        ''' Typisches Einsatzszenario: Persistieren in die zugrunde liegende INI-Datei außerhalb des Controls.
+        ''' Wird ausgelöst, wenn sich der Wert geändert hat und der Benutzer die Änderung
+        ''' bestätigt hat.<br/>
+        ''' Typisches Einsatzszenario: Persistieren in die zugrunde liegende INI-Datei
+        ''' außerhalb des Controls.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Abonnieren des Ereignisses und Persistieren des Werts
+        ''' AddHandler entryValueEdit.ValueChanged, Sub(sender, args)
+        '''     IniFile.Write(args.Section, args.Entry, args.Value)
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Description("Wird ausgelöst wenn sich der Wert geändert hat.")>
         Public Event ValueChanged(sender As Object, e As EntryValueEditEventArgs)
 
-        ''' <summary>
-        ''' Internes Ereignis: Wird nach Änderung der Eigenschaft <see cref="TitelText"/> ausgelöst,
-        ''' um die UI (GroupBox.Text) zu aktualisieren.
-        ''' </summary>
         Private Event TitelTextChanged()
-
-        ''' <summary>
-        ''' Internes Ereignis: Wird ausgelöst, wenn die Eigenschaft <see cref="Value"/> programmatisch gesetzt wurde.
-        ''' Synchronisiert die TextBox mit dem internen Wert und deaktiviert den Button.
-        ''' </summary>
         Private Event PropertyValueChanged()
 
 #End Region
 
-#Region "neue Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
-        ''' Gibt den Text der Titelzeile zurück oder legt diesen fest.
-        ''' Das Setzen dieser Eigenschaft aktualisiert die UI (GroupBox.Text) über das interne Ereignis.
+        ''' Gibt den Text der Titelzeile zurück oder legt diesen fest.<br/>
+        ''' Das Setzen dieser Eigenschaft aktualisiert die UI (GroupBox.Text) über das
+        ''' interne Ereignis.
         ''' </summary>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
@@ -112,8 +106,10 @@ Namespace IniFileControl
         End Property
 
         ''' <summary>
-        ''' Gibt den aktuell ausgewählten Abschnitt (INI-Sektion) zurück oder legt diesen fest.
-        ''' Diese Information wird zusammen mit dem Eintragsnamen im ValueChanged-Ereignis mitgegeben.
+        ''' Gibt den aktuell ausgewählten Abschnitt (INI-Sektion) zurück oder legt diesen
+        ''' fest.<br/>
+        ''' Diese Information wird zusammen mit dem Eintragsnamen im ValueChanged-Ereignis
+        ''' mitgegeben.
         ''' </summary>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
@@ -128,8 +124,10 @@ Namespace IniFileControl
         End Property
 
         ''' <summary>
-        ''' Gibt den aktuell ausgewählten Eintrag innerhalb der Sektion zurück oder legt diesen fest.
-        ''' Diese Information wird gemeinsam mit dem Abschnitt im ValueChanged-Ereignis übergeben.
+        ''' Gibt den aktuell ausgewählten Eintrag innerhalb der Sektion zurück oder legt
+        ''' diesen fest.<br/>
+        ''' Diese Information wird gemeinsam mit dem Abschnitt im ValueChanged-Ereignis
+        ''' übergeben.
         ''' </summary>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
@@ -144,9 +142,11 @@ Namespace IniFileControl
         End Property
 
         ''' <summary>
-        ''' Gibt den Eintragswert zurück oder legt diesen fest.
-        ''' Beim Setzen wird die TextBox über das interne Ereignis synchronisiert und der Übernehmen-Button deaktiviert.
-        ''' Hinweis: Das ändert NICHT automatisch die INI-Datei; Persistenz erfolgt über das ValueChanged-Ereignis.
+        ''' Gibt den Eintragswert zurück oder legt diesen fest.<br/>
+        ''' Beim Setzen wird die TextBox über das interne Ereignis synchronisiert und der
+        ''' Übernehmen-Button deaktiviert.<br/>
+        ''' Hinweis: Das ändert NICHT automatisch die INI-Datei; Persistenz erfolgt über das
+        ''' ValueChanged-Ereignis.
         ''' </summary>
         <System.ComponentModel.Description("Gibt den Eintragswert zurück oder legt diesen fest.")>
         Public Property Value As String
@@ -166,57 +166,17 @@ Namespace IniFileControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="EntryValueEdit"/> und übernimmt den initialen Titeltext.
+        ''' Initialisiert eine neue Instanz von <see cref="EntryValueEdit"/> und übernimmt
+        ''' den initialen Titeltext.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Instanziierung und Setzen des Titeltexts
+        ''' Dim control As New EntryValueEdit()
+        ''' control.TitelText = "Wert bearbeiten"]]></code>
+        ''' </example>
         Public Sub New()
             Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich (legt die im Designer definierten Controls an).
             Me._TitelText = Me.GroupBox.Text ' Initialer Titeltext aus der GroupBox übernehmen, damit Eigenschaft und UI konsistent sind.
-        End Sub
-
-#End Region
-
-#Region "interne Methoden"
-
-        ''' <summary>
-        ''' Bestätigt eine geänderte Eingabe und löst das <see cref="ValueChanged"/>-Ereignis mit Kontextinformationen aus.
-        ''' </summary>
-        ''' <param name="sender">Auslösende Schaltfläche.</param>
-        ''' <param name="e">Ereignisargumente.</param>
-        Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles Button.Click
-            ' Ereignis auslösen und Kontextinformationen (Sektion, Eintrag, Wert) mitgeben.
-            RaiseEvent ValueChanged(Me, New EntryValueEditEventArgs(Me.SelectedSection, Me.SelectedEntry, Me._Value))
-            ' Nach dem Bestätigen wieder deaktivieren, bis sich der Text erneut ändert.
-            Me.Button.Enabled = False
-        End Sub
-
-        ''' <summary>
-        ''' Reagiert auf Benutzereingaben in der TextBox, synchronisiert den internen Wert und steuert den Button-Zustand.
-        ''' </summary>
-        ''' <param name="sender">Die TextBox.</param>
-        ''' <param name="e">Ereignisargumente.</param>
-        Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
-            If Me._Value <> Me.TextBox.Text Then ' Prüfung, ob sich der Wert geändert hat (Two-Way-Sync: interner Wert <-> TextBox.Text)
-                Me.Button.Enabled = True ' Es liegt eine nicht bestätigte Änderung vor -> Button aktivieren.
-                Me._Value = Me.TextBox.Text ' Internen Wert direkt mitführen, damit der Button-Klick den aktuellen Text erhält.
-            Else
-                Me.Button.Enabled = False ' TextBox wurde programmatisch auf den internen Wert gesetzt -> keine Änderung offen.
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' Aktualisiert den GroupBox-Titel, nachdem die Eigenschaft <see cref="TitelText"/> geändert wurde.
-        ''' </summary>
-        Private Sub IniFileCommentEdit_TitelTextChanged() Handles Me.TitelTextChanged
-            Me.GroupBox.Text = Me._TitelText ' Titeltext in der GroupBox aktualisieren.
-        End Sub
-
-        ''' <summary>
-        ''' Synchronisiert die TextBox mit dem internen Wert und deaktiviert den Button,
-        ''' wenn die Eigenschaft <see cref="Value"/> programmatisch geändert wurde.
-        ''' </summary>
-        Private Sub IniFileEntryValueEdit_PropertyValueChanged() Handles Me.PropertyValueChanged
-            Me.TextBox.Text = Me._Value ' TextBox an den internen Wert angleichen (dies löst TextChanged aus, das den Button korrekt deaktiviert).
-            Me.Button.Enabled = False ' Sicherheitshalber explizit deaktivieren.
         End Sub
 
         ''' <summary>
@@ -234,9 +194,35 @@ Namespace IniFileControl
             End Try
         End Sub
 
-        ''' <summary>
-        ''' Initialisiert die im Designer angelegten Steuerelemente und deren Layout.
-        ''' </summary>
+#End Region
+
+#Region "interne Methoden"
+
+        Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles Button.Click
+            ' Ereignis auslösen und Kontextinformationen (Sektion, Eintrag, Wert) mitgeben.
+            RaiseEvent ValueChanged(Me, New EntryValueEditEventArgs(Me.SelectedSection, Me.SelectedEntry, Me._Value))
+            ' Nach dem Bestätigen wieder deaktivieren, bis sich der Text erneut ändert.
+            Me.Button.Enabled = False
+        End Sub
+
+        Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
+            If Me._Value <> Me.TextBox.Text Then ' Prüfung, ob sich der Wert geändert hat (Two-Way-Sync: interner Wert <-> TextBox.Text)
+                Me.Button.Enabled = True ' Es liegt eine nicht bestätigte Änderung vor -> Button aktivieren.
+                Me._Value = Me.TextBox.Text ' Internen Wert direkt mitführen, damit der Button-Klick den aktuellen Text erhält.
+            Else
+                Me.Button.Enabled = False ' TextBox wurde programmatisch auf den internen Wert gesetzt -> keine Änderung offen.
+            End If
+        End Sub
+
+        Private Sub IniFileCommentEdit_TitelTextChanged() Handles Me.TitelTextChanged
+            Me.GroupBox.Text = Me._TitelText ' Titeltext in der GroupBox aktualisieren.
+        End Sub
+
+        Private Sub IniFileEntryValueEdit_PropertyValueChanged() Handles Me.PropertyValueChanged
+            Me.TextBox.Text = Me._Value ' TextBox an den internen Wert angleichen (dies löst TextChanged aus, das den Button korrekt deaktiviert).
+            Me.Button.Enabled = False ' Sicherheitshalber explizit deaktivieren.
+        End Sub
+
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.Button = New System.Windows.Forms.Button()

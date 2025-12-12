@@ -5,73 +5,37 @@
 
 Namespace IniFileControl
 
-    ''' <summary>
-    ''' Dialog zum Umbenennen eines Elements. Zeigt den alten Wert an und ermöglicht die Eingabe eines neuen Werts.
-    ''' </summary>
-    ''' <remarks>
-    ''' Der Dialog validiert die Eingabe (keine leeren oder nur aus Leerzeichen bestehenden Namen) und stellt das Ergebnis über <see cref="NewItemValue"/> bereit.
-    ''' </remarks>
     Friend Class RenameItemDialog : Inherits System.Windows.Forms.Form
 
-#Region "Variablendefinition"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Container für die vom Designer erzeugten Komponenten.
-        ''' </summary>
-        Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Button zum Bestätigen der Eingabe ("Ja"). Ist deaktiviert bis eine gültige Eingabe vorliegt.
-        ''' </summary>
-        Private WithEvents ButtonYes As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Button zum Abbrechen des Dialogs ("Nein").
-        ''' </summary>
-        Private WithEvents ButtonNo As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Label zur Anzeige des Hinweistextes inklusive des alten Element-Namens.
-        ''' </summary>
-        Private WithEvents Label As System.Windows.Forms.Label
-
-        ''' <summary>
-        ''' TextBox zur Eingabe des neuen Element-Namens.
-        ''' </summary>
-        Private WithEvents TextBox As System.Windows.Forms.TextBox
-
-        ''' <summary>
-        ''' Hält den ursprünglichen (alten) Wert, der im Dialog angezeigt wird.
-        ''' </summary>
+        Private ReadOnly components As System.ComponentModel.IContainer ' Container für die vom Designer erzeugten Komponenten.
+        Private WithEvents ButtonYes As System.Windows.Forms.Button ' Button zum Bestätigen der Eingabe ("Ja"). Ist deaktiviert bis eine gültige Eingabe vorliegt.
+        Private WithEvents ButtonNo As System.Windows.Forms.Button ' Button zum Abbrechen des Dialogs ("Nein").
+        Private WithEvents Label As System.Windows.Forms.Label ' Label zur Anzeige des Hinweistextes inklusive des alten Element-Namens.
+        Private WithEvents TextBox As System.Windows.Forms.TextBox ' TextBox zur Eingabe des neuen Element-Namens.
         Private _OldItemValue As String = $"" ' Hält den ursprünglichen (alten) Wert, der im Dialog angezeigt wird.
-
-        ''' <summary>
-        ''' Hält den vom Benutzer eingegebenen (neuen) Wert, der beim Bestätigen übernommen wird.
-        ''' </summary>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0032:Automatisch generierte Eigenschaft verwenden", Justification:="<Ausstehend>")>
         <System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Unnötige Unterdrückung entfernen", Justification:="<Ausstehend>")>
         Private _NewItemValue As String = $"" ' Hält den vom Benutzer eingegebenen (neuen) Wert, der beim Bestätigen übernommen wird.
 
 #End Region
 
-#Region "öffentliche Methoden"
+#Region "Eigenschaften"
 
         ''' <summary>
-        ''' Initialisiert den Dialog und setzt Initialzustände der Steuerelemente.
-        ''' </summary>
-        Public Sub New()
-            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
-            Me.ButtonYes.Enabled = False  ' Bestätigen-Button deaktiviert, bis gültiger Text eingegeben wurde.
-        End Sub
-
-#End Region
-
-#Region "neue Eigenschaften"
-
-        ''' <summary>
-        ''' Stellt den alten Wert bereit, der im Label-Text (Platzhalter {0}) angezeigt wird.
+        ''' Stellt den alten Wert bereit, der im Label-Text (Platzhalter {0}) angezeigt
+        ''' wird.<br/>
         ''' Das Setzen löst ein Ereignis aus, damit die UI den Platzhalter ersetzen kann.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispielverwendung:
+        ''' Dim dlg As New IniFileControl.RenameItemDialog()
+        ''' dlg.OldItemValue = "AlterName"
+        ''' If dlg.ShowDialog() = System.Windows.Forms.DialogResult.Yes Then
+        '''     Dim neuerName As String = dlg.NewItemValue
+        ''' End If]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         Public Property OldItemValue As String
             Get
@@ -84,9 +48,17 @@ Namespace IniFileControl
         End Property
 
         ''' <summary>
-        ''' Stellt den vom Benutzer bestätigten neuen Wert bereit.
+        ''' Stellt den vom Benutzer bestätigten neuen Wert bereit.<br/>
         ''' Wird beim Klick auf "Ja" aus dem Textfeld übernommen.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Nach Bestätigung den neuen Namen auslesen
+        ''' Dim dlg As New IniFileControl.RenameItemDialog()
+        ''' dlg.OldItemValue = "AlterName"
+        ''' If dlg.ShowDialog() = System.Windows.Forms.DialogResult.Yes Then
+        '''     Console.WriteLine($"Neuer Name: {dlg.NewItemValue}")
+        ''' End If]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         Public Property NewItemValue As String
             Get
@@ -99,22 +71,57 @@ Namespace IniFileControl
 
 #End Region
 
-#Region "interne Methoden"
+#Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Übernimmt den aktuellen Text aus dem Eingabefeld als neuen Wert.
+        ''' Initialisiert den Dialog und setzt Initialzustände der Steuerelemente.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Dialog instanziieren und anzeigen
+        ''' Dim dlg As New IniFileControl.RenameItemDialog()
+        ''' dlg.OldItemValue = "AlterName"
+        ''' Dim result = dlg.ShowDialog()
+        ''' If result = System.Windows.Forms.DialogResult.Yes Then
+        '''     Dim neuerName = dlg.NewItemValue
+        ''' End If]]></code>
+        ''' </example>
+        Public Sub New()
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me.ButtonYes.Enabled = False  ' Bestätigen-Button deaktiviert, bis gültiger Text eingegeben wurde.
+        End Sub
+
+        ''' <summary>
+        ''' Gibt die von der <see cref="T:System.Windows.Forms.Form"/>-Klasse verwendeten
+        ''' Ressourcen (mit Ausnahme des Speichers) frei.
+        ''' </summary>
+        ''' <param name="disposing"><see langword="true"/>, um sowohl verwaltete als auch
+        ''' nicht verwaltete Ressourcen freizugeben, <see langword="false"/>, um
+        ''' ausschließlich nicht verwaltete Ressourcen freizugeben.</param>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
+        ' Übernimmt den aktuellen Text aus dem Eingabefeld als neuen Wert.
         Private Sub SetNewItemValue()
             Me._NewItemValue = Me.TextBox.Text
         End Sub
 
-        ''' <summary>
-        ''' Gemeinsamer Click-Handler für "Ja" und "Nein".
-        ''' - Bei "Ja": übernimmt den Text aus der TextBox in NewItemValue und schließt mit DialogResult.Yes.
-        ''' - Bei "Nein": schließt mit DialogResult.No.
-        ''' </summary>
-        ''' <param name="sender">Auslösender Button (Ja oder Nein).</param>
-        ''' <param name="e">Ereignisdaten.</param>
+        ' Gemeinsamer Click-Handler für "Ja" und "Nein".
+        ' - Bei "Ja": übernimmt den Text aus der TextBox in NewItemValue und schließt mit DialogResult.Yes.
+        ' - Bei "Nein": schließt mit DialogResult.No.
+        ' <param name="sender">Auslösender Button (Ja oder Nein).</param>
+        ' <param name="e">Ereignisdaten.</param>
         Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles ButtonYes.Click, ButtonNo.Click
             ' Prüfen, welcher Button ausgelöst hat.
             If sender Is Me.ButtonYes Then
@@ -126,12 +133,10 @@ Namespace IniFileControl
             Me.Close() ' Dialog schließen (Modal-Result ist bereits gesetzt).
         End Sub
 
-        ''' <summary>
-        ''' Aktiviert/Deaktiviert den "Ja"-Button abhängig davon, ob ein sinnvoller Text eingegeben wurde.
-        ''' Leere Eingaben oder nur Leerzeichen sind nicht zulässig.
-        ''' </summary>
-        ''' <param name="sender">Die TextBox, deren Inhalt geprüft wird.</param>
-        ''' <param name="e">Ereignisdaten.</param>
+        ' Aktiviert/Deaktiviert den "Ja"-Button abhängig davon, ob ein sinnvoller Text eingegeben wurde.
+        ' Leere Eingaben oder nur Leerzeichen sind nicht zulässig.
+        ' <param name="sender">Die TextBox, deren Inhalt geprüft wird.</param>
+        ' <param name="e">Ereignisdaten.</param>
         Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
             ' TextBox leer oder enthält nur Whitespace?
             If String.IsNullOrWhiteSpace(CType(sender, System.Windows.Forms.TextBox).Text) Then
@@ -141,13 +146,11 @@ Namespace IniFileControl
             End If
         End Sub
 
-        ''' <summary>
-        ''' Initialisiert und konfiguriert die Steuerelemente des Dialogs. 
-        ''' Hinweis: 
-        ''' Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        ''' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-        ''' Das Bearbeiten ist mit dem Windows Form-Designer möglich. 
-        ''' </summary>
+        ' Initialisiert und konfiguriert die Steuerelemente des Dialogs.
+        ' Hinweis:
+        ' Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
+        ' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        ' Das Bearbeiten ist mit dem Windows Form-Designer möglich.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Dim TableLayoutPanel As System.Windows.Forms.TableLayoutPanel
@@ -233,26 +236,6 @@ Namespace IniFileControl
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        ''' <summary>
-        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, falls vorhanden.
-        ''' </summary>
-        ''' <param name="disposing">True zum Freigeben verwalteter Ressourcen; False andernfalls.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region

@@ -8,19 +8,42 @@ Imports System.Linq
 Namespace IniFileControl
 
     ''' <summary>
-    ''' Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars einer INI-Datei.
+    ''' Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars
+    ''' einer INI-Datei.
     ''' </summary>
     ''' <remarks>
-    ''' - Setzen Sie <see cref="Comment"/> um den anzuzeigenden Kommentar zu initialisieren.
-    ''' - Ändern des Textes in der Textbox aktiviert den Übernehmen-Button.
-    ''' - Ein Klick auf den Button übernimmt die Änderungen in <see cref="Comment"/> und löst
-    '''   <see cref="CommentChanged"/> aus.
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Setzen Sie <see cref="Comment"/> um den anzuzeigenden Kommentar
+    ''' zu initialisieren.</description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Änderungen in der TextBox aktivieren den
+    ''' Übernehmen-Button.</description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Ein Klick auf den Button übernimmt die Änderungen in <see
+    ''' cref="Comment"/> und löst <see cref="CommentChanged"/> aus.</description>
+    '''  </item>
+    ''' </list>
     ''' </remarks>
     ''' <example>
-    ''' ' Beispiel: Ereignis abonnieren
-    ''' ' AddHandler commentEdit1.CommentChanged, Sub(sender, args)
-    ''' '     Debug.WriteLine($"Sektion: {args.SectionName}, Zeilen: {args.CommentLines.Length}")
-    ''' ' End Sub
+    ''' <code><![CDATA[' Beispiel: Verwendung im Formular
+    ''' Dim editor As New IniFileControl.CommentEdit() With {
+    '''     .SectionName = "General",
+    '''     .TitelText = "Dateikommentar",
+    '''     .Comment = New String() {"Zeile 1", "Zeile 2"}
+    ''' }
+    ''' AddHandler editor.CommentChanged,
+    '''     Sub(sender, args)
+    '''         ' Änderungen verarbeiten
+    '''         Debug.WriteLine($"Sektion: {args.SectionName}")
+    '''         For Each line In args.CommentLines
+    '''             Debug.WriteLine(line)
+    '''         Next
+    '''     End Sub
+    ''' ' Editor dem UI hinzufügen:
+    ''' Me.Controls.Add(editor)]]></code>
     ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnitts- Kommentars einer INI - Datei.")>
@@ -28,88 +51,71 @@ Namespace IniFileControl
     <System.Drawing.ToolboxBitmap(GetType(IniFileControl.CommentEdit), "CommentEdit.bmp")>
     Public Class CommentEdit : Inherits System.Windows.Forms.UserControl
 
-#Region "Variablendefinition"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Vom Windows Forms Designer verwaltete Komponentenliste.
-        ''' </summary>
         Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Umschließende Gruppe zur Darstellung des Titels und der enthaltenen Steuerelemente.
-        ''' </summary>
         Private WithEvents GroupBox As System.Windows.Forms.GroupBox
-
-        ''' <summary>
-        ''' Schaltfläche zum Übernehmen der in der Textbox vorgenommenen Änderungen.
-        ''' </summary>
         Private WithEvents Button As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Mehrzeiliges Texteingabefeld zur Bearbeitung der Kommentarzeilen.
-        ''' </summary>
         Private WithEvents TextBox As System.Windows.Forms.TextBox
-
-        ''' <summary>
-        ''' Layoutcontainer zur Anordnung von Textbox und Schaltfläche.
-        ''' </summary>
         Private WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-
-        ''' <summary>
-        ''' Enthält die einzelnen Kommentarzeilen. Jede Array-Position entspricht einer Textzeile.
-        ''' </summary>
         Private _Lines As String() = {""}
-
-        ''' <summary>
-        ''' Text, der in der GroupBox als Titel angezeigt wird.
-        ''' </summary>
         Private _TitelText As String
 
 #End Region
 
-#Region "öffentlichen Ereignisse"
+#Region "Ereignisse"
 
         ''' <summary>
-        ''' Wird ausgelöst, wenn sich der Kommentartext geändert hat und per Button übernommen wurde.
+        ''' Wird ausgelöst, wenn sich der Kommentartext geändert hat und per Button
+        ''' übernommen wurde.
         ''' </summary>
         ''' <remarks>
-        ''' Dieses Ereignis folgt dem Muster: Änderungen werden erst nach Klick auf den Übernehmen-Button
-        ''' propagiert, nicht bei jeder Texteingabe. So bleiben UI-Eingaben atomar.
+        ''' <list type="bullet">
+        '''  <item>
+        '''   <description>Änderungen werden erst nach Klick auf den Übernehmen-Button
+        ''' propagiert, nicht bei jeder Texteingabe.</description>
+        '''  </item>
+        '''  <item>
+        '''   <description>Dies ermöglicht eine explizite Bestätigung der Eingaben durch die
+        ''' Nutzenden.</description>
+        '''  </item>
+        ''' </list>
         ''' </remarks>
-        ''' <param name="sender">Die aktuelle Instanz von <see cref="CommentEdit"/>.</param>
-        ''' <param name="e">
-        ''' <see cref="CommentEditEventArgs"/> mit <c>SectionName</c> (Abschnitt) und <c>CommentLines</c> (Kommentarzeilen).
-        ''' </param>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Auf Änderungen reagieren
+        ''' Dim editor As New IniFileControl.CommentEdit() With {
+        '''     .SectionName = "General",
+        '''     .TitelText = "Abschnittskommentar",
+        '''     .Comment = New String() {"Startwert Zeile 1", "Startwert Zeile 2"}
+        ''' }
+        ''' AddHandler editor.CommentChanged,
+        '''     Sub(s, args)
+        '''         Debug.WriteLine("Kommentar übernommen für Sektion: " & args.SectionName)
+        '''         For Each line In args.CommentLines
+        '''             Debug.WriteLine("-> " & line)
+        '''         Next
+        '''     End Sub
+        ''' Me.Controls.Add(editor)]]></code>
+        ''' </example>
         <System.ComponentModel.Description("Wird ausgelöst wenn sich der Kommentartext geändert hat.")>
         Public Event CommentChanged(sender As Object, e As CommentEditEventArgs)
 
 #End Region
 
-#Region "öffentliche Methoden"
-
-        ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="CommentEdit"/> und setzt die Ausgangswerte.
-        ''' </summary>
-        ''' <remarks>
-        ''' Ruft <see cref="InitializeComponent"/> auf, übernimmt den aktuellen GroupBox-Titel in <see cref="TitelText"/>
-        ''' und deaktiviert den Übernehmen-Button, bis eine Änderung erfolgt.
-        ''' </remarks>
-        Public Sub New()
-            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
-            Me._TitelText = Me.GroupBox.Text ' Den aktuellen GroupBox-Titel als Ausgangswert für `TitelText` übernehmen.
-            Me.Button.Enabled = False ' Den Übernehmen-Button deaktivieren, bis eine Änderung erfolgt.
-        End Sub
-
-#End Region
-
-#Region "Definition der neuen Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
         ''' Gibt den Text der Titelzeile (GroupBox) zurück oder legt diesen fest.
         ''' </summary>
         ''' <remarks>
-        ''' Das Setzen löst intern <see cref="TextChanged"/> aus, wodurch der UI-Text aktualisiert wird.
+        ''' Beim Setzen wird der UI-Text der GroupBox aktualisiert.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Titel ändern
+        ''' Dim editor As New IniFileControl.CommentEdit()
+        ''' editor.TitelText = "Dateikommentar"
+        ''' Me.Controls.Add(editor)]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt den Text der Titelzeile zurück oder legt diesen fest.")>
@@ -130,10 +136,31 @@ Namespace IniFileControl
         ''' Gibt die Kommentarzeilen zurück oder legt diese fest.
         ''' </summary>
         ''' <remarks>
-        ''' - Jede Array-Position entspricht einer Zeile in der Textbox.
-        ''' - Änderungserkennung erfolgt per <see cref="Enumerable.SequenceEqual(Of TSource)"/>.
-        ''' - Das Setzen löst intern <see cref="CommentChanged"/> aus, wodurch die Textbox synchronisiert wird.
+        ''' <list type="bullet">
+        '''  <item>
+        '''   <description>Jede Array-Position entspricht einer Zeile in der
+        ''' TextBox.</description>
+        '''  </item>
+        '''  <item>
+        '''   <description>Änderungserkennung erfolgt per <see
+        ''' cref="Enumerable.SequenceEqual(Of TSource)"/>. </description>
+        '''  </item>
+        '''  <item>
+        '''   <description>Beim Setzen werden die TextBox-Zeilen synchronisiert und der
+        ''' Übernehmen-Button deaktiviert.</description>
+        '''  </item>
+        ''' </list>
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Kommentarzeilen setzen
+        ''' Dim editor As New IniFileControl.CommentEdit()
+        ''' editor.Comment = New String() {
+        '''     "Dies ist Zeile 1",
+        '''     "Dies ist Zeile 2",
+        '''     "Dies ist Zeile 3"
+        ''' }
+        ''' Me.Controls.Add(editor)]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt den Kommentartext zurück oder legt diesen fest.")>
@@ -152,11 +179,20 @@ Namespace IniFileControl
         End Property
 
         ''' <summary>
-        ''' Gibt den Namen des INI-Abschnitts zurück oder legt diesen fest, für den der Kommentar angezeigt wird.
+        ''' Gibt den Namen des INI-Abschnitts zurück oder legt diesen fest, für den der
+        ''' Kommentar angezeigt wird.
         ''' </summary>
         ''' <remarks>
-        ''' Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see cref="CommentChanged"/> übermittelt.
+        ''' Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see
+        ''' cref="CommentChanged"/> übermittelt.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Abschnittsname setzen
+        ''' Dim editor As New IniFileControl.CommentEdit()
+        ''' editor.SectionName = "Network"
+        ''' editor.Comment = New String() {"Timeout=30", "Retries=3"}
+        ''' Me.Controls.Add(editor)]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt den Name des Abschnitts zurück oder legt diesen fest für den der Kommentar angezeigt werden soll.")>
@@ -164,34 +200,73 @@ Namespace IniFileControl
 
 #End Region
 
-#Region "interne Methoden"
+#Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Klick auf den Übernehmen-Button: übernimmt die aktuellen Textbox-Zeilen und meldet die Änderung.
+        ''' Initialisiert eine neue Instanz von <see cref="CommentEdit"/> und setzt die
+        ''' Ausgangswerte.
         ''' </summary>
-        ''' <param name="sender">Button</param>
-        ''' <param name="e">Nicht verwendet</param>
+        ''' <remarks>
+        ''' Ruft <see cref="InitializeComponent"/> auf, übernimmt den aktuellen
+        ''' GroupBox-Titel in <see cref="TitelText"/> und deaktiviert den Übernehmen-Button,
+        ''' bis eine Änderung erfolgt.
+        ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Instanz erzeugen und anzeigen
+        ''' Dim editor As New IniFileControl.CommentEdit()
+        ''' editor.TitelText = "Dateikommentar"
+        ''' editor.SectionName = "General"
+        ''' editor.Comment = New String() {"Initiale Zeile"}
+        ''' Me.Controls.Add(editor)]]></code>
+        ''' </example>
+        Public Sub New()
+            Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
+            Me._TitelText = Me.GroupBox.Text ' Den aktuellen GroupBox-Titel als Ausgangswert für `TitelText` übernehmen.
+            Me.Button.Enabled = False ' Den Übernehmen-Button deaktivieren, bis eine Änderung erfolgt.
+        End Sub
+
+        ''' <summary>
+        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern
+        ''' vorhanden.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei <c>disposing = True</c> werden verwaltete Komponenten über <c>components.Dispose()</c> bereinigt.
+        ''' </remarks>
+        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden
+        ''' sollen; andernfalls False.</param>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Ordnungsgemäßes Freigeben
+        ''' Using editor As New IniFileControl.CommentEdit()
+        '''     editor.SectionName = "General"
+        '''     editor.Comment = New String() {"Temp"}
+        '''     Me.Controls.Add(editor)
+        ''' End Using ' Dispose wird automatisch aufgerufen]]></code>
+        ''' </example>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
         Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles Button.Click
             Me._Lines = Me.TextBox.Lines ' Geänderten Kommentar aus der Textbox in das interne Array übernehmen
             Me.Button.Enabled = False ' Button deaktivieren, da die Änderungen jetzt übernommen sind
             RaiseEvent CommentChanged(Me, New CommentEditEventArgs(Me.SectionName, Me._Lines)) ' Änderung nach außen signalisieren (inkl. Abschnittsname)
         End Sub
 
-        ''' <summary>
-        ''' Text wurde in der Textbox geändert: aktiviert den Übernehmen-Button.
-        ''' </summary>
-        ''' <param name="sender">Textbox</param>
-        ''' <param name="e">Nicht verwendet</param>
         Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
             Me.Button.Enabled = True ' Aktiviert den Button, um die Änderungen explizit übernehmen zu können
         End Sub
 
-        ''' <summary>
-        ''' Initialisiert und konfiguriert alle vom Designer verwalteten Steuerelemente des Controls.
-        ''' </summary>
-        ''' <remarks>
-        ''' Diese Methode wird automatisch vom Konstruktor aufgerufen und sollte nicht manuell geändert werden.
-        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.GroupBox = New System.Windows.Forms.GroupBox()
@@ -262,25 +337,6 @@ Namespace IniFileControl
             Me.TableLayoutPanel1.PerformLayout()
             Me.ResumeLayout(False)
 
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.
-        ''' </summary>
-        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region

@@ -3,60 +3,78 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-'Imports System.
-'Imports System.ComponentModel.
-'Imports System.Windows.Forms.
-
 Namespace IniFileControl
 
     ''' <summary>
-    ''' Dialogfenster zum Erfassen eines neuen Wertes (z. B. für einen neuen INI-Item).
-    ''' Der Dialog aktiviert den OK-Button nur bei nicht-leerer Eingabe und gibt
-    ''' den eingegebenen Text über die Eigenschaft <see cref="NewItemValue"/> zurück.
+    ''' Dialogfenster zur Eingabe eines neuen Textwertes (z. B. für einen neuen
+    ''' INI-Schlüssel oder -Eintrag). Der OK-Button ist nur aktiviert, wenn die Eingabe
+    ''' nicht leer ist oder lediglich aus Leerzeichen besteht. Der bestätigte Text wird
+    ''' über die Eigenschaft <see cref="NewItemValue"/> bereitgestellt.
     ''' </summary>
+    ''' <remarks>
+    ''' <list type="bullet">
+    '''  <item>
+    '''   <description>Der Dialog setzt den OK-Button initial auf
+    ''' deaktiviert.</description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Bei Änderungen im Texteingabefeld wird die Gültigkeit geprüft und
+    ''' der OK-Button entsprechend aktiviert/deaktiviert.</description>
+    '''  </item>
+    '''  <item>
+    '''   <description>Beim Bestätigen mit OK wird der Text aus dem Eingabefeld in <see
+    ''' cref="NewItemValue"/> übernommen und <see
+    ''' cref="System.Windows.Forms.Form.DialogResult"/> auf <see
+    ''' cref="System.Windows.Forms.DialogResult.OK"/> gesetzt.</description>
+    '''  </item>
+    ''' </list>
+    ''' </remarks>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: Dialog anzeigen und den bestätigten Wert übernehmen
+    ''' Dim dlg As New IniFileControl.AddItemDialog()
+    ''' ' Optional: Startwert vorgeben
+    ''' dlg.NewItemValue = "VorschlagName"
+    '''  
+    ''' If dlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+    '''     Dim neuerName As String = dlg.NewItemValue
+    '''     ' Weiterverarbeiten des neuen Namens (z. B. INI-Item hinzufügen)
+    ''' End If]]></code>
+    ''' </example>
     Public Class AddItemDialog : Inherits System.Windows.Forms.Form
 
-#Region "Variablendefinition"
+#Region "Variablen"
 
-        ''' <summary>
-        ''' Beschriftung für die Eingabeaufforderung (Name des neuen Elements).
-        ''' </summary>
         Private WithEvents Label As System.Windows.Forms.Label
-
-        ''' <summary>
-        ''' Texteingabefeld für den neuen Elementnamen.
-        ''' </summary>
         Private WithEvents TextBox As System.Windows.Forms.TextBox
-
-        ''' <summary>
-        ''' OK-Schaltfläche zum Bestätigen der Eingabe.
-        ''' Aktiviert sich nur bei nicht-leerer Eingabe.
-        ''' </summary>
         Private WithEvents ButtonOK As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Abbrechen-Schaltfläche zum Verwerfen der Eingabe und Schließen des Dialogs.
-        ''' </summary>
         Private WithEvents ButtonCancel As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Vom Windows Forms Designer verwaltete Komponentenliste.
-        ''' </summary>
         Private ReadOnly components As System.ComponentModel.IContainer ' Wird vom Windows Form-Designer benötigt.
 
 #End Region
 
-#Region "Eigenschftsdefinitionen"
+#Region "Eigenschaften"
 
         ''' <summary>
         ''' Gibt den neuen Wert zurück oder legt ihn fest.
         ''' </summary>
         ''' <remarks>
-        ''' Der Wert wird normalerweise nicht direkt gesetzt, sondern beim Bestätigen (OK)
-        ''' aus dem Textfeld übernommen. Ein externer Set ist möglich, z. B. um einen
-        ''' Startwert anzuzeigen.
+        ''' Der Wert wird standardmäßig beim Bestätigen (OK) aus dem Textfeld
+        ''' übernommen.<br/>
+        ''' Das Setzen von außen ist möglich, um einen Startwert im Textfeld anzuzeigen.
         ''' </remarks>
-        ''' <returns>Der neu eingegebene und über OK bestätigte Text.</returns>
+        ''' <value>
+        ''' Der über OK bestätigte Textwert.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Startwert setzen und später den bestätigten Wert auslesen
+        ''' Dim dlg As New IniFileControl.AddItemDialog()
+        ''' dlg.NewItemValue = "Startwert"
+        '''  
+        ''' If dlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '''     Dim wert As String = dlg.NewItemValue
+        '''     ' Nutzung des bestätigten Wertes
+        ''' End If]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         Public Property NewItemValue As String = $""
 
@@ -65,62 +83,95 @@ Namespace IniFileControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz des Dialogs und setzt den OK-Button auf deaktiviert.
+        ''' Initialisiert eine neue Instanz des Dialogs und setzt den OK-Button auf
+        ''' deaktiviert.
         ''' </summary>
         ''' <remarks>
-        ''' Ruft <see cref="InitializeComponent"/> auf und deaktiviert anschließend den OK-Button,
-        ''' bis eine gültige Eingabe erfolgt ist.
+        ''' Ruft <see cref="InitializeComponent"/> auf und deaktiviert anschließend den
+        ''' OK-Button, bis eine gültige Eingabe erfolgt ist. Der OK-Button wird automatisch
+        ''' aktiviert, sobald der Text im Eingabefeld nicht leer ist und nicht nur aus
+        ''' Leerzeichen besteht.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Dialog instanziieren, optional Startwert setzen und anzeigen
+        ''' Dim dlg As New IniFileControl.AddItemDialog()
+        ''' ' Optional: Starttext für das Eingabefeld
+        ''' dlg.NewItemValue = "VorschlagName"
+        '''  
+        ''' ' Dialog modal anzeigen
+        ''' If dlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '''     ' Bestätigten Wert auslesen
+        '''     Dim neuerName As String = dlg.NewItemValue
+        '''     ' Weiterverarbeitung ...
+        ''' End If
+        '''  
+        ''' ' Nach Verwendung Ressourcen freigeben
+        ''' dlg.Dispose()]]></code>
+        ''' </example>
         Public Sub New()
             Me.InitializeComponent() ' Dieser Aufruf ist für den Designer erforderlich.
             Me.ButtonOK.Enabled = False ' OK-Button standardmäßig deaktivieren damit nur valide Eingaben bestätigt werden können.
         End Sub
 
+        ''' <summary>
+        ''' Gibt verwaltete Ressourcen des Dialogs frei.
+        ''' </summary>
+        ''' <remarks>
+        ''' Überschreibt <see cref="System.Windows.Forms.Form.Dispose(Boolean)"/> und sorgt dafür, dass die vom Designer erzeugten Komponenten korrekt bereinigt werden, wenn <paramref name="disposing"/> <c>True</c> ist. Anschließend wird die Basisklasse aufgerufen.
+        ''' </remarks>
+        ''' <param name="disposing"><c>True</c>, wenn sowohl verwaltete als auch unverwalte Ressourcen freigegeben werden sollen; <c>False</c>, wenn nur unverwalte Ressourcen freigegeben werden.</param>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Sichere Verwendung mit Using-Block (automatisches Dispose)
+        ''' Using dlg As New IniFileControl.AddItemDialog()
+        '''     dlg.NewItemValue = "Startwert"
+        '''     If dlg.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '''         Dim wert As String = dlg.NewItemValue
+        '''         ' Nutzung des bestätigten Wertes ...
+        '''     End If
+        ''' End Using
+        '''  
+        ''' ' Alternativ ohne Using-Block:
+        ''' Dim dlg2 As New IniFileControl.AddItemDialog()
+        ''' Try
+        '''     If dlg2.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+        '''         Dim wert2 As String = dlg2.NewItemValue
+        '''     End If
+        ''' Finally
+        '''     dlg2.Dispose()
+        ''' End Try]]></code>
+        ''' </example>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
 
 #End Region
 
 #Region "interne Methoden"
 
-        ''' <summary>
-        ''' Gemeinsamer Klick-Handler für OK- und Abbrechen-Button.
-        ''' OK: Wert übernehmen und Dialog mit <see cref="System.Windows.Forms.DialogResult.OK"/> schließen.
-        ''' Abbrechen: Dialog mit <see cref="System.Windows.Forms.DialogResult.Cancel"/> schließen (ohne Übernahme).
-        ''' </summary>
-        ''' <param name="sender">Auslösendes Steuerelement (OK oder Cancel).</param>
-        ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
         Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles ButtonOK.Click, ButtonCancel.Click
 
             Select Case True
                 Case sender Is Me.ButtonOK
                     Me.SetNewItemValue()  ' Neuen Wert aus der TextBox in das Feld übernehmen.
                     Me.DialogResult = System.Windows.Forms.DialogResult.OK ' Ergebnis auf OK setzen.
-
                 Case sender Is Me.ButtonCancel
                     Me.DialogResult = System.Windows.Forms.DialogResult.Cancel ' Ergebnis auf Cancel setzen.
-
             End Select
-
             Me.Close() ' Dialog schließen (Rückgabe über DialogResult).
 
         End Sub
 
-        ''' <summary>
-        ''' Übernimmt den neuen Wert aus der TextBox in die Eigenschaft <see cref="NewItemValue"/>.
-        ''' </summary>
-        ''' <remarks>
-        ''' Es erfolgt keine Trimmung oder Validierung – Leerzeichen am Anfang/Ende bleiben bewusst erhalten.
-        ''' Die Validierung erfolgt über <see cref="TextBox_TextChanged"/>.
-        ''' </remarks>
         Private Sub SetNewItemValue()
             Me.NewItemValue = Me.TextBox.Text
         End Sub
 
-        ''' <summary>
-        ''' Ereignishandler bei Änderungen des Textes im Eingabefeld.
-        ''' Aktiviert oder deaktiviert den OK-Button abhängig davon, ob eine nicht-leere Eingabe vorliegt.
-        ''' </summary>
-        ''' <param name="sender">Die TextBox, deren Inhalt sich geändert hat.</param>
-        ''' <param name="e">Ereignisargumente (nicht verwendet).</param>
         Private Sub TextBox_TextChanged(sender As Object, e As System.EventArgs) Handles TextBox.TextChanged
             ' Textbox leer oder nur Leerzeichen?
             If String.IsNullOrWhiteSpace(CType(sender, System.Windows.Forms.TextBox).Text) Then
@@ -133,12 +184,6 @@ Namespace IniFileControl
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-        ''' <summary>
-        ''' Initialisiert und konfiguriert alle vom Designer verwalteten Steuerelemente des Dialogs.
-        ''' </summary>
-        ''' <remarks>
-        ''' Diese Methode wird automatisch vom Konstruktor aufgerufen und sollte nicht manuell geändert werden.
-        ''' </remarks>
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Dim TableLayoutPanel As System.Windows.Forms.TableLayoutPanel
@@ -228,26 +273,6 @@ Namespace IniFileControl
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        ''' <summary>
-        ''' Gibt verwaltete Ressourcen frei und bereinigt die Komponentenliste, sofern vorhanden.
-        ''' </summary>
-        ''' <param name="disposing">True, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls False.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region

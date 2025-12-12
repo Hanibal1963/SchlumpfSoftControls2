@@ -9,53 +9,42 @@ Namespace IniFileControl
     ''' Dialog zur Bestätigung des Löschens eines Elements.
     ''' </summary>
     ''' <remarks>
-    ''' Beispielnutzung:
-    ''' Dim dlg As New DeleteItemDialog()
-    ''' dlg.ItemValue = "MeinEintrag"
-    ''' If dlg.ShowDialog() = DialogResult.OK Then
-    '''     ' Löschvorgang ausführen
-    ''' End If
+    ''' Verwendet <see cref="System.Windows.Forms.DialogResult.OK"/> für "Ja" und <see
+    ''' cref="System.Windows.Forms.DialogResult.Cancel"/> für "Nein".
     ''' </remarks>
-    Public Class DeleteItemDialog : Inherits System.Windows.Forms.Form
+    ''' <example>
+    ''' <code><![CDATA[' Verwendung des DeleteItemDialog
+    ''' Using dlg As New IniFileControl.DeleteItemDialog()
+    '''     dlg.ItemValue = "MeinEintrag"
+    '''     If dlg.ShowDialog() = DialogResult.OK Then
+    '''         ' Element löschen
+    '''     End If
+    ''' End Using]]></code>
+    ''' </example>
+    Friend Class DeleteItemDialog : Inherits System.Windows.Forms.Form
 
 #Region "Variablendefinition"
 
-        ''' <summary>
-        ''' Bestätigungs-Schaltfläche für das Löschen ("Ja"). Löst bei Klick den Dialogabschluss mit <see cref="System.Windows.Forms.DialogResult.OK"/> aus.
-        ''' </summary>
         Private WithEvents ButtonYes As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Abbruch-Schaltfläche ("Nein"). Löst bei Klick den Dialogabschluss mit <see cref="System.Windows.Forms.DialogResult.Cancel"/> aus.
-        ''' </summary>
         Private WithEvents ButtonNo As System.Windows.Forms.Button
-
-        ''' <summary>
-        ''' Anzeige-Label für die Bestätigungsfrage, inkl. des aktuell gesetzten Elementwertes.
-        ''' </summary>
         Private WithEvents Label As System.Windows.Forms.Label
-
-        ''' <summary>
-        ''' Container für untergeordnete Komponenten. Wird vom Windows Forms-Designer verwaltet und beim Dispose freigegeben.
-        ''' </summary>
-        ''' <remarks>ReadOnly, da nur während der Initialisierung gesetzt.</remarks>
         Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Aktuell anzuzeigender Wert des zu löschenden Elements. Initialwert ist eine leere Zeichenfolge.
-        ''' </summary>
-        ''' <remarks>Wird über die Eigenschaft <see cref="ItemValue"/> gesetzt.</remarks>
         Private _ItemValue As String = $""
 
 #End Region
 
-#Region "neue Eigenschaften"
+#Region "Eigenschaften"
 
         ''' <summary>
-        ''' Wert (Text) des zu löschenden Elements. Wird in der Bestätigungsfrage angezeigt.
+        ''' Wert (Text) des zu löschenden Elements.<br/>
+        ''' Wird in der Bestätigungsfrage angezeigt.
         ''' </summary>
-        ''' <value>Der Elementwert, der im Dialog referenziert wird.</value>
-        ''' <remarks>Beim Setzen wird der UI-Text des Labels aktualisiert.</remarks>
+        ''' <remarks>
+        ''' Beim Setzen wird der UI-Text des Labels aktualisiert.
+        ''' </remarks>
+        ''' <value>
+        ''' Der Elementwert, der im Dialog referenziert wird.
+        ''' </value>
         Public Property ItemValue As String
             Get
                 Return Me._ItemValue
@@ -78,18 +67,28 @@ Namespace IniFileControl
             Me.InitializeComponent()
         End Sub
 
+        ''' <summary>
+        ''' Gibt die vom Dialog verwendeten Ressourcen frei.
+        ''' </summary>
+        ''' <param name="disposing"><c>True</c>, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls <c>False</c>.</param>
+        ''' <remarks>
+        ''' Überschreibt <see cref="System.Windows.Forms.Form.Dispose(Boolean)"/> zur Freigabe des Komponenten-Containers.
+        ''' </remarks>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            Try
+                If disposing AndAlso components IsNot Nothing Then
+                    components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
 #End Region
 
 #Region "interne Methoden"
 
-        ''' <summary>
-        ''' Gemeinsamer Klick-Handler für die Schaltflächen "Ja" und "Nein".
-        ''' </summary>
-        ''' <param name="sender">Der auslösende Button (<see cref="ButtonYes"/> oder <see cref="ButtonNo"/>).</param>
-        ''' <param name="e">Ereignisdaten (werden hier nicht verwendet).</param>
-        ''' <remarks>
-        ''' Setzt je nach gedrückter Schaltfläche das entsprechende <see cref="System.Windows.Forms.DialogResult"/> und schließt das Formular.
-        ''' </remarks>
         Private Sub Button_Click(sender As Object, e As System.EventArgs) Handles ButtonYes.Click, ButtonNo.Click
             If sender Is Me.ButtonYes Then ' Welcher Button wurde gedrückt?
                 Me.DialogResult = System.Windows.Forms.DialogResult.OK ' Ergebnis setzen
@@ -99,12 +98,8 @@ Namespace IniFileControl
             Me.Close() ' Dialog schließen
         End Sub
 
-        ''' <summary>
-        ''' Initialisiert alle Steuerelemente des Dialogs und deren Eigenschaften / Layout.
-        ''' </summary>
-        ''' <remarks>
-        ''' Methode wird vom Konstruktor aufgerufen. Änderungen sollten über den Designer erfolgen.
-        ''' </remarks>
+        ' Initialisiert alle Steuerelemente des Dialogs und deren Eigenschaften / Layout.
+        ' Methode wird vom Konstruktor aufgerufen. Änderungen sollten über den Designer erfolgen.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Dim TableLayoutPanel As System.Windows.Forms.TableLayoutPanel
@@ -178,28 +173,6 @@ Namespace IniFileControl
             TableLayoutPanel.ResumeLayout(False)
             Me.ResumeLayout(False)
 
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' Gibt die vom Dialog verwendeten Ressourcen frei.
-        ''' </summary>
-        ''' <param name="disposing"><c>True</c>, wenn verwaltete Ressourcen freigegeben werden sollen; andernfalls <c>False</c>.</param>
-        ''' <remarks>
-        ''' Überschreibt <see cref="System.Windows.Forms.Form.Dispose(Boolean)"/> zur Freigabe des Komponenten-Containers.
-        ''' </remarks>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region
