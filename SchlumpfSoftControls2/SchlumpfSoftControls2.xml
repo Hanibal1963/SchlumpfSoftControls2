@@ -1177,5 +1177,63 @@ Initialisiert eine neue Instanz des Steuerelements <see cref="ListEdit" /> und �
       <remarks>
 Ruft <see cref="InitializeComponent" /> auf und spiegelt anschließend den in der GroupBox gesetzten Text in die interne Variable für <see cref="TitelText" />.</remarks>
     </member>
+    <member name="N:SchlumpfSoft.Controls.NotifyFormControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm">
+      <summary>
+Control zum anzeigen von Benachrichtigungsfenstern.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle">
+      <summary>
+Auflistung der Styles</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle.Information">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle.Question">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle.CriticalError">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormStyle.Exclamation">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormDesign">
+      <summary>
+Auflistung der Designs</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormDesign.Bright">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormDesign.Colorful">
+    </member>
+    <member name="F:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.NotifyFormDesign.Dark">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Design">
+      <summary>
+Legt das Aussehen des Benachrichtigungsfensters fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Message">
+      <summary>
+Legt den Benachrichtigungstext fest der angezeigt werden soll.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.ShowTime">
+      <summary>
+Legt die Anzeigedauer des Benachrichtigungsfensters in ms fest.</summary>
+      <remarks>
+Der Wert 0 bewirkt das kein automatisches schließen des Fensters erfolgt.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Style">
+      <summary>
+Legt das anzuzeigende Symbol im Benachrichtigungsfensters fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Title">
+      <summary>
+Legt den Text der Titelzeile des Benachrichtigungsfensters fest.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.#ctor">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="NotifyForm" /> Klasse mit Standardwerten.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.NotifyFormControl.NotifyForm.Show">
+      <summary>
+Zeigt das Meldungsfenster an.</summary>
+    </member>
   </members>
 </doc>
