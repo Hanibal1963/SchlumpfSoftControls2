@@ -8,6 +8,15 @@ Namespace NotifyFormControl
     ''' <summary>
     ''' Control zum anzeigen von Benachrichtigungsfenstern.
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+    ''' nf.Title = "Hinweis"
+    ''' nf.Message = "Speichern erfolgreich."
+    ''' nf.Style = NotifyFormControl.NotifyForm.NotifyFormStyle.Information
+    ''' nf.Design = NotifyFormControl.NotifyForm.NotifyFormDesign.Bright
+    ''' nf.ShowTime = 3000
+    ''' nf.Show()]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Control zum anzeigen von Benachrichtigungsfenstern.")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -19,49 +28,37 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Auflistung der Styles
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Style = NotifyFormControl.NotifyForm.NotifyFormStyle.Exclamation
+        ''' nf.Message = "Bitte Eingaben prüfen."
+        ''' nf.Show()]]></code>
+        ''' </example>
         Public Enum NotifyFormStyle As Integer
 
-            ''' <summary>
-            ''' Infosymbol
-            ''' </summary>
-            Information = 0
-
-            ''' <summary>
-            ''' Fragesymbol
-            ''' </summary>
-            Question = 1
-
-            ''' <summary>
-            ''' Fehlersymbol
-            ''' </summary>
-            CriticalError = 2
-
-            ''' <summary>
-            ''' Warnungssymbol
-            ''' </summary>
-            Exclamation = 3
+            Information = 0 ' Infosymbol
+            Question = 1 ' Fragesymbol
+            CriticalError = 2 ' Fehlersymbol
+            Exclamation = 3 ' Warnungssymbol
 
         End Enum
 
         ''' <summary>
         ''' Auflistung der Designs
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Design = NotifyFormControl.NotifyForm.NotifyFormDesign.Dark
+        ''' nf.Style = NotifyFormControl.NotifyForm.NotifyFormStyle.Information
+        ''' nf.Title = "Status"
+        ''' nf.Message = "Nachtmodus aktiv."
+        ''' nf.Show()]]></code>
+        ''' </example>
         Public Enum NotifyFormDesign As Integer
 
-            ''' <summary>
-            ''' Helles Design
-            ''' </summary>
-            Bright = 0
-
-            ''' <summary>
-            ''' Farbiges Design
-            ''' </summary>
-            Colorful = 1
-
-            ''' <summary>
-            ''' Dunkles Design
-            ''' </summary>
-            Dark = 2
+            Bright = 0  ' Helles Design
+            Colorful = 1 ' Farbiges Design
+            Dark = 2 ' Dunkles Design
 
         End Enum
 
@@ -72,6 +69,11 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Legt das Aussehen des Benachrichtigungsfensters fest.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Design = NotifyFormControl.NotifyForm.NotifyFormDesign.Colorful
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt das Aussehen des Benachrichtigungsfensters fest.")>
@@ -80,6 +82,11 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Legt den Benachrichtigungstext fest der angezeigt werden soll.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Message = "Update abgeschlossen"
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt den Benachrichtigungstext fest der angezeigt werden soll.")>
@@ -91,6 +98,11 @@ Namespace NotifyFormControl
         ''' <remarks>
         ''' Der Wert 0 bewirkt das kein automatisches schließen des Fensters erfolgt.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.ShowTime = 0 ' Manuelles Schließen erforderlich
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Legt die Anzeigedauer des Benachrichtigungsfensters in ms fest.")>
@@ -99,6 +111,12 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Legt das anzuzeigende Symbol im Benachrichtigungsfensters fest.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Style = NotifyFormControl.NotifyForm.NotifyFormStyle.CriticalError
+        ''' nf.Message = "Unerwarteter Fehler aufgetreten"
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt das anzuzeigende Symbol im Benachrichtigungsfensters fest.")>
@@ -107,6 +125,12 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Legt den Text der Titelzeile des Benachrichtigungsfensters fest.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Title = "Ergebnis"
+        ''' nf.Message = "Vorgang erfolgreich"
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt den Text der Titelzeile des Benachrichtigungsfensters fest.")>
@@ -117,8 +141,14 @@ Namespace NotifyFormControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz der <see cref="NotifyForm"/> Klasse mit Standardwerten.
+        ''' Initialisiert eine neue Instanz der <see cref="NotifyForm"/> Klasse mit
+        ''' Standardwerten.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' ' Standardwerte: Title="Titel", Message="Mitteilung", Design=Bright, Style=Information, ShowTime=5000
+        ''' nf.Show()]]></code>
+        ''' </example>
         Public Sub New()
             Me.Title = $"Titel"
             Me.Message = $"Mitteilung"
@@ -130,6 +160,14 @@ Namespace NotifyFormControl
         ''' <summary>
         ''' Zeigt das Meldungsfenster an.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[Dim nf As New NotifyFormControl.NotifyForm()
+        ''' nf.Title = "Frage"
+        ''' nf.Message = "Möchten Sie fortfahren?"
+        ''' nf.Style = NotifyFormControl.NotifyForm.NotifyFormStyle.Question
+        ''' nf.ShowTime = 7000
+        ''' nf.Show()]]></code>
+        ''' </example>
         <System.ComponentModel.Description("Zeigt das Meldungsfenster an.")>
         Public Sub Show()
             FormTemplate.Image = Me.SetFormImage()
@@ -144,17 +182,13 @@ Namespace NotifyFormControl
 
 #Region "Interne Methoden"
 
-        ''' <summary>
-        ''' Erstellt und initialisiert das zugrunde liegende Formular.
-        ''' </summary>
+        ' Erstellt und initialisiert das zugrunde liegende Formular.
         Private Sub ShowForm()
             Dim frm As New FormTemplate
             frm.Initialize()
         End Sub
 
-        ''' <summary>
-        ''' Wählt anhand der aktuellen Einstellung das Design aus und setzt es.
-        ''' </summary>
+        ' Wählt anhand der aktuellen Einstellung das Design aus und setzt es.
         Private Sub SetFormDesign()
             Select Case Me.Design
                 Case NotifyFormDesign.Bright : SetFormDesignBright()
@@ -163,9 +197,7 @@ Namespace NotifyFormControl
             End Select
         End Sub
 
-        ''' <summary>
-        ''' Setzt das helle Design.
-        ''' </summary>
+        ' Setzt das helle Design.
         Private Shared Sub SetFormDesignBright()
             FormTemplate.BackgroundColor = System.Drawing.Color.White
             FormTemplate.TextFieldColor = System.Drawing.Color.White
@@ -173,9 +205,7 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.Black
         End Sub
 
-        ''' <summary>
-        ''' Setzt das farbige Design.
-        ''' </summary>
+        ' Setzt das farbige Design.
         Private Shared Sub SetFormDesignColorful()
             FormTemplate.BackgroundColor = System.Drawing.Color.LightBlue
             FormTemplate.TextFieldColor = System.Drawing.Color.LightBlue
@@ -183,9 +213,7 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.White
         End Sub
 
-        ''' <summary>
-        ''' Setzt das dunkle Design.
-        ''' </summary>
+        ' Setzt das dunkle Design.
         Private Shared Sub SetFormDesignDark()
             FormTemplate.BackgroundColor = System.Drawing.Color.FromArgb(83, 79, 75)
             FormTemplate.TextFieldColor = System.Drawing.Color.FromArgb(83, 79, 75)
@@ -193,10 +221,7 @@ Namespace NotifyFormControl
             FormTemplate.FontColor = System.Drawing.Color.White
         End Sub
 
-        ''' <summary>
-        ''' Ermittelt das anzuzeigende Symbol entsprechend dem eingestellten Stil.
-        ''' </summary>
-        ''' <returns>Das anzuzeigende <see cref="System.Drawing.Image"/> Objekt oder Nothing.</returns>
+        ' Ermittelt das anzuzeigende Symbol entsprechend dem eingestellten Stil.
         Private Function SetFormImage() As System.Drawing.Image
             Dim result As System.Drawing.Bitmap = Nothing
             Select Case Me.Style
@@ -208,9 +233,7 @@ Namespace NotifyFormControl
             Return result
         End Function
 
-        ''' <summary>
-        ''' Initialisiert die durch den Designer generierten Komponenten (Platzhalter).
-        ''' </summary>
+        ' Initialisiert die durch den Designer generierten Komponenten (Platzhalter).
         Private Sub InitializeComponent()
         End Sub
 
