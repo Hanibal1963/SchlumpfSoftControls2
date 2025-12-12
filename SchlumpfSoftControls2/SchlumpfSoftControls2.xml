@@ -747,5 +747,435 @@ Gesamtanzahl der zu erwartenden Dateien gemäß aktueller Zählung.</summary>
       <remarks>
 Dieser Wert kann sich im Verlauf der Suche ändern, wenn neue Verzeichnisse/Filter berücksichtigt werden.<br />Bei <see cref="Total" /> = 0 ist eine Prozentberechnung nicht sinnvoll.</remarks>
     </member>
+    <member name="N:SchlumpfSoft.Controls.IniFileControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEdit">
+      <summary>
+Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars einer INI-Datei.</summary>
+      <remarks>
+<list type="bullet"><item><description>Setzen Sie <see cref="Comment" /> um den anzuzeigenden Kommentar zu initialisieren.</description></item><item><description>Änderungen in der TextBox aktivieren den Übernehmen-Button.</description></item><item><description>Ein Klick auf den Button übernimmt die Änderungen in <see cref="Comment" /> und löst <see cref="CommentChanged" /> aus.</description></item></list></remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.CommentEdit.CommentChanged">
+      <summary>
+Wird ausgelöst, wenn sich der Kommentartext geändert hat und per Button übernommen wurde.</summary>
+      <remarks>
+<list type="bullet"><item><description>Änderungen werden erst nach Klick auf den Übernehmen-Button propagiert, nicht bei jeder Texteingabe.</description></item><item><description>Dies ermöglicht eine explizite Bestätigung der Eingaben durch die Nutzenden.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.CommentEdit.TitelText">
+      <summary>
+Gibt den Text der Titelzeile (GroupBox) zurück oder legt diesen fest.</summary>
+      <remarks>
+Beim Setzen wird der UI-Text der GroupBox aktualisiert.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.CommentEdit.Comment">
+      <summary>
+Gibt die Kommentarzeilen zurück oder legt diese fest.</summary>
+      <remarks>
+<list type="bullet"><item><description>Jede Array-Position entspricht einer Zeile in der TextBox.</description></item><item><description>Änderungserkennung erfolgt per <see cref="Enumerable.SequenceEqual(Of TSource)" />. </description></item><item><description>Beim Setzen werden die TextBox-Zeilen synchronisiert und der Übernehmen-Button deaktiviert.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.CommentEdit.SectionName">
+      <summary>
+Gibt den Namen des INI-Abschnitts zurück oder legt diesen fest, für den der Kommentar angezeigt wird.</summary>
+      <remarks>
+Dieser Name wird zusammen mit den Kommentarzeilen im Ereignis <see cref="CommentChanged" /> übermittelt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.CommentEdit.#ctor">
+      <summary>
+Initialisiert eine neue Instanz von <see cref="CommentEdit" /> und setzt die Ausgangswerte.</summary>
+      <remarks>
+Ruft <see cref="InitializeComponent" /> auf, übernimmt den aktuellen GroupBox-Titel in <see cref="TitelText" /> und deaktiviert den Übernehmen-Button, bis eine Änderung erfolgt.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.ContentView">
+      <summary>
+Steuerelement zur read-only Anzeige eines Dateiinhalts (z. B. INI-Datei, Log, Text) in einer mehrzeiligen <see cref="System.Windows.Forms.TextBox" /> innerhalb einer <see cref="System.Windows.Forms.GroupBox" />.</summary>
+      <remarks>
+<para><b>Funktion:</b></para> <list type="bullet"><item><description>Stellt die Eigenschaften <see cref="TitelText" /> (Titel der GroupBox) und <see cref="Lines" /> (Zeileninhalt) bereit.</description></item><item><description>Änderungen an diesen Eigenschaften lösen interne Ereignisse aus, die die UI synchron aktualisieren.</description></item><item><description>Layout und untergeordnete Steuerelemente (<c>GroupBox</c>, <c>TextBox</c>) werden im Designer erstellt und in <c>InitializeComponent()</c> initialisiert. </description></item></list> <para><b>Einschränkungen:</b></para> <list type="bullet"><item><description>Die TextBox ist schreibgeschützt (<c>ReadOnly = True</c>) und dient ausschließlich der Anzeige.</description></item><item><description>Zeilenumbrüche werden aus <see cref="Lines" /> übernommen; <c>WordWrap</c> ist deaktiviert, Scrollbars sind aktiv.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ContentView.TitelText">
+      <summary>
+Titeltext der <see cref="System.Windows.Forms.GroupBox" />.</summary>
+      <remarks>
+<list type="bullet"><item><description>Beim Setzen wird <c>PropertyTitelTextChanged</c> ausgelöst und der UI-Titel aktualisiert.</description></item><item><description>Die Property ist im Designer sichtbar und der Kategorie "Appearance" zugeordnet.</description></item><item><description>Standardwert wird im Konstruktor aus <c>GroupBox.Text</c> übernommen.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ContentView.Lines">
+      <summary>
+Anzeigeninhalt als Array von Zeilen für die read-only <see cref="System.Windows.Forms.TextBox" />.</summary>
+      <remarks>
+<list type="bullet"><item><description>Beim Setzen wird <c>PropertyLinesChanged</c> ausgelöst und der TextBox-Inhalt mit <c>TextBox.Lines</c> aktualisiert.</description></item><item><description>Der Vergleich <c>IsNot</c> prüft Referenzungleichheit des Arrays.</description></item><item><description>Wird dieselbe Arrayinstanz intern verändert, ohne das Arrayobjekt zu ersetzen, erfolgt keine Aktualisierung.</description></item><item><description>Für große Inhalte empfiehlt sich die Zuweisung eines neuen Arrays, um das Aktualisierungsereignis sicher auszulösen.</description></item></list></remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.ContentView.#ctor">
+      <summary>
+Initialisiert eine neue Instanz des Controls, erstellt die Designer-Komponenten und übernimmt den anfänglichen Titel der <see cref="System.Windows.Forms.GroupBox" />.</summary>
+      <remarks>
+<list type="bullet"><item><description>Ruft <see cref="InitializeComponent" /> auf, um die vom Designer verwalteten Untersteuerelemente zu erzeugen.</description></item><item><description>Setzt den internen Standardwert für <see cref="TitelText" /> anhand von <c>GroupBox.Text</c>.</description></item></list></remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit">
+      <summary>
+Steuerelement zum Anzeigen und Bearbeiten der Einträge eines Abschnitts einer INI - Datei.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.ValueChanged">
+      <summary>
+Wird ausgelöst, wenn sich der Wert geändert hat und der Benutzer die Änderung bestätigt hat.<br />Typisches Einsatzszenario: Persistieren in die zugrunde liegende INI-Datei außerhalb des Controls.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.TitelText">
+      <summary>
+Gibt den Text der Titelzeile zurück oder legt diesen fest.<br />Das Setzen dieser Eigenschaft aktualisiert die UI (GroupBox.Text) über das interne Ereignis.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.SelectedSection">
+      <summary>
+Gibt den aktuell ausgewählten Abschnitt (INI-Sektion) zurück oder legt diesen fest.<br />Diese Information wird zusammen mit dem Eintragsnamen im ValueChanged-Ereignis mitgegeben.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.SelectedEntry">
+      <summary>
+Gibt den aktuell ausgewählten Eintrag innerhalb der Sektion zurück oder legt diesen fest.<br />Diese Information wird gemeinsam mit dem Abschnitt im ValueChanged-Ereignis übergeben.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.Value">
+      <summary>
+Gibt den Eintragswert zurück oder legt diesen fest.<br />Beim Setzen wird die TextBox über das interne Ereignis synchronisiert und der Übernehmen-Button deaktiviert.<br />Hinweis: Das ändert NICHT automatisch die INI-Datei; Persistenz erfolgt über das ValueChanged-Ereignis.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.EntryValueEdit.#ctor">
+      <summary>
+Initialisiert eine neue Instanz von <see cref="EntryValueEdit" /> und übernimmt den initialen Titeltext.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.IniFile">
+      <summary>
+Steuerelement zum Verwalten von INI - Dateien</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.IniFile.FileContentChanged">
+      <summary>
+Wird ausgelöst wenn sich der Dateiinhalt geändert hat.</summary>
+      <remarks>
+Dieses Ereignis wird nach jeder Änderung an der internen Struktur (Add/Rename/Delete/Set) ausgelöst, unabhängig davon, ob AutoSave aktiv ist.</remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.IniFile.SectionNameExist">
+      <summary>
+Wird ausgelöst wenn beim anlegen eines neuen Abschnitts oder umbnennen eines Abschnitts der Name bereits vorhanden ist.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.IniFile.EntryNameExist">
+      <summary>
+Wird ausgelöst wenn beim anlegen eines neuen Eintrags oder umbenennen eines Eintrags der Name bereitsvorhanden ist.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.IniFile.FileSaved">
+      <summary>
+Zeigt an ob die Datei gespeichert wurde</summary>
+      <remarks>
+True bedeutet, dass der aktuelle Zustand auf Datenträger geschrieben wurde (entweder durch expliziten Aufruf von SaveFile oder automatisch, wenn AutoSave=True).</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.IniFile.CommentPrefix">
+      <summary>
+Gibt das Prefixzeichen für Kommentare zurück oder legt dieses fest.</summary>
+      <remarks>
+Wird beim Erzeugen/Analysieren der Datei verwendet.<br />Änderungen wirken sich auf die Ausgabe in CreateFileContent aus.<br />Beim Parsen wird das jeweils aktuell gesetzte Prefix zur Erkennung von Kommentarzeilen herangezogen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.IniFile.FileName">
+      <summary>
+Gibt den aktuellen Dateiname zurück oder legt diesen fest</summary>
+      <remarks>
+Der Name wird beim Speichern/Laden mit dem Pfad kombiniert.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.IniFile.FilePath">
+      <summary>
+Gibt den Pfad zur INI-Datei zurück oder legt diesen fest.</summary>
+      <remarks>
+Beim Speichern/Laden wird der Pfad mit dem Dateinamen kombiniert.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.IniFile.AutoSave">
+      <summary>
+Legt das Speicherverhalten der Klasse fest.</summary>
+      <remarks>
+True legt fest das Änderungen automatisch gespeichert werden.<br />Bei False bleibt der Status unsaved, bis SaveFile explizit aufgerufen wird.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.CreateNewFile">
+      <summary>
+Erzeugt eine neue Datei mit Beispielinhalt und Standard-Kommentarprefix</summary>
+      <remarks>
+Diese Methode ruft <seealso cref="CreateNewFile(Char)" /> mit "Nothing" auf.</remarks>
+      <seealso cref="M:SchlumpfSoft.Controls.IniFileControl.IniFile.CreateNewFile(System.Char)">
+CreateNewFile</seealso>
+      <seealso cref="M:SchlumpfSoft.Controls.IniFileControl.IniFile.CreateNewFile(System.Char)">
+CreateNewFile</seealso>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.CreateNewFile(System.Char)">
+      <summary>
+Erzeugt eine neue Datei mit Beispielinhalt</summary>
+      <remarks>
+Wenn kein Prefixzeichen angegeben wird, wird Standardmäßig das Semikolon verwendet.<br />Diese Methode erstellt eine Beispielstruktur mit den Abschnitten [Allgemein], [Datenbank], [Logging].</remarks>
+      <param name="CommentPrefix">
+Prefixzeichen für Kommentare oder "Nothing".</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.LoadFile(System.String)">
+      <summary>
+Lädt die angegebene Datei</summary>
+      <remarks>
+Diese Überladung setzt Pfad und Dateiname und ruft anschließend LoadFile() ohne Parameter auf.</remarks>
+      <param name="FilePathAndName">
+Name und Pfad der Datei die geladen werden soll.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.LoadFile">
+      <summary>
+Lädt die Datei die in <see cref="FilePath" /> angegeben wurde.</summary>
+      <remarks>
+Liest alle Zeilen, parst sie in die internen Strukturen, markiert den Zustand als gespeichert und löst das FileContentChanged-Ereignis aus.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.SaveFile(System.String)">
+      <summary>
+Speichert die angegebene Datei.</summary>
+      <remarks>
+Setzt Pfad und Dateiname und ruft SaveFile() ohne Parameter auf.</remarks>
+      <param name="FilePathAndName">
+Name und Pfad der Datei die gespeichert werden soll.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetFileContent">
+      <summary>
+Gibt den Dateiinhalt zurück</summary>
+      <remarks>
+Dies ist der aktuelle, generierte Rohinhalt (Zeilen), so wie er gespeichert werden würde.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetFileComment">
+      <summary>
+Gibt den Dateikommentar zurück</summary>
+      <remarks>
+Die Kommentarzeilen werden ohne Prefixzeichen zurückgegeben. Beim Erzeugen des Datei-Inhalts wird das Prefix automatisch vorangestellt.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.SetFileComment(System.String[])">
+      <summary>
+Setzt den Dateikommentar.</summary>
+      <remarks>
+Die übergebenen Zeilen sollten keine Prefixzeichen enthalten. Nach dem Setzen wird der Dateiinhalt neu aufgebaut (und ggf. gespeichert, wenn AutoSave=True).</remarks>
+      <param name="CommentLines">
+Die Zeilen des Dateikommentars.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetSectionNames">
+      <summary>
+Ruft die Abschnittsnamen ab.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetEntryNames(System.String)">
+      <summary>
+Gibt die Namen der Einträge eines Abschnitts zurück</summary>
+      <returns>
+Eintragsliste oder Nothing falls <paramref name="SectionName" /> nicht existiert.</returns>
+      <param name="SectionName">
+Abschnittsname</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.AddSection(System.String)">
+      <summary>
+Fügt einen neuen Abschnitt hinzu.</summary>
+      <remarks>
+Löst SectionNameExist aus und bricht ab, wenn der Abschnitt bereits existiert.</remarks>
+      <param name="Name">
+Name des neuen Abschnitts</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.AddEntry(System.String,System.String)">
+      <summary>
+Fügt einen neuen Eintrag in die Liste der Eintragsnamen ein.</summary>
+      <remarks>
+Der Abschnitt muss existieren, andernfalls kommt es zu einer Ausnahme.<br />Bei Namenskonflikt wird EntryNameExist ausgelöst und abgebrochen.</remarks>
+      <param name="Section">
+Abschnitt in den der Eintrag eingefügt werden soll.</param>
+      <param name="Name">
+Name des Eintrags.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.RenameSection(System.String,System.String)">
+      <summary>
+Benennt einen Abschnitt um.</summary>
+      <remarks>
+Es werden sowohl der Abschnitt (Werte) als auch sein Kommentar umgehängt.<br />Bei Namenskonflikt wird SectionNameExist ausgelöst.</remarks>
+      <param name="OldName">
+alter Name des Abschnitts</param>
+      <param name="NewName">
+neuer name des Abschnitts</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.RenameEntry(System.String,System.String,System.String)">
+      <summary>
+Benennt einen Eintrag in einem Abschnitt um.</summary>
+      <remarks>
+Der Abschnitt muss existieren.<br />Bei Namenskonflikt wird EntryNameExist ausgelöst.</remarks>
+      <param name="Section">
+Abschnitt der den Eintrag enthält.</param>
+      <param name="Oldname">
+</param>
+      <param name="NewName">
+Neuer Name des Eintrags.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.DeleteSection(System.String)">
+      <summary>
+Löscht einen Abschnitt</summary>
+      <remarks>
+Entfernt auch den dazugehörigen Abschnittskommentar.</remarks>
+      <param name="Name">
+Name des Abschnittes</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.DeleteEntry(System.String,System.String)">
+      <summary>
+Löscht einen Eintrag aus einem Abschnitt.</summary>
+      <param name="Section">
+Abschnitt aus dem der Eintrag gelöscht werden soll.</param>
+      <param name="Entry">
+Eintrag der gelöscht werden soll.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetSectionComment(System.String)">
+      <summary>
+Gibt die Kommentarzeilen für einen Abschnitt zurück</summary>
+      <returns>
+Kommentar für <paramref name="SectionName" /> oder Nothing wenn kein Kommentar existiert.</returns>
+      <param name="SectionName">
+Name des Abschnitts</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.GetEntryValue(System.String,System.String)">
+      <summary>
+Gibt den Wert eines Eintrags aus einem Abschnitt zurück</summary>
+      <remarks>
+Erwartet, dass Abschnitt und Eintrag existieren.<br />Andernfalls kann eine Ausnahme geworfen werden.<br />Bei leerem Abschnitts- und Eintragsnamen wird ein leerer String zurückgegeben.</remarks>
+      <returns>
+Wert des Eintrags.</returns>
+      <param name="Section">
+Abschnitt aus dem der Wert des Eintrags gelesen werden soll.</param>
+      <param name="Entry">
+Eintrag dessen Wert gelesen werden soll.</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.SetSectionComment(System.String,System.String[])">
+      <summary>
+Setzt den Kommentar für einen Abschnitt.</summary>
+      <remarks>
+Die übergebenen Zeilen sollten ohne Prefixzeichen sein.</remarks>
+      <param name="Name">
+Name des Abschnitts.</param>
+      <param name="CommentLines">
+Kommentarzeilen</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.IniFile.SetEntryValue(System.String,System.String,System.String)">
+      <summary>
+Setzt den Wert eines Eintrags in einem Abschnitt.</summary>
+      <remarks>
+Der Abschnitt und der Eintrag müssen existieren.</remarks>
+      <param name="Section">
+Abschnitt in dem der Wert eines Eintrags geändert werden soll.</param>
+      <param name="Entry">
+Eintrag dessen Wert geändert werden soll.</param>
+      <param name="Value">
+Der geänderte Wert.</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEditEventArgs">
+      <summary>
+Repräsentiert die Ereignisdaten für das Bearbeiten von Kommentartexten in einer INI-Datei.</summary>
+      <remarks>
+<para> Der Kommentar wird als Array von Zeilen (<see cref="String" />) gespeichert.<br />Dies erlaubt eine genaue Trennung und spätere Ausgabe, ohne Zeilenumbrüche neu zusammensetzen zu müssen. </para> <para> Beachten Sie, dass das übergebene Array als Referenz gespeichert wird.<br />Wenn Unveränderlichkeit gewünscht ist, übergeben Sie eine Kopie (z. B. mittels <c>Comment.ToArray()</c>) oder erstellen Sie innerhalb des Aufrufers eine neue Arrayinstanz. </para></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.CommentEditEventArgs.Comment">
+      <summary>
+Speichert den neuen Kommentartext als Array von Zeilen.</summary>
+      <remarks>
+Diese Eigenschaft hält eine Referenz auf das Array.<br />Externe Änderungen am Array werden somit in dieser Instanz sichtbar.<br />Wenn das unerwünscht ist, verwenden Sie eine Kopie.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.CommentEditEventArgs.Section">
+      <summary>
+Speichert den Namen des aktuellen Abschnitts.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.CommentEditEventArgs.#ctor(System.String,System.String[])">
+      <summary>
+Initialisiert eine neue Instanz der Klasse <see cref="CommentEditEventArgs" />.</summary>
+      <remarks>
+Aus Leistungsgründen wird das übergebene <paramref name="Comment" />-Array als Referenz übernommen.<br />Erstellen Sie bei Bedarf vor dem Aufruf eine Kopie.</remarks>
+      <param name="Section">
+Der Name des Abschnitts (ohne eckige Klammern).<br />Kann Nothing/Leer sein.</param>
+      <param name="Comment">
+Der neue Kommentartext als Zeilenarray.<br />Sollte nicht Nothing sein.</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs">
+      <summary>
+Transportiert Kontextinformationen, wenn der Wert eines INI-Eintrags editiert wurde.</summary>
+      <remarks>
+Typisches Einsatzszenario:<br />Wird als <see cref="System.EventArgs" /> bei einem Ereignis (z. B. "EntryValueEdited") verwendet, um die betroffene Sektion, den Eintragsnamen und den neuen Wert an die Event-Handler zu übergeben.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs.SelectedSection">
+      <summary>
+Gibt die aktuell ausgewählte Sektion an, in der der Eintrag liegt.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs.SelectedEntry">
+      <summary>
+Gibt den Namen des ausgewählten Eintrags innerhalb der Sektion an.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs.NewValue">
+      <summary>
+Enthält den neuen Wert, der für den Eintrag gesetzt wurde.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.EntryValueEditEventArgs.#ctor(System.String,System.String,System.String)">
+      <summary>
+Erstellt eine neue Instanz und initialisiert alle kontextrelevanten Informationen.</summary>
+      <param name="SelectedSection">
+Name der INI-Sektion.</param>
+      <param name="SelectedEntry">
+Eintragsname innerhalb der Sektion.</param>
+      <param name="NewValue">
+Neuer Wert des Eintrags.</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs">
+      <summary>
+Trägersklasse für Ereignisdaten beim Bearbeiten einer Eintragsliste (z. B. Umbenennen, Hinzufügen, Löschen) innerhalb einer INI-Abschnittsstruktur.</summary>
+      <remarks>
+<list type="bullet"><item><description>Diese Klasse wird typischerweise als <see cref="System.EventArgs" />-Ableitung in Ereignissen verwendet, die eine Listeneintrag-Operation beschreiben.</description></item></list> <para><b>Bedeutungen der Felder/Eigenschaften:</b></para> <list type="bullet"><item><description><see cref="SelectedSection" />: Der Name des INI-Abschnitts (Section), in dem die Operation stattfindet.</description></item><item><description><see cref="SelectedItem" />: Der aktuell ausgewählte/zu bearbeitende Eintrag (z. B. alter Name beim Umbenennen).</description></item><item><description><see cref="NewItemName" />: Der neue Name für den Eintrag (z. B. Zielname beim Umbenennen oder Name beim Hinzufügen).</description></item></list> <para><b>Hinweise:</b></para> <list type="bullet"><item><description>Für Löschvorgänge kann <see cref="NewItemName" /> leer bleiben.</description></item><item><description>Für Hinzufüge-Operationen kann <see cref="SelectedItem" /> leer sein, während <see cref="NewItemName" /> den neuen Namen enthält.</description></item><item><description>Strings werden standardmäßig auf <see cref="String.Empty" /> initialisiert, können jedoch auch <c>Nothing</c> sein, wenn dies im aufrufenden Code so gesetzt wird.</description></item></list></remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs.#ctor(System.String,System.String,System.String)">
+      <summary>
+Erstellt eine neue Instanz mit den relevanten Angaben zur Listenbearbeitung.</summary>
+      <param name="SelectedSection">
+Der INI-Abschnitt, in dem die Operation stattfindet.</param>
+      <param name="SelectedItem">
+Der aktuell ausgewählte/alte Eintragsname (kann leer sein, z. B. beim Hinzufügen).</param>
+      <param name="NewItemName">
+Der neue Eintragsname (kann leer sein, z. B. beim Löschen).</param>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs.SelectedSection">
+      <summary>
+Name des INI-Abschnitts, in dem die Listenoperation erfolgt.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs.SelectedItem">
+      <summary>
+Der aktuell ausgewählte/alte Eintrag, auf den sich die Operation bezieht.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEditEventArgs.NewItemName">
+      <summary>
+Zielname bzw. neuer Eintragsname.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.ListEdit">
+      <summary>
+Steuerelement zum Anzeigen und Bearbeiten der Abschnitts- oder Eintrags-Liste einer INI-Datei.</summary>
+      <remarks>
+<para><b>Darstellung:</b> </para> <list type="bullet"><item><description>Eine `GroupBox` mit Titel (Eigenschaft `TitelText`). </description></item><item><description>Eine `ListBox` mit Einträgen (Eigenschaft `ListItems`). </description></item><item><description>Drei Buttons: Hinzufügen, Umbenennen, Löschen. Interaktion: </description></item><item><description>Auswahländerung in der ListBox löst `SelectedItemChanged` aus. </description></item><item><description>Button-Klicks lösen semantische Ereignisse aus (`ItemAdd`, `ItemRename`, `ItemRemove`), die vom Host verarbeitet werden. </description></item></list></remarks>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.ListEdit.ItemAdd">
+      <summary>
+Wird ausgelöst, wenn über den UI-Button ein neuer Eintrag hinzugefügt werden soll.<br />Der Host soll im Handler den Eintrag tatsächlich anlegen und die ListItems ggf. neu setzen.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.ListEdit.ItemRename">
+      <summary>
+Wird ausgelöst, wenn ein Eintrag umbenannt werden soll.<br />Alte und neue Werte sind in den EventArgs enthalten.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.ListEdit.ItemRemove">
+      <summary>
+Wird ausgelöst, wenn ein Eintrag gelöscht werden soll.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.IniFileControl.ListEdit.SelectedItemChanged">
+      <summary>
+Wird ausgelöst, wenn sich der gewählte Eintrag geändert hat (Auswahl in der ListBox).</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEdit.TitelText">
+      <summary>
+Gibt den Text der Titelzeile zurück oder legt diesen fest.<br />Beim Setzen wird ein internes Ereignis ausgelöst und das UI aktualisiert.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEdit.ListItems">
+      <summary>
+Setzt die Elemente der ListBox oder gibt diese zurück.<br />Das Array wird als Ganzes ersetzt und die ListBox neu befüllt.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.ListEdit.SelectedSection">
+      <summary>
+Gibt den aktuell ausgewählten Abschnitt zurück oder legt diesen fest.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.ListEdit.#ctor">
+      <summary>
+Initialisiert eine neue Instanz des Steuerelements <see cref="ListEdit" /> und übernimmt den initialen Titel.</summary>
+      <remarks>
+Ruft <see cref="InitializeComponent" /> auf und spiegelt anschließend den in der GroupBox gesetzten Text in die interne Variable für <see cref="TitelText" />.</remarks>
+    </member>
   </members>
 </doc>
