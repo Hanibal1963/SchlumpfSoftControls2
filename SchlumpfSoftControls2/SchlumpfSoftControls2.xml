@@ -1519,5 +1519,231 @@ Ausgeblendet da für dieses Control nicht relevant.</summary>
       <summary>
 Initialisiert eine neue Instanz der <see cref="TransparentLabel" />-Klasse.</summary>
     </member>
+    <member name="N:SchlumpfSoft.Controls.WizardControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PageCustom">
+      <summary>
+Definiert eine benutzerdefinierte Assistentenseite.</summary>
+      <remarks>
+Verwenden Sie diese Klasse, um eigene Inhalte und Verhalten innerhalb eines Assistenten bereitzustellen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.PageCustom.Style">
+      <summary>
+Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Der Stil steuert das Erscheinungsbild und Verhalten der Seite innerhalb des Assistenten.<br />Der Standardwert ist <see cref="WizardControl.PageStyle.Custom" />.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PageFinish">
+      <summary>
+Definiert die Abschlußseite des Assistenten.</summary>
+      <remarks>
+Diese Seite wird typischerweise am Ende des Assistenten angezeigt, um Ergebnisse zusammenzufassen oder eine Bestätigung bereitzustellen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.PageFinish.Style">
+      <summary>
+Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Der Standardwert ist <see cref="PageStyle.Finish" />.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs">
+      <summary>
+Enthält die Indexwerte der Seiten bevor die Seiten gewechselt werden.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs.Cancel">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs.NewIndex">
+      <summary>
+Index der neuen Seite</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs">
+      <summary>
+Enthält die Indexwerte der Seiten nachdem die Seiten gewechselt wurden.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs.OldIndex">
+      <summary>
+Index der alten Seite</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.AfterSwitchPagesEventArgs.NewIndex">
+      <summary>
+Index der neuen Seite</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PageStandard">
+      <summary>
+Definiert eine Standardseite.</summary>
+      <remarks>
+Diese Seite verwendet standardmäßig den Stil <see cref="PageStyle.Standard" />.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.PageStandard.Style">
+      <summary>
+Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Der Standardwert ist <see cref="PageStyle.Standard" />.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PageStyle">
+      <summary>
+Auflistung der verfügbaren Seitenstile</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.WizardControl.PageStyle.Standard">
+      <summary>
+Stellt eine Standardseite dar.</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.WizardControl.PageStyle.Welcome">
+      <summary>
+Stellt die Willkommensseite dar.</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.WizardControl.PageStyle.Finish">
+      <summary>
+Stellt die Abschlußseite dar.</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.WizardControl.PageStyle.Custom">
+      <summary>
+Stellt eine Benutzerdefinierte Seite dar.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PageWelcome">
+      <summary>
+Definiert die Willkommenseite für den Assistenten.</summary>
+      <remarks>
+Diese Seite dient als Einstiegsseite und verwendet standardmäßig den Stil <see cref="PageStyle.Welcome" />.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.PageWelcome.Style">
+      <summary>
+Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Standardwert ist <see cref="PageStyle.Welcome" />. Die Änderung des Stils kann das Layout und die Darstellung der Seite beeinflussen.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.Wizard">
+      <summary>
+Ein Control zum Erstellen eines Assistenten.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.Wizard.BeforeSwitchPagesEventHandler">
+      <summary>
+Delegattyp für das Ereignis, das vor dem Wechsel der Assistentenseiten ausgelöst wird. Ermöglicht Validierung und das ggf. Verhindern des Seitenwechsels.</summary>
+      <remarks>
+Setzen Sie <c>e.Cancel = True</c>, um den Seitenwechsel zu verhindern.</remarks>
+      <param name="sender">
+Das auslösende Objekt (typischerweise die <see cref="Wizard" />-Instanz).</param>
+      <param name="e">
+Ein <see cref="WizardControl.BeforeSwitchPagesEventArgs" />, das die Ereignisdaten enthält (Alter/Neuer Index, Abbruchflag).</param>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.Wizard.AfterSwitchPagesEventHandler">
+      <summary>
+Delegattyp für das Ereignis, das nach dem Wechsel der Assistentenseiten ausgelöst wird. Ermöglicht das Initialisieren und Aktualisieren der neu aktiven Seite.</summary>
+      <remarks>
+Verwenden Sie dieses Ereignis, um Fokus zu setzen, Daten zu laden oder UI-Elemente anzupassen.</remarks>
+      <param name="sender">
+Das auslösende Objekt (typischerweise die <see cref="Wizard" />-Instanz).</param>
+      <param name="e">
+Ein <see cref="WizardControl.AfterSwitchPagesEventArgs" />, das die Ereignisdaten enthält (Alter/Neuer Index).</param>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.WizardControl.Wizard.BeforeSwitchPages">
+      <summary>
+Tritt auf, bevor die Seiten des Assistenten gewechselt werden, um dem Benutzer die Möglichkeit zur Validierung zu geben.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.WizardControl.Wizard.AfterSwitchPages">
+      <summary>
+Tritt auf, nachdem die Seiten des Assistenten gewechselt wurden, und gibt dem Benutzer die Möglichkeit, die neue Seite einzurichten.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.WizardControl.Wizard.Cancel">
+      <summary>
+Tritt auf wenn der Benutzer auf Abbrechen geklickt hat.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.WizardControl.Wizard.Finish">
+      <summary>
+Tritt auf, wenn der Assistent abgeschlossen ist, und gibt dem Benutzer die Möglichkeit, zusätzliche Aufgaben zu erledigen.</summary>
+    </member>
+    <member name="E:SchlumpfSoft.Controls.WizardControl.Wizard.Help">
+      <summary>
+Tritt auf, wenn der Benutzer auf die Hilfeschaltfläche klickt.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.VisibleHelp">
+      <summary>
+Ruft die Sichtbarkeit Status der Hilfeschaltfläche ab oder legt diesen fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.Pages">
+      <summary>
+Ruft die Auflistung der Assistentenseiten in diesem Registerkartensteuerelement ab.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.ImageHeader">
+      <summary>
+Ruft das in der Kopfzeile der Standardseiten angezeigte Bild ab oder legt dieses fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.ImageWelcome">
+      <summary>
+Ruft das auf den Begrüßungs- und Abschlussseiten angezeigte Bild ab oder legt es fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.Dock">
+      <summary>
+Ruft ab oder legt fest, an welcher Kante des übergeordneten Containers ein Steuerelement angedockt ist.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.SelectedPage">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.HeaderFont">
+      <summary>
+Ruft die Schriftart ab, die zum Anzeigen der Beschreibung einer Standardseite verwendet wird, oder legt diese fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.HeaderTitleFont">
+      <summary>
+Ruft die Schriftart ab, die zum Anzeigen des Titels einer Standardseite verwendet wird, oder legt diese fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.WelcomeFont">
+      <summary>
+Ruft die Schriftart ab, die zum Anzeigen der Beschreibung einer Begrüßungs- oder Abschlussseite verwendet wird, oder legt diese fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.WelcomeTitleFont">
+      <summary>
+Ruft die Schriftart ab, die zum Anzeigen des Titels einer Begrüßungs- oder Abschlussseite verwendet wird, oder legt diese fest.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.NextEnabled">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.BackEnabled">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.NextText">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.BackText">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.CancelText">
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.Wizard.HelpText">
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.#ctor">
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.Next">
+      <summary>
+Entspricht einem Klick auf die Schaltfläche "weiter".</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.Wizard.Back">
+      <summary>
+Entspricht einem Klick auf die Schaltfläche "zurück".</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.WizardPage">
+      <summary>
+Definiert eine Seite des Controls.</summary>
+      <remarks>
+Eine Assistentenseite stellt Titel, Beschreibung und einen Darstellungsstil bereit.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.WizardPage.Style">
+      <summary>
+Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Bei Änderung wird die Seite neu gezeichnet bzw. der Wizard aktualisiert.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.WizardPage.Title">
+      <summary>
+Ruft den Titel der Assistentenseite ab oder legt diesen fest.</summary>
+      <remarks>
+Bei Änderung wird die Seite neu gezeichnet.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.WizardPage.Description">
+      <summary>
+Ruft die Beschreibung der Assistentenseite ab oder legt diese fest.</summary>
+      <remarks>
+Bei Änderung wird die Seite neu gezeichnet.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.WizardPage.#ctor">
+      <summary>
+Initialisiert eine neue Instanz der Klasse <see cref="SchlumpfSoft.Controls.WizardControl.WizardPage" />.</summary>
+      <remarks>
+Setzt ControlStyles für flackerfreies Zeichnen.</remarks>
+    </member>
   </members>
 </doc>

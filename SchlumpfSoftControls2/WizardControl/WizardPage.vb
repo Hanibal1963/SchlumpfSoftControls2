@@ -6,15 +6,48 @@
 Namespace WizardControl
 
     ''' <summary>
-    ''' Definiert eine Seite des Controls
+    ''' Definiert eine Seite des Controls.
     ''' </summary>
+    ''' <remarks>
+    ''' Eine Assistentenseite stellt Titel, Beschreibung und einen Darstellungsstil
+    ''' bereit.
+    ''' </remarks>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: WizardPage erstellen und konfigurieren
+    ''' Dim page As New WizardControl.WizardPage()
+    ''' page.Title = "Willkommen"
+    ''' page.Description = "Dieser Assistent führt durch die wichtigsten Schritte."
+    ''' page.Style = PageStyle.Welcome
+    '''  
+    ''' ' Zu einem Wizard hinzufügen (sofern vorhanden)
+    ''' Dim wiz As New WizardControl.Wizard()
+    ''' wiz.Pages.Add(page)
+    ''' wiz.SelectedPage = page]]></code>
+    ''' </example>
     <System.ComponentModel.ToolboxItem(False)>
     Public Class WizardPage : Inherits System.Windows.Forms.Panel
 
-        Private _Style As PageStyle = PageStyle.Standard
-        Private _Title As String = String.Empty
-        Private _Description As String = String.Empty
+        Private _Style As PageStyle = PageStyle.Standard  ' Privates Feld: Darstellungsstil der Seite
+        Private _Title As String = String.Empty  ' Privates Feld: Titel der Seite
+        Private _Description As String = String.Empty  ' Privates Feld: Beschreibung der Seite
 
+        ''' <summary>
+        ''' Ruft den Stil der Assistentenseite ab oder legt diesen fest.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Änderung wird die Seite neu gezeichnet bzw. der Wizard aktualisiert.
+        ''' </remarks>
+        ''' <value>
+        ''' Ein Wert der Enumeration <see cref="PageStyle"/>.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Den Stil einer WizardPage setzen
+        ''' Dim page As New WizardControl.WizardPage()
+        ''' page.Style = PageStyle.Standard
+        '''  
+        ''' ' Stil auf benutzerdefiniert ändern (keine Kopfzeile gezeichnet)
+        ''' page.Style = PageStyle.Custom]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft den Stil der Assistentenseite ab oder legt diesen fest.")>
         Public Overridable Property Style As PageStyle
@@ -37,6 +70,20 @@ Namespace WizardControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ruft den Titel der Assistentenseite ab oder legt diesen fest.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Änderung wird die Seite neu gezeichnet.
+        ''' </remarks>
+        ''' <value>
+        ''' Der anzuzeigende Titeltext.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Den Titel einer WizardPage setzen
+        ''' Dim page As New WizardControl.WizardPage()
+        ''' page.Title = "Schritt 1: Einführung"]]></code>
+        ''' </example>
         <System.ComponentModel.DefaultValue("")>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft den Titel der Assistentenseite ab oder legt diesen fest.")>
@@ -55,6 +102,20 @@ Namespace WizardControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Ruft die Beschreibung der Assistentenseite ab oder legt diese fest.
+        ''' </summary>
+        ''' <remarks>
+        ''' Bei Änderung wird die Seite neu gezeichnet.
+        ''' </remarks>
+        ''' <value>
+        ''' Der anzuzeigende Beschreibungstext.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Die Beschreibung einer WizardPage setzen
+        ''' Dim page As New WizardControl.WizardPage()
+        ''' page.Description = "Bitte füllen Sie die folgenden Felder aus, um fortzufahren."]]></code>
+        ''' </example>
         <System.ComponentModel.DefaultValue("")>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft die Beschreibung der Assistentenseite ab oder legt diese fest.")>
@@ -73,10 +134,25 @@ Namespace WizardControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' Initialisiert eine neue Instanz der Klasse <see
+        ''' cref="SchlumpfSoft.Controls.WizardControl.WizardPage"/>.
+        ''' </summary>
+        ''' <remarks>
+        ''' Setzt ControlStyles für flackerfreies Zeichnen.
+        ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Eine neue WizardPage erstellen
+        ''' Dim page As New WizardControl.WizardPage()
+        ''' page.Title = "Zusammenfassung"
+        ''' page.Description = "Prüfen Sie Ihre Angaben, bevor Sie abschließen."
+        ''' page.Style = PageStyle.Finish]]></code>
+        ''' </example>
         Public Sub New()
             Me.InitializeStyles()
         End Sub
 
+        ' Initialisiert Zeichen- und Puffer-Styles.
         Private Sub InitializeStyles()
             Me.SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint, True)
             Me.SetStyle(System.Windows.Forms.ControlStyles.DoubleBuffer, True)
@@ -84,6 +160,7 @@ Namespace WizardControl
             Me.SetStyle(System.Windows.Forms.ControlStyles.UserPaint, True)
         End Sub
 
+        ' Zeichnet die Seite abhängig vom Stil. Geschützter Override für benutzerdefiniertes Rendern.
         Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
             MyBase.OnPaint(e)
             If Me._Style = PageStyle.Custom Then Return
@@ -161,7 +238,5 @@ Namespace WizardControl
         End Sub
 
     End Class
-
-
 
 End Namespace

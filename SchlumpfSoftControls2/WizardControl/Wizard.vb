@@ -6,8 +6,56 @@
 Namespace WizardControl
 
     ''' <summary>
-    ''' Ein Control zum erstellen eines Assistenten
+    ''' Ein Control zum Erstellen eines Assistenten.
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: Wizard-Steuerung initialisieren und in ein Formular einfügen
+    ''' Dim wiz As New WizardControl.Wizard()
+    ''' wiz.Dock = System.Windows.Forms.DockStyle.Fill
+    '''  
+    ''' ' Seiten anlegen (vereinfachtes Beispiel; konkrete WizardPage-Instanzen vorausgesetzt)
+    ''' Dim page1 As New WizardControl.WizardPage() With {.Style = WizardControl.PageStyle.Custom}
+    ''' Dim page2 As New WizardControl.WizardPage() With {.Style = WizardControl.PageStyle.Finish}
+    ''' wiz.Pages.Add(page1)
+    ''' wiz.Pages.Add(page2)
+    '''  
+    ''' ' Ereignisse abonnieren
+    ''' AddHandler wiz.BeforeSwitchPages, Sub(sender, e)
+    '''     ' Validierung vor Seitenwechsel: Beispielhaft ersten Wechsel verhindern
+    '''     If e.OldIndex = 0 AndAlso e.NewIndex = 1 Then
+    '''         ' e.Cancel = True setzt den Wechsel aus
+    '''         ' e.Cancel = False erlaubt den Wechsel
+    '''         e.Cancel = False
+    '''     End If
+    ''' End Sub
+    '''  
+    ''' AddHandler wiz.AfterSwitchPages, Sub(sender, e)
+    '''     ' Nach dem Wechsel: Seite anpassen
+    '''     ' e.NewIndex enthält den neuen Seitenindex
+    ''' End Sub
+    '''  
+    ''' AddHandler wiz.Cancel, Sub(sender, e)
+    '''     ' Abbruch behandeln (Dialog offen lassen, wenn Cancel=True)
+    '''     e.Cancel = False
+    ''' End Sub
+    '''  
+    ''' AddHandler wiz.Finish, Sub(sender, e)
+    '''     ' Abschluss behandeln
+    '''     System.Windows.Forms.MessageBox.Show("Assistent abgeschlossen.")
+    ''' End Sub
+    '''  
+    ''' AddHandler wiz.Help, Sub(sender, e)
+    '''     ' Hilfe anzeigen
+    '''     System.Windows.Forms.MessageBox.Show("Hilfe zum Assistenten.")
+    ''' End Sub
+    '''  
+    ''' ' Dem Formular hinzufügen
+    ''' Me.Controls.Add(wiz)
+    '''  
+    ''' ' Programmgesteuerter Seitenwechsel
+    ''' wiz.Next()  ' Entspricht Klick auf "Weiter"
+    ''' wiz.Back()  ' Entspricht Klick auf "Zurück"]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Ein Control zum erstellen eines Assistenen")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -15,34 +63,103 @@ Namespace WizardControl
     <System.ComponentModel.Designer(GetType(WizardControl.WizardDesigner))>
     Public Class Wizard : Inherits System.Windows.Forms.UserControl
 
-        Friend _ImageHeader As System.Drawing.Image
-        Friend _ImageWelcome As System.Drawing.Image
-        Friend _WelcomeFont As System.Drawing.Font
-        Friend _WelcomeTitleFont As System.Drawing.Font
-        Friend _HeaderFont As System.Drawing.Font
-        Friend _HeaderTitleFont As System.Drawing.Font
-        Friend _SelectedPage As WizardPage
-        Friend _Pages As PagesCollection
-        Friend _ButtonHelpVisible As Boolean
-        Friend ReadOnly _OffsetCancel As New System.Drawing.Point(84, 36)
-        Friend ReadOnly _OffsetNext As New System.Drawing.Point(164, 36)
-        Friend ReadOnly _OffsetBack As New System.Drawing.Point(244, 36)
+        Friend _ImageHeader As System.Drawing.Image               ' Bild, das in der Kopfzeile von Standardseiten angezeigt wird
+        Friend _ImageWelcome As System.Drawing.Image              ' Bild, das auf Begrüßungs- und Abschlussseiten angezeigt wird
+        Friend _WelcomeFont As System.Drawing.Font                ' Schriftart für die Beschreibung auf Begrüßungs- und Abschlussseiten (optional, fällt sonst auf Font zurück)
+        Friend _WelcomeTitleFont As System.Drawing.Font           ' Schriftart für den Titel auf Begrüßungs- und Abschlussseiten (optional; Standard: größer und fett)
+        Friend _HeaderFont As System.Drawing.Font                 ' Schriftart für die Beschreibung in der Kopfzeile von Standardseiten (optional, fällt sonst auf Font zurück)
+        Friend _HeaderTitleFont As System.Drawing.Font            ' Schriftart für den Titel in der Kopfzeile von Standardseiten (optional; Standard: +2pt, fett)
+        Friend _SelectedPage As WizardPage                        ' Aktuell aktive Assistentenseite
+        Friend _Pages As PagesCollection                          ' Sammlung aller Assistentenseiten
+        Friend _ButtonHelpVisible As Boolean                      ' Steuert die Sichtbarkeit der Hilfeschaltfläche
+        Friend ReadOnly _OffsetCancel As New System.Drawing.Point(84, 36) ' Abstand für Positionierung der Abbrechen/Beenden-Schaltfläche (X- und Y-Offset)
+        Friend ReadOnly _OffsetNext As New System.Drawing.Point(164, 36)  ' Abstand für Positionierung der Weiter-Schaltfläche (X- und Y-Offset)
+        Friend ReadOnly _OffsetBack As New System.Drawing.Point(244, 36)  ' Abstand für Positionierung der Zurück-Schaltfläche (X- und Y-Offset)
+        Friend WithEvents ButtonHelp As System.Windows.Forms.Button
+        Friend WithEvents ButtonBack As System.Windows.Forms.Button
+        Friend WithEvents ButtonNext As System.Windows.Forms.Button
+        Friend WithEvents ButtonCancel As System.Windows.Forms.Button
+        Private ReadOnly components As System.ComponentModel.IContainer ' Erforderlich für den Windows Form Designer
 
+        ''' <summary>
+        ''' Delegattyp für das Ereignis, das vor dem Wechsel der Assistentenseiten ausgelöst
+        ''' wird. Ermöglicht Validierung und das ggf. Verhindern des Seitenwechsels.
+        ''' </summary>
+        ''' <remarks>
+        ''' Setzen Sie <c>e.Cancel = True</c>, um den Seitenwechsel zu verhindern.
+        ''' </remarks>
+        ''' <param name="sender">Das auslösende Objekt (typischerweise die <see
+        ''' cref="Wizard"/>-Instanz).</param>
+        ''' <param name="e">Ein <see cref="WizardControl.BeforeSwitchPagesEventArgs"/>, das
+        ''' die Ereignisdaten enthält (Alter/Neuer Index, Abbruchflag).</param>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Validierung vor Seitenwechsel
+        ''' AddHandler wiz.BeforeSwitchPages, Sub(sender, e)
+        '''     ' Nur vorwärtswechsel validieren
+        '''     If e.NewIndex > e.OldIndex Then
+        '''         ' Prüfen, ob die aktuelle Seite gültig ist
+        '''         Dim currentPage As WizardControl.WizardPage = wiz.Pages(e.OldIndex)
+        '''         Dim isValid As Boolean = True
+        '''         ' Eigene Prüfungen ergänzen
+        '''         e.Cancel = Not isValid
+        '''     End If
+        ''' End Sub]]></code>
+        ''' </example>
         Public Delegate Sub BeforeSwitchPagesEventHandler(sender As Object, e As BeforeSwitchPagesEventArgs)
+
+        ''' <summary>
+        ''' Delegattyp für das Ereignis, das nach dem Wechsel der Assistentenseiten
+        ''' ausgelöst wird. Ermöglicht das Initialisieren und Aktualisieren der neu aktiven
+        ''' Seite.
+        ''' </summary>
+        ''' <remarks>
+        ''' Verwenden Sie dieses Ereignis, um Fokus zu setzen, Daten zu laden oder
+        ''' UI-Elemente anzupassen.
+        ''' </remarks>
+        ''' <param name="sender">Das auslösende Objekt (typischerweise die <see
+        ''' cref="Wizard"/>-Instanz).</param>
+        ''' <param name="e">Ein <see cref="WizardControl.AfterSwitchPagesEventArgs"/>, das
+        ''' die Ereignisdaten enthält (Alter/Neuer Index).</param>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Seite nach Wechsel vorbereiten
+        ''' AddHandler wiz.AfterSwitchPages, Sub(sender, e)
+        '''     Dim newPage As WizardControl.WizardPage = wiz.Pages(e.NewIndex)
+        '''     ' Fokus setzen oder Inhalte aktualisieren
+        '''     ' Seitenspezifische Initialisierung ergänzen
+        ''' End Sub]]></code>
+        ''' </example>
         Public Delegate Sub AfterSwitchPagesEventHandler(sender As Object, e As AfterSwitchPagesEventArgs)
 
         ''' <summary>
-        ''' Tritt auf, bevor die Seiten des Assistenten gewechselt werden, 
-        ''' um dem Benutzer die Möglichkeit zur Validierung zu geben.
+        ''' Tritt auf, bevor die Seiten des Assistenten gewechselt werden, um dem Benutzer
+        ''' die Möglichkeit zur Validierung zu geben.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[AddHandler wiz.BeforeSwitchPages, Sub(sender, e)
+        '''     ' Beispiel: Wechsel verhindern, wenn Pflichtfelder nicht ausgefüllt sind
+        '''     If e.NewIndex > e.OldIndex Then
+        '''         Dim currentPage As WizardControl.WizardPage = wiz.Pages(e.OldIndex)
+        '''         ' Prüflogik...
+        '''         Dim isValid As Boolean = True
+        '''         e.Cancel = Not isValid
+        '''     End If
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Tritt auf, bevor die Seiten des Assistenten gewechselt werden, um dem Benutzer die Möglichkeit zur Validierung zu geben.")>
         Public Event BeforeSwitchPages As BeforeSwitchPagesEventHandler
 
         ''' <summary>
-        ''' Tritt auf, nachdem die Seiten des Assistenten gewechselt wurden, 
-        ''' und gibt dem Benutzer die Möglichkeit, die neue Seite einzurichten.
+        ''' Tritt auf, nachdem die Seiten des Assistenten gewechselt wurden, und gibt dem
+        ''' Benutzer die Möglichkeit, die neue Seite einzurichten.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[AddHandler wiz.AfterSwitchPages, Sub(sender, e)
+        '''     ' Beispiel: Fokus setzen oder Inhalte aktualisieren
+        '''     Dim newPage As WizardControl.WizardPage = wiz.Pages(e.NewIndex)
+        '''     ' SetupLogik...
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Tritt auf, nachdem die Seiten des Assistenten gewechselt wurden, und gibt dem Benutzer die Möglichkeit, die neue Seite einzurichten.")>
         Public Event AfterSwitchPages As AfterSwitchPagesEventHandler
@@ -50,14 +167,26 @@ Namespace WizardControl
         ''' <summary>
         ''' Tritt auf wenn der Benutzer auf Abbrechen geklickt hat.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[AddHandler wiz.Cancel, Sub(sender, e)
+        '''     ' Dialogschließen verhindern
+        '''     e.Cancel = True
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Tritt auf wenn der Benutzer auf Abbrechen geklickt hat.")>
         Public Event Cancel As System.ComponentModel.CancelEventHandler
 
         ''' <summary>
-        ''' Tritt auf, wenn der Assistent abgeschlossen ist, 
-        ''' und gibt dem Benutzer die Möglichkeit, zusätzliche Aufgaben zu erledigen.
+        ''' Tritt auf, wenn der Assistent abgeschlossen ist, und gibt dem Benutzer die
+        ''' Möglichkeit, zusätzliche Aufgaben zu erledigen.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[AddHandler wiz.Finish, Sub(sender, e)
+        '''     ' Ergebnisse speichern und Dialog schließen
+        '''     System.Windows.Forms.MessageBox.Show("Fertig.")
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Tritt auf, wenn der Assistent abgeschlossen ist, und gibt dem Benutzer die Möglichkeit, zusätzliche Aufgaben zu erledigen.")>
         Public Event Finish As System.EventHandler
@@ -65,6 +194,12 @@ Namespace WizardControl
         ''' <summary>
         ''' Tritt auf, wenn der Benutzer auf die Hilfeschaltfläche klickt.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[AddHandler wiz.Help, Sub(sender, e)
+        '''     ' Hilfe anzeigen
+        '''     System.Windows.Forms.MessageBox.Show("Hilfeinhalt.")
+        ''' End Sub]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Behavior")>
         <System.ComponentModel.Description("Tritt auf, wenn der Benutzer auf die Hilfeschaltfläche klickt.")>
         Public Event Help As System.EventHandler
@@ -72,7 +207,16 @@ Namespace WizardControl
         ''' <summary>
         ''' Ruft die Sichtbarkeit Status der Hilfeschaltfläche ab oder legt diesen fest.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value>
+        ''' True, wenn die Hilfeschaltfläche sichtbar ist, andernfalls False.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Hilfe ausblenden
+        ''' wiz.VisibleHelp = False
+        '''  
+        ''' ' Hilfe einblenden
+        ''' wiz.VisibleHelp = True]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft die Sichtbarkeit Status der Hilfeschaltfläche ab oder legt diesen fest.")>
@@ -96,11 +240,21 @@ Namespace WizardControl
                 End Try
             End Set
         End Property
-
         ''' <summary>
-        ''' Ruft die Auflistung der Assistentenseiten in diesem Registerkartensteuerelement ab.
+        ''' Ruft die Auflistung der Assistentenseiten in diesem Registerkartensteuerelement
+        ''' ab.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value>
+        ''' Die Auflistung der Seiten als <see cref="PagesCollection"/>.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Seiten hinzufügen
+        ''' Dim p As New WizardControl.WizardPage()
+        ''' wiz.Pages.Add(p)
+        '''  
+        ''' ' Aktuelle Seite ermitteln
+        ''' Dim current As WizardControl.WizardPage = wiz.Pages(wiz.SelectedIndex)]]></code>
+        ''' </example>
         <System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Content)>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft die Auflistung der Assistentenseiten in diesem Registerkartensteuerelement ab.")>
@@ -110,11 +264,17 @@ Namespace WizardControl
                 Return Me._Pages
             End Get
         End Property
-
         ''' <summary>
-        ''' Ruft das in der Kopfzeile der Standardseiten angezeigte Bild ab oder legt dieses fest.
+        ''' Ruft das in der Kopfzeile der Standardseiten angezeigte Bild ab oder legt dieses
+        ''' fest.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <value>
+        ''' Das Bild für die Kopfzeile.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' Kopfzeilenbild setzen
+        ''' wiz.ImageHeader = My.Resources.WizardHeaderImage]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft das in der Kopfzeile der Standardseiten angezeigte Bild ab oder legt dieses fest.")>
@@ -129,11 +289,10 @@ Namespace WizardControl
                 End If
             End Set
         End Property
-
         ''' <summary>
-        ''' Ruft das auf den Begrüßungs- und Abschlussseiten angezeigte Bild ab oder legt es fest.
+        ''' Ruft das auf den Begrüßungs- und Abschlussseiten angezeigte Bild ab oder legt es
+        ''' fest.
         ''' </summary>
-        ''' <returns></returns>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Design")>
         <System.ComponentModel.Description("Ruft das auf den Begrüßungs- und Abschlussseiten angezeigte Bild ab oder legt es fest.")>
@@ -148,11 +307,10 @@ Namespace WizardControl
                 End If
             End Set
         End Property
-
         ''' <summary>
-        ''' Ruft ab oder legt fest, an welcher Kante des übergeordneten Containers ein Steuerelement angedockt ist.
+        ''' Ruft ab oder legt fest, an welcher Kante des übergeordneten Containers ein
+        ''' Steuerelement angedockt ist.
         ''' </summary>
-        ''' <returns></returns>
         <System.ComponentModel.Category("Layout")>
         <System.ComponentModel.Description("Ruft ab oder legt fest, an welcher Kante des übergeordneten Containers ein Steuerelement angedockt ist.")>
         <System.ComponentModel.DefaultValue(System.Windows.Forms.DockStyle.Fill)>
@@ -164,7 +322,6 @@ Namespace WizardControl
                 MyBase.Dock = value
             End Set
         End Property
-
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)>
         Public Property SelectedPage As WizardPage
@@ -195,10 +352,9 @@ Namespace WizardControl
         End Property
 
         ''' <summary>
-        ''' Ruft die Schriftart ab, die zum Anzeigen der Beschreibung einer Standardseite 
+        ''' Ruft die Schriftart ab, die zum Anzeigen der Beschreibung einer Standardseite
         ''' verwendet wird, oder legt diese fest.
         ''' </summary>
-        ''' <returns></returns>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Ruft die Schriftart ab, die zum Anzeigen der Beschreibung einer Standardseite verwendet wird, oder legt diese fest.")>
         Public Property HeaderFont As System.Drawing.Font
@@ -556,8 +712,7 @@ Namespace WizardControl
             End Try
         End Sub
 
-        'Erforderlich für den Windows Form Designer
-        Private ReadOnly components As System.ComponentModel.IContainer
+
 
         'HINWEIS: Das folgende Verfahren ist für den Windows Form Designer erforderlich
         'Es kann mit dem Windows Form Designer geändert werden.
@@ -622,11 +777,6 @@ Namespace WizardControl
             Me.ResumeLayout(False)
 
         End Sub
-
-        Friend WithEvents ButtonHelp As System.Windows.Forms.Button
-        Friend WithEvents ButtonBack As System.Windows.Forms.Button
-        Friend WithEvents ButtonNext As System.Windows.Forms.Button
-        Friend WithEvents ButtonCancel As System.Windows.Forms.Button
 
     End Class
 
