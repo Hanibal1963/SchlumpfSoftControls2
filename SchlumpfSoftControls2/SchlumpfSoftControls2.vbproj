@@ -252,8 +252,7 @@
     <Compile Include="TransparentLabelControl\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WizardControl\AfterSwitchPagesEventArgs.vb" />
-    <Compile Include="WizardControl\BeforeSwitchPagesEventArgs.vb" />
+    <Compile Include="WizardControl\PagesEventArgs.vb" />
     <Compile Include="WizardControl\PageCustom.vb">
       <SubType>Component</SubType>
     </Compile>
