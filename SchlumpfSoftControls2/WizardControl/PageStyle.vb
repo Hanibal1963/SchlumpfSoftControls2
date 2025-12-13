@@ -3,8 +3,6 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
 Namespace WizardControl
 
     ''' <summary>

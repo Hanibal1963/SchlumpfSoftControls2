@@ -3,22 +3,13 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System.Windows.Forms.Design
-
 Namespace WizardControl
 
-    ''' <summary>
-    ''' Designer für die Seiten des Controls
-    ''' </summary>
-    Friend Class PageDesigner
+    Friend Class PageDesigner : Inherits System.Windows.Forms.Design.ParentControlDesigner
 
-        Inherits ParentControlDesigner
-
-        Public Overrides ReadOnly Property SelectionRules As SelectionRules
+        Public Overrides ReadOnly Property SelectionRules As System.Windows.Forms.Design.SelectionRules
             Get
-                Return SelectionRules.Locked Or SelectionRules.Visible
+                Return System.Windows.Forms.Design.SelectionRules.Locked Or System.Windows.Forms.Design.SelectionRules.Visible
             End Get
         End Property
 

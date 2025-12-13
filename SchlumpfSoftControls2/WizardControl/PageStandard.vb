@@ -3,24 +3,19 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System.ComponentModel
-
 Namespace WizardControl
+
     ''' <summary>
     ''' Definiert eine Standardseite
     ''' </summary>
-    <ToolboxItem(False)>
-    Public Class PageStandard
-
-        Inherits WizardPage
+    <System.ComponentModel.ToolboxItem(False)>
+    Public Class PageStandard : Inherits WizardPage
 
         Private _Style As PageStyle = PageStyle.Standard
 
-        <DefaultValue(PageStyle.Standard)>
-        <Category("Design")>
-        <Description("Ruft den Stil der Assistentenseite ab oder legt diesen fest.")>
+        <System.ComponentModel.DefaultValue(PageStyle.Standard)>
+        <System.ComponentModel.Category("Design")>
+        <System.ComponentModel.Description("Ruft den Stil der Assistentenseite ab oder legt diesen fest.")>
         Public Overrides Property Style As PageStyle
             Get
                 Return Me._Style

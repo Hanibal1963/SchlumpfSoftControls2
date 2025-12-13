@@ -3,38 +3,26 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System
-'Imports System.Collections
-Imports System.ComponentModel.Design
-
 Namespace WizardControl
 
     ''' <summary>
     ''' Dient zum anzeigen der Seitenstile im Seitendesigner
     ''' </summary>
-    Friend Class PagesCollectionEditor
+    Friend Class PagesCollectionEditor : Inherits System.ComponentModel.Design.CollectionEditor
 
-        Inherits CollectionEditor
+        Private ReadOnly _PageTypes As System.Type()
 
-        Private ReadOnly _PageTypes As Type()
-
-        Public Sub New(PageType As Type)
-
+        Public Sub New(PageType As System.Type)
             MyBase.New(PageType)
-            Me._PageTypes = New Type(3) {
+            Me._PageTypes = New System.Type(3) {
                 GetType(PageWelcome),
                 GetType(PageStandard),
                 GetType(PageCustom),
                 GetType(PageFinish)}
-
         End Sub
 
-        Protected Overrides Function CreateNewItemTypes() As Type()
-
+        Protected Overrides Function CreateNewItemTypes() As System.Type()
             Return Me._PageTypes
-
         End Function
 
     End Class

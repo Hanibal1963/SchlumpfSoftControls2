@@ -3,18 +3,12 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
-' TODO: Code noch überarbeiten
-
-Imports System
-
 Namespace WizardControl
 
     ''' <summary>
     ''' Enthält die Indexwerte der Seiten bevor die Seiten gewechselt werden.
     ''' </summary>
-    Public Class BeforeSwitchPagesEventArgs
-
-        Inherits AfterSwitchPagesEventArgs
+    Public Class BeforeSwitchPagesEventArgs : Inherits AfterSwitchPagesEventArgs
 
         Public Property Cancel As Boolean = False
 
@@ -31,9 +25,7 @@ Namespace WizardControl
         End Property
 
         Friend Sub New(OldIndex As Integer, NewIndex As Integer)
-
             MyBase.New(OldIndex, NewIndex)
-
         End Sub
 
     End Class
@@ -41,9 +33,7 @@ Namespace WizardControl
     ''' <summary>
     ''' Enthält die Indexwerte der Seiten nachdem die Seiten gewechselt wurden.
     ''' </summary>
-    Public Class AfterSwitchPagesEventArgs
-
-        Inherits EventArgs
+    Public Class AfterSwitchPagesEventArgs : Inherits System.EventArgs
 
         Protected _NewIndex As Integer
 
@@ -62,10 +52,8 @@ Namespace WizardControl
         End Property
 
         Friend Sub New(OldIndex As Integer, NewIndex As Integer)
-
             Me.OldIndex = OldIndex
             Me._NewIndex = NewIndex
-
         End Sub
 
     End Class
