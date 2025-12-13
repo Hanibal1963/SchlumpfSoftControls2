@@ -22,6 +22,7 @@
     <File Path=".gitattributes" />
     <File Path=".github/prompts/.xml_doku_einfügen.md" />
     <File Path=".gitignore" />
+    <File Path="Copilotantworten.md" />
     <File Path="LICENSE.txt" />
     <File Path="Links.md" />
     <File Path="README.md" />
