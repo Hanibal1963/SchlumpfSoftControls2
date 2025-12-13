@@ -10,6 +10,24 @@ Namespace SevenSegmentControl
     ''' </para>
     ''' <para>das eine Ziffer oder einen Buchstaben anzeigt.</para>
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[
+    ''' ' Beispiel: Verwendung von SingleDigit in einem Formular
+    ''' Dim digit As New SevenSegmentControl.SingleDigit()
+    ''' digit.Dock = DockStyle.None
+    ''' digit.Size = New Size(48, 96)
+    ''' digit.ForeColor = Color.Red
+    ''' digit.InactiveColor = Color.Gray
+    ''' digit.BackColor = Color.Black
+    ''' digit.SegmentWidth = 8
+    ''' digit.ItalicFactor = -0.1F
+    ''' digit.ShowDecimalPoint = True
+    ''' digit.DecimalPointActive = True
+    ''' digit.ShowColon = False
+    ''' digit.DigitValue = "A"
+    ''' Me.Controls.Add(digit)
+    ''' ]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, das eine Ziffer oder einen Buchstaben anzeigt.")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -18,299 +36,71 @@ Namespace SevenSegmentControl
 
 #Region "Variablen"
 
-        ''' <summary>
-        ''' Sammlung der Eckpunkte für jedes der 7 Segmente (jedes Segment als Polygon mit 6 Punkten).
-        ''' </summary>
-        Private ReadOnly _SegmentPoints As System.Drawing.Point()()
-
-        ''' <summary>
-        ''' Interne, fixe Höhe (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
-        ''' </summary>
-        Private ReadOnly _DigitHeight As Integer = 80
-
-        ''' <summary>
-        ''' Interne, fixe Breite (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
-        ''' </summary>
-        Private ReadOnly _DigitWidth As Integer = 48
-
-        ''' <summary>
-        ''' Aktuelle Segmentbreite (Dicke der LED-Balken) in Pixeln.
-        ''' </summary>
-        Private _SegmentWidth As Integer = 10
-
-        ''' <summary>
-        ''' Scherfaktor zur Erzeugung einer kursiven Darstellung (negativ neigt nach links).
-        ''' </summary>
-        Private _ItalicFactor As Single = -0.1F
-
-        ''' <summary>
-        ''' Zwischengespeicherte Hintergrundfarbe des Steuerelements.
-        ''' </summary>
-        Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
-
-        ''' <summary>
-        ''' Farbe für inaktive (nicht leuchtende) Segmente.
-        ''' </summary>
-        Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
-
-        ''' <summary>
-        ''' Vordergrundfarbe für aktive (leuchtende) Segmente.
-        ''' </summary>
-        Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
-
-        ''' <summary>
-        ''' Zu darstellender Zeichenwert (Ziffer/Buchstabe/Sonderzeichen) als String.
-        ''' </summary>
-        Private _DigitValue As String = Nothing
-
-        ''' <summary>
-        ''' Steuert, ob der Dezimalpunkt gezeichnet wird.
-        ''' </summary>
-        Private _ShowDecimalPoint As Boolean = True
-
-        ''' <summary>
-        ''' Status des Dezimalpunktes (aktiv = leuchtend).
-        ''' </summary>
-        Private _DecimalPointActive As Boolean = False
-
-        ''' <summary>
-        ''' Steuert, ob der Doppelpunkt (zwei Punkte) gezeichnet wird.
-        ''' </summary>
-        Private _ShowColon As Boolean = False
-
-        ''' <summary>
-        ''' Status des Doppelpunkts (aktiv = beide Punkte leuchten).
-        ''' </summary>
-        Private _ColonActive As Boolean = False
-
-        ''' <summary>
-        ''' Bitmaske für die 7 Segmente (Bit0..Bit6); ermöglicht benutzerdefinierte Muster.
-        ''' </summary>
-        Private _CustomBitPattern As Integer = 0
+        Private ReadOnly _SegmentPoints As System.Drawing.Point()()  ' Sammlung der Eckpunkte für jedes der 7 Segmente (jedes Segment als Polygon mit 6 Punkten).
+        Private ReadOnly _DigitHeight As Integer = 80 ' Interne, fixe Höhe (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
+        Private ReadOnly _DigitWidth As Integer = 48 ' Interne, fixe Breite (virtuell) der Ziffer für die Berechnung der Segmentkoordinaten.
+        Private _SegmentWidth As Integer = 10 ' Aktuelle Segmentbreite (Dicke der LED-Balken) in Pixeln.
+        Private _ItalicFactor As Single = -0.1F ' Scherfaktor zur Erzeugung einer kursiven Darstellung (negativ neigt nach links).
+        Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray ' Zwischengespeicherte Hintergrundfarbe des Steuerelements.
+        Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray ' Farbe für inaktive (nicht leuchtende) Segmente.
+        Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen  ' Vordergrundfarbe für aktive (leuchtende) Segmente.
+        Private _DigitValue As String = Nothing ' Zu darstellender Zeichenwert (Ziffer/Buchstabe/Sonderzeichen) als String.
+        Private _ShowDecimalPoint As Boolean = True ' Steuert, ob der Dezimalpunkt gezeichnet wird.
+        Private _DecimalPointActive As Boolean = False ' Status des Dezimalpunktes (aktiv = leuchtend).
+        Private _ShowColon As Boolean = False ' Steuert, ob der Doppelpunkt (zwei Punkte) gezeichnet wird.
+        Private _ColonActive As Boolean = False  ' Status des Doppelpunkts (aktiv = beide Punkte leuchten).
+        Private _CustomBitPattern As Integer = 0 ' Bitmaske für die 7 Segmente (Bit0..Bit6); ermöglicht benutzerdefinierte Muster.
 
 #End Region
 
 #Region "Aufzählungen"
 
-        ''' <summary>
-        ''' <para>Dies sind die verschiedenen Bitmuster, die die Zeichen darstellen, </para>
-        ''' <para>die in den sieben Segmenten angezeigt werden können.<br/>
-        ''' </para>
-        ''' </summary>
-        ''' <remarks>
-        ''' Die Bits 0 bis 6 entsprechen den einzelnen LEDs, von oben nach unten!
-        ''' </remarks>
+        ' Dies sind die verschiedenen Bitmuster, die die Zeichen darstellen, die in den sieben Segmenten angezeigt werden können.
+        ' Die Bits 0 bis 6 entsprechen den einzelnen LEDs, von oben nach unten!
         Friend Enum CharacterPattern
 
-            ''' <summary>
-            ''' Kein Segment aktiv (alles aus).
-            ''' </summary>
-            None = &H0
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 0.
-            ''' </summary>
-            Zero = &H77
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 1.
-            ''' </summary>
-            One = &H24
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 2.
-            ''' </summary>
-            Two = &H5D
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 3.
-            ''' </summary>
-            Three = &H6D
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 4.
-            ''' </summary>
-            Four = &H2E
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 5.
-            ''' </summary>
-            Five = &H6B
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 6.
-            ''' </summary>
-            Six = &H7B
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 7.
-            ''' </summary>
-            Seven = &H25
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 8 (alle Segmente an).
-            ''' </summary>
-            Eight = &H7F
-
-            ''' <summary>
-            ''' Darstellung der Ziffer 9.
-            ''' </summary>
-            Nine = &H6F
-
-            ''' <summary>
-            ''' Großbuchstabe A.
-            ''' </summary>
-            A = &H3F
-
-            ''' <summary>
-            ''' Großbuchstabe B.
-            ''' </summary>
-            B = &H7A
-
-            ''' <summary>
-            ''' Großbuchstabe C.
-            ''' </summary>
+            None = &H0 ' Kein Segment aktiv (alles aus).
+            Zero = &H77 ' Darstellung der Ziffer 0.
+            One = &H24 ' Darstellung der Ziffer 1.
+            Two = &H5D  ' Darstellung der Ziffer 2.
+            Three = &H6D ' Darstellung der Ziffer 3.
+            Four = &H2E ' Darstellung der Ziffer 4.
+            Five = &H6B ' Darstellung der Ziffer 5.
+            Six = &H7B ' Darstellung der Ziffer 6.
+            Seven = &H25  ' Darstellung der Ziffer 7.
+            Eight = &H7F  ' Darstellung der Ziffer 8 (alle Segmente an).
+            Nine = &H6F  ' Darstellung der Ziffer 9.
+            A = &H3F  ' Großbuchstabe A.
+            B = &H7A ' Großbuchstabe B.
             C = &H53
-
-            ''' <summary>
-            ''' Kleinbuchstabe c (abgekürzte Form / Feldbezeichnung).
-            ''' </summary>
-            cField = &H58
-
-            ''' <summary>
-            ''' Großbuchstabe D.
-            ''' </summary>
-            D = &H7C
-
-            ''' <summary>
-            ''' Großbuchstabe E.
-            ''' </summary>
-            E = &H5B
-
-            ''' <summary>
-            ''' Großbuchstabe F.
-            ''' </summary>
-            F = &H1B
-
-            ''' <summary>
-            ''' Großbuchstabe G.
-            ''' </summary>
-            G = &H73
-
-            ''' <summary>
-            ''' Großbuchstabe H.
-            ''' </summary>
-            H = &H3E
-
-            ''' <summary>
-            ''' Kleinbuchstabe h (abgekürzte Form / Feldbezeichnung).
-            ''' </summary>
-            hField = &H3A
-
-            ''' <summary>
-            ''' Kleinbuchstabe i.
-            ''' </summary>
-            i = &H20
-
-            ''' <summary>
-            ''' Großbuchstabe J.
-            ''' </summary>
-            J = &H74
-
-            ''' <summary>
-            ''' Großbuchstabe L.
-            ''' </summary>
-            L = &H52
-
-            ''' <summary>
-            ''' Großbuchstabe N.
-            ''' </summary>
-            N = &H38
-
-            ''' <summary>
-            ''' Kleinbuchstabe o.
-            ''' </summary>
-            o = &H78
-
-            ''' <summary>
-            ''' Großbuchstabe P.
-            ''' </summary>
-            P = &H1F
-
-            ''' <summary>
-            ''' Großbuchstabe Q.
-            ''' </summary>
-            Q = &H2F
-
-            ''' <summary>
-            ''' Großbuchstabe R.
-            ''' </summary>
-            R = &H18
-
-            ''' <summary>
-            ''' Großbuchstabe T.
-            ''' </summary>
-            T = &H5A
-
-            ''' <summary>
-            ''' Großbuchstabe U.
-            ''' </summary>
-            U = &H76
-
-            ''' <summary>
-            ''' Kleinbuchstabe u (abgekürzte Form / Feldbezeichnung).
-            ''' </summary>
-            uField = &H70
-
-            ''' <summary>
-            ''' Großbuchstabe Y.
-            ''' </summary>
-            Y = &H6E
-
-            ''' <summary>
-            ''' Bindestrich / Minuszeichen.
-            ''' </summary>
-            Dash = &H8
-
-            ''' <summary>
-            ''' Gleichheitszeichen (=).
-            ''' </summary>
-            Equals = &H48
-
-            ''' <summary>
-            ''' Gradzeichen (°).
-            ''' </summary>
-            Degrees = &HF
-
-            ''' <summary>
-            ''' Apostroph (').
-            ''' </summary>
-            Apostrophe = &H2
-
-            ''' <summary>
-            ''' Anführungszeichen (").
-            ''' </summary>
-            Quote = &H6
-
-            ''' <summary>
-            ''' Rechte Klammer (]).
-            ''' </summary>
-            RBracket = &H65
-
-            ''' <summary>
-            ''' Unterstrich (_).
-            ''' </summary>
-            Underscore = &H40
-
-            ''' <summary>
-            ''' Identisch-Zeichen (≡).
-            ''' </summary>
-            Identical = &H49
-
-            ''' <summary>
-            ''' Logisches NOT-Zeichen (¬).
-            ''' </summary>
-            [Not] = &H28
+            cField = &H58 ' Kleinbuchstabe c (abgekürzte Form / Feldbezeichnung).
+            D = &H7C ' Großbuchstabe D.
+            E = &H5B ' Großbuchstabe E.
+            F = &H1B ' Großbuchstabe F.
+            G = &H73 ' Großbuchstabe G.
+            H = &H3E ' Großbuchstabe H.
+            hField = &H3A ' Kleinbuchstabe h (abgekürzte Form / Feldbezeichnung).
+            i = &H20 ' Kleinbuchstabe i.
+            J = &H74 ' Großbuchstabe J.
+            L = &H52 ' Großbuchstabe L.
+            N = &H38 ' Großbuchstabe N.
+            o = &H78 ' Kleinbuchstabe o.
+            P = &H1F ' Großbuchstabe P.
+            Q = &H2F ' Großbuchstabe Q.
+            R = &H18 ' Großbuchstabe R.
+            T = &H5A ' Großbuchstabe T.
+            U = &H76 ' Großbuchstabe U.
+            uField = &H70 ' Kleinbuchstabe u (abgekürzte Form / Feldbezeichnung).
+            Y = &H6E ' Großbuchstabe Y.
+            Dash = &H8 ' Bindestrich / Minuszeichen.
+            Equals = &H48 ' Gleichheitszeichen (=).
+            Degrees = &HF ' Gradzeichen (°).
+            Apostrophe = &H2 ' Apostroph (').
+            Quote = &H6 ' Anführungszeichen (").
+            RBracket = &H65 ' Rechte Klammer (]).
+            Underscore = &H40 ' Unterstrich (_).
+            Identical = &H49 ' Identisch-Zeichen (≡).
+            [Not] = &H28 ' Logisches NOT-Zeichen (¬).
 
         End Enum
 
@@ -321,6 +111,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Inaktive Segmente dunkelgrau anzeigen
+        ''' digit.InactiveColor = Color.DarkGray
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
         Public Property InactiveColor As System.Drawing.Color
@@ -336,6 +132,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Breite der LED-Segmente fest oder gibt diese zurück.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Segmentbreite auf 12 Pixel setzen
+        ''' digit.SegmentWidth = 12
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
         Public Property SegmentWidth As Integer
@@ -355,6 +157,12 @@ Namespace SevenSegmentControl
         ''' <remarks>
         ''' Standardwert ist -0,1.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Anzeige leicht nach links geneigt darstellen
+        ''' digit.ItalicFactor = -0.15F
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
         Public Property ItalicFactor As Single
@@ -373,6 +181,14 @@ Namespace SevenSegmentControl
         ''' <remarks>
         ''' Unterstützte Zeichen sind Ziffern und die meisten Buchstaben.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Ziffer 7 anzeigen
+        ''' digit.DigitValue = "7"
+        ''' ' Buchstabe A anzeigen
+        ''' digit.DigitValue = "A"
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt das anzuzeigende Zeichen fest oder gibt dieses zurück.")>
         Public Property DigitValue As String
@@ -454,6 +270,12 @@ Namespace SevenSegmentControl
         ''' <para>Dies ist ein ganzzahliger Wert, bei dem die Bits 0 bis 6 den jeweiligen
         ''' LED-Segmenten entsprechen.</para>
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Benutzerdefiniertes Muster setzen (alle Segmente an)
+        ''' digit.CustomBitPattern = &H7F
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten angezeigt werden soll.")>
         Public Property CustomBitPattern As Integer
@@ -469,6 +291,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Gibt an, ob die Dezimalpunkt-LED angezeigt wird.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Dezimalpunkt sichtbar machen
+        ''' digit.ShowDecimalPoint = True
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
         Public Property ShowDecimalPoint As Boolean
@@ -484,6 +312,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Gibt an, ob die Dezimalpunkt-LED aktiv ist.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Dezimalpunkt einschalten
+        ''' digit.DecimalPointActive = True
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED aktiv ist.")>
         Public Property DecimalPointActive As Boolean
@@ -499,6 +333,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Gibt an, ob die Doppelpunkt-LEDs angezeigt werden.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Doppelpunkt anzeigen
+        ''' digit.ShowColon = True
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob die Doppelpunkt-LEDs angezeigt werden.")>
         Public Property ShowColon As Boolean
@@ -514,6 +354,12 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Gibt an, ob die Doppelpunkt-LEDs aktiv sind.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Doppelpunkt einschalten
+        ''' digit.ColonActive = True
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob die Doppelpunkt-LEDs aktiv sind.")>
         Public Property ColonActive As Boolean
@@ -530,6 +376,12 @@ Namespace SevenSegmentControl
         ''' Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.
         ''' </summary>
         ''' <returns>Aktuelle Hintergrundfarbe.</returns>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Hintergrundfarbe auf Schwarz setzen
+        ''' digit.BackColor = Color.Black
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
         Public Overrides Property BackColor As System.Drawing.Color
@@ -546,6 +398,12 @@ Namespace SevenSegmentControl
         ''' Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.
         ''' </summary>
         ''' <returns>Aktuelle Segment-Vordergrundfarbe.</returns>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Aktive Segmentfarbe auf Grün setzen
+        ''' digit.ForeColor = Color.Green
+        ''' ]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
         Public Overrides Property ForeColor As System.Drawing.Color
@@ -635,6 +493,17 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Initialisiert eine neue Instanz der <see cref="SingleDigit"/>-Klasse.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[
+        ''' ' Neues SingleDigit-Control erzeugen und konfigurieren
+        ''' Dim digit As New SevenSegmentControl.SingleDigit()
+        ''' digit.DigitValue = "9"
+        ''' digit.ShowDecimalPoint = True
+        ''' digit.DecimalPointActive = False
+        ''' digit.ShowColon = True
+        ''' digit.ColonActive = True
+        ''' ]]></code>
+        ''' </example>
         Public Sub New()
             Me.SuspendLayout()
             Me.Name = "SevSegSingleDigit"
@@ -650,15 +519,21 @@ Namespace SevenSegmentControl
             Me.CalculatePoints(Me._SegmentPoints, Me._DigitHeight, Me._DigitWidth, Me._SegmentWidth)
         End Sub
 
+        ''' <summary>
+        ''' <para>Gibt nicht verwaltete Ressourcen frei und führt weitere
+        ''' Bereinigungsvorgänge durch, </para>
+        ''' <para>bevor <see cref="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit"/>
+        ''' durch die Garbage Collection zurückgefordert wird.</para>
+        ''' </summary>
+        Protected Overrides Sub Finalize()
+            MyBase.Finalize()
+        End Sub
+
 #End Region
 
 #Region "interne Methoden"
 
-        ''' <summary>
-        ''' Tritt ein, wenn das Steuerelement neu gezeichnet wird.
-        ''' </summary>
-        ''' <param name="sender">Ereignisquelle.</param>
-        ''' <param name="e">Paint-Argumente mit Grafikobjekt.</param>
+        ' Tritt ein, wenn das Steuerelement neu gezeichnet wird.
         Private Sub SevSegsingleDigit_Paint(sender As Object, e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
             Dim useValue = Me._CustomBitPattern
             Dim brushLight As System.Drawing.Brush = New System.Drawing.SolidBrush(Me._ForeColor)
@@ -689,14 +564,12 @@ Namespace SevenSegmentControl
             e.Graphics.EndContainer(containerState)
         End Sub
 
-        ''' <summary>
-        ''' Zeichnet die Segmente basierend auf den gesetzten Bits im Bitmuster.
-        ''' </summary>
-        ''' <param name="e">Paint-Ereignisargumente mit Grafik.</param>
-        ''' <param name="BitPattern">Bitmaske (Bit0..Bit6) für die 7 Segmente.</param>
-        ''' <param name="BrushLight">Pinsel für aktive Segmente.</param>
-        ''' <param name="BrushDark">Pinsel für inaktive Segmente.</param>
-        ''' <param name="SegmentPoints">Polygonpunkte je Segment.</param>
+        ' Zeichnet die Segmente basierend auf den gesetzten Bits im Bitmuster.
+        ' e: Paint-Ereignisargumente mit Grafik.
+        ' BitPattern: Bitmaske (Bit0..Bit6) für die 7 Segmente.
+        ' BrushLight: Pinsel für aktive Segmente.
+        ' BrushDark: Pinsel für inaktive Segmente.
+        ' SegmentPoints: Polygonpunkte je Segment.
         Private Sub PaintSegments(e As System.Windows.Forms.PaintEventArgs, BitPattern As Integer, BrushLight As System.Drawing.Brush, BrushDark As System.Drawing.Brush, ByRef SegmentPoints As System.Drawing.Point()())
             e.Graphics.FillPolygon(If((BitPattern And &H1) = &H1, BrushLight, BrushDark), SegmentPoints(0))
             e.Graphics.FillPolygon(If((BitPattern And &H2) = &H2, BrushLight, BrushDark), SegmentPoints(1))
@@ -707,13 +580,11 @@ Namespace SevenSegmentControl
             e.Graphics.FillPolygon(If((BitPattern And &H40) = &H40, BrushLight, BrushDark), SegmentPoints(6))
         End Sub
 
-        ''' <summary>
-        ''' Berechnet die Polygonpunkte für alle sieben Segmente bei Initialisierung oder Segmentbreitenänderung.
-        ''' </summary>
-        ''' <param name="SegmentCornerPoints">Zielarray mit Punktdaten für die Segmente.</param>
-        ''' <param name="DigitHeight">Virtuelle Höhe der Ziffer.</param>
-        ''' <param name="DigitWidth">Virtuelle Breite der Ziffer.</param>
-        ''' <param name="SegmentWidth">Breite (Dicke) eines Segments.</param>
+        ' Berechnet die Polygonpunkte für alle sieben Segmente bei Initialisierung oder Segmentbreitenänderung.
+        ' SegmentCornerPoints: Zielarray mit Punktdaten für die Segmente.
+        ' DigitHeight: Virtuelle Höhe der Ziffer.
+        ' DigitWidth: Virtuelle Breite der Ziffer.
+        ' SegmentWidth: Breite (Dicke) eines Segments.
         Private Sub CalculatePoints(ByRef SegmentCornerPoints As System.Drawing.Point()(), DigitHeight As Integer, DigitWidth As Integer, SegmentWidth As Integer)
             Dim halfHeight As Integer = CInt(DigitHeight / 2)
             Dim halfWidth As Integer = CInt(SegmentWidth / 2)
@@ -810,50 +681,24 @@ Namespace SevenSegmentControl
             SegmentCornerPoints(p)(5).Y = DigitHeight - halfWidth
         End Sub
 
-        ''' <summary>
-        ''' Tritt beim Ändern der Größe des Steuerelements ein und invalidiert die Anzeige.
-        ''' </summary>
-        ''' <param name="sender">Ereignisquelle.</param>
-        ''' <param name="e">Argumente zum Resize-Ereignis.</param>
+        ' Tritt beim Ändern der Größe des Steuerelements ein und invalidiert die Anzeige.
         Private Sub SevSegSingleDigit_Resize(sender As Object, e As System.EventArgs) Handles Me.Resize
             Me.Invalidate()
         End Sub
 
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' Löst das PaddingChanged-Ereignis aus und invalidiert die Anzeige.
-        ''' </summary>
-        ''' <param name="e">Ereignisargumente.</param>
+        ' Löst das PaddingChanged-Ereignis aus und invalidiert die Anzeige.
         Protected Overrides Sub OnPaddingChanged(e As System.EventArgs)
             MyBase.OnPaddingChanged(e)
             Me.Invalidate()
         End Sub
 
-        ''' <summary>
-        ''' Zeichnet den Hintergrund des Steuerelements (überschreibt Standardverhalten).
-        ''' </summary>
-        ''' <param name="e">Paint-Argumente.</param>
+        ' Zeichnet den Hintergrund des Steuerelements (überschreibt Standardverhalten).
         Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
             'MyBase.OnPaintBackground(e)
             e.Graphics.Clear(Me._BackgroundColor)
         End Sub
 
-        ''' <summary>
-        ''' <para>Gibt nicht verwaltete Ressourcen frei und führt weitere
-        ''' Bereinigungsvorgänge durch, </para>
-        ''' <para>bevor <see cref="SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit"/>
-        ''' durch die Garbage Collection zurückgefordert wird.</para>
-        ''' </summary>
-        Protected Overrides Sub Finalize()
-            MyBase.Finalize()
-        End Sub
-
-        ''' <summary>
-        ''' Initialisiert Komponenten des Steuerelements (Designer-Unterstützung).
-        ''' </summary>
+        ' Initialisiert Komponenten des Steuerelements (Designer-Unterstützung).
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             Me.ResumeLayout(False)

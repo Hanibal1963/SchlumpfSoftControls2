@@ -1235,5 +1235,157 @@ Initialisiert eine neue Instanz der <see cref="NotifyForm" /> Klasse mit Standar
       <summary>
 Zeigt das Meldungsfenster an.</summary>
     </member>
+    <member name="N:SchlumpfSoft.Controls.SevenSegmentControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit">
+      <summary>
+Stellt ein Control dar, das mehrere Siebensegmentanzeigen enthält.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.InactiveColor">
+      <summary>
+Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.SegmentWidth">
+      <summary>
+Legt die Breite der LED-Segmente fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ItalicFactor">
+      <summary>
+Scherkoeffizient für die Kursivschrift der Anzeige.</summary>
+      <remarks>
+Standardwert ist -0.1</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ShowDecimalPoint">
+      <summary>
+Gibt an, ob die Dezimalpunkt-LED angezeigt wird.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.DigitCount">
+      <summary>
+Anzahl der Digits in diesem Control.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.DigitPadding">
+      <summary>
+Auffüllung, die für jedes Digit im Control gilt.</summary>
+      <remarks>
+Passen Sie diese Zahlen an, um das perfekte Erscheinungsbild für das Control Ihrer Größe zu erhalten.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Value">
+      <summary>
+Der auf dem Control anzuzeigende Wert.</summary>
+      <remarks>
+Kann Zahlen, bestimmte Buchstaben und Dezimalpunkte enthalten.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackColor">
+      <summary>
+Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.ForeColor">
+      <summary>
+Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackgroundImage">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.BackgroundImageLayout">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Font">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.Text">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.RightToLeft">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit.#ctor">
+      <summary>
+Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit" />.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit">
+      <summary>
+<para>Dieses Steuerelement stellt ein einzelnes Siebensegment-LED-Display dar, </para> <para>das eine Ziffer oder einen Buchstaben anzeigt.</para></summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.InactiveColor">
+      <summary>
+Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.SegmentWidth">
+      <summary>
+Legt die Breite der LED-Segmente fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ItalicFactor">
+      <summary>
+Scherkoeffizient für die Kursivschrift der Anzeige.</summary>
+      <remarks>
+Standardwert ist -0,1.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.DigitValue">
+      <summary>
+Legt das anzuzeigende Zeichen fest oder gibt dieses zurück.</summary>
+      <remarks>
+Unterstützte Zeichen sind Ziffern und die meisten Buchstaben.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.CustomBitPattern">
+      <summary>
+<para>Legt ein benutzerdefiniertes Bitmuster fest, das in den sieben Segmenten angezeigt werden soll.</para> <para>Dies ist ein ganzzahliger Wert, bei dem die Bits 0 bis 6 den jeweiligen LED-Segmenten entsprechen.</para></summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ShowDecimalPoint">
+      <summary>
+Gibt an, ob die Dezimalpunkt-LED angezeigt wird.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.DecimalPointActive">
+      <summary>
+Gibt an, ob die Dezimalpunkt-LED aktiv ist.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ShowColon">
+      <summary>
+Gibt an, ob die Doppelpunkt-LEDs angezeigt werden.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ColonActive">
+      <summary>
+Gibt an, ob die Doppelpunkt-LEDs aktiv sind.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackColor">
+      <summary>
+Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.</summary>
+      <value>
+Aktuelle Hintergrundfarbe.</value>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.ForeColor">
+      <summary>
+Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.</summary>
+      <value>
+Aktuelle Segment-Vordergrundfarbe.</value>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackgroundImage">
+      <summary>
+Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.BackgroundImageLayout">
+      <summary>
+Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Font">
+      <summary>
+Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.Text">
+      <summary>
+Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.RightToLeft">
+      <summary>
+Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.SevenSegmentControl.SingleDigit.#ctor">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="SingleDigit" />-Klasse.</summary>
+    </member>
   </members>
 </doc>

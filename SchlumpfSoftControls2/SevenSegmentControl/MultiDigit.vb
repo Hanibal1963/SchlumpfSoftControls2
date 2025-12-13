@@ -8,6 +8,18 @@ Namespace SevenSegmentControl
     ''' <summary>
     ''' Stellt ein Control dar, das mehrere Siebensegmentanzeigen enthält.
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: MultiDigit verwenden
+    ''' Dim display As New SevenSegmentControl.MultiDigit()
+    ''' display.DigitCount = 6
+    ''' display.SegmentWidth = 12
+    ''' display.InactiveColor = System.Drawing.Color.DimGray
+    ''' display.ForeColor = System.Drawing.Color.LimeGreen
+    ''' display.ShowDecimalPoint = True
+    ''' display.Value = "12.34"
+    ''' display.Dock = System.Windows.Forms.DockStyle.Top
+    ''' Me.Controls.Add(display)]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("ClassDescriptionSevSegMultiDigit")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -16,50 +28,15 @@ Namespace SevenSegmentControl
 
 #Region "Variablen"
 
-        ''' <summary>
-        ''' Array der untergeordneten Einzelanzeigen (Digits), welche die Zeichen darstellen.
-        ''' </summary>
-        Private _Digits As SingleDigit() = Nothing
-
-        ''' <summary>
-        ''' Breite der LED-Segmente in Pixeln.
-        ''' </summary>
-        Private _SegmentWidth As Integer = 10
-
-        ''' <summary>
-        ''' Scherkoeffizient zur Simulation von Kursivschrift (negativ = nach links geneigt).
-        ''' </summary>
-        Private _ItalicFactor As Single = -0.1F
-
-        ''' <summary>
-        ''' Hintergrundfarbe des Controls.
-        ''' </summary>
-        Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray
-
-        ''' <summary>
-        ''' Farbe, mit der inaktive Segmente gezeichnet werden.
-        ''' </summary>
-        Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray
-
-        ''' <summary>
-        ''' Farbe, mit der aktive Segmente gezeichnet werden.
-        ''' </summary>
-        Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen
-
-        ''' <summary>
-        ''' Gibt an, ob der Dezimalpunkt pro Digit sichtbar sein kann.
-        ''' </summary>
-        Private _ShowDecimalPoint As Boolean = True
-
-        ''' <summary>
-        ''' Innenabstand (Padding), der für jedes Digit angewendet wird.
-        ''' </summary>
-        Private _DigitPadding As System.Windows.Forms.Padding
-
-        ''' <summary>
-        ''' Der aktuell darzustellende Textwert.
-        ''' </summary>
-        Private _Value As String = Nothing
+        Private _Digits As SingleDigit() = Nothing ' Array der untergeordneten Einzelanzeigen (Digits), welche die Zeichen darstellen.
+        Private _SegmentWidth As Integer = 10 ' Breite der LED-Segmente in Pixeln.
+        Private _ItalicFactor As Single = -0.1F ' Scherkoeffizient zur Simulation von Kursivschrift (negativ = nach links geneigt).
+        Private _BackgroundColor As System.Drawing.Color = System.Drawing.Color.LightGray ' Hintergrundfarbe des Controls.
+        Private _InactiveColor As System.Drawing.Color = System.Drawing.Color.DarkGray ' Farbe, mit der inaktive Segmente gezeichnet werden.
+        Private _ForeColor As System.Drawing.Color = System.Drawing.Color.DarkGreen ' Farbe, mit der aktive Segmente gezeichnet werden.
+        Private _ShowDecimalPoint As Boolean = True ' Gibt an, ob der Dezimalpunkt pro Digit sichtbar sein kann.
+        Private _DigitPadding As System.Windows.Forms.Padding ' Innenabstand (Padding), der für jedes Digit angewendet wird.
+        Private _Value As String = Nothing ' Der aktuell darzustellende Textwert.
 
 #End Region
 
@@ -68,6 +45,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Inaktive Farbe setzen
+        ''' display.InactiveColor = System.Drawing.Color.DarkGray]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Farbe inaktiver Segmente fest oder gibt diese zurück.")>
         Public Property InactiveColor As System.Drawing.Color
@@ -83,6 +64,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Breite der LED-Segmente fest oder gibt diese zurück.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Segmentbreite anpassen
+        ''' display.SegmentWidth = 14]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Breite der LED-Segmente fest oder gibt diese zurück.")>
         Public Property SegmentWidth As Integer
@@ -101,6 +86,10 @@ Namespace SevenSegmentControl
         ''' <remarks>
         ''' Standardwert ist -0.1
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Kursivfaktor ändern (negativ neigt nach links)
+        ''' display.ItalicFactor = -0.2F]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Scherkoeffizient für die Kursivschrift der Anzeige.")>
         Public Property ItalicFactor As Single
@@ -116,6 +105,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Gibt an, ob die Dezimalpunkt-LED angezeigt wird.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Dezimalpunktanzeige aktivieren/deaktivieren
+        ''' display.ShowDecimalPoint = True]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Gibt an, ob die Dezimalpunkt-LED angezeigt wird.")>
         Public Property ShowDecimalPoint As Boolean
@@ -131,6 +124,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Anzahl der Digits in diesem Control.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Anzahl der Stellen setzen
+        ''' display.DigitCount = 8]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Anzahl der Digits in diesem Control.")>
         Public Property DigitCount As Integer
@@ -149,6 +146,10 @@ Namespace SevenSegmentControl
         ''' Passen Sie diese Zahlen an, um das perfekte Erscheinungsbild für das Control
         ''' Ihrer Größe zu erhalten.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Innenabstand der Digits festlegen
+        ''' display.DigitPadding = New System.Windows.Forms.Padding(8, 4, 8, 4)]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Auffüllung, die für jedes Digit im Control gilt.")>
         Public Property DigitPadding As System.Windows.Forms.Padding
@@ -162,11 +163,16 @@ Namespace SevenSegmentControl
         End Property
 
         ''' <summary>
-        ''' Der auf dem Control anzuzeigende Wert. 
+        ''' Der auf dem Control anzuzeigende Wert.
         ''' </summary>
         ''' <remarks>
         ''' Kann Zahlen, bestimmte Buchstaben und Dezimalpunkte enthalten.
         ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Wert für die Anzeige setzen
+        ''' display.Value = "HELLO"
+        ''' display.Value = "3.1415"]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Der auf dem Control anzuzeigende Wert.")>
         Public Property Value As String
@@ -196,7 +202,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <example>
+        ''' <code><![CDATA[' Hintergrundfarbe setzen
+        ''' display.BackColor = System.Drawing.Color.Black]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Hintergrundfarbe des Controls fest oder gibt diese zurück.")>
         Public Overrides Property BackColor As System.Drawing.Color
@@ -212,7 +221,10 @@ Namespace SevenSegmentControl
         ''' <summary>
         ''' Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <example>
+        ''' <code><![CDATA[' Vordergrundfarbe setzen
+        ''' display.ForeColor = System.Drawing.Color.Red]]></code>
+        ''' </example>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Vordergrundfarbe der Segmente des Controls fest oder gibt diese zurück.")>
         Public Overrides Property ForeColor As System.Drawing.Color
@@ -267,6 +279,9 @@ Namespace SevenSegmentControl
             End Set
         End Property
 
+        ''' <summary>
+        ''' ausgeblendet da nicht relevant.
+        ''' </summary>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Text As String
@@ -297,8 +312,16 @@ Namespace SevenSegmentControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit"/>.
+        ''' Initialisiert eine neue Instanz von <see
+        ''' cref="SchlumpfSoft.Controls.SevenSegmentControl.MultiDigit"/>.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Instanz erstellen und konfigurieren
+        ''' Dim display As New SevenSegmentControl.MultiDigit()
+        ''' display.DigitCount = 4
+        ''' display.Value = "1234"
+        ''' Me.Controls.Add(display)]]></code>
+        ''' </example>
         Public Sub New()
             Me.SuspendLayout()
             Me.Name = "SevSegMultiDigit"
@@ -314,13 +337,7 @@ Namespace SevenSegmentControl
 
 #Region "interne Methoden"
 
-        ''' <summary>
-        ''' <para>Ändert die Anzahl der Elemente im LED-Array. </para>
-        ''' <para>Dadurch werden die vorherigen Elemente zerstört und an ihrer Stelle neue
-        ''' erstellt, </para>
-        ''' <para>wobei alle aktuellen Optionen auf die neuen angewendet werden.</para>
-        ''' </summary>
-        ''' <param name="count">Anzahl der zu erstellenden Elemente.</param>
+        ' Erstellt die einzelnen Segmente (Digits) basierend auf der angegebenen Anzahl.
         Private Sub CreateSegments(count As Integer)
             If Me._Digits IsNot Nothing Then
                 For i = 0 To Me._Digits.Length - 1
@@ -344,10 +361,7 @@ Namespace SevenSegmentControl
             Me.Value = Me._Value
         End Sub
 
-        ''' <summary>
-        ''' Richtet die Elemente des Arrays so aus, dass sie genau in die Breite des
-        ''' übergeordneten Steuerelements passen.
-        ''' </summary>
+        ' Passt die Größe und Position der einzelnen Segmente basierend auf der Gesamtgröße des MultiDigit-Controls an.
         Private Sub ResizeSegments()
             Dim segWidth As Integer = CInt(Me.Width / Me._Digits.Length)
             For i = 0 To Me._Digits.Length - 1
@@ -356,9 +370,7 @@ Namespace SevenSegmentControl
             Next
         End Sub
 
-        ''' <summary>
-        ''' Aktualisiert die Eigenschaften jedes Elements mit den Eigenschaften.
-        ''' </summary>
+        ' Aktualisiert die Eigenschaften aller Segmente basierend auf den aktuellen Einstellungen des MultiDigit-Controls.
         Private Sub UpdateSegments()
             For i = 0 To Me._Digits.Length - 1
                 Me._Digits(i).BackColor = Me._BackgroundColor
@@ -371,31 +383,12 @@ Namespace SevenSegmentControl
             Next
         End Sub
 
-        ''' <summary>
-        ''' Wird ausgeführt wenn die Größe des Controls geändert wird.
-        ''' </summary>
-        ''' <param name="sender">Auslösendes Objekt.</param>
-        ''' <param name="e">Ereignisdaten der Größenänderung.</param>
+        ' Reagiert auf Größenänderungen des MultiDigit-Controls und ruft ResizeSegments() auf, um die Digits neu zu verteilen.
         Private Sub SevSegMultiDigit_Resize(sender As Object, e As System.EventArgs)
             Me.ResizeSegments()
         End Sub
 
-        ''' <summary>
-        ''' Initialisierungsmethode, die vom Designer verwendet wird.
-        ''' </summary>
-        Private Sub InitializeComponent()
-            Me.SuspendLayout()
-            Me.ResumeLayout(False)
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' Zeichnet den Hintergrund des Steuerelements in der festgelegten Hintergrundfarbe.
-        ''' </summary>
-        ''' <param name="e">Zeicheninformationen für das Hintergrundrendering.</param>
+        ' Zeichnet den Hintergrund des Steuerelements in der festgelegten Hintergrundfarbe.
         Protected Overrides Sub OnPaintBackground(e As System.Windows.Forms.PaintEventArgs)
             e.Graphics.Clear(Me._BackgroundColor)
         End Sub
