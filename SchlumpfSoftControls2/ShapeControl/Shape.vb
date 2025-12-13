@@ -8,6 +8,19 @@ Namespace ShapeControl
     ''' <summary>
     ''' Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
     ''' </summary>
+    ''' <example>
+    ''' <code><![CDATA[' Beispiel: Verwendung des Shape-Control in einem Formular
+    ''' Dim shp As New ShapeControl.Shape()
+    ''' shp.Width = 200
+    ''' shp.Height = 100
+    ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.FilledRectangle
+    ''' shp.LineWidth = 3
+    ''' shp.LineColor = System.Drawing.Color.DarkBlue
+    ''' shp.FillColor = System.Drawing.Color.LightBlue
+    ''' shp.DiagonalLineModus = ShapeControl.Shape.DiagonalLineModes.TopLeftToBottomRight
+    ''' shp.Location = New System.Drawing.Point(10, 10)
+    ''' Me.Controls.Add(shp)]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -16,35 +29,12 @@ Namespace ShapeControl
 
 #Region "Variablen"
 
-        ''' <summary>
-        ''' Container für Komponenten, die von diesem Control verwendet werden.
-        ''' </summary>
-        Private ReadOnly components As System.ComponentModel.IContainer
-
-        ''' <summary>
-        ''' Speichert den aktuell gesetzten Modus (Formtyp), der gezeichnet werden soll.
-        ''' </summary>
-        Private _ShapeModus As ShapeModes
-
-        ''' <summary>
-        ''' Speichert die Linienbreite für Linie oder Rahmen.
-        ''' </summary>
-        Private _LineWidth As Single
-
-        ''' <summary>
-        ''' Speichert die Farbe der Linie oder Rahmenlinie.
-        ''' </summary>
-        Private _LineColor As System.Drawing.Color
-
-        ''' <summary>
-        ''' Speichert die Füllfarbe für Rechteck oder Ellipse, sofern gefüllte Formen gewählt wurden.
-        ''' </summary>
-        Private _FillColor As System.Drawing.Color
-
-        ''' <summary>
-        ''' Speichert die Richtung der diagonalen Linie.
-        ''' </summary>
-        Private _DiagonalLineModus As DiagonalLineModes
+        Private ReadOnly components As System.ComponentModel.IContainer ' Container für Komponenten, die von diesem Control verwendet werden.
+        Private _ShapeModus As ShapeModes   ' Speichert den aktuell gesetzten Modus (Formtyp), der gezeichnet werden soll.
+        Private _LineWidth As Single ' Speichert die Linienbreite für Linie oder Rahmen.
+        Private _LineColor As System.Drawing.Color ' Speichert die Farbe der Linie oder Rahmenlinie.
+        Private _FillColor As System.Drawing.Color ' Speichert die Füllfarbe für Rechteck oder Ellipse, sofern gefüllte Formen gewählt wurden.
+        Private _DiagonalLineModus As DiagonalLineModes ' Speichert die Richtung der diagonalen Linie.
 
 #End Region
 
@@ -53,6 +43,12 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt fest in welcher Richtung die diagonale Linie gezeichnet wird
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Richtung der Diagonalen setzen
+        ''' Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.DiagonalLine
+        ''' shp.DiagonalLineModus = ShapeControl.Shape.DiagonalLineModes.BottomLeftToTopRight]]></code>
+        ''' </example>
         Public Enum DiagonalLineModes
 
             ''' <summary>
@@ -70,6 +66,13 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt fest welche Form gezeichnet wird
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Auswahl der zu zeichnenden Form
+        ''' Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.Ellipse
+        ''' shp.LineColor = System.Drawing.Color.Red
+        ''' shp.LineWidth = 2]]></code>
+        ''' </example>
         Public Enum ShapeModes
 
             ''' <summary>
@@ -117,7 +120,13 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt die anzuzeigende Form fest oder gibt diese zurück.
         ''' </summary>
-        ''' <value>Ein Wert aus <see cref="ShapeModes"/> der die Form bestimmt.</value>
+        ''' <value>
+        ''' Ein Wert aus <see cref="ShapeModes"/> der die Form bestimmt.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.Rectangle]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die anzuzeigende Form fest oder gibt diese zurück.")>
@@ -134,7 +143,13 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt die Breite der Linie oder Rahmenlinie fest oder gibt diese zurück.
         ''' </summary>
-        ''' <value>Die Breite der Linie in Pixeln.</value>
+        ''' <value>
+        ''' Die Breite der Linie in Pixeln.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[Dim shp As New ShapeControl.Shape()
+        ''' shp.LineWidth = 5.0F]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Breite der Linie oder Rahmenlinie fest oder gibt diese zurück.")>
@@ -151,7 +166,13 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt die Farbe der Linie oder Rahmenlinie fest oder gibt diese zurück.
         ''' </summary>
-        ''' <value>Eine <see cref="System.Drawing.Color"/> Instanz für die Linienfarbe.</value>
+        ''' <value>
+        ''' Eine <see cref="System.Drawing.Color"/> Instanz für die Linienfarbe.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[Dim shp As New ShapeControl.Shape()
+        ''' shp.LineColor = System.Drawing.Color.Green]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Farbe der Linie oder Rahmenlinie fest oder gibt diese zurück.")>
@@ -168,7 +189,14 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt die Füllfarbe für die Form fest oder gibt diese zurück.
         ''' </summary>
-        ''' <value>Eine <see cref="System.Drawing.Color"/> Instanz für die Füllung.</value>
+        ''' <value>
+        ''' Eine <see cref="System.Drawing.Color"/> Instanz für die Füllung.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.FilledEllipse
+        ''' shp.FillColor = System.Drawing.Color.Orange]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt die Füllfarbe für die Form fest oder gibt diese zurück.")>
@@ -186,7 +214,14 @@ Namespace ShapeControl
         ''' Legt fest ob eine diagonale Linie von links oben nach rechts unten oder
         ''' umgekehrt verläuft oder gibt dieses zurück.
         ''' </summary>
-        ''' <value>Ein Wert aus <see cref="DiagonalLineModes"/> zur Bestimmung der Richtung.</value>
+        ''' <value>
+        ''' Ein Wert aus <see cref="DiagonalLineModes"/> zur Bestimmung der Richtung.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.DiagonalLine
+        ''' shp.DiagonalLineModus = ShapeControl.Shape.DiagonalLineModes.TopLeftToBottomRight]]></code>
+        ''' </example>
         <System.ComponentModel.Browsable(True)>
         <System.ComponentModel.Category("Appearance")>
         <System.ComponentModel.Description("Legt fest ob eine diagonale Linie von links oben nach rechts unten oder umgekehrt verläuft oder gibt dieses zurück.")>
@@ -203,15 +238,27 @@ Namespace ShapeControl
         ''' <summary>
         ''' Legt spezielle Parameter für das ShapeControl fest.
         ''' </summary>
-        ''' <returns>Ein <see cref="System.Windows.Forms.CreateParams"/> Objekt mit erweiterten Stil-Flags.</returns>
         ''' <remarks>
-        ''' https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form
+        ''' <para><b></b></para>
+        ''' <b>  </b><para>Das Setzen von <c>WS_EX_TRANSPARENT</c> sorgt dafür, dass der Hintergrund des Eltern-Steuerelements durchscheint.</para>
+        ''' <b>  </b><para><b>Weitere Infos unter:<br/>
+        ''' </b><see
+        ''' href="https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form"/><br/>
+        ''' und<br/>
+        ''' <see
+        ''' href="https://learn.microsoft.com/de-de/windows/win32/winmsg/extended-window-styles"/><br/>
+        ''' </para>
+        ''' <b>  </b><para></para>
         ''' </remarks>
+        ''' <value>
+        ''' Ein <see cref="System.Windows.Forms.CreateParams"/> Objekt mit erweiterten
+        ''' Stil-Flags.
+        ''' </value>
         Protected Overrides ReadOnly Property CreateParams() As System.Windows.Forms.CreateParams
             Get
                 Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
-                'WS EX TRANSPARENT aktivieren
-                'https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles
+                ' WS EX TRANSPARENT aktivieren
+                ' https://learn.microsoft.com/de-de/windows/win32/winmsg/extended-window-styles
                 cp.ExStyle = cp.ExStyle Or &H20
                 Return cp
             End Get
@@ -220,7 +267,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Die Hintergrundfarbe des Controls.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property BackColor As System.Drawing.Color
@@ -235,7 +281,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Das Hintergrundbild des Controls.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImage As System.Drawing.Image
@@ -250,7 +295,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Das Layout des Hintergrundbildes.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property BackgroundImageLayout As System.Windows.Forms.ImageLayout
@@ -265,7 +309,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Die Schriftart für das Control.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Font As System.Drawing.Font
@@ -280,7 +323,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Die Vordergrundfarbe des Controls.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property ForeColor As System.Drawing.Color
@@ -295,7 +337,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Die Schreibrichtung.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property RightToLeft As System.Windows.Forms.RightToLeft
@@ -310,7 +351,6 @@ Namespace ShapeControl
         ''' <summary>
         ''' ausgeblendet da nicht relevant.
         ''' </summary>
-        ''' <value>Der Text des Controls.</value>
         <System.ComponentModel.Browsable(False)>
         <System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>
         Public Overrides Property Text As String
@@ -327,9 +367,19 @@ Namespace ShapeControl
 #Region "öffentliche Methoden"
 
         ''' <summary>
-        ''' Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ShapeControl.Shape"/>. 
+        ''' Initialisiert eine neue Instanz von <see
+        ''' cref="SchlumpfSoft.Controls.ShapeControl.Shape"/>.
         ''' </summary>
-        ''' <remarks>Richtet Standardwerte und Zeichenstile ein.</remarks>
+        ''' <remarks>
+        ''' Richtet Standardwerte und Zeichenstile ein.
+        ''' </remarks>
+        ''' <example>
+        ''' <code><![CDATA[' Beispiel: Instanziierung und Grundkonfiguration
+        ''' Dim shp As New ShapeControl.Shape()
+        ''' shp.ShapeModus = ShapeControl.Shape.ShapeModes.HorizontalLine
+        ''' shp.LineWidth = 2
+        ''' shp.LineColor = System.Drawing.Color.Black]]></code>
+        ''' </example>
         Public Sub New()
             'Dieser Aufruf ist für den Designer erforderlich.
             Me.InitializeComponent()
@@ -338,13 +388,35 @@ Namespace ShapeControl
             Me.InitializeStyles()
         End Sub
 
+        ''' <summary>
+        ''' Gibt die vom <see cref="SchlumpfSoft.Controls.ShapeControl.Shape"/> verwendeten
+        ''' nicht verwalteten Ressourcen frei und gibt optional die verwalteten Ressourcen
+        ''' frei.
+        ''' </summary>
+        ''' <param name="disposing">Wenn auf <see langword="true"/> gesetzt, dann werden
+        ''' verwaltete und nicht verwaltete Ressourcen freigegeben, andernfalls nur nicht
+        ''' verwaltete Ressourcen.</param>
+        ''' <example>
+        ''' <code><![CDATA[Using shp As New ShapeControl.Shape()
+        '''     shp.ShapeModus = ShapeControl.Shape.ShapeModes.Rectangle
+        ''' End Using ' Dispose wird automatisch aufgerufen]]></code>
+        ''' </example>
+        <System.Diagnostics.DebuggerNonUserCode()>
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            Try
+                If disposing AndAlso Me.components IsNot Nothing Then
+                    Me.components.Dispose()
+                End If
+            Finally
+                MyBase.Dispose(disposing)
+            End Try
+        End Sub
+
 #End Region
 
 #Region "interne Methoden"
 
-        ''' <summary>
-        ''' Initialisiert die Standardwerte für das ShapeControl.
-        ''' </summary>
+        ' Initialisiert die Standardwerte für das ShapeControl.
         Private Sub InitializeVariables()
             Me._ShapeModus = ShapeModes.HorizontalLine 'Horizontale Linie
             Me._DiagonalLineModus = DiagonalLineModes.TopLeftToBottomRight 'diagonale Linie von links oben nach rechts unten
@@ -353,36 +425,23 @@ Namespace ShapeControl
             Me._FillColor = System.Drawing.Color.Gray 'Füllfarbe für Ellipse und Rechteck
         End Sub
 
-        ''' <summary>
-        ''' Initialisiert die Styles für das ShapeControl.
-        ''' </summary>
+        ' Initialisiert die Styles für das ShapeControl.
         Private Sub InitializeStyles()
             Me.SetStyle(System.Windows.Forms.ControlStyles.Opaque, True)
             Me.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, False)
         End Sub
 
-        ''' <summary>
-        ''' <para>Die folgende Prozedur ist für den Komponenten-Designer erforderlich.</para>
-        ''' <para>Sie kann mit dem Komponenten-Designer geändert werden.</para>
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Hinweis:</para>
-        ''' <para>Das Bearbeiten mit dem Code-Editor ist nicht möglich.</para>
-        ''' </remarks>
+        ' Die folgende Prozedur ist für den Komponenten-Designer erforderlich.
+        ' Sie kann mit dem Komponenten-Designer geändert werden.
+        ' Hinweis:
+        ' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.SuspendLayout()
             Me.ResumeLayout(False)
         End Sub
 
-#End Region
-
-#Region "überschriebene Methoden"
-
-        ''' <summary>
-        ''' zeichnet das ShapeControl neu.
-        ''' </summary>
-        ''' <param name="e">Ein <see cref="System.Windows.Forms.PaintEventArgs"/>, das die Ereignisdaten enthält.</param>
+        ' zeichnet das ShapeControl neu.
         Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
             MyBase.OnPaint(e)
             Dim g As System.Drawing.Graphics = Me.CreateGraphics()
@@ -409,21 +468,6 @@ Namespace ShapeControl
                     g.DrawEllipse(New System.Drawing.Pen(Me._LineColor, Me._LineWidth), Me._LineWidth / 2, Me._LineWidth / 2, Me.Width - Me._LineWidth, Me.Height - Me._LineWidth)
                     g.FillEllipse(New System.Drawing.SolidBrush(Me._FillColor), Me._LineWidth, Me._LineWidth, Me.Width - (2 * Me._LineWidth), Me.Height - (2 * Me._LineWidth))
             End Select
-        End Sub
-
-        ''' <summary>
-        ''' Gibt die vom <see cref="SchlumpfSoft.Controls.ShapeControl.Shape"/> verwendeten nicht verwalteten Ressourcen frei und gibt optional die verwalteten Ressourcen frei.
-        ''' </summary>
-        ''' <param name="disposing">Wenn auf <see langword="true"/> gesetzt, dann werden verwaltete und nicht verwaltete Ressourcen freigegeben, andernfalls nur nicht verwaltete Ressourcen.</param>
-        <System.Diagnostics.DebuggerNonUserCode()>
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            Try
-                If disposing AndAlso Me.components IsNot Nothing Then
-                    Me.components.Dispose()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
         End Sub
 
 #End Region

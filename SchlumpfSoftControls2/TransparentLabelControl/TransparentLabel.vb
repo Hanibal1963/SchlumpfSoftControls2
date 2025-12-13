@@ -8,6 +8,37 @@ Namespace TransparentLabelControl
     ''' <summary>
     ''' Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
     ''' </summary>
+    ''' <remarks>
+    ''' Dieses Label nutzt den erweiterten Fensterstil <c>WS_EX_TRANSPARENT</c>, um den Hintergrund transparent erscheinen zu lassen.
+    ''' </remarks>
+    ''' <example>
+    ''' <code><![CDATA[' Verwendung von TransparentLabel in einem Formular
+    ''' Public Class MainForm
+    '''     Inherits Form
+    '''  
+    '''     Private ReadOnly _lbl As New TransparentLabelControl.TransparentLabel With {
+    '''         .Text = "Durchscheinender Text",
+    '''         .AutoSize = True,
+    '''         .ForeColor = Color.DarkBlue,
+    '''         .Location = New Point(20, 20)
+    '''     }
+    '''  
+    '''     Public Sub New()
+    '''         Me.Text = "Demo TransparentLabel"
+    '''         Me.ClientSize = New Size(400, 200)
+    '''  
+    '''         ' Hintergrund eines übergeordneten Controls sichtbar machen
+    '''         Dim panel As New Panel With {
+    '''             .Dock = DockStyle.Fill,
+    '''             .BackgroundImage = Image.FromFile("background.jpg"),
+    '''             .BackgroundImageLayout = ImageLayout.Stretch
+    '''         }
+    '''  
+    '''         panel.Controls.Add(_lbl)
+    '''         Me.Controls.Add(panel)
+    '''     End Sub
+    ''' End Class]]></code>
+    ''' </example>
     <ProvideToolboxControl("SchlumpfSoft Controls", False)>
     <System.ComponentModel.Description("Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.")>
     <System.ComponentModel.ToolboxItem(True)>
@@ -16,10 +47,7 @@ Namespace TransparentLabelControl
 
 #Region "Variablendefinition"
 
-        ''' <summary>
-        ''' Container für verwaltete Komponenten dieses Steuerelements.
-        ''' </summary>
-        Private components As System.ComponentModel.IContainer
+        Private components As System.ComponentModel.IContainer ' Container für verwaltete Komponenten dieses Steuerelements.
 
 #End Region
 
@@ -82,9 +110,42 @@ Namespace TransparentLabelControl
         End Property
 
         ''' <summary>
-        ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
+        ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die
+        ''' Transparenz.
         ''' </summary>
-        ''' <returns>Die angepassten <see cref="CreateParams"/> mit aktiviertem WS_EX_TRANSPARENT-Stil.</returns>
+        ''' <remarks>
+        ''' <para>Das Setzen von <c>WS_EX_TRANSPARENT</c> sorgt dafür, dass der Hintergrund des Eltern-Steuerelements durchscheint.</para>
+        ''' <para><b>Weitere Infos unter:</b><br/>
+        ''' <see
+        ''' href="https://stackoverflow.com/questions/511320/transparent-control-backgrounds-on-a-vb-net-gradient-filled-form"/><br/>
+        ''' und<br/>
+        ''' <see
+        ''' href="https://learn.microsoft.com/de-de/windows/win32/winmsg/extended-window-styles"/></para>
+        ''' </remarks>
+        ''' <value>
+        ''' Die angepassten <see cref="CreateParams"/> mit aktiviertem
+        ''' WS_EX_TRANSPARENT-Stil.
+        ''' </value>
+        ''' <example>
+        ''' <code><![CDATA[' CreateParams ist schreibgeschützt; Beispiel zeigt, wie die Transparenz wirkt:
+        ''' Dim form As New Form() With {.ClientSize = New Size(300, 150)}
+        ''' Dim panel As New Panel() With {
+        '''     .Dock = DockStyle.Fill,
+        '''     .BackgroundImage = Image.FromFile("background.jpg"),
+        '''     .BackgroundImageLayout = ImageLayout.Stretch
+        ''' }
+        '''  
+        ''' Dim lbl As New TransparentLabelControl.TransparentLabel() With {
+        '''     .Text = "Transparent",
+        '''     .AutoSize = True,
+        '''     .ForeColor = Color.White,
+        '''     .Location = New Point(10, 10)
+        ''' }
+        '''  
+        ''' panel.Controls.Add(lbl)
+        ''' form.Controls.Add(panel)
+        ''' form.Show()]]></code>
+        ''' </example>
         Protected Overrides ReadOnly Property CreateParams As System.Windows.Forms.CreateParams
             Get
                 Dim cp As System.Windows.Forms.CreateParams = MyBase.CreateParams
@@ -101,6 +162,17 @@ Namespace TransparentLabelControl
         ''' <summary>
         ''' Initialisiert eine neue Instanz der <see cref="TransparentLabel"/>-Klasse.
         ''' </summary>
+        ''' <example>
+        ''' <code><![CDATA[' Instanziierung und Grundkonfiguration
+        ''' Dim lbl As New TransparentLabelControl.TransparentLabel() With {
+        '''     .Text = "Hallo Welt",
+        '''     .AutoSize = True,
+        '''     .ForeColor = Color.Black
+        ''' }
+        '''  
+        ''' ' In ein Formular oder Panel einfügen
+        ''' Me.Controls.Add(lbl)]]></code>
+        ''' </example>
         Public Sub New()
             'Dieser Aufruf ist für den Designer erforderlich.
             Me.InitializeComponent()
@@ -108,41 +180,21 @@ Namespace TransparentLabelControl
             Me.InitializeStyles()
         End Sub
 
-#End Region
-
-#Region "interne Methoden"
-
-        ''' <summary>
-        ''' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
-        ''' </summary>
-        Private Sub InitializeStyles()
-            Me.SetStyle(System.Windows.Forms.ControlStyles.Opaque, True)
-            Me.SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, True)
-            Me.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, False)
-        End Sub
-
-        ''' <summary>
-        ''' Initialisiert die Komponenten des Steuerelements.
-        ''' </summary>
-        ''' <remarks>
-        ''' <para>Die folgende Prozedur ist für den Komponenten-Designer
-        ''' erforderlich.</para>
-        ''' <para>Sie kann mit dem Komponenten-Designer geändert werden.</para>
-        ''' <para>Das Bearbeiten mit dem Code-Editor ist nicht möglich.</para>
-        ''' </remarks>
-        <System.Diagnostics.DebuggerStepThrough()>
-        Private Sub InitializeComponent()
-            Me.components = New System.ComponentModel.Container()
-        End Sub
-
-#End Region
-
-#Region "überschriebene Methoden"
-
         ''' <summary>
         ''' Bereinigt die von der <see cref="TransparentLabel"/> verwendeten Ressourcen.
         ''' </summary>
-        ''' <param name="disposing">Gibt an, ob verwaltete Ressourcen freigegeben werden sollen.</param>
+        ''' <remarks>
+        ''' Bei <c>disposing = True</c> werden verwaltete Ressourcen freigegeben. Nicht verwaltete Ressourcen werden immer freigegeben.
+        ''' </remarks>
+        ''' <param name="disposing">Gibt an, ob verwaltete Ressourcen freigegeben werden
+        ''' sollen.</param>
+        ''' <example>
+        ''' <code><![CDATA[' Ordnungsgemäße Entsorgung (IDisposable-Pattern beachten)
+        ''' Using lbl As New TransparentLabelControl.TransparentLabel()
+        '''     lbl.Text = "Temporäres Label"
+        '''     ' ... Verwendung ...
+        ''' End Using ' Dispose wird automatisch aufgerufen]]></code>
+        ''' </example>
         <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
@@ -152,6 +204,26 @@ Namespace TransparentLabelControl
             Finally
                 MyBase.Dispose(disposing)
             End Try
+        End Sub
+
+#End Region
+
+#Region "interne Methoden"
+
+        ' Gibt die Erstellungsparameter für das Steuerelement zurück und aktiviert die Transparenz.
+        Private Sub InitializeStyles()
+            Me.SetStyle(System.Windows.Forms.ControlStyles.Opaque, True)
+            Me.SetStyle(System.Windows.Forms.ControlStyles.SupportsTransparentBackColor, True)
+            Me.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, False)
+        End Sub
+
+        ' Initialisiert die Komponenten des Steuerelements.
+        ' Die folgende Prozedur ist für den Komponenten-Designer erforderlich.
+        ' Sie kann mit dem Komponenten-Designer geändert werden.
+        ' Das Bearbeiten mit dem Code-Editor ist nicht möglich.
+        <System.Diagnostics.DebuggerStepThrough()>
+        Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container()
         End Sub
 
 #End Region

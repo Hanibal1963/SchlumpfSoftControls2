@@ -1387,5 +1387,137 @@ Ausgeblendet da nicht relevant für die Funktion der Anzeige.</summary>
       <summary>
 Initialisiert eine neue Instanz der <see cref="SingleDigit" />-Klasse.</summary>
     </member>
+    <member name="N:SchlumpfSoft.Controls.ShapeControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ShapeControl.Shape">
+      <summary>
+Steuerelement zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModes">
+      <summary>
+Legt fest in welcher Richtung die diagonale Linie gezeichnet wird</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModes.TopLeftToBottomRight">
+      <summary>
+von links oben nach rechts unten</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModes.BottomLeftToTopRight">
+      <summary>
+von links unten nach rechts oben</summary>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes">
+      <summary>
+Legt fest welche Form gezeichnet wird</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.HorizontalLine">
+      <summary>
+Horizontale Linie</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.VerticalLine">
+      <summary>
+Vertikale Linie</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.DiagonalLine">
+      <summary>
+diagonale Linie</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.Rectangle">
+      <summary>
+Rechteck</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.FilledRectangle">
+      <summary>
+gefülltes Rechteck</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.Ellipse">
+      <summary>
+Kreis oder Ellipse</summary>
+    </member>
+    <member name="F:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModes.FilledEllipse">
+      <summary>
+gefüllter Kreis oder gefüllte Ellipse</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.ShapeModus">
+      <summary>
+Legt die anzuzeigende Form fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.LineWidth">
+      <summary>
+Legt die Breite der Linie oder Rahmenlinie fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.LineColor">
+      <summary>
+Legt die Farbe der Linie oder Rahmenlinie fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.FillColor">
+      <summary>
+Legt die Füllfarbe für die Form fest oder gibt diese zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.DiagonalLineModus">
+      <summary>
+Legt fest ob eine diagonale Linie von links oben nach rechts unten oder umgekehrt verläuft oder gibt dieses zurück.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.BackColor">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.BackgroundImage">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.BackgroundImageLayout">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.Font">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.ForeColor">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.RightToLeft">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.ShapeControl.Shape.Text">
+      <summary>
+ausgeblendet da nicht relevant.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.ShapeControl.Shape.#ctor">
+      <summary>
+Initialisiert eine neue Instanz von <see cref="SchlumpfSoft.Controls.ShapeControl.Shape" />.</summary>
+      <remarks>
+Richtet Standardwerte und Zeichenstile ein.</remarks>
+    </member>
+    <member name="N:SchlumpfSoft.Controls.TransparentLabelControl">
+    </member>
+    <member name="T:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel">
+      <summary>
+Ein Steuerelement zum Anzeigen eines Textes mit durchscheinendem Hintergrund.</summary>
+      <remarks>
+Dieses Label nutzt den erweiterten Fensterstil <c>WS_EX_TRANSPARENT</c>, um den Hintergrund transparent erscheinen zu lassen.</remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackColor">
+      <summary>
+Ausgeblendet da für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackgroundImage">
+      <summary>
+Ausgeblendet da für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.BackgroundImageLayout">
+      <summary>
+Ausgeblendet da für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.FlatStyle">
+      <summary>
+Ausgeblendet da für dieses Control nicht relevant.</summary>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.TransparentLabelControl.TransparentLabel.#ctor">
+      <summary>
+Initialisiert eine neue Instanz der <see cref="TransparentLabel" />-Klasse.</summary>
+    </member>
   </members>
 </doc>
