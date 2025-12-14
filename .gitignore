@@ -368,6 +368,6 @@ FodyWeavers.xsd
 *.vsix
 /VS Marketplace Vorlage.md
 *.zip
-/SchlumpfSoftControls2/Help
 /.github/prompts
 /Copilotantworten.md
+/Help

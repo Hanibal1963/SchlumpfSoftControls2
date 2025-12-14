@@ -18,32 +18,36 @@ Das vorherige Projekt werde ich nach der Veröffentlichung dieses Projekts archi
 
 Zurzeit sind folgende Steuerelemente vorhanden:
 
-* AniGif Control - Ein Control zum anzeigen von animierten Grafiken.
-* DriveWatcher Control - Ein Control zum Überwachen der Laufwerke.
-* NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.
-* Wizard Control - Ein Control zum erstellen eines Assistenten.
-* Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
-* TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
-* SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.
-* ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
-* ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
-* IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.
-* **NEU:** ExtendedRTF Control - Ein Control zum Anzeigen und Bearbeiten von RTF - Text.
-* **NEU:** FileSearch Control - Ein Control zum Suchen von Dateien und Ordnern.
+- AniGif Control - Ein Control zum anzeigen von animierten Grafiken.
+- DriveWatcher Control - Ein Control zum Überwachen der Laufwerke.
+- NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.
+- Wizard Control - Ein Control zum erstellen eines Assistenten.
+- Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
+- TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
+- SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.
+- ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
+- ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
+- IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.
+- **NEU:** ExtendedRTFControl - Eine erweiterte RtfTextBox.
+- **NEU:** FileSearchControl - Ein Control zur Dateisuche.
 
   ---
 
   ## geplante Änderungen und Erweiterungen
 
-* Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
-* Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
-* Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
-* Neues Control zum Auswählen einer Uhrzeit hinzufügen.
-* Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
+- Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
+- Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
+- Neues Control zum Auslesen und Bearbeiten von ID3 Tag's von Musikdateien hinzufügen.
+- Neues Control zum Auswählen einer Uhrzeit hinzufügen.
+- Neues Control zur Anzeige und Extraktion von Icons aus DLLs oder EXEs.
 
 ---
 
 ## Versionsverlauf
+
+**Version 3.2025.1214.0 (14.12.2025)**
+- Interner Code optimiert (keine Funktionsänderungen)
+- Dokumentationskommentare überarbeitet.
 
 **Version 3.2025.1129.0 (29.11.2025)**
 - Es wurde ein Fehler beseitigt, der eine korrekte Funktion der Controls „AniGif“, „NotifyForm“, 

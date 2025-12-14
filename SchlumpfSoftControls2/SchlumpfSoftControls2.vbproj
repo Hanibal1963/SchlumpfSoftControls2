@@ -67,8 +67,9 @@
     <ErrorReport>prompt</ErrorReport>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <UseWinFormsOutOfProcDesigner>True</UseWinFormsOutOfProcDesigner>
-    <DeployExtension>True</DeployExtension>
+    <DeployExtension>False</DeployExtension>
     <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
+    <CreateVsixContainer>False</CreateVsixContainer>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -82,11 +83,6 @@
     <DocumentationFile>SchlumpfSoftControls2.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Help\**\*">
-      <!-- Alle Dateien aus dem ordner "Help" inclusive Unterordner und enthaltene dateien in VSIX aufnehmen-->
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="LICENSE.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -368,7 +364,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)*.vsix" "$(SolutionDir)"</PostBuildEvent>
+    <PostBuildEvent>IF $(ConfigurationName)==Release (copy "$(TargetDir)*.vsix" "$(SolutionDir)")</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

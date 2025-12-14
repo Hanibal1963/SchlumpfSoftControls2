@@ -749,6 +749,24 @@ Dieser Wert kann sich im Verlauf der Suche ändern, wenn neue Verzeichnisse/Filt
     </member>
     <member name="N:SchlumpfSoft.Controls.IniFileControl">
     </member>
+    <member name="T:SchlumpfSoft.Controls.IniFileControl.AddItemDialog">
+      <summary>
+Dialogfenster zur Eingabe eines neuen Textwertes (z. B. für einen neuen INI-Schlüssel oder -Eintrag). Der OK-Button ist nur aktiviert, wenn die Eingabe nicht leer ist oder lediglich aus Leerzeichen besteht. Der bestätigte Text wird über die Eigenschaft <see cref="NewItemValue" /> bereitgestellt.</summary>
+      <remarks>
+<list type="bullet"><item><description>Der Dialog setzt den OK-Button initial auf deaktiviert.</description></item><item><description>Bei Änderungen im Texteingabefeld wird die Gültigkeit geprüft und der OK-Button entsprechend aktiviert/deaktiviert.</description></item><item><description>Beim Bestätigen mit OK wird der Text aus dem Eingabefeld in <see cref="NewItemValue" /> übernommen und <see cref="System.Windows.Forms.Form.DialogResult" /> auf <see cref="System.Windows.Forms.DialogResult.OK" /> gesetzt.</description></item></list></remarks>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.IniFileControl.AddItemDialog.NewItemValue">
+      <summary>
+Gibt den neuen Wert zurück oder legt ihn fest.</summary>
+      <remarks>
+Der Wert wird standardmäßig beim Bestätigen (OK) aus dem Textfeld übernommen.<br />Das Setzen von außen ist möglich, um einen Startwert im Textfeld anzuzeigen.</remarks>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.IniFileControl.AddItemDialog.#ctor">
+      <summary>
+Initialisiert eine neue Instanz des Dialogs und setzt den OK-Button auf deaktiviert.</summary>
+      <remarks>
+Ruft <see cref="InitializeComponent" /> auf und deaktiviert anschließend den OK-Button, bis eine gültige Eingabe erfolgt ist. Der OK-Button wird automatisch aktiviert, sobald der Text im Eingabefeld nicht leer ist und nicht nur aus Leerzeichen besteht.</remarks>
+    </member>
     <member name="T:SchlumpfSoft.Controls.IniFileControl.CommentEdit">
       <summary>
 Steuerelement zum Anzeigen und Bearbeiten des Datei- oder Abschnittskommentars einer INI-Datei.</summary>
@@ -1544,6 +1562,40 @@ Diese Seite wird typischerweise am Ende des Assistenten angezeigt, um Ergebnisse
 Ruft den Stil der Assistentenseite ab oder legt diesen fest.</summary>
       <remarks>
 Der Standardwert ist <see cref="PageStyle.Finish" />.</remarks>
+    </member>
+    <member name="T:SchlumpfSoft.Controls.WizardControl.PagesCollection">
+      <summary>
+Definiert die Auflistung der Seiten des Assistenten</summary>
+    </member>
+    <member name="P:SchlumpfSoft.Controls.WizardControl.PagesCollection.Item(System.Int32)">
+      <param name="Index">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.Add(SchlumpfSoft.Controls.WizardControl.WizardPage)">
+      <param name="Page">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.AddRange(SchlumpfSoft.Controls.WizardControl.WizardPage[])">
+      <param name="Pages">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.IndexOf(SchlumpfSoft.Controls.WizardControl.WizardPage)">
+      <param name="Page">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.Insert(System.Int32,SchlumpfSoft.Controls.WizardControl.WizardPage)">
+      <param name="Index">
+</param>
+      <param name="Page">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.Remove(SchlumpfSoft.Controls.WizardControl.WizardPage)">
+      <param name="Page">
+</param>
+    </member>
+    <member name="M:SchlumpfSoft.Controls.WizardControl.PagesCollection.Contains(SchlumpfSoft.Controls.WizardControl.WizardPage)">
+      <param name="Page">
+</param>
     </member>
     <member name="T:SchlumpfSoft.Controls.WizardControl.BeforeSwitchPagesEventArgs">
       <summary>
