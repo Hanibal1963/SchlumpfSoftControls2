@@ -2,42 +2,13 @@
 
 Steuerelement zum Darstellen einfacher Formen (Linien, Rechtecke, Ellipsen) für WinForms (.NET Framework 4.7.2).
 
-## Inhalt
-
-- [Überblick](#überblick)
-- [Funktionsumfang](#funktionsumfang)
-- [Unterstützte Formen](#unterstützte-formen)
-- [Enums](#enums)
-    - [ShapeModes](#shapemodes)
-    - [DiagonalLineModes](#diagonallinemodes)
-- [Eigenschaften](#eigenschaften)
-- [Schnellstart](#schnellstart)
-  - [Verwendung im Designer](#verwendung-im-designer)
-  - [Verwendung im Code](#verwendung-im-code)
-- [Beispiele](#beispiele)
-    - [Dünne Trennlinie](#dünne-trennlinie)
-    - [Diagonale Linie als dekoratives Element](#diagonale-linie-als-dekoratives-element)
-    - [Rechteck als Rahmen](#rechteck-als-rahmen)
-    - [Gefüllte Ellipse als Statusindikator](#gefüllte-ellipse-als-statusindikator)
-- [Darstellungsdetails](#darstellungsdetails)
-- [Transparenz / Zeichenlogik](#transparenz--zeichenlogik)
-- [Performance-Hinweise](#performance-hinweise)
-- [Bekannte Einschränkungen](#bekannte-einschränkungen)
-- [Erweiterbarkeit](#erweiterbarkeit)
-- [Fehlersuche / Troubleshooting](#fehlersuche--troubleshooting)
-- [weitere Literatur](#weitere-literatur)
-
----
-
-<a name="überblick"></a>
-## 1. Überblick
+## Überblick
 
 `Shape` ist ein leichtgewichtiges WinForms-Control zur Darstellung einfacher Vektorformen ohne Abhängigkeit zu GDI+ High-Level Wrappern oder externen Bibliotheken. Es eignet sich für UI-Trennlinien, einfache Markierungen, Status-Indikatoren oder visuelle Gruppierungen.
 
 ---
 
-<a name="funktionsumfang"></a>
-## 2. Funktionsumfang
+## Funktionsumfang
 
 - Horizontale, vertikale und diagonale Linien (2 Richtungen)
 - Rechtecke und Ellipsen (leer und gefüllt)
@@ -48,152 +19,7 @@ Steuerelement zum Darstellen einfacher Formen (Linien, Rechtecke, Ellipsen) für 
 
 ---
 
-<a name="unterstützte-formen"></a>
-## 3. Unterstützte Formen
-
-Der Modus wird über `ShapeModus` gesteuert:
-
-| Modus | Beschreibung |
-|-------|--------------|
-| `HorizontalLine` | Horizontale Linie mittig im Control |
-| `VerticalLine` | Vertikale Linie mittig im Control |
-| `DiagonalLine` | Diagonale Linie (Richtung über `DiagonalLineModus`) |
-| `Rectangle` | Rechteck (nur Rahmen) |
-| `FilledRectangle` | Gefülltes Rechteck |
-| `Ellipse` | Ellipse / Kreis (nur Rahmen) |
-| `FilledEllipse` | Gefüllte Ellipse / gefüllter Kreis |
-
----
-
-<a name="enums"></a>
-## 4. Enums
-
-
-<a name="shapemodes"></a>
-### 4.1. ShapeModes
-
-Steuert die Grundform (siehe Tabelle oben).
-
-<a name="diagonallinemodes"></a>
-### 4.2. DiagonalLineModes
-
-| Wert | Richtung |
-|------|----------|
-| `TopLeftToBottomRight` | Von links oben nach rechts unten |
-| `BottomLeftToTopRight` | Von links unten nach rechts oben |
-
----
-
-<a name="eigenschaften"></a>
-## 5. Eigenschaften
-
-| Eigenschaft | Typ | Beschreibung | Standard |
-|-------------|-----|--------------|----------|
-| `ShapeModus` | `ShapeModes` | Zu zeichnende Form | `HorizontalLine` |
-| `LineWidth` | `Single` | Linien- bzw. Rahmenstärke (Pixel) | `2` |
-| `LineColor` | `Color` | Linien-/Rahmenfarbe | `Black` |
-| `FillColor` | `Color` | Füllfarbe (nur gefüllte Formen) | `Gray` |
-| `DiagonalLineModus` | `DiagonalLineModes` | Richtung für diagonale Linien | `TopLeftToBottomRight` |
-
----
-
-<a name="ausgeblendete-geerbte-eigenschaften"></a>
-### 6. Ausgeblendete geerbte Eigenschaften
-
-Zur Vereinfachung der Verwendung und weil sie für die Darstellung nicht benötigt werden, sind u.a. folgende geerbte Eigenschaften im Designer ausgeblendet: `BackColor`, `BackgroundImage`, `BackgroundImageLayout`, `Font`, `ForeColor`, `RightToLeft`, `Text`.
-
----
-
-<a name="schnellstart"></a>
-## 7. Schnellstart
-
-<a name="verwendung-im-designer"></a>
-### 7.1. Verwendung im Designer
-
-1. Projekt bauen, damit das Control in der Toolbox erscheint (Kategorie: "SchlumpfSoft Controls").
-2. `Shape` auf ein Formular ziehen.
-3. In den Eigenschaften z.B. `ShapeModus = HorizontalLine` und `LineColor = DarkGray` setzen.
-
-<a name="verwendung-im-code"></a>
-### 7.2. Verwendung im Code
-
-```vbnet
-Dim s As New ShapeControl.Shape()
-With s
-    .ShapeModus = ShapeControl.ShapeModes.FilledEllipse
-    .LineColor = Color.DarkBlue
-    .FillColor = Color.LightSkyBlue
-    .LineWidth = 3
-    .Size = New Size(80, 80)
-    .Location = New Point(20, 20)
-End With
-Me.Controls.Add(s)
-```
-
----
-
-<a name="beispiele"></a>
-## 8. Beispiele
-
-<a name="beispiele"></a>
-### 8.1. Dünne Trennlinie
-
-```vbnet
-Dim separator As New ShapeControl.Shape() With {
-    .ShapeModus = ShapeControl.ShapeModes.HorizontalLine,
-    .LineWidth = 1,
-    .LineColor = Color.Silver,
-    .Dock = DockStyle.Top,
-    .Height = 6 ' etwas höher für mehr "Luft" um die Linie
-}
-Me.Controls.Add(separator)
-```
-
-<a name="beispiele"></a>
-### 8.2. Diagonale Linie als dekoratives Element
-
-```vbnet
-Dim diag As New ShapeControl.Shape() With {
-    .ShapeModus = ShapeControl.ShapeModes.DiagonalLine,
-    .DiagonalLineModus = ShapeControl.DiagonalLineModes.BottomLeftToTopRight,
-    .LineWidth = 4,
-    .LineColor = Color.OrangeRed,
-    .Size = New Size(120, 120)
-}
-Me.Controls.Add(diag)
-```
-
-<a name="beispiele"></a>
-### 8.3. Rechteck als Rahmen
-
-```vbnet
-Dim frame As New ShapeControl.Shape() With {
-    .ShapeModus = ShapeControl.ShapeModes.Rectangle,
-    .LineWidth = 2,
-    .LineColor = Color.DarkGreen,
-    .Size = New Size(200, 100)
-}
-Me.Controls.Add(frame)
-```
-
-<a name="beispiele"></a>
-### 8.4. Gefüllte Ellipse als Statusindikator
-
-```vbnet
-Dim indicator As New ShapeControl.Shape() With {
-    .ShapeModus = ShapeControl.ShapeModes.FilledEllipse,
-    .LineWidth = 2,
-    .LineColor = Color.DarkGray,
-    .FillColor = Color.LimeGreen,
-    .Size = New Size(24, 24)
-}
-Me.Controls.Add(indicator)
-```
-
----
-
-<a name="darstellungsdetails"></a>
-## 9. Darstellungsdetails
+## Darstellungsdetails
 
 - Die tatsächliche Zeichenlogik befindet sich in `OnPaint`.
 - Es wird direkt ein `Graphics`-Objekt über `CreateGraphics()` erzeugt (Hinweis: Für künftige Erweiterungen wäre die Nutzung des bereitgestellten `e.Graphics` in `OnPaint` vorzuziehen, um Flickern zu reduzieren und Repaints konsistenter zu halten).
@@ -201,8 +27,7 @@ Me.Controls.Add(indicator)
 
 ---
 
-<a name="transparenz--zeichenlogik"></a>
-## 10. Transparenz / Zeichenlogik
+## Transparenz / Zeichenlogik
 
 Das Control setzt im überschriebenen `CreateParams` das Extended Window Style Flag `WS_EX_TRANSPARENT` (`&H20`). Dadurch:
 - Zeichnet Windows zuerst die darunterliegenden Controls.
@@ -213,8 +38,7 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
 
 ---
 
-<a name="performance-hinweise"></a>
-## 11. Performance-Hinweise
+## Performance-Hinweise
 - `ControlStyles.OptimizedDoubleBuffer` ist deaktiviert (`False`). Bei starkem Redraw (Resize/Animation) kann Flickern auftreten.
 - Für großflächige oder häufig animierte Szenarien kann eine Anpassung sinnvoll sein:
   ```vbnet
@@ -226,8 +50,7 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
 
 ---
 
-<a name="bekannte-einschränkungen"></a>
-## 12. Bekannte Einschränkungen
+## Bekannte Einschränkungen
 
 | Bereich | Beschreibung |
 |--------|--------------|
@@ -239,8 +62,7 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
 
 ---
 
-<a name="erweiterbarkeit"></a>
-## 13. Erweiterbarkeit
+## Erweiterbarkeit
 
 Mögliche Erweiterungen:
 - Anti-Aliasing aktivierbar (`g.SmoothingMode = SmoothingMode.AntiAlias`).
@@ -252,8 +74,7 @@ Mögliche Erweiterungen:
 
 ---
 
-<a name="fehlersuche--troubleshooting"></a>
-## 14. Fehlersuche / Troubleshooting
+## Fehlersuche / Troubleshooting
 
 | Problem | Ursache | Lösung |
 |---------|---------|--------|
@@ -263,8 +84,7 @@ Mögliche Erweiterungen:
 
 ---
 
-<a name="weitere-literatur"></a>
-## 15. weitere Literatur
+## weitere Literatur
 
 - [Erstellen eines Windows Forms-Toolbox-Steuerelements](https://docs.microsoft.com/de-de/visualstudio/extensibility/creating-a-windows-forms-toolbox-control?view=vs-2022)
 - [Infos zur ControlStyles Enumeration](https://learn.microsoft.com/de-de/dotnet/api/system.windows.forms.controlstyles?redirectedfrom=MSDN&view=netframework-4.7.2)
