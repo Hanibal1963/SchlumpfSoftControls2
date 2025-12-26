@@ -18,18 +18,18 @@ Das vorherige Projekt werde ich nach der Veröffentlichung dieses Projekts archi
 
 Zurzeit sind folgende Steuerelemente vorhanden:
 
-- AniGif Control - Ein Control zum anzeigen von animierten Grafiken.
-- DriveWatcher Control - Ein Control zum Überwachen der Laufwerke.
-- NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.
-- Wizard Control - Ein Control zum erstellen eines Assistenten.
-- Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.
-- TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.
-- SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.
-- ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.
-- ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.
-- IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.
-- **NEU:** ExtendedRTFControl - Eine erweiterte RtfTextBox.
-- **NEU:** FileSearchControl - Ein Control zur Dateisuche.
+- [AniGif Control - Ein Control zum anzeigen von animierten Grafiken.](/Doc/AniGifControl.md)
+- [DriveWatcher Control - Ein Control zum Überwachen der Laufwerke.](/Doc/DriveWatcherControl.md)
+- [NotifyForm Control - Ein Control zum anzeigen eines Benachrichtigungsfensters.](/Doc/NotifyFormControl.md)
+- [Shape Control - Ein Control zum Darstellen einer Linie, eines Rechtecks oder einer Ellipse.](/Doc/ShapeControl.md)
+- [TransparentLabel Control - Ein Control zum Anzeigen eines Textes mit durchscheinendem Hintergrund.](/Doc/TransparentLabelControl.md)
+- [SevenSegment Control - Ein Control zum Anzeigen von Zeichen als 7-Segmentanzeige.](/Doc/SevenSegmentControl.md)
+- [ColorProgressBar Control - Ein Control zum Anzeigen eines farblichen Fortschrittsbalkens.](/Doc/ColorProgressBarControl.md)
+- [Wizard Control - Ein Control zum erstellen eines Assistenten.](/Doc/WizardControl.md)
+- [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](/Doc/ExplorerTreeViewControl.md)
+- [IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.](/Doc/IniFileControl.md)
+- **NEU:** [ExtendedRTFControl - Eine erweiterte RtfTextBox.](/Doc/ExtendedRTFControl.md)
+- **NEU:** [FileSearchControl - Ein Control zur Dateisuche.](/Doc/FileSearchControl.md)
 
   ---
 

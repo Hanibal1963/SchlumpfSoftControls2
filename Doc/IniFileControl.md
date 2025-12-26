@@ -14,49 +14,9 @@ Es sind nur noch wenige Zeilen Code erforderlich um die volle Funktionalität zu
 
 ---
 
-## Inhaltsverzeichnis
+##  Struktur einer INI-Datei
 
-1. [Struktur einer INI-Datei](#struktur)
-    - [Abschnitte (Sections)](#abschnitte)
-    - [Schlüssel-Wert-Paare (Key-Value Pairs)](#keyvalue)
-    - [Kommentare](#kommentare)
-    - [Beispiel einer vollständigen INI-Datei](#beispiel)
-2. [Überblick](#ueberblick)
-3. [Komponentenübersicht](#komponentenuebersicht)
-4. [Architektur & Zusammenspiel](#architektur)
-5. [Klassen & Steuerelemente](#klassen)
-   - [`IniFile`](#inifile)
-   - [`ListEdit`](#listedit)
-   - [`EntryValueEdit`](#entryvalueedit)
-   - [`CommentEdit`](#commentedit)
-   - [`ContentView`](#contentview)
-   - [Dialoge (`AddItemDialog`, `RenameItemDialog`, `DeleteItemDialog`)](#dialoge)
-   - [EventArgs-Klassen](#eventargs)
-6. [Ereignismodell](#ereignismodell)
-7. [Lebenszyklus typischer Operationen](#lebenszyklus)
-   - [Eintrag umbenennen](#eintrag-umbenennen)
-   - [Kommentar bearbeiten](#kommentar-bearbeiten)
-8. [Verwendung (Codebeispiele)](#verwendung)
-9. [Validierung & Fehlerfälle](#validierung)
-10. [Thread-Sicherheit / Performance](#threadsicherheit)
-11. [Erweiterbarkeit / Best Practices](#erweiterbarkeit)
-12. [Bekannte Verbesserungsmöglichkeiten](#bekannte-verbesserungsmöglichkeiten)
-13. [Schnellreferenz (Properties & Events)](#schnellreferenz)
-   - [`IniFile`-Ereignisse](#inifile-events)
-   - [`ListEdit`-Events](#listedit-events)
-   - [`EntryValueEdit`-Event](#entryvalueedit-event)
-   - [`CommentEdit`-Event](#commentedit-event)
-14. [Beispiel: Zusammenspiel mehrerer Controls (Ausschnitt)](#beispiel-zusammenspiel)
-15. [Qualitätshinweise](#qualitätshinweise)
-16. [Fazit](#fazit)
-
----
-
-<a name="struktur"></a>
-##  1. Struktur einer INI-Datei
-
-<a name="abschnitte"></a>
-### 1.1. Abschnitte (Sections)
+### Abschnitte (Sections)
 
    -	Abschnitte werden durch eckige Klammern <font color="red">[  ]</font> gekennzeichnet.
    -	Sie dienen dazu, verwandte Einstellungen zu gruppieren.
@@ -67,8 +27,7 @@ Es sind nur noch wenige Zeilen Code erforderlich um die volle Funktionalität zu
 [Datenbank]
 ```
 
-<a name="keyvalue"></a>
-### 1.2. Schlüssel-Wert-Paare (Key-Value Pairs)
+### Schlüssel-Wert-Paare (Key-Value Pairs)
 
    -	Innerhalb eines Abschnitts werden Einstellungen als Schlüssel-Wert-Paare definiert.
    -	Der Schlüssel und der Wert werden durch ein Gleichheitszeichen = getrennt.
@@ -80,8 +39,7 @@ Benutzername=admin
 Passwort=geheim
 ```
 
-<a name="kommentare"></a>
-### 1.3. Kommentare
+### Kommentare
 
    - Kommentare beginnen mit einem Semikolon <font color="red">;</font> oder einem Hashtag <font color="red">#</font>.
    - Sie werden ignoriert und dienen nur zur Dokumentation.
@@ -93,8 +51,7 @@ Passwort=geheim
 # Dies ist auch ein Kommentar
 ```
 
-<a name="beispiel"></a>
-### 1.4. Beispiel einer vollständigen INI-Datei
+### Beispiel einer vollständigen INI-Datei
 
 ```ini
 ; Dies ist eine Beispiel-INI-Datei
@@ -160,23 +117,21 @@ LogDatei=logs/app.log
 
 ---
 
-<a name="ueberblick"></a>
-## 2. Überblick
+## Überblick
 
 Das Modul kapselt:
 - Ein datenorientiertes Kernobjekt `IniFile` (nicht-visuell, verwaltet Struktur & Persistenz).
 - Mehrere WinForms-UserControls zur Anzeige und Bearbeitung:
-  - Listendarstellung von Sektionen oder Einträgen
-  - Bearbeitung einzelner Werte
-  - Bearbeitung von Kommentarblöcken
-  - Anzeige des gesamten Dateiinhalts
+- Listendarstellung von Sektionen oder Einträgen
+- Bearbeitung einzelner Werte
+- Bearbeitung von Kommentarblöcken
+- Anzeige des gesamten Dateiinhalts
 - Dialoge für hinzufügen, löschen, umbenennen.
 - Stark ereignisgetriebenes Modell: UI löst semantische Events aus, Host-Anwendung führt Änderungen aus (Trennung von Anzeige & Datenquelle).
 
 ---
 
-<a name="komponentenuebersicht"></a>
-## 3. Komponentenübersicht
+## Komponentenübersicht
 
 | Kategorie | Name | Zweck |
 |-----------|------|-------|
@@ -194,8 +149,7 @@ Das Modul kapselt:
 
 ---
 
-<a name="architektur"></a>
-## 4. Architektur & Zusammenspiel
+## Architektur & Zusammenspiel
 
 Architekturprinzipien:
 
@@ -205,11 +159,7 @@ Architekturprinzipien:
 
 ---
 
-<a name="klassen"></a>
-## 5. Klassen & Steuerelemente
-
-<a name="inifile"></a>
-### 5.1 `IniFile`
+### `IniFile`
 
 Verwaltet:
 
@@ -236,8 +186,7 @@ Ereignisse:
 - `SectionNameExist`
 - `EntryNameExist`
 
-<a name="listedit"></a>
-### 4.2 `ListEdit`
+### `ListEdit`
 
 Darstellung einer Liste (Sektionen oder Einträge):
 
@@ -252,8 +201,7 @@ Darstellung einer Liste (Sektionen oder Einträge):
   - `SelectedSection`
 - Intern: keine direkte Manipulation der INI-Datei.
 
-<a name="entryvalueedit"></a>
-### 5.3 `EntryValueEdit`
+### `EntryValueEdit`
 
 Bearbeitet einen Eintragswert.
 
@@ -261,8 +209,7 @@ Bearbeitet einen Eintragswert.
 - Event: `ValueChanged(EntryValueEditEventArgs)`
 - Button aktiv nur, falls Text geändert wurde.
 
-<a name="commentedit"></a>
-### 5.4 `CommentEdit`
+### `CommentEdit`
 
 Bearbeitet Datei- oder Abschnittskommentare.
 
@@ -270,16 +217,14 @@ Bearbeitet Datei- oder Abschnittskommentare.
 - Event: `CommentChanged(CommentEditEventArgs)`
 - Änderung erst nach explizitem Buttonklick.
 
-<a name="contentview"></a>
-### 5.5 `ContentView`
+### `ContentView`
 
 Schreibgeschützte Anzeige eines Zeilenarrays:
 
 - Property: `Lines`
 - Dient typischerweise zur Anzeige des durch `IniFile.CreateFileContent()` generierten Zustands.
 
-<a name="dialoge"></a>
-### 5.6 Dialoge
+### Dialoge
 
 | Dialog | Zweck | Besonderheiten |
 |--------|-------|----------------|
@@ -287,40 +232,9 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 | `RenameItemDialog` | Alten → neuen Namen | Platzhalter `{0}` im Label für alten Namen |
 | `DeleteItemDialog` | Löschbestätigung | Platzhalter `{0}` für anzuzeigendes Element |
 
-<a name="eventargs"></a>
-### 5.7 EventArgs-Klassen
+ ---
 
-| Klasse | Felder / Properties | Kontext |
-|--------|---------------------|---------|
-| `ListEditEventArgs` | SelectedSection, SelectedItem, NewItemName | Add/Rename/Delete/Selection |
-| `EntryValueEditEventArgs` | SelectedSection, SelectedEntry, NewValue | Bestätigung eines Wert-Edits |
-| `CommentEditEventArgs` | Section, Comment() | Übernahme Kommentarblock |
-| (intern verwendet: `CommentEditEventArgs` in `CommentEdit`) | – | – |
-
----
-
-<a name="ereignismodell"></a>
-## 6. Ereignismodell
-
-| Auslöser | Event | Reaktion (Host) |
-|----------|-------|-----------------|
-| Sektion/Eintrag hinzufügen | `ItemAdd` | `IniFile.AddSection()` oder `IniFile.AddEntry()` |
-| Umbenennen | `ItemRename` | `IniFile.RenameSection()` oder `IniFile.RenameEntry()` |
-| Löschen | `ItemRemove` | `IniFile.DeleteSection()` / `IniFile.DeleteEntry()` |
-| Auswahl geändert | `SelectedItemChanged` | Kontext synchronisieren (z. B. passenden Value laden) |
-| Wert bestätigt | `ValueChanged` | Persistieren: `IniFile.SetEntryValue()` |
-| Kommentar übernommen | `CommentChanged` | Datei-/Abschnittskommentar setzen |
-| Datei geändert | `FileContentChanged` | UI refresh: Listen, Inhalt, Rohansicht |
-| Abschnitt existiert | `SectionNameExist` | Hinweis anzeigen |
-| Eintrag existiert | `EntryNameExist` | Hinweis anzeigen |
-
----
-
-<a name="lebenszyklus"></a>
-## 7. Lebenszyklus typischer Operationen
-
-<a name="eintrag-umbenennen"></a>
-### 6.1 Eintrag umbenennen
+### Eintrag umbenennen
 
 1. Benutzer wählt Item in `ListEdit`
 2. Klick "Umbenennen" → Dialog → bestätigt
@@ -329,8 +243,7 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 5. `IniFile` erzeugt neuen Rohinhalt → `FileContentChanged`
 6. Host lädt neue `EntryNames` → setzt `ListEdit.ListItems`
 
-<a name="kommentar-bearbeiten"></a>
-### 7.2 Kommentar bearbeiten
+### Kommentar bearbeiten
 
 1. Host setzt `CommentEdit.Comment = ini.GetSectionComment("Logging")`
 2. Benutzer editiert → klickt Übernehmen
@@ -340,27 +253,7 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 
 ---
 
-<a name="verwendung"></a>
-## 8. Verwendung (vereinfachtes Beispiel)
-
-```vbnet
-' IniFile laden
-iniFile = New IniFile
-iniFile.LoadFile("konfiguration.ini")
-Dim sektionen() As String = iniFile.GetSectionNames
-Dim wert As String = iniFile.GetEntryValue("Datenbank", "Benutzername")
-
-' Kommentar einer Sektion setzen
-iniFile.SetSectionComment("Logging", "Einstellungen für das Logging")
-
-' Datei speichern
-iniFile.SaveFile
-```
-
----
-
-<a name="validierung"></a>
-## 9. Validierung & Fehlerfälle
+## Validierung & Fehlerfälle
 
 **Allgemeine Prinzipien:**
 
@@ -390,8 +283,7 @@ iniFile.SaveFile
 
 ---
 
-<a name="threadsicherheit"></a>
-## 10. Thread-Sicherheit / Performance
+## Thread-Sicherheit / Performance
 
 **Thread-Sicherheit:**
 
@@ -415,8 +307,7 @@ iniFile.SaveFile
 
 ---
 
-<a name="erweiterbarkeit"></a>
-## 11. Erweiterbarkeit / Best Practices
+## Erweiterbarkeit / Best Practices
 
 **Erweiterbarkeit:**
 
@@ -430,8 +321,7 @@ iniFile.SaveFile
 
 ---
 
-<a name="bekannte-verbesserungsmöglichkeiten"></a>
-## 12. Bekannte Verbesserungsmöglichkeiten
+## Bekannte Verbesserungsmöglichkeiten
 
 **Allgemein:**
 
@@ -455,56 +345,7 @@ iniFile.SaveFile
 
 ---
 
-<a name="schnellreferenz"></a>
-## 13. Schnellreferenz (Properties & Events)
-
-<a name="inifile-events"></a>
-### 12.1 `IniFile`-Ereignisse
-
-- `FileContentChanged`: Wird ausgelöst, wenn der Inhalt der Datei geändert wurde.
-- `SectionNameExist`: Tritt ein, wenn der Name einer Sektion bereits existiert.
-- `EntryNameExist`: Tritt ein, wenn der Name eines Eintrags bereits existiert.
-
-<a name="listedit-events"></a>
-### 13.2 `ListEdit`-Events
-
-- `ItemAdd`: Wenn ein neues Item hinzugefügt wird.
-- `ItemRename`: Beim Umbenennen eines Items.
-- `ItemRemove`: Wenn ein Item entfernt wird.
-- `SelectedItemChanged`: Wenn sich das ausgewählte Item ändert.
-
-<a name="entryvalueedit-event"></a>
-### 13.3 `EntryValueEdit`-Event
-
-- `ValueChanged`: Wenn sich der Wert eines Eintrags ändert.
-
-<a name="commentedit-event"></a>
-### 13.4 `CommentEdit`-Event
-
-- `CommentChanged`: Wenn ein Kommentar geändert wurde.
-
----
-
-<a name="beispiel-zusammenspiel"></a>
-## 14. Beispiel: Zusammenspiel mehrerer Controls (Ausschnitt)
-
-```vbnet
-' UI initial binden
-ListSections.ListItems = _ini.GetSectionNames()
-ContentView1.Lines = _ini.GetFileContent()
-
-' Events
-AddHandler _ini.FileContentChanged,
-    Sub()
-        ContentView1.Lines = _ini.GetFileContent() 
-    End Sub
-End Sub
-```
-
----
-
-<a name="qualitätshinweise"></a>
-## 15. Qualitätshinweise
+## Qualitätshinweise
 
 | Thema | Empfehlung |
 |-------|------------|
@@ -515,8 +356,7 @@ End Sub
 
 ---
 
-<a name="fazit"></a>
-## 16. Fazit
+## Fazit
 
 Das Modul stellt eine klare Trennung von Datenmodell (`IniFile`) und Benutzerinteraktion (UserControls + Dialoge) bereit. Durch konsequente Eventorientierung bleibt die Host-Anwendung flexibel und kann eigene Logik (Validierung, Persistenzstrategien, Undo/Redo) ergänzen.
 
