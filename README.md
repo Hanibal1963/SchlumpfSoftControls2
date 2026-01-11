@@ -28,8 +28,8 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 - [Wizard Control - Ein Control zum erstellen eines Assistenten.](/Doc/WizardControl.md)
 - [ExplorerTreeView Control - Das Steuerelement ist ein spezielles TreeView Control, dass die Struktur des Verzeichnisbaums des Windows Explorers nachahmt.](/Doc/ExplorerTreeViewControl.md)
 - [IniFile Control - Ein Set von Komponenten zum Verwalten von INI - Dateien.](/Doc/IniFileControl.md)
-- **NEU:** [ExtendedRTFControl - Eine erweiterte RtfTextBox.](/Doc/ExtendedRTFControl.md)
-- **NEU:** [FileSearchControl - Ein Control zur Dateisuche.](/Doc/FileSearchControl.md)
+- [ExtendedRTFControl - Eine erweiterte RtfTextBox.](/Doc/ExtendedRTFControl.md)
+- [FileSearchControl - Ein Control zur Dateisuche.](/Doc/FileSearchControl.md)
 
   ---
 
@@ -44,6 +44,9 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 ---
 
 ## Versionsverlauf
+
+**Version 3.2026.0111.0 (11.01.2026)**
+- Lizenz und ReleaseNotes angepasst (keine Funktionsänderungen)
 
 **Version 3.2025.1214.0 (14.12.2025)**
 - Interner Code optimiert (keine Funktionsänderungen)
