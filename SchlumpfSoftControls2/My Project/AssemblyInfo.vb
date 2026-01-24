@@ -8,9 +8,9 @@
 <Assembly: System.Reflection.AssemblyConfiguration("")>
 <Assembly: System.Reflection.AssemblyCompany("Andreas Sauer")>
 <Assembly: System.Reflection.AssemblyProduct("SchlumpfSoftControls2")>
-<Assembly: System.Reflection.AssemblyCopyright("Copyright © Andreas Sauer 2025")>
+<Assembly: System.Reflection.AssemblyCopyright("Copyright © Andreas Sauer 2024 - 2026")>
 <Assembly: System.Reflection.AssemblyTrademark("privat")>
 <Assembly: System.Reflection.AssemblyCulture("")>
-<Assembly: System.Reflection.AssemblyVersion("3.2025.1214.0")>
-<Assembly: System.Reflection.AssemblyFileVersion("3.2025.1214.0")>
+<Assembly: System.Reflection.AssemblyVersion("3.2026.0124.0")>
+<Assembly: System.Reflection.AssemblyFileVersion("3.2026.0124.0")>
 <Assembly: System.Runtime.InteropServices.ComVisible(False)>

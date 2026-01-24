@@ -11,6 +11,7 @@ Grundlage und Anregung für dieses Control stammen aus dem Internet.
 ## Überblick
 
 `DriveWatcher` ist eine nicht-visuelle Komponente (erbt von `System.ComponentModel.Component`) zur Überwachung von Änderungen an logischen Laufwerken (Volumes) unter Windows. Sie meldet:
+
 - Hinzufügen (Einhängen) eines Laufwerks (z. B. USB-Stick, Netzlaufwerk, virtuelle Laufwerke)
 - Entfernen (Aushängen) eines Laufwerks
 
@@ -85,9 +86,9 @@ Interner Ablauf bei Systemmeldung:
 
 > **Hinweis**
 >
-> Bei den Tests, das ISO-datei beim mounten nicht immer als laufwerk erkannt wird. 
+> Bei den Tests, musste ich feststellen, das eine ISO-Datei beim mounten nicht immer als Laufwerk erkannt wird.
 >
-> Dies scheint von der Windows-Version und dem verwendeten Tool abzuhängen.
+> Dies scheint von der Windows-Version und dem verwendeten Tool abhängig zu sein.
 
 ---
 
