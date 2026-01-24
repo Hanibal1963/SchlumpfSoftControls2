@@ -33,7 +33,7 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
   ---
 
-  ## geplante Änderungen und Erweiterungen
+## geplante Änderungen und Erweiterungen
 
 - Eine Möglichkeit die Breite des MultiDigit Control automatisch an die Anzahl der Digits anzupassen.
 - Neues Control zum Auslesen und Bearbeiten der EXIF Tag's von Bildern hinzufügen.
@@ -45,59 +45,69 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
-**Version 3.2026.0111.0 (11.01.2026)**
+**Version 3.2026.0124.0 (24.01.2026)**
+
 - Lizenz und ReleaseNotes angepasst (keine Funktionsänderungen)
 
 **Version 3.2025.1214.0 (14.12.2025)**
+
 - Interner Code optimiert (keine Funktionsänderungen)
 - Dokumentationskommentare überarbeitet.
 
 **Version 3.2025.1129.0 (29.11.2025)**
-- Es wurde ein Fehler beseitigt, der eine korrekte Funktion der Controls „AniGif“, „NotifyForm“, 
-„SevenSegment“ und „Shape“ verhinderte.
+
+- Es wurde ein Fehler beseitigt, der eine korrekte Funktion der Controls „AniGif“, „NotifyForm“, „SevenSegment“ und „Shape“ verhinderte.
 
 **Version 3.2025.1122.0 (22.11.2025)**
-- Es wurde ein Fehler im ExplorerTreeView Control beseitigt, der einen Absturz verursachte wenn beim öffnen 
-eines Knotens keine Pfadangabe erfolgte (im konkreten Fall wurde der Fehler verursacht wenn der 
-Knoten „Diese Computer“ geöffnet wurde)
+
+- Es wurde ein Fehler im ExplorerTreeView Control beseitigt, der einen Absturz verursachte wenn beim öffnen eines Knotens keine Pfadangabe erfolgte (im konkreten Fall wurde der Fehler verursacht wenn der Knoten „Diese Computer“ geöffnet wurde)
 
 **Version 3.2025.1116.0 (16.11.2025)**
+
 - Fehler in internen Dialogen beseitigt.
-- Fehler im IniFileControl beseitigt der einen Absturz verursachte wenn
-ein Abschnittskommentar oder Eintragswert hinzugefügt werden soll obwohl kein Abschnitt oder Eintrag ausgewählt war.
+- Fehler im IniFileControl beseitigt der einen Absturz verursachte wenn ein Abschnittskommentar oder Eintragswert hinzugefügt werden soll obwohl kein Abschnitt oder Eintrag ausgewählt war.
 - Interne Codeoptimierungen.
 - Support für VS2026 hinzugefügt.
 
 **Version 3.2025.1012.0 (12.10.2025)**
+
 - FileSearchControl hinzugefügt .
 
 **Version 3.2025.1011.1 (11.10.2025)**
+
 - Es wurde ein Fehler beseitigt der das ExtendedRTFControl in der IDE in einer falschen Kategorie angezeigt hat.
 
 **Version 3.2025.1011.0 (11.10.2025)**
+
 - ExtendedRTFControl hinzugefügt.
 
 **Version 3.2025.1004.1 (04.10.2025)**
+
 - Korrektur eines Fehlers der verhinderte das die Symbole in der IDE richtig angezeigt werden.
 
 **Version 3.2025.1004.0 (04.10.2025)**
+
 - ursprüngliches Projekt IniFileControl in dieses Projekt übernommen
 - Dokumentation für IniFileControl hinzugefügt
 - Demoanwendung um IniFileControl erweitert
 
 **Version 3.2025.0928.0 (28.09.2025)**
+
 - Dokumentationen überarbeitet und erweitert
 - Demoanwendung überarbeitet und erweitert
 
 **Version 2.2025.0907.0 (07.09.2025)**
+
 - Umstukturierung der einzelnen Controls in eigene Projekte abgeschlossen
 
 **Version 1.2025.0814.0 (14.08.2025)**
+
 - Codeoptimierungen im ExplorerTreeViewControl
 
 **Version 1.2025.0811.0 (11.08.2025)**
+
 - ExplorerTreeView hinzugefügt
 
 **Version 1.2025.0802.0 (02.08.2025)**
+
 - Erstes Release dieser Controlsammlung (noch ohne IniFileControl)
-  

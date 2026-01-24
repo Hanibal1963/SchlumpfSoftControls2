@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TransparentLabelControlDemo", "Demos\TransparentLabelControlDemo\TransparentLabelControlDemo.vbproj", "{A5E1E8BA-01AA-4C2E-806A-2D57D4B4290B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5E1E8BA-01AA-4C2E-806A-2D57D4B4290B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E1E8BA-01AA-4C2E-806A-2D57D4B4290B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E1E8BA-01AA-4C2E-806A-2D57D4B4290B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E1E8BA-01AA-4C2E-806A-2D57D4B4290B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3100DF0B-5A78-4D48-BE7A-1C175642122E}
+	EndGlobalSection
+EndGlobal
