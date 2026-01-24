@@ -6,7 +6,7 @@ Ausführliche Dokumentation für das benutzerdefinierte WinForms-Steuerelement `
 
 Die Idee hinter dem `ColorProgressBarControl` ist es, einen Fortschrittsbalken zu erstellen, der in optisch anpassbar ist.
 
-Der Standard-Fortschrittsbalken in Windows ist ein einfacher Balken, der den Fortschritt in Form einer Füllung anzeigt. 
+Der Standard-Fortschrittsbalken in Windows ist ein einfacher Balken, der den Fortschritt in Form einer Füllung anzeigt.
 Der `ColorProgressBarControl` hingegen kann in verschiedenen Farben und Stilen angezeigt werden.
 
 Als Anregung diente der Artikel [A Better ProgressBar - Using Panels!](https://www.codeproject.com/Articles/31903/A-Better-ProgressBar-Using-Panels) von Saul Johnson.
@@ -45,6 +45,7 @@ Das Control erbt von `UserControl` und besteht intern (laut Code) aus mehreren P
 - `GlossLeft` / `GlossRight`: halbtransparente Overlays für den Glanzeffekt
 
 Die Berechnungslogik ist in zwei interne Methoden gekapselt:
+
 - `UpdateProgress()`: Berechnet Pixelbreite pro Einheit und setzt Balkenbreite, Rahmen-Padding und Sichtbarkeit.
 - `UpdateGloss()`: Passt Gloss-Höhe proportional zur Control-Höhe an.
 
@@ -130,6 +131,7 @@ Mögliche Optimierung:
 ## Migration & Versionierung
 
 Aktuell frühe Basisversion ohne Breaking Changes. Bei zukünftiger Einführung zusätzlicher Eigenschaften sollte darauf geachtet werden:
+
 - Standardwerte rückwärtskompatibel halten.
 - Zusätzliche Ereignisse nicht blockierend gestalten.
 - Rendering auf OnPaint umstellen → Breaking Change klar dokumentieren.
