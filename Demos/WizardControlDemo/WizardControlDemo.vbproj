@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SchlumpfSoftControls2">
-      <HintPath>D:\Dokumente\Visual Studio\Projekte\SchlumpfSoft\SchlumpfSoftControls2\SchlumpfSoftControls2\bin\Debug\SchlumpfSoftControls2.dll</HintPath>
+      <HintPath>..\..\SchlumpfSoftControls2\bin\Debug\SchlumpfSoftControls2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
