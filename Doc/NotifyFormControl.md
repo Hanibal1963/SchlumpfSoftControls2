@@ -10,7 +10,6 @@ Falls jemand die ursprüngliche Quelle kennt oder finden sollte, dann bitte eine 
 
 ---
 
-
 ## Übersicht
 
 Das Projekt `NotifyFormControl` stellt eine wiederverwendbare Komponente (`NotifyForm`) zur Anzeige von Benachrichtigungs-Popups (ähnlich "Toast" bzw. Hinweisfenstern) bereit. Diese Benachrichtigungsfenster erscheinen ohne Rahmen am unteren rechten Bildschirmrand, blenden weich ein und (optional) nach Ablauf einer definierten Zeit wieder aus.
@@ -92,7 +91,7 @@ Typische Einsatzszenarien:
 
 Verbesserbare Punkte:
 
-- Fokussteuerung (aktueller Fokus nach Öffnen unklar). 
+- Fokussteuerung (aktueller Fokus nach Öffnen unklar).
 - Tastaturbedienung (ESC zum Schließen implementieren).
 - Screenreader-Kompatibilität (Role + AccessibleName/Description setzen).
 

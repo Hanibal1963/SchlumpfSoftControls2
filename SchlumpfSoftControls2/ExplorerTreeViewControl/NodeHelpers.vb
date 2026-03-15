@@ -86,7 +86,7 @@ Namespace ExplorerTreeViewControl
         Private ReadOnly FolderMappings As New System.Collections.Generic.Dictionary(Of String, String) From {
             {FOLDER_DESKTOP, System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop)},
             {FOLDER_DOKUMENTE, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments)},
-            {FOLDER_DOWNLOADS, System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads")},
+            {FOLDER_DOWNLOADS, GetDownloadsFolderPath()},
             {FOLDER_MUSIK, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyMusic)},
             {FOLDER_BILDER, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures)},
             {FOLDER_VIDEOS, System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyVideos)}
@@ -181,6 +181,21 @@ Namespace ExplorerTreeViewControl
 #End Region
 
 #Region "Interne Methoden"
+
+        Private Function GetDownloadsFolderPath() As String
+
+            ' Liest den tatsächlichen Pfad des Downloads-Ordners aus der Registry,
+            ' da "Downloads" kein Standard-SpecialFolder ist und vom Benutzer verschoben werden kann.
+            Dim path As String = CStr(Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders", "{374DE290-123F-4565-9164-39C4925E467B}", Nothing))
+
+            If Not String.IsNullOrEmpty(path) Then
+                Return path
+            End If
+
+            ' Fallback auf den Standard-Pfad, falls der Registry-Wert nicht vorhanden ist
+            Return System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "Downloads")
+
+        End Function
 
         Private Function IsFloppyDrive(drive As System.IO.DriveInfo) As Boolean
 

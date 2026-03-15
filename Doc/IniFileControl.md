@@ -14,13 +14,13 @@ Es sind nur noch wenige Zeilen Code erforderlich um die volle Funktionalität zu
 
 ---
 
-##  Struktur einer INI-Datei
+## Struktur einer INI-Datei
 
 ### Abschnitte (Sections)
 
-   -	Abschnitte werden durch eckige Klammern <font color="red">[  ]</font> gekennzeichnet.
-   -	Sie dienen dazu, verwandte Einstellungen zu gruppieren.
-   
+- Abschnitte werden durch eckige Klammern <font color="red">[  ]</font> gekennzeichnet.
+- Sie dienen dazu, verwandte Einstellungen zu gruppieren.
+
    Beispiel:
 
 ```ini
@@ -29,9 +29,9 @@ Es sind nur noch wenige Zeilen Code erforderlich um die volle Funktionalität zu
 
 ### Schlüssel-Wert-Paare (Key-Value Pairs)
 
-   -	Innerhalb eines Abschnitts werden Einstellungen als Schlüssel-Wert-Paare definiert.
-   -	Der Schlüssel und der Wert werden durch ein Gleichheitszeichen = getrennt.
-   
+- Innerhalb eines Abschnitts werden Einstellungen als Schlüssel-Wert-Paare definiert.
+- Der Schlüssel und der Wert werden durch ein Gleichheitszeichen = getrennt.
+
    Beispiel:
 
 ```ini
@@ -41,9 +41,9 @@ Passwort=geheim
 
 ### Kommentare
 
-   - Kommentare beginnen mit einem Semikolon <font color="red">;</font> oder einem Hashtag <font color="red">#</font>.
-   - Sie werden ignoriert und dienen nur zur Dokumentation.
-   
+- Kommentare beginnen mit einem Semikolon <font color="red">;</font> oder einem Hashtag <font color="red">#</font>.
+- Sie werden ignoriert und dienen nur zur Dokumentation.
+
    Beispiel:
 
 ```ini
@@ -75,43 +75,43 @@ LogDatei=logs/app.log
 
 **Erklärung des Beispiels**
 
-:memo: **Kommentare:** 
+:memo: **Kommentare:**
 
 > &rarr; Die erste Zeile ist ein Kommentar, der ignoriert wird.
 
 :memo: **Abschnitt "Allgemein":**
 
->   &rarr;	Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
+> &rarr; Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
 >
->   &rarr;	**AppName=MeineApp**: Definiert den Namen der Anwendung.
+> &rarr; **AppName=MeineApp**: Definiert den Namen der Anwendung.
 >
->   &rarr;	**Version=1.0.0**: Gibt die Version der Anwendung an.
+> &rarr; **Version=1.0.0**: Gibt die Version der Anwendung an.
 
 :memo: **Abschnitt "Datenbank":**
 
->   &rarr;	Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
+> &rarr; Die erste Zeile des Abschnitts ist ein Kommentar der ignoriert wird
 >
->   &rarr;	**Server=localhost**: Gibt den Datenbankserver an.
+> &rarr; **Server=localhost**: Gibt den Datenbankserver an.
 >
->   &rarr;	**Port=3306**: Gibt den Port an, auf dem die Datenbank läuft.
+>&rarr; **Port=3306**: Gibt den Port an, auf dem die Datenbank läuft.
 >
->   &rarr;	**Benutzername=admin**: Der Benutzername für die Datenbank.
+>&rarr; **Benutzername=admin**: Der Benutzername für die Datenbank.
 >
->   &rarr;	**Passwort=geheim**: Das Passwort für die Datenbank.
+> &rarr; **Passwort=geheim**: Das Passwort für die Datenbank.
 
-:memo:	**Abschnitt "Logging":**
+:memo:    **Abschnitt "Logging":**
 
->   &rarr;	**LogLevel=DEBUG**: Definiert das Log-Level.
+> &rarr; **LogLevel=DEBUG**: Definiert das Log-Level.
 >
->   &rarr;	**LogDatei=logs/app.log**: Gibt den Pfad zur Log-Datei an.
+> &rarr; **LogDatei=logs/app.log**: Gibt den Pfad zur Log-Datei an.
 
 :memo: **Wichtige Hinweise:**
 
->   &rarr;	**Leerzeichen**: Leerzeichen um das Gleichheitszeichen werden ignoriert.
+>&rarr; **Leerzeichen**: Leerzeichen um das Gleichheitszeichen werden ignoriert.
 >
->   &rarr;	**Groß-/Kleinschreibung**: In der Regel sind Schlüssel und Abschnittsnamen nicht case-sensitive, aber das kann je nach Implementierung variieren.
+> &rarr; **Groß-/Kleinschreibung**: In der Regel sind Schlüssel und Abschnittsnamen nicht case-sensitive, aber das kann je nach Implementierung variieren.
 >
->   &rarr;	**Mehrere Abschnitte**: Eine INI-Datei kann mehrere Abschnitte enthalten, und jeder Abschnitt kann mehrere Schlüssel-Wert-Paare haben.
+>&rarr; **Mehrere Abschnitte**: Eine INI-Datei kann mehrere Abschnitte enthalten, und jeder Abschnitt kann mehrere Schlüssel-Wert-Paare haben.
 
 :bulb: INI-Dateien sind aufgrund ihrer Einfachheit und Lesbarkeit weit verbreitet, insbesondere für kleinere Anwendungen und Konfigurationsdateien, die von Menschen bearbeitet werden sollen.
 
@@ -120,6 +120,7 @@ LogDatei=logs/app.log
 ## Überblick
 
 Das Modul kapselt:
+
 - Ein datenorientiertes Kernobjekt `IniFile` (nicht-visuell, verwaltet Struktur & Persistenz).
 - Mehrere WinForms-UserControls zur Anzeige und Bearbeitung:
 - Listendarstellung von Sektionen oder Einträgen
@@ -257,29 +258,29 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 
 **Allgemeine Prinzipien:**
 
-  - Fehler dürfen nicht stillschweigend passieren.
-  - Kein partielles Speichern von Änderungen.
+- Fehler dürfen nicht stillschweigend passieren.
+- Kein partielles Speichern von Änderungen.
 
 **Eingangsvalidierung:**
 
-  - Alle Eingaben (z. B. von Dialogen) sind vor Verarbeitung zu überprüfen.
+- Alle Eingaben (z. B. von Dialogen) sind vor Verarbeitung zu überprüfen.
 
 **Spezifische Validierungen:**
 
 `IniFile`:
 
-   - Verbieten leerer oder nur aus Leerzeichen bestehenden Namen für Sektionen und Einträge.
-   - Verhindern von Duplikaten: Keine zwei Sektionen oder Einträge mit demselben Namen.
+- Verbieten leerer oder nur aus Leerzeichen bestehenden Namen für Sektionen und Einträge.
+- Verhindern von Duplikaten: Keine zwei Sektionen oder Einträge mit demselben Namen.
 
 **Steuerelemente:**
 
-   - `EntryValueEdit`: Nur gültige, nicht-leere Werte erlauben.
-   - `CommentEdit`: Umgang mit mehrzeiligen Kommentaren prüfen (z. B. durch `Join()` beim Setzen).
+- `EntryValueEdit`: Nur gültige, nicht-leere Werte erlauben.
+- `CommentEdit`: Umgang mit mehrzeiligen Kommentaren prüfen (z. B. durch `Join()` beim Setzen).
 
 **Fehlerberichte:**
 
-  - Verwendung eigener Ausnahmen (z. B. `IniException`) zur präzisen Fehlerkommunikation.
-  - Zwingend: Fehlerursache und behobene/falsche Werte im Fehlerbericht.
+- Verwendung eigener Ausnahmen (z. B. `IniException`) zur präzisen Fehlerkommunikation.
+- Zwingend: Fehlerursache und behobene/falsche Werte im Fehlerbericht.
 
 ---
 
@@ -287,13 +288,13 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 
 **Thread-Sicherheit:**
 
-  - Prinzipiell nicht thread-sicher. Entwickler muss für Sicherheit sorgen.
-  - Vorschlag: Synchronisierungsmechanismen wie `lock` bei Zugriff auf `IniFile`-Instanzen.
+- Prinzipiell nicht thread-sicher. Entwickler muss für Sicherheit sorgen.
+- Vorschlag: Synchronisierungsmechanismen wie `lock` bei Zugriff auf `IniFile`-Instanzen.
 
 **Performance-Überlegungen:**
 
-  - Vermeiden unnötiger `Load`/`Save`-Operationen.
-  - Beispiel:
+- Vermeiden unnötiger `Load`/`Save`-Operationen.
+- Beispiel:
   
     ```vbnet
     lock (iniFile)
@@ -303,7 +304,7 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
     iniFile.SaveFile   
     ```
 
-  - Aufwand für Synchronisierung meist vernachlässigbar gegen I/O-Operationen.
+- Aufwand für Synchronisierung meist vernachlässigbar gegen I/O-Operationen.
 
 ---
 
@@ -311,13 +312,13 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 
 **Erweiterbarkeit:**
 
-  - Gestaltung auf Einfachheit der Erweiterung bedacht.
-  - Z. B. Hinzufügen neuer Steuerelemente oder Anpassungen in `IniFile`-Logik.
+- Gestaltung auf Einfachheit der Erweiterung bedacht.
+- Z.B. Hinzufügen neuer Steuerelemente oder Anpassungen in `IniFile` - Logik.
 
 **Best Practices:**
 
-  - Bei Subklassenbildung: Basisimplementierungen stets berücksichtigen.
-  - Bei Erweiterung von Dialogen: Immer auch an Validierung denken.
+- Bei Subklassenbildung: Basisimplementierungen stets berücksichtigen.
+- Bei Erweiterung von Dialogen: Immer auch an Validierung denken.
 
 ---
 
@@ -325,23 +326,23 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 
 **Allgemein:**
 
-   - Einheitlichere Ereignisnamen (z. B. `ItemAdded` statt `ItemAdd`).
-   - Konsistentere Methode zur Fehlerberichterstattung (z. B. überall Ausnahmen verwenden).
+- Einheitlichere Ereignisnamen (z. B. `ItemAdded` statt `ItemAdd`).
+- Konsistentere Methode zur Fehlerberichterstattung (z. B. überall Ausnahmen verwenden).
 
 **`IniFile`-Klasse:**
 
-   - Verbessertes Fehlerhandling beim Laden/Speichern (z. B. Detailierte Ausnahmen).
-   - Möglichkeit, Dateiüberschreibungen zu erzwingen oder abzulehnen.
+- Verbessertes Fehlerhandling beim Laden/Speichern (z. B. Detailierte Ausnahmen).
+- Möglichkeit, Dateiüberschreibungen zu erzwingen oder abzulehnen.
 
 **UI-Komponenten:**
 
-   - Verbesserung der Benutzerführung, z. B. durch Tooltips oder Eingabehilfen.
-   - Erweiterte Dialogoptionen, z. B. Mehrfachlöschung oder -umbenennung.
+- Verbesserung der Benutzerführung, z. B. durch Tooltips oder Eingabehilfen.
+- Erweiterte Dialogoptionen, z. B. Mehrfachlöschung oder -umbenennung.
 
 **Dokumentation:**
 
-   - Vollständige Beispiele für typische Anwendungsfälle.
-   - Detailliertere Fehlerbeschreibungen und Lösungsvorschläge.
+- Vollständige Beispiele für typische Anwendungsfälle.
+- Detailliertere Fehlerbeschreibungen und Lösungsvorschläge.
 
 ---
 
@@ -361,6 +362,7 @@ Schreibgeschützte Anzeige eines Zeilenarrays:
 Das Modul stellt eine klare Trennung von Datenmodell (`IniFile`) und Benutzerinteraktion (UserControls + Dialoge) bereit. Durch konsequente Eventorientierung bleibt die Host-Anwendung flexibel und kann eigene Logik (Validierung, Persistenzstrategien, Undo/Redo) ergänzen.
 
 Für größere Evolutionsschritte bieten sich an:
+
 - Zentralisiertes Änderungs- und Konfliktmanagement
 - Verbesserte Nutzungs- und Fehlermeldungen
 - Erweiterte Formatierungsregeln (z. B. Quoting)

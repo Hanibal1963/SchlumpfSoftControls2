@@ -16,7 +16,6 @@ Führt eine optionale rekursive, asynchrone Dateisuche anhand eines Suchmusters a
 - Kooperativer Abbruch via `StopSearch()` oder erneutem Start
 - Fortschritt und Events typischerweise auf dem UI-Thread (abhängig von `SimpleProgress(Of T)`)
 
-
 ## Fehler- und Abbruchverhalten
 
 - Abbruch: `CancellationToken` wird geprüft; `StopSearch()` oder ein erneuter `StartSearchAsync()`-Aufruf löst Abbruch aus.
@@ -32,9 +31,10 @@ Wichtig: Pro-Datei-Fehler werden nicht individuell behandelt. Tritt während der 
 
 ## Leistungsaspekte
 
-- Es wird bewusst doppelt enumeriert:
--  `Count()` ermittelt die Gesamtanzahl
--  Zweite Enumeration verarbeitet die Dateien
+Es wird bewusst doppelt enumeriert:
+
+- `Count()` ermittelt die Gesamtanzahl
+- Zweite Enumeration verarbeitet die Dateien
 - Bei sehr großen Verzeichnisbäumen kann das Performance kosten.
 - Alternativen (nicht implementiert, mögliche Erweiterungen):
 - Einmaliges Materialisieren: `ToList()` (Speicher vs. Zeit)

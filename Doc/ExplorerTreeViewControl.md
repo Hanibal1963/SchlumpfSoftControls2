@@ -155,8 +155,8 @@ Empfehlungen für Weiterentwicklung:
 
 ---
 
-<a name="18-kurze-faq"></a>
 ## 18. Kurze FAQ
+
 **Warum werden manche Ordner nicht angezeigt?**
 Zugriff evtl. verweigert (Permissions) – still unterdrückt.
 
