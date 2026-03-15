@@ -92,7 +92,7 @@ Namespace ExplorerTreeViewControl
         Private WithEvents DW As SchlumpfSoft.Controls.DriveWatcherControl.DriveWatcher
         Private WithEvents IL As System.Windows.Forms.ImageList
         Private WithEvents TV As System.Windows.Forms.TreeView
-		Private _SelectedPath As String
+        Private _SelectedPath As String
 
 #End Region
 
@@ -129,16 +129,16 @@ Namespace ExplorerTreeViewControl
 
 #Region "Eigenschaften"
 
-		''' <summary>
-		''' Gibt den aktuell ausgewählten Pfad zurück.
-		''' </summary>
-		''' <returns></returns>
-		<System.ComponentModel.Browsable(False)>
-		Public ReadOnly Property SelectedPath As System.String
-			Get
-				Return Me._SelectedPath
-			End Get
-		End Property
+        ''' <summary>
+        ''' Gibt den aktuell ausgewählten Pfad zurück.
+        ''' </summary>
+        ''' <returns></returns>
+        <System.ComponentModel.Browsable(False)>
+        Public ReadOnly Property SelectedPath As System.String
+            Get
+                Return Me._SelectedPath
+            End Get
+        End Property
 
         ''' <summary>
         ''' Gibt die Farbe der Linien zwischen den Knoten zurück oder legt diese fest.
@@ -576,6 +576,7 @@ Namespace ExplorerTreeViewControl
             Me.TV.ImageList.Images.Add(ICON_FOLDER_DOWNLOADS, My.Resources.FolderDownloads)
             Me.TV.ImageList.Images.Add(ICON_FOLDER_MUSIC, My.Resources.FolderMusic)
             Me.TV.ImageList.Images.Add(ICON_FOLDER_PICTURES, My.Resources.FolderPictures)
+            Me.TV.ImageList.Images.Add(ICON_FOLDER_VIDEOS, My.Resources.FolderVideos)
         End Sub
 
         Private Sub LoadSubfolders(Node As System.Windows.Forms.TreeNode)
@@ -682,12 +683,12 @@ Namespace ExplorerTreeViewControl
         End Sub
 
         Private Sub TV_AfterSelect(sender As Object, e As System.Windows.Forms.TreeViewEventArgs) Handles TV.AfterSelect
-			Dim selectedpath As String = Me.GetDirectoryPath(e.Node)
-			' Wenn der Pfad des ausgewählten Knotens leer ist, wird keine weitere Verarbeitung durchgeführt.
-			If String.IsNullOrEmpty(selectedpath) Then Exit Sub
-			Me._SelectedPath = selectedpath
-			' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
-			RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(selectedpath))
+            Dim selectedpath As String = Me.GetDirectoryPath(e.Node)
+            ' Wenn der Pfad des ausgewählten Knotens leer ist, wird keine weitere Verarbeitung durchgeführt.
+            If String.IsNullOrEmpty(selectedpath) Then Exit Sub
+            Me._SelectedPath = selectedpath
+            ' Ereignis auslösen mit Übergabe des ausgewählten Verzeichnisses
+            RaiseEvent SelectedPathChanged(Me, New SelectedPathChangedEventArgs(selectedpath))
         End Sub
 
         Private Sub DW_DriveAdded(sender As Object, e As SchlumpfSoft.Controls.DriveWatcherControl.DriveAddedEventArgs) Handles DW.DriveAdded
