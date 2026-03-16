@@ -105,7 +105,7 @@ Namespace FileSearchControl
         Friend _StartPath As String = String.Empty
 
         ' Das aktuell konfigurierte Suchmuster (Standard: *.*).
-        Friend _SearchPattern As String = $"*.*"
+        Friend _SearchPattern As String = "*.*"
 
         ' Gibt an, ob eine rekursive Suche über alle Unterordner erfolgt (Standard: False).
         Friend _SearchInSubfolders As Boolean = False
@@ -128,7 +128,7 @@ Namespace FileSearchControl
         '''     ListBox1.Items.Add(filePath)
         ''' End Sub]]></code>
         ''' </example>
-        <System.ComponentModel.Description("")>
+        <System.ComponentModel.Description("Wird für jede gefundene Datei ausgelöst.")>
         Public Event FileFound(sender As Object, file As String)
 
         ''' <summary>
@@ -146,7 +146,7 @@ Namespace FileSearchControl
         '''     LabelStatus.Text = If(canceled, "Suche abgebrochen.", "Suche abgeschlossen.")
         ''' End Sub]]></code>
         ''' </example>
-        <System.ComponentModel.Description("Wird für jede gefundene Datei ausgelöst.")>
+        <System.ComponentModel.Description("Wird nach Abschluss oder Abbruch der Suche ausgelöst.")>
         Public Event SearchCompleted(sender As Object, cancel As Boolean)
 
         ''' <summary>
@@ -403,10 +403,11 @@ Namespace FileSearchControl
         Public Async Function StartSearchAsync() As System.Threading.Tasks.Task
 
             ' Evtl. laufende Suche abbrechen (kooperativ).
-            '  Es wird NICHT auf deren Abschluss gewartet. Dadurch ist ein schneller Neustart möglich,
-            '  birgt aber das Risiko, dass kurze Zeit noch Events der alten Suche eintreffen.
+            ' Es wird NICHT auf deren Abschluss gewartet. Dadurch ist ein schneller Neustart möglich,
+            ' birgt aber das Risiko, dass kurze Zeit noch Events der alten Suche eintreffen.
             Me._CancellationSource?.Cancel()
-
+            ' alte Instanz freigeben
+            Me._CancellationSource?.Dispose()
             ' Neue CancellationTokenSource erzeugen.
             Me._CancellationSource = New System.Threading.CancellationTokenSource()
             Dim token = Me._CancellationSource.Token
@@ -486,13 +487,16 @@ Namespace FileSearchControl
                 RaiseEvent SearchCompleted(Me, True) ' Falls innerhalb der Task-Pipeline eine echte CancellationException geworfen wurde.
 
             Catch ex As System.UnauthorizedAccessException
-                RaiseEvent ErrorOccurred(Me, ex) ' Zugriffsrechte fehlten (z. B. Systemordner). Suche wird komplett abgebrochen.
+                RaiseEvent ErrorOccurred(Me, ex) ' Zugriffsrechte fehlten (z. B. Systemordner). -> Suche wird komplett abgebrochen.
+                RaiseEvent SearchCompleted(Me, False)
 
             Catch ex As System.IO.DirectoryNotFoundException
-                RaiseEvent ErrorOccurred(Me, ex) ' Startpfad oder Teilpfade existieren nicht.
+                RaiseEvent ErrorOccurred(Me, ex) ' Startpfad oder Teilpfade existieren nicht. -> Suche wird komplett abgebrochen.
+                RaiseEvent SearchCompleted(Me, False)
 
             Catch ex As System.Exception
-                RaiseEvent ErrorOccurred(Me, ex) ' Generischer Fehlerfall (IO, Pfadlänge, etc.).
+                RaiseEvent ErrorOccurred(Me, ex) ' Generischer Fehlerfall (IO, Pfadlänge, etc.). -> Suche wird komplett abgebrochen.
+                RaiseEvent SearchCompleted(Me, False)
 
             End Try
 
@@ -536,8 +540,13 @@ Namespace FileSearchControl
         <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
-                If disposing AndAlso Me.components IsNot Nothing Then
-                    Me.components.Dispose()
+                If disposing Then
+                    If Me.components IsNot Nothing Then
+                        Me.components.Dispose()
+                    End If
+                    ' CancellationTokenSource freigeben
+                    Me._CancellationSource?.Cancel()
+                    Me._CancellationSource?.Dispose()
                 End If
             Finally
                 MyBase.Dispose(disposing)
