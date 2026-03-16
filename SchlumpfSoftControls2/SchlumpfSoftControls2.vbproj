@@ -164,6 +164,7 @@
       <DependentUpon>WizardPage.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="FileSearchControl\CoPilot Hinweise.md" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
