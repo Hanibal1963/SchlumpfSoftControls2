@@ -3,6 +3,9 @@
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
+Imports System.Collections.Generic
+Imports System.Linq
+
 Namespace FileSearchControl
 
     ''' <summary>
@@ -99,16 +102,16 @@ Namespace FileSearchControl
 
         ' Token-Quelle zur Signalisierung eines kooperativen Abbruchs an den laufenden Such-Task.
         ' Wird bei jedem Suchstart neu erzeugt und ersetzt eine vorherige Instanz.
-        Friend _CancellationSource As System.Threading.CancellationTokenSource
+        Private _CancellationSource As System.Threading.CancellationTokenSource
 
         ' Startpfad für die aktuelle Suche (Standard: String.Empty).
-        Friend _StartPath As String = String.Empty
+        Private _StartPath As String = String.Empty
 
         ' Das aktuell konfigurierte Suchmuster (Standard: *.*).
-        Friend _SearchPattern As String = "*.*"
+        Private _SearchPattern As String = "*.*"
 
         ' Gibt an, ob eine rekursive Suche über alle Unterordner erfolgt (Standard: False).
-        Friend _SearchInSubfolders As Boolean = False
+        Private _SearchInSubfolders As Boolean = False
 
 #End Region
 
@@ -402,14 +405,20 @@ Namespace FileSearchControl
         ''' </example>
         Public Async Function StartSearchAsync() As System.Threading.Tasks.Task
 
+            ' Validierung des Startpfads.
+            ' Ein leerer oder nur aus Leerzeichen bestehender Pfad ist ungültig.
+            If String.IsNullOrWhiteSpace(Me._StartPath) Then
+                RaiseEvent ErrorOccurred(Me, New System.ArgumentException("StartPath darf nicht leer sein.", NameOf(Me.StartPath)))
+                RaiseEvent SearchCompleted(Me, False)
+                Return
+            End If
+
             ' Evtl. laufende Suche abbrechen (kooperativ).
             ' Es wird NICHT auf deren Abschluss gewartet. Dadurch ist ein schneller Neustart möglich,
             ' birgt aber das Risiko, dass kurze Zeit noch Events der alten Suche eintreffen.
             Me._CancellationSource?.Cancel()
-            ' alte Instanz freigeben
-            Me._CancellationSource?.Dispose()
-            ' Neue CancellationTokenSource erzeugen.
-            Me._CancellationSource = New System.Threading.CancellationTokenSource()
+            Me._CancellationSource?.Dispose() ' alte Instanz freigeben
+            Me._CancellationSource = New System.Threading.CancellationTokenSource() ' Neue CancellationTokenSource erzeugen.
             Dim token = Me._CancellationSource.Token
 
             ' Progress-Objekt für EINZELNE Dateien.
@@ -438,14 +447,9 @@ Namespace FileSearchControl
 
                                                           ' Lazy-Enumeration aller passenden Dateien. Achtung:
                                                           '  Directory.EnumerateFiles löst erst beim Durchlaufen der Aufzählung IO-Zugriffe aus.
-                                                          Dim allfiles As System.Collections.Generic.IEnumerable(Of String) = System.IO.Directory.EnumerateFiles(Me.StartPath, Me.SearchPattern, optionen)
-
-                                                          ' Performance-Hinweis: Count() zwingt vollständige Aufzählung VOR der eigentlichen Verarbeitung.
-                                                          ' Dadurch wird das gesamte Dateiset zweimal traversiert (hier: für Count und unten für die Schleife).
-                                                          ' Alternative Strategien:
-                                                          ' - Dateien einmal in eine Liste materialisieren (ToList) und dann Count + Schleife durchführen.
-                                                          ' - Fortschritt ohne Total (z. B. with -1) oder mit dynamischer Schätzung ausgeben.
-                                                          Dim total As Integer = System.Linq.Enumerable.Count(allfiles)
+                                                          ' Einmalige Materialisierung statt doppelter Enumeration:
+                                                          Dim allfiles As List(Of String) = System.IO.Directory.EnumerateFiles(Me.StartPath, Me.SearchPattern, optionen).ToList()
+                                                          Dim total As Integer = allfiles.Count
 
                                                           Dim found As Integer = 0
 
@@ -488,15 +492,15 @@ Namespace FileSearchControl
 
             Catch ex As System.UnauthorizedAccessException
                 RaiseEvent ErrorOccurred(Me, ex) ' Zugriffsrechte fehlten (z. B. Systemordner). -> Suche wird komplett abgebrochen.
-                RaiseEvent SearchCompleted(Me, False)
+                RaiseEvent SearchCompleted(Me, True)
 
             Catch ex As System.IO.DirectoryNotFoundException
                 RaiseEvent ErrorOccurred(Me, ex) ' Startpfad oder Teilpfade existieren nicht. -> Suche wird komplett abgebrochen.
-                RaiseEvent SearchCompleted(Me, False)
+                RaiseEvent SearchCompleted(Me, True)
 
             Catch ex As System.Exception
                 RaiseEvent ErrorOccurred(Me, ex) ' Generischer Fehlerfall (IO, Pfadlänge, etc.). -> Suche wird komplett abgebrochen.
-                RaiseEvent SearchCompleted(Me, False)
+                RaiseEvent SearchCompleted(Me, True)
 
             End Try
 
@@ -519,6 +523,8 @@ Namespace FileSearchControl
         ''' </example>
         Public Sub StopSearch()
             Me._CancellationSource?.Cancel()
+            Me._CancellationSource?.Dispose()
+            Me._CancellationSource = Nothing
         End Sub
 
         ''' <summary>
@@ -547,6 +553,7 @@ Namespace FileSearchControl
                     ' CancellationTokenSource freigeben
                     Me._CancellationSource?.Cancel()
                     Me._CancellationSource?.Dispose()
+                    Me._CancellationSource = Nothing
                 End If
             Finally
                 MyBase.Dispose(disposing)

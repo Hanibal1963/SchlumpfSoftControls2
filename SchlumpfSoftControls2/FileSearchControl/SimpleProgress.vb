@@ -1,22 +1,22 @@
-' *************************************************************************************************
+ï»¿' *************************************************************************************************
 ' SimpleProgress.vb
 ' Copyright (c) 2025 by Andreas Sauer 
 ' *************************************************************************************************
 
 Namespace FileSearchControl
 
-    ' Stellt einen einfachen, generischen Fortschritts-/Rückruf-Helfer bereit, der – falls vorhanden – den zum Erstellungszeitpunkt aktuellen 
+    ' Stellt einen einfachen, generischen Fortschritts-/RÃ¼ckruf-Helfer bereit, der â€“ falls vorhanden â€“ den zum Erstellungszeitpunkt aktuellen 
     ' "System.Threading.SynchronizationContext" erfasst
-    ' und Rückrufe (`Report`) automatisch auf diesen Kontext marshalt (z. B. UI-Thread in WinForms/WPF).
-    ' Falls kein Synchronisierungskontext vorhanden ist (Nothing), wird der Rückruf direkt synchron ausgeführt.
+    ' und RÃ¼ckrufe (`Report`) automatisch auf diesen Kontext marshalt (z. B. UI-Thread in WinForms/WPF).
+    ' Falls kein Synchronisierungskontext vorhanden ist (Nothing), wird der RÃ¼ckruf direkt synchron ausgefÃ¼hrt.
     ' Diese Klasse ist eine schlanke Alternative zu "IProgress(Of T)" bzw. "Progress(Of T)". 
-    ' Sie führt keine zusätzliche Thread-Sicherheitslogik ein; Mehrfachaufrufe von "Report" können parallel erfolgen.
+    ' Sie fÃ¼hrt keine zusÃ¤tzliche Thread-Sicherheitslogik ein; Mehrfachaufrufe von "Report" kÃ¶nnen parallel erfolgen.
     Friend Class SimpleProgress(Of T)
 
-        ' Der beim Erzeugen übergebene Rückruf, der den Fortschrittswert konsumiert.
+        ' Der beim Erzeugen Ã¼bergebene RÃ¼ckruf, der den Fortschrittswert konsumiert.
         Private ReadOnly _callback As System.Action(Of T)
 
-        ' Gespeicherter Synchronisierungskontext, um Aufrufe zurück auf den ursprünglichen (UI-)Thread zu marshallen.
+        ' Gespeicherter Synchronisierungskontext, um Aufrufe zurÃ¼ck auf den ursprÃ¼nglichen (UI-)Thread zu marshallen.
         ' Kann Nothing sein, wenn beim Erzeugen keiner gesetzt war.
         Private ReadOnly _context As System.Threading.SynchronizationContext
 
@@ -28,30 +28,30 @@ Namespace FileSearchControl
         End Sub
 
         ' Meldet einen neuen Wert. 
-        ' Falls ein Synchronisierungskontext erfasst wurde, wird der Rückruf
+        ' Falls ein Synchronisierungskontext erfasst wurde, wird der RÃ¼ckruf
         ' asynchron mittels System.Threading.SynchronizationContext.Post(System.Threading.SendOrPostCallback,Object)" dorthin gesendet.
         ' Andernfalls erfolgt der Aufruf unmittelbar (synchron) im aufrufenden Thread.
-        ' Bei Verwendung in UI-Anwendungen sorgt dies dafür, dass UI-Elemente gefahrlos
-        ' aktualisiert werden können, ohne selbst Invoke/BeginInvoke o. Ä. aufzurufen.
+        ' Bei Verwendung in UI-Anwendungen sorgt dies dafÃ¼r, dass UI-Elemente gefahrlos
+        ' aktualisiert werden kÃ¶nnen, ohne selbst Invoke/BeginInvoke o. Ã„. aufzurufen.
         ' 
         ' WARUM VSTHRD001 AUFTRITT:
         ' - Der Roslyn-Analyzer "Microsoft.VisualStudio.Threading.Analyzers" warnt vor direkter Verwendung von SynchronizationContext.Post/Send,
-        '   weil VS-Extensions stattdessen JoinableTaskFactory.SwitchToMainThreadAsync nutzen sollen (deadlock-sicher, prioritätsbewusst).
+        '   weil VS-Extensions stattdessen JoinableTaskFactory.SwitchToMainThreadAsync nutzen sollen (deadlock-sicher, prioritÃ¤tsbewusst).
         ' 
         ' WIE VERMEIDEN:
-        ' - Für VS-Extensions: JoinableTaskFactory verwenden (#If VS_THREADING Then ...).
-        ' - Für normale WinForms/WPF/Console-Bibliotheken: Weiterhin SynchronizationContext.Post nutzen und die Analyzer-Warnung lokal unterdrücken.
-        ' - Zusätzlich: Falls bereits auf dem gewünschten Kontext, direkt synchron aufrufen (spart Post und vermeidet unnötiges Marshalling).
+        ' - FÃ¼r VS-Extensions: JoinableTaskFactory verwenden (#If VS_THREADING Then ...).
+        ' - FÃ¼r normale WinForms/WPF/Console-Bibliotheken: Weiterhin SynchronizationContext.Post nutzen und die Analyzer-Warnung lokal unterdrÃ¼cken.
+        ' - ZusÃ¤tzlich: Falls bereits auf dem gewÃ¼nschten Kontext, direkt synchron aufrufen (spart Post und vermeidet unnÃ¶tiges Marshalling).
         Public Sub Report(value As T)
             Dim ctx = _context
-            ' Wenn kein Kontext erfasst wurde oder wir bereits auf dem Zielkontext sind, direkt ausführen.
+            ' Wenn kein Kontext erfasst wurde oder wir bereits auf dem Zielkontext sind, direkt ausfÃ¼hren.
             If ctx Is Nothing OrElse ctx Is System.Threading.SynchronizationContext.Current Then
                 _callback(value)
                 Return
             End If
 
 #If VS_THREADING Then
-            ' Pfad für VS-Extensions: JTF verwenden, um sicher auf den UI-Thread zu wechseln.
+            ' Pfad fÃ¼r VS-Extensions: JTF verwenden, um sicher auf den UI-Thread zu wechseln.
             Dim jtf = Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory
             Dim _ = jtf.RunAsync(
                 Async Function()
@@ -59,12 +59,12 @@ Namespace FileSearchControl
                     _callback(value)
                 End Function)
 #Else
-#Disable Warning IDE0079 ' Unnötige Unterdrückung entfernen
-            ' Pfad für normale Apps/Bibliotheken: SynchronizationContext.Post ist korrekt und nicht blockierend.
+#Disable Warning IDE0079 ' UnnÃ¶tige UnterdrÃ¼ckung entfernen
+            ' Pfad fÃ¼r normale Apps/Bibliotheken: SynchronizationContext.Post ist korrekt und nicht blockierend.
 #Disable Warning VSTHRD001 ' In Nicht-VS-Extension-Szenarien ist Post die geeignete, deadlock-freie Methode.
             ctx.Post(AddressOf InvokeCallback, value)
 #Enable Warning VSTHRD001
-#Enable Warning IDE0079 ' Unnötige Unterdrückung entfernen
+#Enable Warning IDE0079 ' UnnÃ¶tige UnterdrÃ¼ckung entfernen
 #End If
         End Sub
 
