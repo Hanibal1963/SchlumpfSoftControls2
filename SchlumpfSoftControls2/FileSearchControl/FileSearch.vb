@@ -440,48 +440,49 @@ Namespace FileSearchControl
                 ' Auslagerung der potentiell langen, blockierenden Dateisystem-Enumeration
                 ' auf einen ThreadPool-Thread. Das CancellationToken wird übergeben, um
                 ' Abbruch auf Task-Ebene (z. B. bei ThrowIfCancellationRequested) zu ermöglichen.
-                Await System.Threading.Tasks.Task.Run(Sub()
+                Await System.Threading.Tasks.Task.Run(
+                    Sub()
 
-                                                          ' Rekursionsmodus bestimmen.
-                                                          Dim optionen As System.IO.SearchOption = If(Me.SearchInSubfolders, System.IO.SearchOption.AllDirectories, System.IO.SearchOption.TopDirectoryOnly)
+                        ' Rekursionsmodus bestimmen.
+                        Dim optionen As System.IO.SearchOption = If(Me.SearchInSubfolders, System.IO.SearchOption.AllDirectories, System.IO.SearchOption.TopDirectoryOnly)
 
-                                                          ' Lazy-Enumeration aller passenden Dateien. Achtung:
-                                                          '  Directory.EnumerateFiles löst erst beim Durchlaufen der Aufzählung IO-Zugriffe aus.
-                                                          ' Einmalige Materialisierung statt doppelter Enumeration:
-                                                          Dim allfiles As List(Of String) = System.IO.Directory.EnumerateFiles(Me.StartPath, Me.SearchPattern, optionen).ToList()
-                                                          Dim total As Integer = allfiles.Count
+                        ' Lazy-Enumeration aller passenden Dateien. Achtung:
+                        '  Directory.EnumerateFiles löst erst beim Durchlaufen der Aufzählung IO-Zugriffe aus.
+                        ' Einmalige Materialisierung statt doppelter Enumeration:
+                        Dim allfiles As List(Of String) = System.IO.Directory.EnumerateFiles(Me.StartPath, Me.SearchPattern, optionen).ToList()
+                        Dim total As Integer = allfiles.Count
 
-                                                          Dim found As Integer = 0
+                        Dim found As Integer = 0
 
-                                                          ' Zweite Enumeration: tatsächliche Verarbeitung jeder Datei.
-                                                          For Each datei In allfiles
+                        ' Zweite Enumeration: tatsächliche Verarbeitung jeder Datei.
+                        For Each datei In allfiles
 
-                                                              ' Kooperativer Abbruch: Schleife wird verlassen,
-                                                              ' Events bis hierher bleiben gültig.
-                                                              If token.IsCancellationRequested Then Exit For
+                            ' Kooperativer Abbruch: Schleife wird verlassen,
+                            ' Events bis hierher bleiben gültig.
+                            If token.IsCancellationRequested Then Exit For
 
-                                                              found += 1
+                            found += 1
 
-                                                              ' Sofortiges Melden der einzelnen Datei.
-                                                              progressFile.Report(datei)
+                            ' Sofortiges Melden der einzelnen Datei.
+                            progressFile.Report(datei)
 
-                                                              ' Prozentberechnung. Schutz gegen Division durch 0 falls total=0.
-                                                              Dim percent As Integer = 0
-                                                              If total > 0 Then
-                                                                  percent = CInt(found / total * 100)
-                                                              End If
+                            ' Prozentberechnung. Schutz gegen Division durch 0 falls total=0.
+                            Dim percent As Integer = 0
+                            If total > 0 Then
+                                percent = CInt(found / total * 100)
+                            End If
 
-                                                              ' Aggregierten Status melden.
-                                                              progressStatus.Report(New FileSearchEventArgs With {.Percent = percent, .Found = found, .Total = total})
+                            ' Aggregierten Status melden.
+                            progressStatus.Report(New FileSearchEventArgs With {.Percent = percent, .Found = found, .Total = total})
 
-                                                              ' Hinweis: Kein try/catch innerhalb der Schleife.
-                                                              ' Tritt ein IO-Fehler (z. B. während Enumeration) auf, wird er
-                                                              ' vom äußeren Catch abgefangen und beendet die gesamte Suche.
-                                                              ' Für "best effort" Verhalten pro Datei könnte man hier
-                                                              ' differenzierter behandeln.
-                                                          Next
+                            ' Hinweis: Kein try/catch innerhalb der Schleife.
+                            ' Tritt ein IO-Fehler (z. B. während Enumeration) auf, wird er
+                            ' vom äußeren Catch abgefangen und beendet die gesamte Suche.
+                            ' Für "best effort" Verhalten pro Datei könnte man hier
+                            ' differenzierter behandeln.
+                        Next
 
-                                                      End Sub, token)
+                    End Sub, token)
 
                 ' Abschluss signalisieren. Wenn IsCancellationRequested True ist,
                 ' bedeutet dies: Schleife wurde vorzeitig verlassen.
