@@ -23,27 +23,27 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.LabelStatus = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.ButtonStop = New System.Windows.Forms.Button()
+        Me.ButtonStart = New System.Windows.Forms.Button()
+        Me.CheckBoxSearchInSubFolders = New System.Windows.Forms.CheckBox()
+        Me.TextBoxSearchPattern = New System.Windows.Forms.TextBox()
+        Me.LabelSearchPattern = New System.Windows.Forms.Label()
+        Me.ButtonSelectFolder = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LabelSearchPath = New System.Windows.Forms.Label()
         Me.FileSearch1 = New SchlumpfSoft.Controls.FileSearchControl.FileSearch(Me.components)
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.SuspendLayout()
         '
-        'Label3
+        'LabelStatus
         '
-        Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label3.Location = New System.Drawing.Point(23, 452)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(698, 20)
-        Me.Label3.TabIndex = 27
+        Me.LabelStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LabelStatus.Location = New System.Drawing.Point(23, 452)
+        Me.LabelStatus.Name = "LabelStatus"
+        Me.LabelStatus.Size = New System.Drawing.Size(698, 20)
+        Me.LabelStatus.TabIndex = 27
         '
         'TextBox3
         '
@@ -56,62 +56,62 @@ Partial Class Form1
         Me.TextBox3.TabIndex = 26
         Me.TextBox3.WordWrap = False
         '
-        'Button3
+        'ButtonStop
         '
-        Me.Button3.Location = New System.Drawing.Point(611, 52)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(110, 23)
-        Me.Button3.TabIndex = 25
-        Me.Button3.Text = "Stop"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.ButtonStop.Location = New System.Drawing.Point(611, 52)
+        Me.ButtonStop.Name = "ButtonStop"
+        Me.ButtonStop.Size = New System.Drawing.Size(110, 23)
+        Me.ButtonStop.TabIndex = 25
+        Me.ButtonStop.Text = "Stop"
+        Me.ButtonStop.UseVisualStyleBackColor = True
         '
-        'Button2
+        'ButtonStart
         '
-        Me.Button2.Location = New System.Drawing.Point(478, 51)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(112, 25)
-        Me.Button2.TabIndex = 24
-        Me.Button2.Text = "Start"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.ButtonStart.Location = New System.Drawing.Point(478, 51)
+        Me.ButtonStart.Name = "ButtonStart"
+        Me.ButtonStart.Size = New System.Drawing.Size(112, 25)
+        Me.ButtonStart.TabIndex = 24
+        Me.ButtonStart.Text = "Start"
+        Me.ButtonStart.UseVisualStyleBackColor = True
         '
-        'CheckBox1
+        'CheckBoxSearchInSubFolders
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.CheckBox1.Location = New System.Drawing.Point(254, 52)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(148, 17)
-        Me.CheckBox1.TabIndex = 23
-        Me.CheckBox1.Text = "Unterordner einschliessen"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CheckBoxSearchInSubFolders.AutoSize = True
+        Me.CheckBoxSearchInSubFolders.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CheckBoxSearchInSubFolders.Location = New System.Drawing.Point(254, 52)
+        Me.CheckBoxSearchInSubFolders.Name = "CheckBoxSearchInSubFolders"
+        Me.CheckBoxSearchInSubFolders.Size = New System.Drawing.Size(148, 17)
+        Me.CheckBoxSearchInSubFolders.TabIndex = 23
+        Me.CheckBoxSearchInSubFolders.Text = "Unterordner einschliessen"
+        Me.CheckBoxSearchInSubFolders.UseVisualStyleBackColor = True
         '
-        'TextBox2
+        'TextBoxSearchPattern
         '
-        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox2.Location = New System.Drawing.Point(97, 51)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox2.Size = New System.Drawing.Size(135, 20)
-        Me.TextBox2.TabIndex = 22
-        Me.TextBox2.WordWrap = False
+        Me.TextBoxSearchPattern.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBoxSearchPattern.Location = New System.Drawing.Point(97, 51)
+        Me.TextBoxSearchPattern.Name = "TextBoxSearchPattern"
+        Me.TextBoxSearchPattern.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.TextBoxSearchPattern.Size = New System.Drawing.Size(135, 20)
+        Me.TextBoxSearchPattern.TabIndex = 22
+        Me.TextBoxSearchPattern.WordWrap = False
         '
-        'Label2
+        'LabelSearchPattern
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(20, 53)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(68, 13)
-        Me.Label2.TabIndex = 21
-        Me.Label2.Text = "Suche nach:"
+        Me.LabelSearchPattern.AutoSize = True
+        Me.LabelSearchPattern.Location = New System.Drawing.Point(20, 53)
+        Me.LabelSearchPattern.Name = "LabelSearchPattern"
+        Me.LabelSearchPattern.Size = New System.Drawing.Size(68, 13)
+        Me.LabelSearchPattern.TabIndex = 21
+        Me.LabelSearchPattern.Text = "Suche nach:"
         '
-        'Button1
+        'ButtonSelectFolder
         '
-        Me.Button1.Location = New System.Drawing.Point(613, 17)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(108, 22)
-        Me.Button1.TabIndex = 20
-        Me.Button1.Text = "Ordner wählen ..."
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.ButtonSelectFolder.Location = New System.Drawing.Point(613, 17)
+        Me.ButtonSelectFolder.Name = "ButtonSelectFolder"
+        Me.ButtonSelectFolder.Size = New System.Drawing.Size(108, 22)
+        Me.ButtonSelectFolder.TabIndex = 20
+        Me.ButtonSelectFolder.Text = "Ordner wählen ..."
+        Me.ButtonSelectFolder.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
@@ -123,14 +123,14 @@ Partial Class Form1
         Me.TextBox1.TabIndex = 19
         Me.TextBox1.WordWrap = False
         '
-        'Label1
+        'LabelSearchPath
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(20, 19)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(53, 13)
-        Me.Label1.TabIndex = 18
-        Me.Label1.Text = "Startpfad:"
+        Me.LabelSearchPath.AutoSize = True
+        Me.LabelSearchPath.Location = New System.Drawing.Point(20, 19)
+        Me.LabelSearchPath.Name = "LabelSearchPath"
+        Me.LabelSearchPath.Size = New System.Drawing.Size(53, 13)
+        Me.LabelSearchPath.TabIndex = 18
+        Me.LabelSearchPath.Text = "Startpfad:"
         '
         'FileSearch1
         '
@@ -149,16 +149,16 @@ Partial Class Form1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(739, 493)
-        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.LabelStatus)
         Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.CheckBox1)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.ButtonStop)
+        Me.Controls.Add(Me.ButtonStart)
+        Me.Controls.Add(Me.CheckBoxSearchInSubFolders)
+        Me.Controls.Add(Me.TextBoxSearchPattern)
+        Me.Controls.Add(Me.LabelSearchPattern)
+        Me.Controls.Add(Me.ButtonSelectFolder)
         Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.LabelSearchPath)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -169,16 +169,16 @@ Partial Class Form1
 
     End Sub
 
-    Private WithEvents Label3 As Label
+    Private WithEvents LabelStatus As Label
     Private WithEvents TextBox3 As TextBox
-    Private WithEvents Button3 As Button
-    Private WithEvents Button2 As Button
-    Private WithEvents CheckBox1 As CheckBox
-    Private WithEvents TextBox2 As TextBox
-    Private WithEvents Label2 As Label
-    Private WithEvents Button1 As Button
+    Private WithEvents ButtonStop As Button
+    Private WithEvents ButtonStart As Button
+    Private WithEvents CheckBoxSearchInSubFolders As CheckBox
+    Private WithEvents TextBoxSearchPattern As TextBox
+    Private WithEvents LabelSearchPattern As Label
+    Private WithEvents ButtonSelectFolder As Button
     Private WithEvents TextBox1 As TextBox
-    Private WithEvents Label1 As Label
+    Private WithEvents LabelSearchPath As Label
     Private WithEvents FileSearch1 As SchlumpfSoft.Controls.FileSearchControl.FileSearch
     Private WithEvents FolderBrowserDialog1 As FolderBrowserDialog
 End Class

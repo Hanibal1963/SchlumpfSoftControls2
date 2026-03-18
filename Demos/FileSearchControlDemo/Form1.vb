@@ -7,30 +7,35 @@
 
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
         Me.TextBox1.Text = Me.FileSearch1.StartPath
-        Me.TextBox2.Text = Me.FileSearch1.SearchPattern
-        Me.CheckBox1.Checked = Me.FileSearch1.SearchInSubfolders
-
+        Me.TextBoxSearchPattern.Text = Me.FileSearch1.SearchPattern
+        Me.CheckBoxSearchInSubFolders.Checked = Me.FileSearch1.SearchInSubfolders
+        Me.ButtonStop.Enabled = False
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub ButtonSelectFolder_Click(sender As Object, e As EventArgs) Handles ButtonSelectFolder.Click
         Dim result As DialogResult = Me.FolderBrowserDialog1.ShowDialog()
         If result = DialogResult.OK Then
             Me.TextBox1.Text = Me.FolderBrowserDialog1.SelectedPath
         End If
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub ButtonStop_Click(sender As Object, e As EventArgs) Handles ButtonStop.Click
         Me.FileSearch1.StopSearch()
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Me.TextBox3.Clear()
+    Private Sub ButtonStart_Click(sender As Object, e As EventArgs) Handles ButtonStart.Click
+
         With Me.FileSearch1
             .StartPath = Me.TextBox1.Text
-            .SearchPattern = Me.TextBox2.Text
-            .SearchInSubfolders = Me.CheckBox1.Checked
+            .SearchPattern = Me.TextBoxSearchPattern.Text
+            .SearchInSubfolders = Me.CheckBoxSearchInSubFolders.Checked
         End With
-        Dim unused = Me.FileSearch1.StartSearchAsync()
+        Me.TextBox3.Clear()
+        Me.ButtonStop.Enabled = True
+        Me.ButtonStart.Enabled = False
+        Dim unused = Me.FileSearch1.StartSearchAsync
+        Me.LabelStatus.Text = $"Suche läuft..."
+        Application.DoEvents()
     End Sub
 
     Private Sub FileSearch1_FileFound(sender As Object, datei As String) Handles FileSearch1.FileFound
@@ -38,6 +43,8 @@
     End Sub
 
     Private Sub FileSearch1_SearchCompleted(sender As Object, abgebrochen As Boolean) Handles FileSearch1.SearchCompleted
+        Me.ButtonStart.Enabled = True
+        Me.ButtonStop.Enabled = False
         If abgebrochen = False Then
             Dim unused = MsgBox("Suche beendet")
         Else
@@ -46,11 +53,13 @@
     End Sub
 
     Private Sub FileSearch1_ErrorOccurred(sender As Object, fehler As Exception) Handles FileSearch1.ErrorOccurred
+        Me.ButtonStart.Enabled = True
+        Me.ButtonStop.Enabled = False
         Dim unused = MsgBox(fehler.Message)
     End Sub
 
     Private Sub FileSearch1_ProgressChanged(sender As Object, e As SchlumpfSoft.Controls.FileSearchControl.FileSearchEventArgs) Handles FileSearch1.ProgressChanged
-        Me.Label3.Text = $"{e.Found} Dateien von {e.Total} Dateien gefunden ({e.Percent}%)"
+        Me.LabelStatus.Text = $"{e.Found} Dateien von {e.Total} Dateien gefunden ({e.Percent}%)"
     End Sub
 
 End Class
