@@ -45,6 +45,14 @@ Zurzeit sind folgende Steuerelemente vorhanden:
 
 ## Versionsverlauf
 
+**Version 3.2026.0404.1402 (04.04.2026 14:02)**
+
+- Dateisuche auf asynchrone Lambda umgestellt
+- Robustheit und Performance von FileSearch verbessert
+- FileSearchControl: Fehlerbehandlung & Ressourcen verbessert
+- ExplorerTreeView: SelectedPath, Downloads-Fix, Docs-Update
+- UI modernisiert und Steuerelemente umbenannt
+
 **Version 3.2026.0124.0 (24.01.2026)**
 
 - Lizenz und ReleaseNotes angepasst (keine Funktionsänderungen)
