@@ -367,8 +367,5 @@ FodyWeavers.xsd
 *.vsdoc
 *.vsix
 /VS Marketplace Vorlage.md
-*.zip
-/.github/prompts
-/Copilotantworten.md
 /Help
-/SchlumpfSoftControls2/FileSearchControl/CoPilot Hinweise.md
+/Backup
