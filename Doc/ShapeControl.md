@@ -30,15 +30,17 @@ Steuerelement zum Darstellen einfacher Formen (Linien, Rechtecke, Ellipsen) für 
 ## Transparenz / Zeichenlogik
 
 Das Control setzt im überschriebenen `CreateParams` das Extended Window Style Flag `WS_EX_TRANSPARENT` (`&H20`). Dadurch:
+
 - Zeichnet Windows zuerst die darunterliegenden Controls.
 - Das Shape wird anschließend darüber gerendert.
-- Effekt: pseudo-transparenter Hintergrund (keine eigene Füllung). 
+- Effekt: pseudo-transparenter Hintergrund (keine eigene Füllung).
 
 Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen nicht, aber für einfache Überlagerungen genügt es meist.
 
 ---
 
 ## Performance-Hinweise
+
 - `ControlStyles.OptimizedDoubleBuffer` ist deaktiviert (`False`). Bei starkem Redraw (Resize/Animation) kann Flickern auftreten.
 - Für großflächige oder häufig animierte Szenarien kann eine Anpassung sinnvoll sein:
   ```vbnet
@@ -65,6 +67,7 @@ Hinweis: Echt-Transparenz im Sinne von Alphakomposition bietet dieses Vorgehen n
 ## Erweiterbarkeit
 
 Mögliche Erweiterungen:
+
 - Anti-Aliasing aktivierbar (`g.SmoothingMode = SmoothingMode.AntiAlias`).
 - Weitere Formen (Dreieck, Polygon, Pfeile).
 - Unterstützung für gestrichelte Linien (`Pen.DashStyle`).

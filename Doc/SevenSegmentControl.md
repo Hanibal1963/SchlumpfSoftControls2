@@ -6,7 +6,7 @@ Ich habe für ein anderes Projekt versucht eine 7-Segmentanzeige zu programmiere
 Nach einigen Fehlversuchen und einer intensive Internetrecherche, bin ich auf GitHub fündig geworden.
 ([SevenSegment von Dimitry Brant](https://github.com/dbrant/SevenSegment))
 
-Ich habe mich entschlossen den Code in VisualBasic neu zu erstellen da ich mit C# keinerlei Erfahrung habe. 
+Ich habe mich entschlossen den Code in VisualBasic neu zu erstellen da ich mit C# keinerlei Erfahrung habe.
 
   ---
 
@@ -14,8 +14,8 @@ Ich habe mich entschlossen den Code in VisualBasic neu zu erstellen da ich mit C
 
 Das Projekt `SevenSegmentControl` stellt zwei Windows Forms Steuerelemente bereit, die klassische 7-Segment-(LED)-Anzeige(n) simulieren:
 
-   - `SingleDigit` – Ein einzelnes 7-Segment-Display mit optionalem Dezimalpunkt und (optionalem) Doppelpunktbereich.
-   - `MultiDigit` – Ein Container für mehrere `SingleDigit`-Instanzen zur Darstellung kompletter numerischer/teilweise alphanumerischer Werte.
+- `SingleDigit` – Ein einzelnes 7-Segment-Display mit optionalem Dezimalpunkt und (optionalem Doppelpunktbereich.
+- `MultiDigit` – Ein Container für mehrere `SingleDigit`-Instanzen zur Darstellung kompletter numerischer/teilweise alphanumerischer Werte.
 
 Der Fokus liegt auf:
 
@@ -26,7 +26,7 @@ Der Fokus liegt auf:
 
 ---
 
-##  Ziele / Einsatzzweck
+## Ziele / Einsatzzweck
 
 Typische Anwendungsfälle:
 
@@ -40,6 +40,7 @@ Typische Anwendungsfälle:
 ## Darstellung & Bitmuster
 
 Jedes Segment wird durch ein Bit in einem Integer repräsentiert:
+
 - Bit 0: Oberes Segment
 - Bit 1: Oben links
 - Bit 2: Oben rechts
@@ -96,4 +97,3 @@ Beispiel: Ziffer "0" (`CharacterPattern.Zero = &H77` = Binär `0b1110111`) – a
 - [ToolboxBitmapAttribute Konstruktoren](https://learn.microsoft.com/de-de/dotnet/api/system.drawing.toolboxbitmapattribute.-ctor?view=dotnet-plat-ext-7.0#system-drawing-toolboxbitmapattribute-ctor(system-type-system-string))
 - [Entwickeln benutzerdefinierter Windows Forms-Steuerelemente mit .NET Framework](https://learn.microsoft.com/de-de/dotnet/desktop/winforms/controls/developing-custom-windows-forms-controls?view=netframeworkdesktop-4.8)
 - [Control-Techniken: Eigenes Toolboxicon für Steuerelement](https://www.vb-paradise.de/index.php/Thread/123746-Control-Techniken-Eigenes-Toolboxicon-f%C3%BCr-Steuerelement/)
-
