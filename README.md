@@ -12,6 +12,9 @@ Ich bin diesen Schritt gegangen da das vorherige Projekt zu unübersichtlich wur
 
 Das vorherige Projekt werde ich nach der Veröffentlichung dieses Projekts archivieren da ich es nicht mehr weiterentwickeln werde.
 
+> [!NOTE]
+> Eine weitere Überarbeitung ist in Arbeit und diese Version wird nach Fertigstellung archviert.
+
 ---
 
 ## Inhalt
